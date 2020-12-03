@@ -1,0 +1,24 @@
+{
+  "name": "inter-club-golf-live",
+  "version": "1.0.0",
+  "description": "An app to allow users to create golf matches which allows users to view these matches in realtime",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darren-behan/inter-club-golf-live.git"
+  },
+  "author": "Darren Behan",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/darren-behan/inter-club-golf-live/issues"
+  },
+  "homepage": "https://github.com/darren-behan/inter-club-golf-live#readme",
+  "dependencies": {
+    "bootstrap": "^4.5.3",
+    "express": "^4.17.1"
+  }
+}

@@ -1,9 +1,9 @@
 // Dependencies
 const router = require('express').Router();
 const path = require('path');
-const matchesRoute = require('./api/matches');
+const matchesRoute = require('./api/match');
 
-router.use('/matches', matchesRoute);
+router.use('/match', matchesRoute);
 
 // If no API routes are hit, send the React app
 router.use((req, res) => {

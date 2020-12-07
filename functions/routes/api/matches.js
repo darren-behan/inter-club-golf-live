@@ -1,10 +1,6 @@
 const router = require('express').Router();
 const matchesController = require('../../controllers/matchesController');
 
-const {
-  findAll
-} = require('../../controllers/matchesController');
-
 // Express then matches the final portion of the route to one of the below
 
 // Matches with "/api/matches/"

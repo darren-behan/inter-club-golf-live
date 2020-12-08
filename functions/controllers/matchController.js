@@ -24,7 +24,6 @@ module.exports = {
             createdAt: doc.data().createdAt
           });
         });
-        console.log(matches);
         return response.json(matches);
       })
       .catch((err) => {
@@ -33,7 +32,6 @@ module.exports = {
       });
   },
   postMatch(request, response) {
-    console.log(request.body[0]);
     if (request.body[0].teamOneName.trim() === "" || request.body[0].teamTwoName.trim() === "") {
       return response.status(400).json('Must not be empty');
     }
@@ -61,6 +59,17 @@ module.exports = {
 			response.status(500).json({ error: 'Something went wrong' });
 			console.error(err);
 		});
+  },
+  deleteMatch(request, response) {
+    const matchId = request.params.matchId;
+    const res = db.collection('matches').doc(matchId).delete()
+    .then(() => {
+      response.json({ message: 'Delete successfull' });
+    })
+    .catch((err) => {
+      console.error(err);
+      return response.status(500).json({ error: err.code });
+    });
   }
 }
 

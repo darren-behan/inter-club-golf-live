@@ -13,4 +13,8 @@ router.route('/create')
   // POST request to return all matches
   .post(matchesController.postMatch);
 
+router.route('/:matchId')
+  // DELETE request to return all matches
+  .delete(matchesController.deleteMatch);
+
 module.exports = router;

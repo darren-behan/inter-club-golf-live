@@ -14,9 +14,13 @@ module.exports = {
         data.forEach((doc) => {
           matches.push({
             matchId: doc.id,
-            homeTeamName: doc.data().homeTeamName,
-            awayTeamName: doc.data().awayTeamName,
-            numOfIndividualMatches: doc.data().numOfIndividualMatches,
+            competitionName: doc.data().competitionName,
+            numIndividualMatches: doc.data().numIndividualMatches,
+            teamOneName: doc.data().homeTeamName,
+            teamTwoName: doc.data().awayTeamName,
+            teamOneScore: doc.data().teamOneScore,
+            teamTwoScore: doc.data().teamTwoScore,
+            individualMatch: doc.data().individualMatch,
             createdAt: doc.data().createdAt
           });
         });
@@ -30,14 +34,18 @@ module.exports = {
   },
   postMatch(request, response) {
     console.log(request.body[0]);
-    if (request.body[0].homeTeamName.trim() === "" || request.body[0].awayTeamName.trim() === "") {
+    if (request.body[0].teamOneName.trim() === "" || request.body[0].teamTwoName.trim() === "") {
       return response.status(400).json('Must not be empty');
     }
 
     const newMatch = {
-      homeTeamName: request.body[0].homeTeamName,
-      awayTeamName: request.body[0].awayTeamName,
-      numOfIndividualMatches: request.body[0].numOfIndividualMatches,
+      competitionName: request.body[0].competitionName, // USER selection here will drive numIndividualMatches value
+      numIndividualMatches: request.body[0].numIndividualMatches,
+      teamOneName: request.body[0].teamOneName,
+      teamTwoName: request.body[0].teamTwoName,
+      teamOneScore: calculateMatchScoreOnPost(request.body[0].numIndividualMatches),
+      teamTwoScore: calculateMatchScoreOnPost(request.body[0].numIndividualMatches),
+      individualMatch: returnIndividualMatchObject(request.body[0].numIndividualMatches, request.body[0].teamOneName, request.body[0].teamTwoName),
       createdAt: moment.utc()
     };
 
@@ -54,4 +62,29 @@ module.exports = {
 			console.error(err);
 		});
   }
+}
+
+const calculateMatchScoreOnPost = (value) => {
+  return value / 2;
+}
+
+const returnIndividualMatchObject = (numIndividualMatches, teamOneName, teamTwoName) => {
+  if (numIndividualMatches === 5) {
+    const arr = [1, 2, 3, 4, 5];
+    return returnIndividualMatchScoresObject(arr, teamOneName, teamTwoName);
+  } else {
+    return;
+  }
+}
+
+const returnIndividualMatchScoresObject = (arr, teamOneName, teamTwoName) => {
+  const individualMatchScoreObj = {};
+  for (let i = 0; i < arr.length; i++) {
+    const key = "Match " + arr[i];
+    individualMatchScoreObj[key] = {
+      [teamOneName]: 0,
+      [teamTwoName]: 0
+    };
+  }
+  return individualMatchScoreObj
 }

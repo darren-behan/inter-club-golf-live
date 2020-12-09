@@ -70,6 +70,19 @@ module.exports = {
       console.error(err);
       return response.status(500).json({ error: err.code });
     });
+  },
+  updateMatch(request, response) {
+    let document = db.collection('matches').doc(`${request.params.matchId}`);
+    document.update(matchDataToUpdate(request.body))
+    .then(()=> {
+      response.json({message: 'Updated successfully'});
+    })
+    .catch((err) => {
+      console.error(err);
+      return response.status(500).json({ 
+        error: err.code 
+      });
+    });
   }
 }
 
@@ -80,20 +93,67 @@ const calculateMatchScoreOnPost = (value) => {
 const returnIndividualMatchObject = (numIndividualMatches, teamOneName, teamTwoName) => {
   if (numIndividualMatches === 5) {
     const arr = [1, 2, 3, 4, 5];
-    return returnIndividualMatchScoresObject(arr, teamOneName, teamTwoName);
+    return constructIndividualMatchObject(arr, teamOneName, teamTwoName);
   } else {
     return;
   }
 }
 
-const returnIndividualMatchScoresObject = (arr, teamOneName, teamTwoName) => {
+const constructIndividualMatchObject = (arr, teamOneName, teamTwoName) => {
   const individualMatchScoreObj = {};
   for (let i = 0; i < arr.length; i++) {
     const key = "Match " + arr[i];
     individualMatchScoreObj[key] = {
-      [teamOneName]: 0,
-      [teamTwoName]: 0
+      teamOneName: teamOneName,
+      teamOneScore: 0,
+      teamTwoName: teamTwoName,
+      teamTwoScore: 0,
+      holesPlayed: 0
     };
   }
   return individualMatchScoreObj
+}
+
+const matchDataToUpdate = (obj) => {
+  let individualMatchObj = {};
+  let teamOneOverallScore = 0;
+  let teamTwoOverallScore = 0;
+  for (let i in obj) {
+    if (obj[i].teamOneScore === obj[i].teamTwoScore) {
+      teamOneOverallScore += 0.5;
+      teamTwoOverallScore += 0.5;
+      individualMatchObj[i] = {
+        teamOneName: obj[i].teamOneName,
+        teamOneScore: 0,
+        teamTwoName: obj[i].teamTwoName,
+        teamTwoScore: 0,
+        holesPlayed: obj[i].holesPlayed
+      }
+    } else if (obj[i].teamOneScore < obj[i].teamTwoScore) {
+      teamTwoOverallScore += 1;
+      individualMatchObj[i] = {
+        teamOneName: obj[i].teamOneName,
+        teamOneScore: 0,
+        teamTwoName: obj[i].teamTwoName,
+        teamTwoScore: obj[i].teamTwoScore,
+        holesPlayed: obj[i].holesPlayed
+      }
+    } else if (obj[i].teamOneScore > obj[i].teamTwoScore) {
+      teamOneOverallScore += 1;
+      individualMatchObj[i] = {
+        teamOneName: obj[i].teamOneName,
+        teamOneScore: obj[i].teamOneScore,
+        teamTwoName: obj[i].teamTwoName,
+        teamTwoScore: 0,
+        holesPlayed: obj[i].holesPlayed
+      }
+    }
+    console.log(obj[i].teamOneName);
+    console.log(obj[i].teamTwoName);
+  };
+  return {
+    teamOneScore: teamOneOverallScore,
+    teamTwoScore: teamTwoOverallScore,
+    individualMatch: individualMatchObj
+  }
 }

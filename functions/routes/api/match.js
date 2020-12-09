@@ -10,11 +10,15 @@ router.route('/')
 
 // Matches with "/api/matches/create"
 router.route('/create')
-  // POST request to return all matches
+  // POST request to create a match
   .post(matchesController.postMatch);
 
 router.route('/:matchId')
-  // DELETE request to return all matches
+  // DELETE request to delete a match
   .delete(matchesController.deleteMatch);
+
+router.route('/:matchId')
+  // UPDATE request to update a match
+  .put(matchesController.updateMatch);
 
 module.exports = router;

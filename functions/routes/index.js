@@ -6,7 +6,7 @@ const userRoute = require('./api/user');
 
 router.use('/match', matchesRoute);
 
-router.use('/login', userRoute);
+router.use('/user', userRoute);
 
 // If no API routes are hit, send the React app
 router.use((req, res) => {

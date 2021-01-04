@@ -64,7 +64,7 @@ module.exports = {
     const matchId = request.params.matchId;
     const res = db.collection('matches').doc(matchId).delete()
     .then(() => {
-      response.json({ message: 'Delete successfull' });
+      return response.json({ message: 'Delete successfull' });
     })
     .catch((err) => {
       console.error(err);
@@ -75,7 +75,7 @@ module.exports = {
     let document = db.collection('matches').doc(`${request.params.matchId}`);
     document.update(matchDataToUpdate(request.body))
     .then(()=> {
-      response.json({message: 'Updated successfully'});
+      return response.json({message: 'Updated successfully'});
     })
     .catch((err) => {
       console.error(err);
@@ -150,7 +150,7 @@ const matchDataToUpdate = (obj) => {
     }
     console.log(obj[i].teamOneName);
     console.log(obj[i].teamTwoName);
-  };
+  }
   return {
     teamOneScore: teamOneOverallScore,
     teamTwoScore: teamTwoOverallScore,

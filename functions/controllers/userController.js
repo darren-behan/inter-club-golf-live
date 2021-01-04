@@ -1,5 +1,5 @@
 // Defining methods for the userController
-const { db } = require('../util/admin');
+const { db, admin } = require('../util/admin');
 const config = require('../util/config');
 
 const firebase = require('firebase');
@@ -94,6 +94,36 @@ module.exports = {
 			} else {
 				return response.status(500).json({ general: 'Something went wrong, please try again' });
 			}
+		});
+  },
+  getUserDetail(request, response) {
+    let userData = {};
+    admin
+    .auth()
+    .getUser(request.user.user_id)
+		.then((doc) => {
+      return response.json(doc);
+		})
+		.catch((error) => {
+			console.error(error);
+			return response.status(500).json({ error: error.code });
+		});
+  },
+  updateUserDetail(request, response) {
+    console.log(request.user);
+    let document = db.collection('users').doc(`${request.user.email}`);
+    document
+    .update(request.body)
+		.then(() => {
+      return response.json({
+        message: 'Updated successfully'
+      });
+		})
+		.catch((error) => {
+			console.error(error);
+			return response.status(500).json({
+        message: "Cannot Update the value"
+      });
 		});
   }
 }

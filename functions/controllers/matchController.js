@@ -6,11 +6,11 @@ module.exports = {
   findAll(request, response) {
       db
       .collection('matches')
+      .where('username', '==', request.user.username)
       .orderBy('createdAt', 'desc')
       .get()
       .then((data) => {
         let matches = [];
-        console.log(data);
         data.forEach((doc) => {
           matches.push({
             matchId: doc.id,
@@ -21,6 +21,7 @@ module.exports = {
             teamOneScore: doc.data().teamOneScore,
             teamTwoScore: doc.data().teamTwoScore,
             individualMatch: doc.data().individualMatch,
+            createdBy: doc.data().createdBy,
             createdAt: doc.data().createdAt
           });
         });
@@ -37,6 +38,7 @@ module.exports = {
     }
 
     const newMatch = {
+      username: request.user.username,
       competitionName: request.body[0].competitionName, // USER selection here will drive numIndividualMatches value
       numIndividualMatches: request.body[0].numIndividualMatches,
       teamOneName: request.body[0].teamOneName,
@@ -44,6 +46,7 @@ module.exports = {
       teamOneScore: calculateMatchScoreOnPost(request.body[0].numIndividualMatches),
       teamTwoScore: calculateMatchScoreOnPost(request.body[0].numIndividualMatches),
       individualMatch: returnIndividualMatchObject(request.body[0].numIndividualMatches, request.body[0].teamOneName, request.body[0].teamTwoName),
+      createdBy: request.user.username,
       createdAt: moment.utc()
     };
 
@@ -62,7 +65,18 @@ module.exports = {
   },
   deleteMatch(request, response) {
     const matchId = request.params.matchId;
-    const res = db.collection('matches').doc(matchId).delete()
+    db
+    .collection('matches')
+    .doc(matchId)
+    .get()
+    .then((doc) => {
+      if (doc.data().username !== request.user.username) {
+        return response.status(403).json({
+          error:"Unauthorized"
+        })
+      }
+      return db.collection('matches').doc(matchId).delete();
+    })
     .then(() => {
       return response.json({ message: 'Delete successfull' });
     })

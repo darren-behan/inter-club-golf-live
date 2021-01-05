@@ -1,11 +1,27 @@
 import './App.css';
-import Input from '../src/components';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from 'react-router-dom';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import PageNotFound from './pages/PageNotFound';
 
 function App() {
   return (
-    <div className="App App-header">
-      <Input styles={{ paddingLeft: "100px" }}/>
-    </div>
+    <>
+      <Router>
+        <Switch>
+          <Route exact path={['/', '/home']} component={Home} />
+          <Route exact path='/login' component={Login} />
+          <Route exact path='/signup' component={Signup} />
+          <Route exact path='*' component={PageNotFound} />
+        </Switch>
+      </Router>
+    </>
   );
 }
 

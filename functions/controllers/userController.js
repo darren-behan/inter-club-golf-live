@@ -10,6 +10,7 @@ const { validateLoginData, validateSignUpData } = require('../util/validators');
 
 module.exports = {
   loginUser(request, response) {
+    console.log(request.body);
     const user = {
       email: request.body.email,
       password: request.body.password

@@ -5,9 +5,14 @@ import axios from 'axios';
 export default {
   // Logs in a user
   loginUser: function(userData) {
-    console.log(userData);
     // return axios.post('/api/user/login', userData);
     return axios.post('http://localhost:5000/inter-club-golf-live/us-central1/api/user/login', userData);
+  },
+  // Returns all matches
+  getAllMatches: function() {
+    const authToken = localStorage.getItem('AuthToken');
+		axios.defaults.headers.common = { Authorization: `${authToken}` };
+    return axios.get('http://localhost:5000/inter-club-golf-live/us-central1/api/match');
   }
 };
 

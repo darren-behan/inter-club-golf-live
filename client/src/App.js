@@ -18,7 +18,7 @@ function App() {
   // This is used to confirm the user is logged in and redirect them to the home page
   const [isAuthenticated, setIsAuthenticated] = useState( false );
   // This is used to create an object to capture the login details so we can send the data to the server, confirm the user and proceed to log them in
-  const [loggedInUserObject, setLoggedInUserObject] = useState({});
+  const [loginDataObj, setLoginDataObj] = useState({});
   // This is used to store all matches in the database
   const [allMatches, setAllMatches] = useState( [] );
 
@@ -39,7 +39,7 @@ function App() {
   return (
     <>
       <DataAreaContext.Provider
-      value={{ isAuthenticated, allMatches, loggedInUserObject, setIsAuthenticated, setLoggedInUserObject }}
+      value={{ isAuthenticated, allMatches, loginDataObj, setIsAuthenticated, setLoginDataObj }}
       >
         <Router>
           <div>

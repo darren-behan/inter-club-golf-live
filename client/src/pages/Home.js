@@ -11,7 +11,7 @@ function Home() {
   const [textFieldDisabled, setTextFieldDisabled] = useState(true);
 
   console.log(allMatches);
-  
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -23,30 +23,25 @@ function Home() {
         <Link to="/login">Login</Link>
       </div>
       <div>
-        <Typography component="h1" variant="h5">
-        Home
-        </Typography>
-        <form noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            id="teamOneScore"
-            defaultValue={allMatches[1].teamOneScore}
-            label={allMatches[1].teamOneScore}
-            name="teamOneScore"
-            disabled={textFieldDisabled}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            id="teamTwoScore"
-            label={allMatches[1].teamTwoScore}
-            name="teamTwoScore"
-            disabled={textFieldDisabled}
-          />
-        </form>
+        {allMatches === [] ? (
+            <div></div> 
+          ) : (
+            <table>
+              <thead>
+                <tr>
+                  <th>Team One Score</th>
+                  <th>Team Two Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{allMatches[1]?.teamOneScore}</td>
+                  <td>{allMatches[1]?.teamTwoScore}</td>
+                </tr>
+              </tbody>
+            </table>
+          )
+        }
       </div>
     </Container>
   );

@@ -6,7 +6,7 @@ module.exports = {
   findAll(request, response) {
       db
       .collection('matches')
-      .where('username', '==', request.user.username)
+      // .where('username', '==', request.user.username)
       .orderBy('createdAt', 'desc')
       .get()
       .then((data) => {

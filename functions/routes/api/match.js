@@ -7,7 +7,7 @@ const auth = require('../../util/auth');
 // Matches with "/api/match/"
 router.route('/')
   // GET request to return all matches
-  .get(auth, matchesController.findAll);
+  .get(matchesController.findAll);
 
 // Matches with "/api/matches/create"
 router.route('/create')

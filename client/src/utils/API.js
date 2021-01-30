@@ -10,8 +10,8 @@ export default {
   },
   // Returns all matches
   getAllMatches: function() {
-    const authToken = localStorage.getItem('AuthToken');
-		axios.defaults.headers.common = { Authorization: `${authToken}` };
+    // const authToken = localStorage.getItem('AuthToken');
+		// axios.defaults.headers.common = { Authorization: `${authToken}` };
     return axios.get('http://localhost:5000/inter-club-golf-live/us-central1/api/match');
   }
 };

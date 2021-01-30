@@ -7,6 +7,7 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
+import { trackPromise } from 'react-promise-tracker';
 import Home from './pages/Home';
 import Matches from './pages/Matches';
 import Login from './pages/Login';
@@ -19,36 +20,40 @@ function App() {
   // This is used to create an object to capture the login details so we can send the data to the server, confirm the user and proceed to log them in
   const [loggedInUserObject, setLoggedInUserObject] = useState({});
   // This is used to store all matches in the database
-  const [allMatches, setAllMatches] = useState([]);
+  const [allMatches, setAllMatches] = useState( [] );
 
   useEffect(() => {
     loadMatches();
   }, []);
 
   async function loadMatches() {
-    await API.getAllMatches()
-    .then(res =>
-      setAllMatches(res.data)
-    )
-    .catch(err => console.log(err));
+    await trackPromise(
+      API.getAllMatches()
+      .then(res => {
+        setAllMatches(res.data);
+      })
+      .catch(err => console.log(err))
+    );
   }
 
   return (
-    <DataAreaContext.Provider
-    value={{ isAuthenticated, loggedInUserObject, allMatches, setIsAuthenticated, setLoggedInUserObject }}
-    >
-      <Router>
-        <div>
-          <Switch>
-            <Route exact path={['/', '/home']} component={Home} />
-            <Route exact path={['/matches']} component={Matches} />
-            <Route exact path='/login' component={Login} />
-            <Route exact path='/signup' component={Signup} />
-            <Route exact path='*' component={PageNotFound} />
-          </Switch>
-        </div>
-      </Router>
-    </DataAreaContext.Provider>
+    <>
+      <DataAreaContext.Provider
+      value={{ isAuthenticated, allMatches, loggedInUserObject, setIsAuthenticated, setLoggedInUserObject }}
+      >
+        <Router>
+          <div>
+            <Switch>
+              <Route exact path={['/', '/home']} component={Home} />
+              <Route exact path={['/matches']} component={Matches} />
+              <Route exact path='/login' component={Login} />
+              <Route exact path='/signup' component={Signup} />
+              <Route exact path='*' component={PageNotFound} />
+            </Switch>
+          </div>
+        </Router>
+      </DataAreaContext.Provider>
+    </>
   );
 }
 

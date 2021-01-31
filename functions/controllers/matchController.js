@@ -15,6 +15,8 @@ module.exports = {
           matches.push({
             matchId: doc.id,
             competitionName: doc.data().competitionName,
+            matchDate: doc.data().matchDate,
+            matchTime: doc.data().matchTime,
             numIndividualMatches: doc.data().numIndividualMatches,
             teamOneName: doc.data().teamOneName,
             teamTwoName: doc.data().teamTwoName,
@@ -22,7 +24,8 @@ module.exports = {
             teamTwoScore: doc.data().teamTwoScore,
             individualMatch: doc.data().individualMatch,
             createdBy: doc.data().createdBy,
-            createdAt: doc.data().createdAt
+            createdAt: doc.data().createdAt,
+            updatedAt: doc.data().updatedAt
           });
         });
         return response.json(matches);
@@ -39,6 +42,8 @@ module.exports = {
 
     const newMatch = {
       username: request.user.username,
+      matchDate: request.body[0].matchDate,
+      matchTime: request.body[0].matchTime,
       competitionName: request.body[0].competitionName, // USER selection here will drive numIndividualMatches value
       numIndividualMatches: request.body[0].numIndividualMatches,
       teamOneName: request.body[0].teamOneName,
@@ -47,7 +52,8 @@ module.exports = {
       teamTwoScore: calculateMatchScoreOnPost(request.body[0].numIndividualMatches),
       individualMatch: returnIndividualMatchArr(request.body[0].numIndividualMatches, request.body[0].teamOneName, request.body[0].teamTwoName),
       createdBy: request.user.username,
-      createdAt: moment.utc()
+      createdAt: moment().format("DD/MM/YY, HH:mm"),
+      updatedAt: moment().format("DD/MM/YY, HH:mm")
     };
 
     db
@@ -106,17 +112,18 @@ const calculateMatchScoreOnPost = (value) => {
 
 const returnIndividualMatchArr = (numIndividualMatches, teamOneName, teamTwoName) => {
   if (numIndividualMatches === 5) {
-    const arr = [1, 2, 3, 4, 5];
-    return constructIndividualMatchArr(arr, teamOneName, teamTwoName);
+    return constructIndividualMatchArr(numIndividualMatches, teamOneName, teamTwoName);
+  } else if (numIndividualMatches === 9) {
+    return constructIndividualMatchArr(numIndividualMatches, teamOneName, teamTwoName);
   } else {
     return;
   }
 }
 
-const constructIndividualMatchArr = (arr, teamOneName, teamTwoName) => {
+const constructIndividualMatchArr = (numIndividualMatches, teamOneName, teamTwoName) => {
   const individualMatchScoreArr = [];
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] <= Math.ceil(arr.length / 2)) {
+  for (let i = 0; i < numIndividualMatches; i++) {
+    if (i < Math.ceil(numIndividualMatches / 2)) {
       individualMatchScoreArr.push(
         {
           'teamOneName': teamOneName,
@@ -181,6 +188,7 @@ const matchDataToUpdate = (array) => {
   return {
     teamOneScore: teamOneOverallScore,
     teamTwoScore: teamTwoOverallScore,
-    individualMatch: individualMatchArr
+    individualMatch: individualMatchArr,
+    updatedAt: moment().format("DD/MM/YY, HH:mm")
   }
 }

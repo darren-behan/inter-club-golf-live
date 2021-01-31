@@ -1,0 +1,420 @@
+[debug] [2021-01-31T15:45:41.512Z] ----------------------------------------------------------------------
+[debug] [2021-01-31T15:45:41.516Z] Command:       /Users/darren.behan/.nvm/versions/node/v10.12.0/bin/node /Users/darren.behan/.nvm/versions/node/v10.12.0/bin/firebase functions:shell
+[debug] [2021-01-31T15:45:41.517Z] CLI Version:   8.18.0
+[debug] [2021-01-31T15:45:41.517Z] Platform:      darwin
+[debug] [2021-01-31T15:45:41.517Z] Node Version:  v10.12.0
+[debug] [2021-01-31T15:45:41.521Z] Time:          Mon Feb 01 2021 02:45:41 GMT+1100 (Australian Eastern Daylight Time)
+[debug] [2021-01-31T15:45:41.522Z] ----------------------------------------------------------------------
+[debug] [2021-01-31T15:45:41.522Z] 
+[debug] [2021-01-31T15:45:41.535Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-01-31T15:45:41.536Z] > authorizing via signed-in user
+[debug] [2021-01-31T15:45:41.536Z] [iam] checking project inter-club-golf-live for permissions ["firebase.projects.get"]
+[debug] [2021-01-31T15:45:41.546Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-01-31T15:45:41.546Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-01-31T15:45:42.018Z] <<< HTTP RESPONSE 200 {"expires":"Mon, 01 Jan 1990 00:00:00 GMT","pragma":"no-cache","cache-control":"no-cache, no-store, max-age=0, must-revalidate","date":"Sun, 31 Jan 2021 15:45:41 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-01-31T15:45:42.033Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/inter-club-golf-live:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2021-01-31T15:45:43.489Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sun, 31 Jan 2021 15:45:43 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1072","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-01-31T15:45:43.499Z] [functions] Using node@10 from host.
+[debug] [2021-01-31T15:45:43.501Z] defaultcredentials: writing to file /Users/darren.behan/.config/firebase/darrenbehan03_gmail_com_application_default_credentials.json
+[debug] [2021-01-31T15:45:43.502Z] DEBUG: Setting GAC to /Users/darren.behan/.config/firebase/darrenbehan03_gmail_com_application_default_credentials.json
+[debug] [2021-01-31T15:45:43.512Z] [functions] Watching "/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions" for Cloud Functions...
+[debug] [2021-01-31T15:45:43.522Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2021-01-31T15:45:43.523Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2021-01-31T15:45:43.523Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2021-01-31T15:45:43.523Z] DEBUG: [worker-~diagnostic~-08440592-6bc3-4d3a-b49a-68c493241521]: Assigning socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7030.sock
+[debug] [2021-01-31T15:45:43.524Z] DEBUG: [worker-~diagnostic~-08440592-6bc3-4d3a-b49a-68c493241521]: BUSY
+[debug] [2021-01-31T15:45:43.766Z] DEBUG: [runtime-status] [7030] Functions runtime initialized. {"cwd":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions","node_version":"10.12.0"}
+[debug] [2021-01-31T15:45:43.769Z] DEBUG: [runtime-status] [7030] Disabled runtime features: undefined
+[debug] [2021-01-31T15:45:43.774Z] DEBUG: [runtime-status] [7030] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:45:43.777Z] DEBUG: [runtime-status] [7030] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:45:43.779Z] DEBUG: [runtime-status] [7030] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:45:43.783Z] DEBUG: [runtime-status] [7030] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-01-31T15:45:43.784Z] DEBUG: [runtime-status] [7030] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:45:43.902Z] DEBUG: [runtime-status] [7030] Checked functions.config() {"config":{}}
+[debug] [2021-01-31T15:45:43.902Z] DEBUG: [runtime-status] [7030] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-01-31T15:45:43.903Z] DEBUG: [runtime-status] [7030] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:45:43.903Z] DEBUG: [runtime-status] [7030] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:45:43.904Z] DEBUG: [runtime-status] [7030] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:45:43.904Z] DEBUG: [runtime-status] [7030] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2021-01-31T15:45:44.113Z] DEBUG: [runtime-status] [7030] initializeApp(DEFAULT) {"databaseURL":"https://inter-club-golf-live.firebaseio.com","storageBucket":"inter-club-golf-live.appspot.com","projectId":"inter-club-golf-live"}
+[warn] ⚠  functions: The Cloud Firestore emulator is not running, so calls to Firestore will affect production. {"metadata":{"emulator":{"name":"functions"},"message":"The Cloud Firestore emulator is not running, so calls to Firestore will affect production."}}
+[debug] [2021-01-31T15:45:45.022Z] [functions[api]] http function initialized (http://localhost:5000/inter-club-golf-live/us-central1/api).
+[info] i  functions: Loaded functions: api 
+[warn] ⚠  functions: The following emulators are not running, calls to these services will affect production: firestore, database, pubsub 
+[debug] [2021-01-31T15:45:45.051Z] DEBUG: [worker-~diagnostic~-08440592-6bc3-4d3a-b49a-68c493241521]: IDLE
+[debug] [2021-01-31T15:45:55.424Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2021-01-31T15:45:55.424Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2021-01-31T15:45:55.425Z] Accepted request GET /inter-club-golf-live/us-central1/api/match --> api
+[debug] [2021-01-31T15:45:55.434Z] DEBUG: [worker-pool] addWorker(api)
+[debug] [2021-01-31T15:45:55.434Z] DEBUG: [worker-pool] Adding worker with key api, total=1
+[debug] [2021-01-31T15:45:55.434Z] DEBUG: [worker-pool] submitWork(triggerId=api)
+[debug] [2021-01-31T15:45:55.435Z] DEBUG: [worker-api-cb09aea5-7012-4b92-826b-21db3c17e182]: Assigning socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7044.sock
+[debug] [2021-01-31T15:45:55.435Z] DEBUG: [worker-api-cb09aea5-7012-4b92-826b-21db3c17e182]: BUSY
+[debug] [2021-01-31T15:45:55.967Z] DEBUG: [runtime-status] [7044] Functions runtime initialized. {"cwd":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions","node_version":"10.12.0"}
+[debug] [2021-01-31T15:45:55.973Z] DEBUG: [runtime-status] [7044] Disabled runtime features: undefined
+[debug] [2021-01-31T15:45:55.977Z] DEBUG: [runtime-status] [7044] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:45:55.979Z] DEBUG: [runtime-status] [7044] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:45:55.979Z] DEBUG: [runtime-status] [7044] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:45:55.984Z] DEBUG: [runtime-status] [7044] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-01-31T15:45:55.984Z] DEBUG: [runtime-status] [7044] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:45:56.047Z] DEBUG: [runtime-status] [7044] Checked functions.config() {"config":{}}
+[debug] [2021-01-31T15:45:56.047Z] DEBUG: [runtime-status] [7044] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-01-31T15:45:56.048Z] DEBUG: [runtime-status] [7044] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:45:56.050Z] DEBUG: [runtime-status] [7044] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:45:56.050Z] DEBUG: [runtime-status] [7044] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:45:56.050Z] DEBUG: [runtime-status] [7044] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2021-01-31T15:45:56.194Z] DEBUG: [runtime-status] [7044] initializeApp(DEFAULT) {"databaseURL":"https://inter-club-golf-live.firebaseio.com","storageBucket":"inter-club-golf-live.appspot.com","projectId":"inter-club-golf-live"}
+[debug] [2021-01-31T15:45:57.003Z] DEBUG: [runtime-status] [7044] Trigger "api" has been found, beginning invocation!
+[debug] [2021-01-31T15:45:57.003Z] [functions] Beginning execution of "api"
+[debug] [2021-01-31T15:45:57.003Z] DEBUG: [runtime-status] [7044] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"}
+[debug] [2021-01-31T15:45:57.004Z] DEBUG: [runtime-status] [7044] Running api in mode HTTPS
+[debug] [2021-01-31T15:45:57.007Z] DEBUG: [runtime-status] [7044] Attempting to listen to socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7044.sock
+[debug] [2021-01-31T15:45:57.014Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2021-01-31T15:45:57.033Z] DEBUG: [runtime-status] [7044] Ephemeral server handling GET request
+[debug] [2021-01-31T15:45:57.043Z] DEBUG: [runtime-status] [7044] Ephemeral server survived.
+[warn] ⚠  Google API requested!
+   - URL: "https://oauth2.googleapis.com/token"
+   - Be careful, this may be a production service. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Google API requested!\n   - URL: \"https://oauth2.googleapis.com/token\"\n   - Be careful, this may be a production service."}}
+[debug] [2021-01-31T15:45:59.281Z] [functions] Finished "api" in ~2s
+[debug] [2021-01-31T15:45:59.282Z] DEBUG: [worker-api-cb09aea5-7012-4b92-826b-21db3c17e182]: IDLE
+[debug] [2021-01-31T15:45:59.283Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2021-01-31T15:47:08.372Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2021-01-31T15:47:08.372Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2021-01-31T15:47:08.372Z] Accepted request POST /inter-club-golf-live/us-central1/api/user/login --> api
+[debug] [2021-01-31T15:47:08.372Z] DEBUG: [worker-pool] submitWork(triggerId=api)
+[debug] [2021-01-31T15:47:08.372Z] DEBUG: [worker-api-cb09aea5-7012-4b92-826b-21db3c17e182]: Assigning socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7044.sock
+[debug] [2021-01-31T15:47:08.372Z] DEBUG: [worker-api-cb09aea5-7012-4b92-826b-21db3c17e182]: BUSY
+[debug] [2021-01-31T15:47:08.374Z] DEBUG: [runtime-status] [7044] Trigger "api" has been found, beginning invocation!
+[debug] [2021-01-31T15:47:08.374Z] [functions] Beginning execution of "api"
+[debug] [2021-01-31T15:47:08.374Z] DEBUG: [runtime-status] [7044] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"}
+[debug] [2021-01-31T15:47:08.374Z] DEBUG: [runtime-status] [7044] Running api in mode HTTPS
+[debug] [2021-01-31T15:47:08.374Z] DEBUG: [runtime-status] [7044] Attempting to listen to socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7044.sock
+[debug] [2021-01-31T15:47:08.380Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2021-01-31T15:47:08.407Z] DEBUG: [runtime-status] [7044] Ephemeral server handling POST request
+[info] >  { email: 'rachelb88@hotmail.com', password: 'Andrew_1312!' } {"user":"{ email: 'rachelb88@hotmail.com', password: 'Andrew_1312!' }","metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"\u001b[90m> \u001b[39m { email: 'rachelb88@hotmail.com', password: 'Andrew_1312!' }"}}
+[debug] [2021-01-31T15:47:08.423Z] DEBUG: [runtime-status] [7044] Ephemeral server survived.
+[debug] [2021-01-31T15:47:09.752Z] [functions] Finished "api" in ~1s
+[debug] [2021-01-31T15:47:09.752Z] DEBUG: [worker-api-cb09aea5-7012-4b92-826b-21db3c17e182]: IDLE
+[debug] [2021-01-31T15:47:09.752Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2021-01-31T15:48:01.146Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2021-01-31T15:48:01.146Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2021-01-31T15:48:01.146Z] Accepted request POST /inter-club-golf-live/us-central1/api/match/create --> api
+[debug] [2021-01-31T15:48:01.146Z] DEBUG: [worker-pool] submitWork(triggerId=api)
+[debug] [2021-01-31T15:48:01.147Z] DEBUG: [worker-api-cb09aea5-7012-4b92-826b-21db3c17e182]: Assigning socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7044.sock
+[debug] [2021-01-31T15:48:01.147Z] DEBUG: [worker-api-cb09aea5-7012-4b92-826b-21db3c17e182]: BUSY
+[debug] [2021-01-31T15:48:01.147Z] DEBUG: [runtime-status] [7044] Trigger "api" has been found, beginning invocation!
+[debug] [2021-01-31T15:48:01.148Z] [functions] Beginning execution of "api"
+[debug] [2021-01-31T15:48:01.148Z] DEBUG: [runtime-status] [7044] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"}
+[debug] [2021-01-31T15:48:01.148Z] DEBUG: [runtime-status] [7044] Running api in mode HTTPS
+[debug] [2021-01-31T15:48:01.148Z] DEBUG: [runtime-status] [7044] Attempting to listen to socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7044.sock
+[debug] [2021-01-31T15:48:01.150Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2021-01-31T15:48:01.153Z] DEBUG: [runtime-status] [7044] Ephemeral server handling POST request
+[warn] ⚠  functions: The Firebase Authentication emulator is not running, so calls to Firebase Authentication will affect production. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"The Firebase Authentication emulator is not running, so calls to Firebase Authentication will affect production."}}
+[debug] [2021-01-31T15:48:01.245Z] DEBUG: [runtime-status] [7044] Ephemeral server survived.
+[debug] [2021-01-31T15:48:03.071Z] [functions] Finished "api" in ~1s
+[debug] [2021-01-31T15:48:03.071Z] DEBUG: [worker-api-cb09aea5-7012-4b92-826b-21db3c17e182]: IDLE
+[debug] [2021-01-31T15:48:03.071Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2021-01-31T15:48:50.575Z] DEBUG: File /Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/controllers/matchController.js changed, reloading triggers
+[debug] [2021-01-31T15:48:51.577Z] DEBUG: [worker-pool] Shutting down IDLE worker (~diagnostic~)
+[debug] [2021-01-31T15:48:51.578Z] DEBUG: [worker-~diagnostic~-08440592-6bc3-4d3a-b49a-68c493241521]: FINISHING
+[debug] [2021-01-31T15:48:51.578Z] DEBUG: [worker-pool] Shutting down IDLE worker (api)
+[debug] [2021-01-31T15:48:51.578Z] DEBUG: [worker-api-cb09aea5-7012-4b92-826b-21db3c17e182]: FINISHING
+[debug] [2021-01-31T15:48:51.584Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2021-01-31T15:48:51.584Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=2
+[debug] [2021-01-31T15:48:51.584Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2021-01-31T15:48:51.584Z] DEBUG: [worker-~diagnostic~-1054290b-6fd6-4143-b33b-fe91fdaf2b34]: Assigning socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7141.sock
+[debug] [2021-01-31T15:48:51.584Z] DEBUG: [worker-~diagnostic~-1054290b-6fd6-4143-b33b-fe91fdaf2b34]: BUSY
+[debug] [2021-01-31T15:48:51.590Z] DEBUG: [worker-~diagnostic~-08440592-6bc3-4d3a-b49a-68c493241521]: exited
+[debug] [2021-01-31T15:48:51.590Z] DEBUG: [worker-~diagnostic~-08440592-6bc3-4d3a-b49a-68c493241521]: FINISHED
+[debug] [2021-01-31T15:48:51.590Z] DEBUG: [worker-api-cb09aea5-7012-4b92-826b-21db3c17e182]: exited
+[debug] [2021-01-31T15:48:51.590Z] DEBUG: [worker-api-cb09aea5-7012-4b92-826b-21db3c17e182]: FINISHED
+[debug] [2021-01-31T15:48:51.846Z] DEBUG: [runtime-status] [7141] Functions runtime initialized. {"cwd":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions","node_version":"10.12.0"}
+[debug] [2021-01-31T15:48:51.851Z] DEBUG: [runtime-status] [7141] Disabled runtime features: undefined
+[debug] [2021-01-31T15:48:51.862Z] DEBUG: [runtime-status] [7141] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:48:51.865Z] DEBUG: [runtime-status] [7141] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:48:51.866Z] DEBUG: [runtime-status] [7141] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:48:51.873Z] DEBUG: [runtime-status] [7141] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-01-31T15:48:51.875Z] DEBUG: [runtime-status] [7141] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:48:51.958Z] DEBUG: [runtime-status] [7141] Checked functions.config() {"config":{}}
+[debug] [2021-01-31T15:48:51.958Z] DEBUG: [runtime-status] [7141] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-01-31T15:48:51.959Z] DEBUG: [runtime-status] [7141] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:48:51.960Z] DEBUG: [runtime-status] [7141] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:48:51.960Z] DEBUG: [runtime-status] [7141] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:48:51.960Z] DEBUG: [runtime-status] [7141] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2021-01-31T15:48:52.134Z] DEBUG: [runtime-status] [7141] initializeApp(DEFAULT) {"databaseURL":"https://inter-club-golf-live.firebaseio.com","storageBucket":"inter-club-golf-live.appspot.com","projectId":"inter-club-golf-live"}
+[debug] [2021-01-31T15:48:52.785Z] DEBUG: [worker-~diagnostic~-1054290b-6fd6-4143-b33b-fe91fdaf2b34]: IDLE
+[debug] [2021-01-31T15:48:54.963Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2021-01-31T15:48:54.963Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2021-01-31T15:48:54.963Z] Accepted request GET /inter-club-golf-live/us-central1/api/match --> api
+[debug] [2021-01-31T15:48:54.964Z] DEBUG: [worker-pool] Cleaned up workers for ~diagnostic~: 2 --> 1
+[debug] [2021-01-31T15:48:54.964Z] DEBUG: [worker-pool] Cleaned up workers for api: 1 --> 0
+[debug] [2021-01-31T15:48:54.980Z] DEBUG: [worker-pool] addWorker(api)
+[debug] [2021-01-31T15:48:54.981Z] DEBUG: [worker-pool] Adding worker with key api, total=1
+[debug] [2021-01-31T15:48:54.981Z] DEBUG: [worker-pool] submitWork(triggerId=api)
+[debug] [2021-01-31T15:48:54.981Z] DEBUG: [worker-api-2df1fa84-a1cc-45e1-8b94-f5f373a941c2]: Assigning socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7146.sock
+[debug] [2021-01-31T15:48:54.981Z] DEBUG: [worker-api-2df1fa84-a1cc-45e1-8b94-f5f373a941c2]: BUSY
+[debug] [2021-01-31T15:48:55.279Z] DEBUG: [runtime-status] [7146] Functions runtime initialized. {"cwd":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions","node_version":"10.12.0"}
+[debug] [2021-01-31T15:48:55.282Z] DEBUG: [runtime-status] [7146] Disabled runtime features: undefined
+[debug] [2021-01-31T15:48:55.285Z] DEBUG: [runtime-status] [7146] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:48:55.288Z] DEBUG: [runtime-status] [7146] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:48:55.289Z] DEBUG: [runtime-status] [7146] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:48:55.293Z] DEBUG: [runtime-status] [7146] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-01-31T15:48:55.294Z] DEBUG: [runtime-status] [7146] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:48:55.340Z] DEBUG: [runtime-status] [7146] Checked functions.config() {"config":{}}
+[debug] [2021-01-31T15:48:55.340Z] DEBUG: [runtime-status] [7146] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-01-31T15:48:55.341Z] DEBUG: [runtime-status] [7146] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:48:55.342Z] DEBUG: [runtime-status] [7146] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:48:55.342Z] DEBUG: [runtime-status] [7146] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:48:55.342Z] DEBUG: [runtime-status] [7146] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2021-01-31T15:48:55.444Z] DEBUG: [runtime-status] [7146] initializeApp(DEFAULT) {"databaseURL":"https://inter-club-golf-live.firebaseio.com","storageBucket":"inter-club-golf-live.appspot.com","projectId":"inter-club-golf-live"}
+[debug] [2021-01-31T15:48:55.908Z] DEBUG: [runtime-status] [7146] Trigger "api" has been found, beginning invocation!
+[debug] [2021-01-31T15:48:55.908Z] [functions] Beginning execution of "api"
+[debug] [2021-01-31T15:48:55.908Z] DEBUG: [runtime-status] [7146] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"}
+[debug] [2021-01-31T15:48:55.908Z] DEBUG: [runtime-status] [7146] Running api in mode HTTPS
+[debug] [2021-01-31T15:48:55.912Z] DEBUG: [runtime-status] [7146] Attempting to listen to socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7146.sock
+[debug] [2021-01-31T15:48:55.916Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2021-01-31T15:48:55.932Z] DEBUG: [runtime-status] [7146] Ephemeral server handling GET request
+[debug] [2021-01-31T15:48:55.941Z] DEBUG: [runtime-status] [7146] Ephemeral server survived.
+[warn] ⚠  Google API requested!
+   - URL: "https://oauth2.googleapis.com/token"
+   - Be careful, this may be a production service. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Google API requested!\n   - URL: \"https://oauth2.googleapis.com/token\"\n   - Be careful, this may be a production service."}}
+[debug] [2021-01-31T15:48:57.664Z] [functions] Finished "api" in ~1s
+[debug] [2021-01-31T15:48:57.664Z] DEBUG: [worker-api-2df1fa84-a1cc-45e1-8b94-f5f373a941c2]: IDLE
+[debug] [2021-01-31T15:48:57.664Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2021-01-31T15:49:23.863Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2021-01-31T15:49:23.863Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2021-01-31T15:49:23.863Z] Accepted request POST /inter-club-golf-live/us-central1/api/match/create --> api
+[debug] [2021-01-31T15:49:23.864Z] DEBUG: [worker-pool] submitWork(triggerId=api)
+[debug] [2021-01-31T15:49:23.864Z] DEBUG: [worker-api-2df1fa84-a1cc-45e1-8b94-f5f373a941c2]: Assigning socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7146.sock
+[debug] [2021-01-31T15:49:23.864Z] DEBUG: [worker-api-2df1fa84-a1cc-45e1-8b94-f5f373a941c2]: BUSY
+[debug] [2021-01-31T15:49:23.865Z] DEBUG: [runtime-status] [7146] Trigger "api" has been found, beginning invocation!
+[debug] [2021-01-31T15:49:23.866Z] [functions] Beginning execution of "api"
+[debug] [2021-01-31T15:49:23.867Z] DEBUG: [runtime-status] [7146] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"}
+[debug] [2021-01-31T15:49:23.867Z] DEBUG: [runtime-status] [7146] Running api in mode HTTPS
+[debug] [2021-01-31T15:49:23.867Z] DEBUG: [runtime-status] [7146] Attempting to listen to socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7146.sock
+[debug] [2021-01-31T15:49:23.868Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2021-01-31T15:49:23.902Z] DEBUG: [runtime-status] [7146] Ephemeral server handling POST request
+[debug] [2021-01-31T15:49:23.972Z] DEBUG: [runtime-status] [7146] Ephemeral server survived.
+[debug] [2021-01-31T15:49:25.092Z] [functions] Finished "api" in ~1s
+[debug] [2021-01-31T15:49:25.093Z] DEBUG: [worker-api-2df1fa84-a1cc-45e1-8b94-f5f373a941c2]: IDLE
+[debug] [2021-01-31T15:49:25.093Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2021-01-31T15:50:34.425Z] DEBUG: File /Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/controllers/matchController.js changed, reloading triggers
+[debug] [2021-01-31T15:50:35.429Z] DEBUG: [worker-pool] Shutting down IDLE worker (~diagnostic~)
+[debug] [2021-01-31T15:50:35.429Z] DEBUG: [worker-~diagnostic~-1054290b-6fd6-4143-b33b-fe91fdaf2b34]: FINISHING
+[debug] [2021-01-31T15:50:35.429Z] DEBUG: [worker-pool] Shutting down IDLE worker (api)
+[debug] [2021-01-31T15:50:35.429Z] DEBUG: [worker-api-2df1fa84-a1cc-45e1-8b94-f5f373a941c2]: FINISHING
+[debug] [2021-01-31T15:50:35.440Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2021-01-31T15:50:35.441Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=2
+[debug] [2021-01-31T15:50:35.441Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2021-01-31T15:50:35.441Z] DEBUG: [worker-~diagnostic~-9177499c-4db8-4bc8-91ab-342fefd9147f]: Assigning socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7194.sock
+[debug] [2021-01-31T15:50:35.441Z] DEBUG: [worker-~diagnostic~-9177499c-4db8-4bc8-91ab-342fefd9147f]: BUSY
+[debug] [2021-01-31T15:50:35.442Z] DEBUG: [worker-~diagnostic~-1054290b-6fd6-4143-b33b-fe91fdaf2b34]: exited
+[debug] [2021-01-31T15:50:35.442Z] DEBUG: [worker-~diagnostic~-1054290b-6fd6-4143-b33b-fe91fdaf2b34]: FINISHED
+[debug] [2021-01-31T15:50:35.443Z] DEBUG: [worker-api-2df1fa84-a1cc-45e1-8b94-f5f373a941c2]: exited
+[debug] [2021-01-31T15:50:35.443Z] DEBUG: [worker-api-2df1fa84-a1cc-45e1-8b94-f5f373a941c2]: FINISHED
+[debug] [2021-01-31T15:50:35.743Z] DEBUG: [runtime-status] [7194] Functions runtime initialized. {"cwd":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions","node_version":"10.12.0"}
+[debug] [2021-01-31T15:50:35.746Z] DEBUG: [runtime-status] [7194] Disabled runtime features: undefined
+[debug] [2021-01-31T15:50:35.750Z] DEBUG: [runtime-status] [7194] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:50:35.751Z] DEBUG: [runtime-status] [7194] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:50:35.752Z] DEBUG: [runtime-status] [7194] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:50:35.755Z] DEBUG: [runtime-status] [7194] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-01-31T15:50:35.756Z] DEBUG: [runtime-status] [7194] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:50:35.824Z] DEBUG: [runtime-status] [7194] Checked functions.config() {"config":{}}
+[debug] [2021-01-31T15:50:35.827Z] DEBUG: [runtime-status] [7194] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-01-31T15:50:35.827Z] DEBUG: [runtime-status] [7194] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:50:35.827Z] DEBUG: [runtime-status] [7194] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:50:35.827Z] DEBUG: [runtime-status] [7194] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:50:35.828Z] DEBUG: [runtime-status] [7194] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2021-01-31T15:50:35.971Z] DEBUG: [runtime-status] [7194] initializeApp(DEFAULT) {"databaseURL":"https://inter-club-golf-live.firebaseio.com","storageBucket":"inter-club-golf-live.appspot.com","projectId":"inter-club-golf-live"}
+[debug] [2021-01-31T15:50:36.834Z] DEBUG: [worker-~diagnostic~-9177499c-4db8-4bc8-91ab-342fefd9147f]: IDLE
+[debug] [2021-01-31T15:50:42.761Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2021-01-31T15:50:42.762Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2021-01-31T15:50:42.762Z] Accepted request POST /inter-club-golf-live/us-central1/api/match/create --> api
+[debug] [2021-01-31T15:50:42.762Z] DEBUG: [worker-pool] Cleaned up workers for ~diagnostic~: 2 --> 1
+[debug] [2021-01-31T15:50:42.762Z] DEBUG: [worker-pool] Cleaned up workers for api: 1 --> 0
+[debug] [2021-01-31T15:50:42.770Z] DEBUG: [worker-pool] addWorker(api)
+[debug] [2021-01-31T15:50:42.771Z] DEBUG: [worker-pool] Adding worker with key api, total=1
+[debug] [2021-01-31T15:50:42.771Z] DEBUG: [worker-pool] submitWork(triggerId=api)
+[debug] [2021-01-31T15:50:42.771Z] DEBUG: [worker-api-dc85663d-e654-4175-a747-d95a2b762db0]: Assigning socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7199.sock
+[debug] [2021-01-31T15:50:42.771Z] DEBUG: [worker-api-dc85663d-e654-4175-a747-d95a2b762db0]: BUSY
+[debug] [2021-01-31T15:50:43.053Z] DEBUG: [runtime-status] [7199] Functions runtime initialized. {"cwd":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions","node_version":"10.12.0"}
+[debug] [2021-01-31T15:50:43.055Z] DEBUG: [runtime-status] [7199] Disabled runtime features: undefined
+[debug] [2021-01-31T15:50:43.062Z] DEBUG: [runtime-status] [7199] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:50:43.063Z] DEBUG: [runtime-status] [7199] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:50:43.064Z] DEBUG: [runtime-status] [7199] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:50:43.067Z] DEBUG: [runtime-status] [7199] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-01-31T15:50:43.068Z] DEBUG: [runtime-status] [7199] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:50:43.123Z] DEBUG: [runtime-status] [7199] Checked functions.config() {"config":{}}
+[debug] [2021-01-31T15:50:43.124Z] DEBUG: [runtime-status] [7199] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-01-31T15:50:43.125Z] DEBUG: [runtime-status] [7199] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:50:43.129Z] DEBUG: [runtime-status] [7199] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:50:43.130Z] DEBUG: [runtime-status] [7199] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:50:43.130Z] DEBUG: [runtime-status] [7199] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2021-01-31T15:50:43.246Z] DEBUG: [runtime-status] [7199] initializeApp(DEFAULT) {"databaseURL":"https://inter-club-golf-live.firebaseio.com","storageBucket":"inter-club-golf-live.appspot.com","projectId":"inter-club-golf-live"}
+[debug] [2021-01-31T15:50:44.007Z] DEBUG: [runtime-status] [7199] Trigger "api" has been found, beginning invocation!
+[debug] [2021-01-31T15:50:44.007Z] [functions] Beginning execution of "api"
+[debug] [2021-01-31T15:50:44.008Z] DEBUG: [runtime-status] [7199] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"}
+[debug] [2021-01-31T15:50:44.008Z] DEBUG: [runtime-status] [7199] Running api in mode HTTPS
+[debug] [2021-01-31T15:50:44.013Z] DEBUG: [runtime-status] [7199] Attempting to listen to socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7199.sock
+[debug] [2021-01-31T15:50:44.018Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2021-01-31T15:50:44.049Z] DEBUG: [runtime-status] [7199] Ephemeral server handling POST request
+[debug] [2021-01-31T15:50:44.149Z] DEBUG: [runtime-status] [7199] Ephemeral server survived.
+[warn] ⚠  Google API requested!
+   - URL: "https://oauth2.googleapis.com/token"
+   - Be careful, this may be a production service. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Google API requested!\n   - URL: \"https://oauth2.googleapis.com/token\"\n   - Be careful, this may be a production service."}}
+[debug] [2021-01-31T15:50:46.586Z] [functions] Finished "api" in ~2s
+[debug] [2021-01-31T15:50:46.586Z] DEBUG: [worker-api-dc85663d-e654-4175-a747-d95a2b762db0]: IDLE
+[debug] [2021-01-31T15:50:46.586Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2021-01-31T15:51:33.420Z] DEBUG: File /Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/controllers/matchController.js changed, reloading triggers
+[debug] [2021-01-31T15:51:34.424Z] DEBUG: [worker-pool] Shutting down IDLE worker (~diagnostic~)
+[debug] [2021-01-31T15:51:34.424Z] DEBUG: [worker-~diagnostic~-9177499c-4db8-4bc8-91ab-342fefd9147f]: FINISHING
+[debug] [2021-01-31T15:51:34.424Z] DEBUG: [worker-pool] Shutting down IDLE worker (api)
+[debug] [2021-01-31T15:51:34.424Z] DEBUG: [worker-api-dc85663d-e654-4175-a747-d95a2b762db0]: FINISHING
+[debug] [2021-01-31T15:51:34.435Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2021-01-31T15:51:34.435Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=2
+[debug] [2021-01-31T15:51:34.436Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2021-01-31T15:51:34.436Z] DEBUG: [worker-~diagnostic~-ff3be854-0b98-4951-9af9-41840a65cd69]: Assigning socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7240.sock
+[debug] [2021-01-31T15:51:34.436Z] DEBUG: [worker-~diagnostic~-ff3be854-0b98-4951-9af9-41840a65cd69]: BUSY
+[debug] [2021-01-31T15:51:34.437Z] DEBUG: [worker-~diagnostic~-9177499c-4db8-4bc8-91ab-342fefd9147f]: exited
+[debug] [2021-01-31T15:51:34.437Z] DEBUG: [worker-~diagnostic~-9177499c-4db8-4bc8-91ab-342fefd9147f]: FINISHED
+[debug] [2021-01-31T15:51:34.437Z] DEBUG: [worker-api-dc85663d-e654-4175-a747-d95a2b762db0]: exited
+[debug] [2021-01-31T15:51:34.437Z] DEBUG: [worker-api-dc85663d-e654-4175-a747-d95a2b762db0]: FINISHED
+[debug] [2021-01-31T15:51:34.665Z] DEBUG: [runtime-status] [7240] Functions runtime initialized. {"cwd":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions","node_version":"10.12.0"}
+[debug] [2021-01-31T15:51:34.668Z] DEBUG: [runtime-status] [7240] Disabled runtime features: undefined
+[debug] [2021-01-31T15:51:34.671Z] DEBUG: [runtime-status] [7240] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:51:34.672Z] DEBUG: [runtime-status] [7240] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:51:34.673Z] DEBUG: [runtime-status] [7240] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:51:34.676Z] DEBUG: [runtime-status] [7240] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-01-31T15:51:34.677Z] DEBUG: [runtime-status] [7240] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:51:34.725Z] DEBUG: [runtime-status] [7240] Checked functions.config() {"config":{}}
+[debug] [2021-01-31T15:51:34.726Z] DEBUG: [runtime-status] [7240] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-01-31T15:51:34.726Z] DEBUG: [runtime-status] [7240] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:51:34.728Z] DEBUG: [runtime-status] [7240] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:51:34.728Z] DEBUG: [runtime-status] [7240] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:51:34.729Z] DEBUG: [runtime-status] [7240] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2021-01-31T15:51:34.819Z] DEBUG: [runtime-status] [7240] initializeApp(DEFAULT) {"databaseURL":"https://inter-club-golf-live.firebaseio.com","storageBucket":"inter-club-golf-live.appspot.com","projectId":"inter-club-golf-live"}
+[debug] [2021-01-31T15:51:35.365Z] DEBUG: [worker-~diagnostic~-ff3be854-0b98-4951-9af9-41840a65cd69]: IDLE
+[debug] [2021-01-31T15:51:37.193Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2021-01-31T15:51:37.193Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2021-01-31T15:51:37.193Z] Accepted request GET /inter-club-golf-live/us-central1/api/match --> api
+[debug] [2021-01-31T15:51:37.193Z] DEBUG: [worker-pool] Cleaned up workers for ~diagnostic~: 2 --> 1
+[debug] [2021-01-31T15:51:37.193Z] DEBUG: [worker-pool] Cleaned up workers for api: 1 --> 0
+[debug] [2021-01-31T15:51:37.202Z] DEBUG: [worker-pool] addWorker(api)
+[debug] [2021-01-31T15:51:37.202Z] DEBUG: [worker-pool] Adding worker with key api, total=1
+[debug] [2021-01-31T15:51:37.202Z] DEBUG: [worker-pool] submitWork(triggerId=api)
+[debug] [2021-01-31T15:51:37.202Z] DEBUG: [worker-api-e42c72f9-abc6-45e9-855b-24d597cf5c3e]: Assigning socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7243.sock
+[debug] [2021-01-31T15:51:37.202Z] DEBUG: [worker-api-e42c72f9-abc6-45e9-855b-24d597cf5c3e]: BUSY
+[debug] [2021-01-31T15:51:37.538Z] DEBUG: [runtime-status] [7243] Functions runtime initialized. {"cwd":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions","node_version":"10.12.0"}
+[debug] [2021-01-31T15:51:37.541Z] DEBUG: [runtime-status] [7243] Disabled runtime features: undefined
+[debug] [2021-01-31T15:51:37.546Z] DEBUG: [runtime-status] [7243] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:51:37.548Z] DEBUG: [runtime-status] [7243] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:51:37.549Z] DEBUG: [runtime-status] [7243] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:51:37.553Z] DEBUG: [runtime-status] [7243] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-01-31T15:51:37.553Z] DEBUG: [runtime-status] [7243] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:51:37.602Z] DEBUG: [runtime-status] [7243] Checked functions.config() {"config":{}}
+[debug] [2021-01-31T15:51:37.602Z] DEBUG: [runtime-status] [7243] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-01-31T15:51:37.602Z] DEBUG: [runtime-status] [7243] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:51:37.603Z] DEBUG: [runtime-status] [7243] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:51:37.604Z] DEBUG: [runtime-status] [7243] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:51:37.604Z] DEBUG: [runtime-status] [7243] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2021-01-31T15:51:37.693Z] DEBUG: [runtime-status] [7243] initializeApp(DEFAULT) {"databaseURL":"https://inter-club-golf-live.firebaseio.com","storageBucket":"inter-club-golf-live.appspot.com","projectId":"inter-club-golf-live"}
+[debug] [2021-01-31T15:51:38.137Z] DEBUG: [runtime-status] [7243] Trigger "api" has been found, beginning invocation!
+[debug] [2021-01-31T15:51:38.137Z] [functions] Beginning execution of "api"
+[debug] [2021-01-31T15:51:38.137Z] DEBUG: [runtime-status] [7243] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"}
+[debug] [2021-01-31T15:51:38.137Z] DEBUG: [runtime-status] [7243] Running api in mode HTTPS
+[debug] [2021-01-31T15:51:38.141Z] DEBUG: [runtime-status] [7243] Attempting to listen to socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7243.sock
+[debug] [2021-01-31T15:51:38.145Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2021-01-31T15:51:38.160Z] DEBUG: [runtime-status] [7243] Ephemeral server handling GET request
+[debug] [2021-01-31T15:51:38.171Z] DEBUG: [runtime-status] [7243] Ephemeral server survived.
+[warn] ⚠  Google API requested!
+   - URL: "https://oauth2.googleapis.com/token"
+   - Be careful, this may be a production service. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Google API requested!\n   - URL: \"https://oauth2.googleapis.com/token\"\n   - Be careful, this may be a production service."}}
+[debug] [2021-01-31T15:51:39.767Z] [functions] Finished "api" in ~1s
+[debug] [2021-01-31T15:51:39.768Z] DEBUG: [worker-api-e42c72f9-abc6-45e9-855b-24d597cf5c3e]: IDLE
+[debug] [2021-01-31T15:51:39.768Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2021-01-31T15:58:16.680Z] DEBUG: File /Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/controllers/matchController.js changed, reloading triggers
+[debug] [2021-01-31T15:58:17.682Z] DEBUG: [worker-pool] Shutting down IDLE worker (~diagnostic~)
+[debug] [2021-01-31T15:58:17.682Z] DEBUG: [worker-~diagnostic~-ff3be854-0b98-4951-9af9-41840a65cd69]: FINISHING
+[debug] [2021-01-31T15:58:17.682Z] DEBUG: [worker-pool] Shutting down IDLE worker (api)
+[debug] [2021-01-31T15:58:17.683Z] DEBUG: [worker-api-e42c72f9-abc6-45e9-855b-24d597cf5c3e]: FINISHING
+[debug] [2021-01-31T15:58:17.693Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2021-01-31T15:58:17.693Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=2
+[debug] [2021-01-31T15:58:17.693Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2021-01-31T15:58:17.694Z] DEBUG: [worker-~diagnostic~-f9692141-c27d-4fc3-8fc2-1f40d537314d]: Assigning socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7446.sock
+[debug] [2021-01-31T15:58:17.694Z] DEBUG: [worker-~diagnostic~-f9692141-c27d-4fc3-8fc2-1f40d537314d]: BUSY
+[debug] [2021-01-31T15:58:17.696Z] DEBUG: [worker-~diagnostic~-ff3be854-0b98-4951-9af9-41840a65cd69]: exited
+[debug] [2021-01-31T15:58:17.696Z] DEBUG: [worker-~diagnostic~-ff3be854-0b98-4951-9af9-41840a65cd69]: FINISHED
+[debug] [2021-01-31T15:58:17.696Z] DEBUG: [worker-api-e42c72f9-abc6-45e9-855b-24d597cf5c3e]: exited
+[debug] [2021-01-31T15:58:17.696Z] DEBUG: [worker-api-e42c72f9-abc6-45e9-855b-24d597cf5c3e]: FINISHED
+[debug] [2021-01-31T15:58:17.936Z] DEBUG: [runtime-status] [7446] Functions runtime initialized. {"cwd":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions","node_version":"10.12.0"}
+[debug] [2021-01-31T15:58:17.938Z] DEBUG: [runtime-status] [7446] Disabled runtime features: undefined
+[debug] [2021-01-31T15:58:17.941Z] DEBUG: [runtime-status] [7446] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:58:17.943Z] DEBUG: [runtime-status] [7446] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:58:17.944Z] DEBUG: [runtime-status] [7446] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:58:17.947Z] DEBUG: [runtime-status] [7446] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-01-31T15:58:17.948Z] DEBUG: [runtime-status] [7446] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:58:17.996Z] DEBUG: [runtime-status] [7446] Checked functions.config() {"config":{}}
+[debug] [2021-01-31T15:58:17.997Z] DEBUG: [runtime-status] [7446] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-01-31T15:58:17.997Z] DEBUG: [runtime-status] [7446] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:58:17.999Z] DEBUG: [runtime-status] [7446] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:58:17.999Z] DEBUG: [runtime-status] [7446] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:58:18.000Z] DEBUG: [runtime-status] [7446] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2021-01-31T15:58:18.082Z] DEBUG: [runtime-status] [7446] initializeApp(DEFAULT) {"databaseURL":"https://inter-club-golf-live.firebaseio.com","storageBucket":"inter-club-golf-live.appspot.com","projectId":"inter-club-golf-live"}
+[debug] [2021-01-31T15:58:18.495Z] DEBUG: [worker-~diagnostic~-f9692141-c27d-4fc3-8fc2-1f40d537314d]: IDLE
+[debug] [2021-01-31T15:59:06.781Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2021-01-31T15:59:06.781Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2021-01-31T15:59:06.781Z] Accepted request POST /inter-club-golf-live/us-central1/api/match/create --> api
+[debug] [2021-01-31T15:59:06.781Z] DEBUG: [worker-pool] Cleaned up workers for ~diagnostic~: 2 --> 1
+[debug] [2021-01-31T15:59:06.781Z] DEBUG: [worker-pool] Cleaned up workers for api: 1 --> 0
+[debug] [2021-01-31T15:59:06.785Z] DEBUG: [worker-pool] addWorker(api)
+[debug] [2021-01-31T15:59:06.786Z] DEBUG: [worker-pool] Adding worker with key api, total=1
+[debug] [2021-01-31T15:59:06.786Z] DEBUG: [worker-pool] submitWork(triggerId=api)
+[debug] [2021-01-31T15:59:06.786Z] DEBUG: [worker-api-dc93038f-d865-4365-879b-5c50e8d2513b]: Assigning socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7486.sock
+[debug] [2021-01-31T15:59:06.786Z] DEBUG: [worker-api-dc93038f-d865-4365-879b-5c50e8d2513b]: BUSY
+[debug] [2021-01-31T15:59:07.042Z] DEBUG: [runtime-status] [7486] Functions runtime initialized. {"cwd":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions","node_version":"10.12.0"}
+[debug] [2021-01-31T15:59:07.044Z] DEBUG: [runtime-status] [7486] Disabled runtime features: undefined
+[debug] [2021-01-31T15:59:07.049Z] DEBUG: [runtime-status] [7486] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:59:07.050Z] DEBUG: [runtime-status] [7486] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:59:07.053Z] DEBUG: [runtime-status] [7486] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:59:07.059Z] DEBUG: [runtime-status] [7486] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-01-31T15:59:07.059Z] DEBUG: [runtime-status] [7486] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:59:07.115Z] DEBUG: [runtime-status] [7486] Checked functions.config() {"config":{}}
+[debug] [2021-01-31T15:59:07.115Z] DEBUG: [runtime-status] [7486] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-01-31T15:59:07.117Z] DEBUG: [runtime-status] [7486] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:59:07.121Z] DEBUG: [runtime-status] [7486] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-01-31T15:59:07.121Z] DEBUG: [runtime-status] [7486] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-01-31T15:59:07.121Z] DEBUG: [runtime-status] [7486] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Google Drive/Monash Coding Bootcamp/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2021-01-31T15:59:07.232Z] DEBUG: [runtime-status] [7486] initializeApp(DEFAULT) {"databaseURL":"https://inter-club-golf-live.firebaseio.com","storageBucket":"inter-club-golf-live.appspot.com","projectId":"inter-club-golf-live"}
+[debug] [2021-01-31T15:59:07.888Z] DEBUG: [runtime-status] [7486] Trigger "api" has been found, beginning invocation!
+[debug] [2021-01-31T15:59:07.888Z] [functions] Beginning execution of "api"
+[debug] [2021-01-31T15:59:07.889Z] DEBUG: [runtime-status] [7486] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"}
+[debug] [2021-01-31T15:59:07.889Z] DEBUG: [runtime-status] [7486] Running api in mode HTTPS
+[debug] [2021-01-31T15:59:07.893Z] DEBUG: [runtime-status] [7486] Attempting to listen to socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7486.sock
+[debug] [2021-01-31T15:59:07.896Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2021-01-31T15:59:07.940Z] DEBUG: [runtime-status] [7486] Ephemeral server handling POST request
+[debug] [2021-01-31T15:59:08.037Z] DEBUG: [runtime-status] [7486] Ephemeral server survived.
+[warn] ⚠  Google API requested!
+   - URL: "https://oauth2.googleapis.com/token"
+   - Be careful, this may be a production service. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Google API requested!\n   - URL: \"https://oauth2.googleapis.com/token\"\n   - Be careful, this may be a production service."}}
+[debug] [2021-01-31T15:59:10.379Z] [functions] Finished "api" in ~2s
+[debug] [2021-01-31T15:59:10.379Z] DEBUG: [worker-api-dc93038f-d865-4365-879b-5c50e8d2513b]: IDLE
+[debug] [2021-01-31T15:59:10.379Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2021-01-31T15:59:21.105Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2021-01-31T15:59:21.105Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2021-01-31T15:59:21.105Z] Accepted request GET /inter-club-golf-live/us-central1/api/match --> api
+[debug] [2021-01-31T15:59:21.105Z] DEBUG: [worker-pool] submitWork(triggerId=api)
+[debug] [2021-01-31T15:59:21.105Z] DEBUG: [worker-api-dc93038f-d865-4365-879b-5c50e8d2513b]: Assigning socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7486.sock
+[debug] [2021-01-31T15:59:21.105Z] DEBUG: [worker-api-dc93038f-d865-4365-879b-5c50e8d2513b]: BUSY
+[debug] [2021-01-31T15:59:21.106Z] DEBUG: [runtime-status] [7486] Trigger "api" has been found, beginning invocation!
+[debug] [2021-01-31T15:59:21.106Z] [functions] Beginning execution of "api"
+[debug] [2021-01-31T15:59:21.106Z] DEBUG: [runtime-status] [7486] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"}
+[debug] [2021-01-31T15:59:21.106Z] DEBUG: [runtime-status] [7486] Running api in mode HTTPS
+[debug] [2021-01-31T15:59:21.107Z] DEBUG: [runtime-status] [7486] Attempting to listen to socketPath: /var/folders/4b/l_9brfl900x93blyn5zh_8l8jfd95g/T/fire_emu_7486.sock
+[debug] [2021-01-31T15:59:21.108Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2021-01-31T15:59:21.112Z] DEBUG: [runtime-status] [7486] Ephemeral server handling GET request
+[debug] [2021-01-31T15:59:21.114Z] DEBUG: [runtime-status] [7486] Ephemeral server survived.
+[debug] [2021-01-31T15:59:21.562Z] [functions] Finished "api" in ~1s
+[debug] [2021-01-31T15:59:21.563Z] DEBUG: [worker-api-dc93038f-d865-4365-879b-5c50e8d2513b]: IDLE
+[debug] [2021-01-31T15:59:21.563Z] [work-queue] {"queueLength":0,"workRunningCount":0}

@@ -116,15 +116,29 @@ const returnIndividualMatchArr = (numIndividualMatches, teamOneName, teamTwoName
 const constructIndividualMatchArr = (arr, teamOneName, teamTwoName) => {
   const individualMatchScoreArr = [];
   for (let i = 0; i < arr.length; i++) {
-    individualMatchScoreArr.push(
-      {
-        'teamOneName': teamOneName,
-        'teamOneScore': 0,
-        'teamTwoName': teamTwoName,
-        'teamTwoScore': 0,
-        'holesPlayed': 0
-      }
-    )
+    if (arr[i] <= Math.ceil(arr.length / 2)) {
+      individualMatchScoreArr.push(
+        {
+          'teamOneName': teamOneName,
+          'teamOneScore': 0,
+          'teamTwoName': teamTwoName,
+          'teamTwoScore': 0,
+          'holesPlayed': 0,
+          'homeMatch': true
+        }
+      )
+    } else {
+      individualMatchScoreArr.push(
+        {
+          'teamOneName': teamOneName,
+          'teamOneScore': 0,
+          'teamTwoName': teamTwoName,
+          'teamTwoScore': 0,
+          'holesPlayed': 0,
+          'homeMatch': false
+        }
+      )
+    }
   }
   return individualMatchScoreArr
 }

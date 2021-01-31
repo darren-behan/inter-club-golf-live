@@ -126,6 +126,7 @@ const constructIndividualMatchArr = (numIndividualMatches, teamOneName, teamTwoN
     if (i < Math.ceil(numIndividualMatches / 2)) {
       individualMatchScoreArr.push(
         {
+          'id': i + 1,
           'teamOneName': teamOneName,
           'teamOneScore': 0,
           'teamTwoName': teamTwoName,
@@ -137,6 +138,7 @@ const constructIndividualMatchArr = (numIndividualMatches, teamOneName, teamTwoN
     } else {
       individualMatchScoreArr.push(
         {
+          'id': i + 1,
           'teamOneName': teamOneName,
           'teamOneScore': 0,
           'teamTwoName': teamTwoName,

@@ -16,8 +16,8 @@ module.exports = {
             matchId: doc.id,
             competitionName: doc.data().competitionName,
             numIndividualMatches: doc.data().numIndividualMatches,
-            teamOneName: doc.data().homeTeamName,
-            teamTwoName: doc.data().awayTeamName,
+            teamOneName: doc.data().teamOneName,
+            teamTwoName: doc.data().teamTwoName,
             teamOneScore: doc.data().teamOneScore,
             teamTwoScore: doc.data().teamTwoScore,
             individualMatch: doc.data().individualMatch,
@@ -45,7 +45,7 @@ module.exports = {
       teamTwoName: request.body[0].teamTwoName,
       teamOneScore: calculateMatchScoreOnPost(request.body[0].numIndividualMatches),
       teamTwoScore: calculateMatchScoreOnPost(request.body[0].numIndividualMatches),
-      individualMatch: returnIndividualMatchObject(request.body[0].numIndividualMatches, request.body[0].teamOneName, request.body[0].teamTwoName),
+      individualMatch: returnIndividualMatchArr(request.body[0].numIndividualMatches, request.body[0].teamOneName, request.body[0].teamTwoName),
       createdBy: request.user.username,
       createdAt: moment.utc()
     };
@@ -104,70 +104,69 @@ const calculateMatchScoreOnPost = (value) => {
   return value / 2;
 }
 
-const returnIndividualMatchObject = (numIndividualMatches, teamOneName, teamTwoName) => {
+const returnIndividualMatchArr = (numIndividualMatches, teamOneName, teamTwoName) => {
   if (numIndividualMatches === 5) {
     const arr = [1, 2, 3, 4, 5];
-    return constructIndividualMatchObject(arr, teamOneName, teamTwoName);
+    return constructIndividualMatchArr(arr, teamOneName, teamTwoName);
   } else {
     return;
   }
 }
 
-const constructIndividualMatchObject = (arr, teamOneName, teamTwoName) => {
-  const individualMatchScoreObj = {};
+const constructIndividualMatchArr = (arr, teamOneName, teamTwoName) => {
+  const individualMatchScoreArr = [];
   for (let i = 0; i < arr.length; i++) {
-    const key = "Match " + arr[i];
-    individualMatchScoreObj[key] = {
-      teamOneName: teamOneName,
-      teamOneScore: 0,
-      teamTwoName: teamTwoName,
-      teamTwoScore: 0,
-      holesPlayed: 0
-    };
+    individualMatchScoreArr.push(
+      {
+        'teamOneName': teamOneName,
+        'teamOneScore': 0,
+        'teamTwoName': teamTwoName,
+        'teamTwoScore': 0,
+        'holesPlayed': 0
+      }
+    )
   }
-  return individualMatchScoreObj
+  return individualMatchScoreArr
 }
 
-const matchDataToUpdate = (obj) => {
-  let individualMatchObj = {};
+const matchDataToUpdate = (array) => {
+  let individualMatchArr = [];
   let teamOneOverallScore = 0;
   let teamTwoOverallScore = 0;
-  for (let i in obj) {
-    if (obj[i].teamOneScore === obj[i].teamTwoScore) {
+  for (const i of array) {
+    if (i.teamOneScore === i.teamTwoScore) {
       teamOneOverallScore += 0.5;
       teamTwoOverallScore += 0.5;
-      individualMatchObj[i] = {
-        teamOneName: obj[i].teamOneName,
+      individualMatchArr.push({
+        teamOneName: i.teamOneName,
         teamOneScore: 0,
-        teamTwoName: obj[i].teamTwoName,
+        teamTwoName: i.teamTwoName,
         teamTwoScore: 0,
-        holesPlayed: obj[i].holesPlayed
-      }
-    } else if (obj[i].teamOneScore < obj[i].teamTwoScore) {
+        holesPlayed: i.holesPlayed
+      })
+    } else if (i.teamOneScore < i.teamTwoScore) {
       teamTwoOverallScore += 1;
-      individualMatchObj[i] = {
-        teamOneName: obj[i].teamOneName,
+      individualMatchArr.push({
+        teamOneName: i.teamOneName,
         teamOneScore: 0,
-        teamTwoName: obj[i].teamTwoName,
-        teamTwoScore: obj[i].teamTwoScore,
-        holesPlayed: obj[i].holesPlayed
-      }
-    } else if (obj[i].teamOneScore > obj[i].teamTwoScore) {
+        teamTwoName: i.teamTwoName,
+        teamTwoScore: i.teamTwoScore,
+        holesPlayed: i.holesPlayed
+      })
+    } else if (i.teamOneScore > i.teamTwoScore) {
       teamOneOverallScore += 1;
-      individualMatchObj[i] = {
-        teamOneName: obj[i].teamOneName,
-        teamOneScore: obj[i].teamOneScore,
-        teamTwoName: obj[i].teamTwoName,
+      individualMatchArr.push({
+        teamOneName: i.teamOneName,
+        teamOneScore: i.teamOneScore,
+        teamTwoName: i.teamTwoName,
         teamTwoScore: 0,
-        holesPlayed: obj[i].holesPlayed
-      }
+        holesPlayed: i.holesPlayed
+      })
     }
-    console.log(obj[i].teamOneName);
-    console.log(obj[i].teamTwoName);
   }
   return {
     teamOneScore: teamOneOverallScore,
     teamTwoScore: teamTwoOverallScore,
-    individualMatch: individualMatchObj
+    individualMatch: individualMatchArr
   }
 }

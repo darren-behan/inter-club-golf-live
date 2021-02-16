@@ -23,7 +23,9 @@ function App() {
   const [allMatches, setAllMatches] = useState( [] );
 
   useEffect(() => {
-    loadMatches();
+    const unsubscribe = loadMatches();
+
+    return () => unsubscribe();
   }, []);
 
   async function loadMatches() {

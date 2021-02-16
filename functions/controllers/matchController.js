@@ -6,13 +6,11 @@ module.exports = {
   findAll(request, response) {
       db
       .collection('matches')
-      // .where('username', '==', request.user.username)
-      .orderBy('createdAt', 'desc')
-      .get()
-      .then((data) => {
+      .orderBy('createdAt', 'asc')
+      .limit(100)
+      .onSnapshot(snap => {
         let matches = [];
-        data.forEach((doc) => {
-          matches.push({
+        matches = snap.docs.map((doc) => ({
             matchId: doc.id,
             competitionName: doc.data().competitionName,
             matchDate: doc.data().matchDate,
@@ -26,14 +24,14 @@ module.exports = {
             createdBy: doc.data().createdBy,
             createdAt: doc.data().createdAt,
             updatedAt: doc.data().updatedAt
-          });
-        });
+          })
+        );
         return response.json(matches);
       })
-      .catch((err) => {
+      , err => {
         console.error(err);
         return response.status(500).json({ error: err.code});
-      });
+      };
   },
   postMatch(request, response) {
     if (request.body[0].teamOneName.trim() === "" || request.body[0].teamTwoName.trim() === "") {

@@ -21,27 +21,28 @@ function App() {
   const [loginDataObj, setLoginDataObj] = useState({});
   // This is used to store all matches in the database
   const [allMatches, setAllMatches] = useState( [] );
+  // This is used to store new match data to post in the database
+  const [postMatchObj, setPostMatchObj] = useState({});
 
   useEffect(() => {
-    const unsubscribe = loadMatches();
-
-    return () => unsubscribe();
+    async function loadMatches() {
+      await trackPromise(
+        API.getAllMatches()
+        .then(res => {
+          setAllMatches(res.data);
+        })
+        .catch(err => console.log(err))
+      );
+    }
+    loadMatches();
   }, []);
 
-  async function loadMatches() {
-    await trackPromise(
-      API.getAllMatches()
-      .then(res => {
-        setAllMatches(res.data);
-      })
-      .catch(err => console.log(err))
-    );
-  }
+  console.log(allMatches);
 
   return (
     <>
       <DataAreaContext.Provider
-      value={{ isAuthenticated, allMatches, loginDataObj, setIsAuthenticated, setLoginDataObj }}
+      value={{ isAuthenticated, allMatches, loginDataObj, postMatchObj, setIsAuthenticated, setAllMatches, setLoginDataObj, setPostMatchObj }}
       >
         <Router>
           <div>

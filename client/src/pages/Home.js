@@ -1,15 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import DataAreaContext from '../utils/DataAreaContext';
 import Table from '../components/MatchesTable';
+import PostMatch from '../components/PostMatchForm';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
 function Home() {
-  const { allMatches } = useContext(DataAreaContext);
-
-  console.log(allMatches);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -22,6 +19,7 @@ function Home() {
         <Link to="/login">Login</Link>
       </div>
       <Table />
+      <PostMatch />
     </Container>
   );
 }

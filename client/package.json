@@ -40,5 +40,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://us-central1-inter-club-golf-live.cloudfunctions.net/api"
+  "proxy": "http://localhost:5000/inter-club-golf-live/us-central1/api"
 }

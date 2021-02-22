@@ -8,9 +8,11 @@ module.exports = {
       .collection('matches')
       .orderBy('createdAt', 'asc')
       .limit(100)
-      .onSnapshot(snap => {
+      .get()
+      .then((data) => {
         let matches = [];
-        matches = snap.docs.map((doc) => ({
+        data.forEach((doc) => {
+          matches.push({
             matchId: doc.id,
             competitionName: doc.data().competitionName,
             matchDate: doc.data().matchDate,
@@ -24,47 +26,59 @@ module.exports = {
             createdBy: doc.data().createdBy,
             createdAt: doc.data().createdAt,
             updatedAt: doc.data().updatedAt
-          })
-        );
-        return response.json(matches);
+          });
+        });
+        return response.status(200).json(matches);
       })
-      , err => {
+      .catch((err) => {
         console.error(err);
         return response.status(500).json({ error: err.code});
-      };
+      });
   },
   postMatch(request, response) {
-    if (request.body[0].teamOneName.trim() === "" || request.body[0].teamTwoName.trim() === "") {
+    if (request.body.teamOneName.trim() === "" || request.body.teamTwoName.trim() === "") {
       return response.status(400).json('Must not be empty');
     }
 
     const newMatch = {
       username: request.user.username,
-      matchDate: request.body[0].matchDate,
-      matchTime: request.body[0].matchTime,
-      competitionName: request.body[0].competitionName, // USER selection here will drive numIndividualMatches value
-      numIndividualMatches: request.body[0].numIndividualMatches,
-      teamOneName: request.body[0].teamOneName,
-      teamTwoName: request.body[0].teamTwoName,
-      teamOneScore: calculateMatchScoreOnPost(request.body[0].numIndividualMatches),
-      teamTwoScore: calculateMatchScoreOnPost(request.body[0].numIndividualMatches),
-      individualMatch: returnIndividualMatchArr(request.body[0].numIndividualMatches, request.body[0].teamOneName, request.body[0].teamTwoName),
+      matchDate: request.body.matchDate,
+      matchTime: request.body.matchTime,
+      competitionName: request.body.competitionName, // USER selection here will drive numIndividualMatches value
+      numIndividualMatches: request.body.numIndividualMatches,
+      teamOneName: request.body.teamOneName,
+      teamTwoName: request.body.teamTwoName,
+      teamOneScore: calculateMatchScoreOnPost(request.body.numIndividualMatches),
+      teamTwoScore: calculateMatchScoreOnPost(request.body.numIndividualMatches),
+      individualMatch: returnIndividualMatchArr(request.body.numIndividualMatches, request.body.teamOneName, request.body.teamTwoName),
       createdBy: request.user.username,
       createdAt: moment().format("DD/MM/YY, HH:mm"),
       updatedAt: moment().format("DD/MM/YY, HH:mm")
     };
 
-    db
-    .collection('matches')
-    .add(newMatch)
-    .then((doc) => {
-      const responseMatch = newMatch;
-      responseMatch.id = doc.id;
-      return response.json(responseMatch);
+    let document = addMatch(newMatch);
+    document
+    .then(doc => {
+      const matches = {
+        matchId: doc.id,
+        competitionName: doc.data().competitionName,
+        matchDate: doc.data().matchDate,
+        matchTime: doc.data().matchTime,
+        numIndividualMatches: doc.data().numIndividualMatches,
+        teamOneName: doc.data().teamOneName,
+        teamTwoName: doc.data().teamTwoName,
+        teamOneScore: doc.data().teamOneScore,
+        teamTwoScore: doc.data().teamTwoScore,
+        individualMatch: doc.data().individualMatch,
+        createdBy: doc.data().createdBy,
+        createdAt: doc.data().createdAt,
+        updatedAt: doc.data().updatedAt
+      };
+      return response.status(200).json(matches);
     })
     .catch((err) => {
-			response.status(500).json({ error: 'Something went wrong' });
 			console.error(err);
+			return response.status(500).json({ error: 'Something went wrong' });
 		});
   },
   deleteMatch(request, response) {
@@ -102,6 +116,11 @@ module.exports = {
       });
     });
   }
+}
+
+async function addMatch(newMatch) {
+  docRef = await db.collection('matches').add(newMatch);
+  return await docRef.get();
 }
 
 const calculateMatchScoreOnPost = (value) => {

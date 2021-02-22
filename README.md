@@ -4,7 +4,7 @@
 
 ## Description
 
-📚 `Inter-club Golf Live` is built on an `node.js` and `express.js` stack with `react.js` as the UI and `MongoDB` & `Mongoose` as the database.
+📚 `Inter-club Golf Live` is built with `react.js` as the UI and `Firebase` as the real-time database.
 
 ## Table of Contents 🗂
 

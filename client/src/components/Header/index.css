@@ -1,21 +1,4 @@
-/* Navigation Menu */
-.hero-navbar {
-  padding: 0 0 10px 0;
-}
-
-#nav-link-join {
-  padding-right: 0;
-}
-
 /* isAuthenticated */
-.dropdown-toggle::after {
-  content: none!important;
-}
-
-.dropdown-item.active, .dropdown-item:active {
-  background-color: #046307;
-}
-
 .welcome-div {
   color: #343a40;
   font-weight: 900;

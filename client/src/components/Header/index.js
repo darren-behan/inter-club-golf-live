@@ -12,13 +12,22 @@ import Button from '@material-ui/core/Button';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    background: "#fafafa",
+    alignItems: 'center'
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1),
+    border: 0,
+    borderRadius: 3,
+    padding: '0 10px',
   },
   title: {
     flexGrow: 1,
+    marginRight: theme.spacing(1),
   },
+  textColor: {
+    color: "green",
+  }
 }));
 
 function Header() {
@@ -26,23 +35,23 @@ function Header() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
+    <div>
+      <AppBar position="static" className={classes.root}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            <Link to="home">
+            <Link to="home" className={classes.textColor}>
               Inter-club Golf Live
             </Link>
           </Typography>
-          <Button color="inherit">
-            <Link to="matches">
+          <Button className={classes.menuButton}>
+            <Link to="matches" className={classes.textColor}>
               Matches
             </Link>
           </Button>
           {!isAuthenticated ? (
             <>
-            <Button color="inherit">
-              <Link to="login">
+            <Button className={classes.menuButton}>
+              <Link to="login" className={classes.textColor}>
                 Login
               </Link>
             </Button>

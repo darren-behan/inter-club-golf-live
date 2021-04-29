@@ -47,7 +47,7 @@ function App() {
         <Router>
           <div>
             <Switch>
-              <Route exact path={['/', '/home']} component={Home} />
+              <Route exact path={['/']} component={Home} />
               <Route exact path={['/matches']} component={Matches} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/signup' component={Signup} />

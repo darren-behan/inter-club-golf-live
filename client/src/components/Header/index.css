@@ -1,8 +1,15 @@
+header {
+  background-color: #ffffff;
+}
+
+.navbar {
+  margin: 0rem 50rem;
+}
+
 /* isAuthenticated */
 .welcome-div {
   color: #343a40;
   font-weight: 900;
-  text-align: center;
 }
 
 @media screen and (min-width: 768px) {

@@ -1,46 +1,57 @@
 import React, { useContext } from 'react';
 import './index.css';
-import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import HeaderAuthenticated from './isAuthenticated';
 import DataAreaContext from '../../utils/DataAreaContext';
+import Col from 'react-bootstrap/Col';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
-import Button from 'react-bootstrap/Button';
+import { Bootstrap } from 'react-bootstrap-icons';
 
 function Header() {
   const { isAuthenticated } = useContext(DataAreaContext);
+  const location = useLocation();
 
   return (
-    <Navbar bg="light" variant="light">
-      <Navbar.Brand href="#home">Inter-club Golf Live</Navbar.Brand>
-      <Nav variant="tabs" defaultActiveKey="/home">
-        <Nav.Item>
-          <Nav.Link href="/home">Home</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/matches">Matches</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/login">Login</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/signup">Signup</Nav.Link>
-        </Nav.Item>
-      </Nav>
-      <Form inline>
-        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-        <Button variant="outline-primary">Search</Button>
-      </Form>
-      {!isAuthenticated ? (
-        <>
-        <div className='welcome-div'>Not logged in</div>
-        </>
-      ) : (
-        <HeaderAuthenticated className='hero-header-authenticated'/>
-      )}
-    </Navbar>
+    <header>
+      <Navbar sticky="top" className='navbar justify-content-between'>
+        <Col sm={4} lg={4}>
+          <Navbar.Brand href="#home">
+            <Bootstrap color="green" size={40}/>
+            Inter-club Golf Live
+          </Navbar.Brand>
+        </Col>
+        <Col sm={4} lg={4}>
+          <Nav justify variant="tabs" activeKey={location.pathname} className="justify-content-center">
+            <Nav.Item>
+              <Nav.Link href="/">Home</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="/matches">Matches</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="/login">Login</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="/signup">Signup</Nav.Link>
+            </Nav.Item>
+          </Nav>
+        </Col>
+        <Col sm={4} lg={4}>
+          {!isAuthenticated ? (
+            <>
+            <Navbar.Collapse className="justify-content-end">
+              <Navbar.Text className='welcome-div justify-content-end'>
+                Not logged in
+              </Navbar.Text>
+            </Navbar.Collapse>
+            </>
+          ) : (
+            <HeaderAuthenticated className='hero-header-authenticated'/>
+          )}
+        </Col>
+      </Navbar>
+    </header>
   );
 }
 

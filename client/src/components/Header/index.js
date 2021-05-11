@@ -17,7 +17,7 @@ function Header() {
   const location = useLocation();
 
   return (
-    <Navbar expand="md" sticky="top" id='navbar' className="navbar-light" style={{ backgroundColor: '#ffffff' }}>
+    <Navbar expand="md" sticky="top" id='navbar' className="navbar-light justify-content-center" style={{ backgroundColor: '#ffffff' }}>
       <Container>
         <Navbar.Brand href="#home" style={{ color: 'green' }}>
           <Bootstrap size={35}/>

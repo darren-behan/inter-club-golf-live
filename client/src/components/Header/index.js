@@ -24,8 +24,8 @@ function Header() {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-start">
-          <Form inline className="navbar-form">
-            <InputGroup className="input-group search-box">
+          <Form inline className="navbar-form" id="form-inline">
+            <InputGroup className="search-box">
               <FormControl type="text" id="search" placeholder="Search" style={{ backgroundColor: '#eef3f8', border: 'none' }} />
               <span className="input-group-addon"><FontAwesomeIcon icon={ faGlasses } style={{ color: 'green' }}/></span>
             </InputGroup>

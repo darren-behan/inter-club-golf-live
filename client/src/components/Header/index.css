@@ -3,6 +3,10 @@
   box-shadow: 0 0 4px rgba(0,0,0,.1);
 }
 
+#search {
+  border-radius: 5px;
+}
+
 .search-box input:focus {		
 	background: #fff;
 	box-shadow: none;

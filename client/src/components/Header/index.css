@@ -1,21 +1,42 @@
-header {
-  background-color: #ffffff;
+#navbar {
+  padding: 0 1rem;
+  box-shadow: 0 0 4px rgba(0,0,0,.1);
 }
 
-.navbar {
-  margin: 0rem 50rem;
+.search-box input:focus {		
+	background: #fff;
+	box-shadow: none;
 }
 
-/* isAuthenticated */
-.welcome-div {
-  color: #343a40;
-  font-weight: 900;
+.search-box .input-group-addon {
+	min-width: 35px;
+	border: none;
+	background: transparent;
+	position: absolute;
+	right: 0;
+	z-index: 9;
+	padding: 10px 7px;
+	height: 100%;
 }
 
-@media screen and (min-width: 768px) {
-  .welcome-div {
-    vertical-align: middle;
-    line-height: 37.5px;
-    padding: 0 5px;
+@media (max-width: 500px){
+	#navbar {
+		padding: 1rem 0 1rem 0;
+	}
+
+  .navbar-brand {
+    margin: 0 1rem;
+  }
+
+  .navbar-toggler {
+    margin: 0 1rem;
+  }
+
+  #search {
+    margin: 1rem 1rem;
+  }
+
+  .input-group-addon {
+    margin: 1rem 1rem;
   }
 }

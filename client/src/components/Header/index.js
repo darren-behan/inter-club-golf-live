@@ -3,55 +3,77 @@ import './index.css';
 import { useLocation } from 'react-router-dom';
 import HeaderAuthenticated from './isAuthenticated';
 import DataAreaContext from '../../utils/DataAreaContext';
-import Col from 'react-bootstrap/Col';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
+import { Container, Navbar, Nav, Form, FormControl, NavDropdown, InputGroup } from 'react-bootstrap';
 import { Bootstrap } from 'react-bootstrap-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { faGolfBall } from '@fortawesome/free-solid-svg-icons';
+import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
   const { isAuthenticated } = useContext(DataAreaContext);
   const location = useLocation();
 
   return (
-    <header>
-      <Navbar sticky="top" className='navbar justify-content-between'>
-        <Col sm={4} lg={4}>
-          <Navbar.Brand href="#home">
-            <Bootstrap color="green" size={40}/>
-            Inter-club Golf Live
-          </Navbar.Brand>
-        </Col>
-        <Col sm={4} lg={4}>
-          <Nav justify variant="tabs" activeKey={location.pathname} className="justify-content-center">
+    <Navbar expand="md" sticky="top" id='navbar' className="navbar-light" style={{ backgroundColor: '#ffffff' }}>
+      <Container>
+        <Navbar.Brand href="#home" style={{ color: 'green' }}>
+          <Bootstrap size={35}/>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-start">
+          <Form inline className="navbar-form">
+            <InputGroup className="input-group search-box">
+              <FormControl type="text" id="search" placeholder="Search" style={{ backgroundColor: '#eef3f8', border: 'none' }} />
+              <span className="input-group-addon"><FontAwesomeIcon icon={ faGlasses } style={{ color: 'green' }}/></span>
+            </InputGroup>
+          </Form>
+          <Nav justify variant="tabs" className="ml-auto" activeKey={location.pathname} style={{ borderBottom: '0' }}>
             <Nav.Item>
-              <Nav.Link href="/">Home</Nav.Link>
+              <Nav.Link href="/">
+                <FontAwesomeIcon icon={ faHome } className='fa-lg'/>
+                <p style={{ marginBottom: '0' }}>Home</p>
+              </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link href="/matches">Matches</Nav.Link>
+              <Nav.Link href="/matches">
+                <FontAwesomeIcon icon={ faGolfBall } className='fa-lg'/>
+                <p style={{ marginBottom: '0' }}>Matches</p>
+              </Nav.Link>
             </Nav.Item>
-            <Nav.Item>
-              <Nav.Link href="/login">Login</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link href="/signup">Signup</Nav.Link>
-            </Nav.Item>
+            {!isAuthenticated ? (
+              <>
+              <Nav.Item>
+                <Nav.Link href="/login">
+                  <FontAwesomeIcon icon={ faSignInAlt } className='fa-lg'/>
+                  <p style={{ marginBottom: '0' }}>Login</p>
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link href="/signup">
+                  <FontAwesomeIcon icon={ faUserPlus } className='fa-lg'/>
+                  <p style={{ marginBottom: '0' }}>Signup</p>
+                </Nav.Link>
+              </Nav.Item>
+              </>
+            ) : (
+              <Nav.Item className="dropdown">
+                <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+                  <NavDropdown.Item>
+                    <Nav.Link href="#">Profile</Nav.Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Nav.Link href="#">Settings</Nav.Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </Nav.Item>
+            )}
           </Nav>
-        </Col>
-        <Col sm={4} lg={4}>
-          {!isAuthenticated ? (
-            <>
-            <Navbar.Collapse className="justify-content-end">
-              <Navbar.Text className='welcome-div justify-content-end'>
-                Not logged in
-              </Navbar.Text>
-            </Navbar.Collapse>
-            </>
-          ) : (
-            <HeaderAuthenticated className='hero-header-authenticated'/>
-          )}
-        </Col>
-      </Navbar>
-    </header>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
 

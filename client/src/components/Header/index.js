@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import './index.css';
 import { useLocation } from 'react-router-dom';
-import HeaderAuthenticated from './isAuthenticated';
 import DataAreaContext from '../../utils/DataAreaContext';
 import { Container, Navbar, Nav, Form, FormControl, NavDropdown, InputGroup } from 'react-bootstrap';
 import { Bootstrap } from 'react-bootstrap-icons';

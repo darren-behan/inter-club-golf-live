@@ -52,7 +52,7 @@ function Login() {
   // If isAuthenticated changes to true, the user is navigated to the home page 
   useEffect(() => {
     if(isAuthenticated) {
-      history.push('/home');
+      history.push('/');
     };
 	}, [isAuthenticated]);
 

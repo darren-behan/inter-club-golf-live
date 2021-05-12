@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import './index.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import DataAreaContext from '../../utils/DataAreaContext';
 import { Container, Navbar, Nav, Form, FormControl, NavDropdown, InputGroup } from 'react-bootstrap';
 import { Bootstrap } from 'react-bootstrap-icons';
@@ -10,6 +10,9 @@ import { faGolfBall } from '@fortawesome/free-solid-svg-icons';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUserCog } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
   const { isAuthenticated } = useContext(DataAreaContext);
@@ -29,15 +32,15 @@ function Header() {
               <span className="input-group-addon"><FontAwesomeIcon icon={ faGlasses } style={{ color: 'green' }}/></span>
             </InputGroup>
           </Form>
-          <Nav justify variant="tabs" className="ml-auto" activeKey={location.pathname} style={{ borderBottom: '0' }}>
+          <Nav justify className="ml-auto" activeKey={location.pathname} style={{ borderBottom: '0' }}>
             <Nav.Item>
-              <Nav.Link href="/">
+              <Nav.Link as={ Link } to="/" eventKey="/">
                 <FontAwesomeIcon icon={ faHome } className='fa-lg'/>
                 <p style={{ marginBottom: '0' }}>Home</p>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link href="/matches">
+              <Nav.Link as={ Link } to="/matches" eventKey="/matches">
                 <FontAwesomeIcon icon={ faGolfBall } className='fa-lg'/>
                 <p style={{ marginBottom: '0' }}>Matches</p>
               </Nav.Link>
@@ -45,29 +48,36 @@ function Header() {
             {!isAuthenticated ? (
               <>
               <Nav.Item>
-                <Nav.Link href="/login">
+                <Nav.Link as={ Link } to="/login" eventKey="/login">
                   <FontAwesomeIcon icon={ faSignInAlt } className='fa-lg'/>
                   <p style={{ marginBottom: '0' }}>Login</p>
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link href="/signup">
+                <Nav.Link as={ Link } to="/signup" eventKey="/signup">
                   <FontAwesomeIcon icon={ faUserPlus } className='fa-lg'/>
                   <p style={{ marginBottom: '0' }}>Signup</p>
                 </Nav.Link>
               </Nav.Item>
               </>
             ) : (
-              <Nav.Item className="dropdown">
-                <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                  <NavDropdown.Item>
-                    <Nav.Link href="#">Profile</Nav.Link>
+              <>
+              <Nav.Item>
+                <NavDropdown title={
+                  <div style={{display: "inline-block"}}>
+                    <FontAwesomeIcon icon={ faUserCircle } className='fa-lg'/>
+                    <p style={{ marginBottom: '0' }}> Me </p>
+                  </div>
+                } id="collasible-nav-dropdown">
+                  <NavDropdown.Item as={ Link } to="/profile" eventKey="/profile">
+                    Profile
                   </NavDropdown.Item>
-                  <NavDropdown.Item>
-                    <Nav.Link href="#">Settings</Nav.Link>
+                  <NavDropdown.Item as={ Link } to="/settings" eventKey="/settings">
+                    Settings
                   </NavDropdown.Item>
                 </NavDropdown>
               </Nav.Item>
+              </>
             )}
           </Nav>
         </Navbar.Collapse>

@@ -12,6 +12,8 @@ import Home from './pages/Home';
 import Matches from './pages/Matches';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Profile from './pages/Profile';
+import Settings from './pages/Settings';
 import PageNotFound from './pages/PageNotFound';
 
 function App() {
@@ -51,6 +53,8 @@ function App() {
               <Route exact path={['/matches']} component={Matches} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/signup' component={Signup} />
+              <Route exact path='/profile' component={Profile} />
+              <Route exact path='/settings' component={Settings} />
               <Route exact path='*' component={PageNotFound} />
             </Switch>
           </div>

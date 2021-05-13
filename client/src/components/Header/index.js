@@ -5,14 +5,7 @@ import DataAreaContext from '../../utils/DataAreaContext';
 import { Container, Navbar, Nav, Form, FormControl, NavDropdown, InputGroup } from 'react-bootstrap';
 import { Bootstrap } from 'react-bootstrap-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
-import { faGolfBall } from '@fortawesome/free-solid-svg-icons';
-import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { faGlasses } from '@fortawesome/free-solid-svg-icons';
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { faUserCog } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faGolfBall, faSignInAlt, faUserPlus, faGlasses, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
   const { isAuthenticated } = useContext(DataAreaContext);

@@ -31,7 +31,6 @@
   padding: 0!important;
   border: none!important;
   border-radius: 0 0 .25rem .25rem!important;
-  margin: 2px 0 0 0!important;
   font-size: 0.875rem!important;
 }
 
@@ -39,9 +38,13 @@
   color: rgba(0,0,0,.5)!important;
 }
 
-.dropdown-item:focus, .dropdown-item:active, .dropdown-item:active, .dropdown-item:hover {
+.dropdown-item:focus, .dropdown-item:hover {
   background-color: #eef3f8!important;
   color: rgba(0,0,0,.7)!important;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+  background-color: #ffffff!important;
 }
 
 @media (min-width: 768px) {

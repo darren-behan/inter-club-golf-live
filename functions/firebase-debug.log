@@ -742,3 +742,229 @@ For CI servers and headless environments, generate a new token with firebase log
 [debug] [2021-05-26T05:48:44.343Z] [functions] Finished "api" in ~8s
 [debug] [2021-05-26T05:48:44.344Z] DEBUG: [worker-api-f1b336da-0e32-4d9e-9191-a624542e67e1]: IDLE
 [debug] [2021-05-26T05:48:44.344Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2021-05-26T06:19:16.298Z] [functions] Stopping Functions Emulator
+[debug] [2021-05-26T06:19:16.322Z] DEBUG: [worker-~diagnostic~-6c9fda54-d4da-46e3-ae52-d39576b213bf]: exited
+[debug] [2021-05-26T06:19:16.322Z] DEBUG: [worker-~diagnostic~-6c9fda54-d4da-46e3-ae52-d39576b213bf]: FINISHED
+[debug] [2021-05-26T06:19:16.323Z] DEBUG: [worker-api-f1b336da-0e32-4d9e-9191-a624542e67e1]: exited
+[debug] [2021-05-26T06:19:16.323Z] DEBUG: [worker-api-f1b336da-0e32-4d9e-9191-a624542e67e1]: FINISHED
+[debug] [2021-05-26T06:19:16.323Z] DEBUG: [worker-api-2b9edd84-401b-45b2-9d86-f52fd7bdff25]: exited
+[debug] [2021-05-26T06:19:16.323Z] DEBUG: [worker-api-2b9edd84-401b-45b2-9d86-f52fd7bdff25]: FINISHED
+[debug] [2021-05-26T06:38:37.201Z] ----------------------------------------------------------------------
+[debug] [2021-05-26T06:38:37.203Z] Command:       /Users/darren.behan/.nvm/versions/node/v15.13.0/bin/node /Users/darren.behan/.nvm/versions/node/v15.13.0/bin/firebase functions:shell
+[debug] [2021-05-26T06:38:37.204Z] CLI Version:   9.9.0
+[debug] [2021-05-26T06:38:37.204Z] Platform:      darwin
+[debug] [2021-05-26T06:38:37.204Z] Node Version:  v15.13.0
+[debug] [2021-05-26T06:38:37.206Z] Time:          Wed May 26 2021 16:38:37 GMT+1000 (Australian Eastern Standard Time)
+[debug] [2021-05-26T06:38:37.206Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-05-26T06:38:37.217Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-05-26T06:38:37.217Z] > authorizing via signed-in user (darrenbehan03@gmail.com)
+[debug] [2021-05-26T06:38:37.217Z] [iam] checking project inter-club-golf-live for permissions ["firebase.projects.get"]
+[debug] [2021-05-26T06:38:37.219Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-05-26T06:38:37.219Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-05-26T06:38:44.539Z] <<< HTTP RESPONSE 200 {"date":"Wed, 26 May 2021 06:38:37 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","expires":"Mon, 01 Jan 1990 00:00:00 GMT","pragma":"no-cache","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-05-26T06:38:44.586Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/inter-club-golf-live:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2021-05-26T06:38:45.042Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Wed, 26 May 2021 06:38:45 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=206","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[warn] ⚠  Your requested "node" version "10" doesn't match your global version "15" {"metadata":{"emulator":{"name":"functions"},"message":"Your requested \"node\" version \"10\" doesn't match your global version \"15\""}}
+[debug] [2021-05-26T06:38:45.066Z] defaultcredentials: writing to file /Users/darren.behan/.config/firebase/darrenbehan03_gmail_com_application_default_credentials.json
+[debug] [2021-05-26T06:38:45.068Z] DEBUG: Setting GAC to /Users/darren.behan/.config/firebase/darrenbehan03_gmail_com_application_default_credentials.json
+[debug] [2021-05-26T06:38:45.069Z] > refreshing access token with scopes: []
+[debug] [2021-05-26T06:38:45.070Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-05-26T06:38:46.238Z] <<< HTTP RESPONSE 200 {"date":"Wed, 26 May 2021 06:38:45 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","pragma":"no-cache","expires":"Mon, 01 Jan 1990 00:00:00 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-05-26T06:38:46.287Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/inter-club-golf-live/adminSdkConfig [none]
+[debug] [2021-05-26T06:38:47.135Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/inter-club-golf-live/adminSdkConfig 200
+[debug] [2021-05-26T06:38:47.135Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/inter-club-golf-live/adminSdkConfig {"projectId":"inter-club-golf-live","databaseURL":"https://inter-club-golf-live-default-rtdb.europe-west1.firebasedatabase.app","storageBucket":"inter-club-golf-live.appspot.com","locationId":"europe-west"}
+[debug] [2021-05-26T06:38:47.164Z] [functions] Watching "/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions" for Cloud Functions...
+[debug] [2021-05-26T06:38:47.174Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2021-05-26T06:38:47.175Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2021-05-26T06:38:47.175Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2021-05-26T06:38:47.175Z] DEBUG: [worker-~diagnostic~-809d8915-1380-4fd8-a458-e2984df82c25]: Assigning socketPath: /var/folders/zq/2hjvzhrx7tx6yy0d6sbhhwdm0000gr/T/fire_emu_17968.sock
+[debug] [2021-05-26T06:38:47.175Z] DEBUG: [worker-~diagnostic~-809d8915-1380-4fd8-a458-e2984df82c25]: BUSY
+[debug] [2021-05-26T06:38:47.380Z] DEBUG: [runtime-status] [17968] Functions runtime initialized. {"cwd":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions","node_version":"15.13.0"}
+[debug] [2021-05-26T06:38:47.382Z] DEBUG: [runtime-status] [17968] Disabled runtime features: undefined
+[debug] [2021-05-26T06:38:47.387Z] DEBUG: [runtime-status] [17968] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-05-26T06:38:47.391Z] DEBUG: [runtime-status] [17968] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-05-26T06:38:47.393Z] DEBUG: [runtime-status] [17968] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-05-26T06:38:47.395Z] DEBUG: [runtime-status] [17968] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-05-26T06:38:47.395Z] DEBUG: [runtime-status] [17968] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-05-26T06:38:47.467Z] DEBUG: [runtime-status] [17968] Checked functions.config() {"config":{}}
+[debug] [2021-05-26T06:38:47.467Z] DEBUG: [runtime-status] [17968] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-05-26T06:38:47.468Z] DEBUG: [runtime-status] [17968] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-05-26T06:38:47.471Z] DEBUG: [runtime-status] [17968] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-05-26T06:38:47.472Z] DEBUG: [runtime-status] [17968] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-05-26T06:38:47.472Z] DEBUG: [runtime-status] [17968] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2021-05-26T06:38:47.668Z] DEBUG: [runtime-status] [17968] initializeApp(DEFAULT) {"storageBucket":"inter-club-golf-live.appspot.com","databaseURL":"https://inter-club-golf-live-default-rtdb.europe-west1.firebasedatabase.app","projectId":"inter-club-golf-live"}
+[warn] ⚠  functions: The Cloud Firestore emulator is not running, so calls to Firestore will affect production. {"metadata":{"emulator":{"name":"functions"},"message":"The Cloud Firestore emulator is not running, so calls to Firestore will affect production."}}
+[debug] [2021-05-26T06:38:48.339Z] [functions[api]] http function initialized (http://localhost:5000/inter-club-golf-live/us-central1/api).
+[info] i  functions: Loaded functions: api 
+[warn] ⚠  functions: The following emulators are not running, calls to these services will affect production: firestore, database, pubsub, storage 
+[debug] [2021-05-26T06:38:48.348Z] DEBUG: [worker-~diagnostic~-809d8915-1380-4fd8-a458-e2984df82c25]: IDLE
+[debug] [2021-05-26T06:38:57.674Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2021-05-26T06:38:57.675Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2021-05-26T06:38:57.675Z] Accepted request GET /inter-club-golf-live/us-central1/api/match --> api
+[debug] [2021-05-26T06:38:57.684Z] DEBUG: [worker-pool] addWorker(api)
+[debug] [2021-05-26T06:38:57.685Z] DEBUG: [worker-pool] Adding worker with key api, total=1
+[debug] [2021-05-26T06:38:57.686Z] DEBUG: [worker-pool] submitWork(triggerId=api)
+[debug] [2021-05-26T06:38:57.686Z] DEBUG: [worker-api-9a146c63-9ad5-4fcd-8035-e799f4e2d665]: Assigning socketPath: /var/folders/zq/2hjvzhrx7tx6yy0d6sbhhwdm0000gr/T/fire_emu_17973.sock
+[debug] [2021-05-26T06:38:57.686Z] DEBUG: [worker-api-9a146c63-9ad5-4fcd-8035-e799f4e2d665]: BUSY
+[debug] [2021-05-26T06:38:57.742Z] [work-queue] {"queueLength":1,"workRunningCount":1}
+[debug] [2021-05-26T06:38:57.742Z] [work-queue] {"queueLength":0,"workRunningCount":2}
+[debug] [2021-05-26T06:38:57.743Z] Accepted request GET /inter-club-golf-live/us-central1/api/logo192.png --> api
+[debug] [2021-05-26T06:38:57.749Z] DEBUG: [worker-pool] addWorker(api)
+[debug] [2021-05-26T06:38:57.750Z] DEBUG: [worker-pool] Adding worker with key api, total=2
+[debug] [2021-05-26T06:38:57.750Z] DEBUG: [worker-pool] submitWork(triggerId=api)
+[debug] [2021-05-26T06:38:57.751Z] DEBUG: [worker-api-51dbe532-7abd-495e-b0d9-02c07748ac2e]: Assigning socketPath: /var/folders/zq/2hjvzhrx7tx6yy0d6sbhhwdm0000gr/T/fire_emu_17974.sock
+[debug] [2021-05-26T06:38:57.751Z] DEBUG: [worker-api-51dbe532-7abd-495e-b0d9-02c07748ac2e]: BUSY
+[debug] [2021-05-26T06:38:57.954Z] DEBUG: [runtime-status] [17973] Functions runtime initialized. {"cwd":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions","node_version":"15.13.0"}
+[debug] [2021-05-26T06:38:57.957Z] DEBUG: [runtime-status] [17973] Disabled runtime features: undefined
+[debug] [2021-05-26T06:38:57.961Z] DEBUG: [runtime-status] [17973] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-05-26T06:38:57.963Z] DEBUG: [runtime-status] [17973] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-05-26T06:38:57.966Z] DEBUG: [runtime-status] [17973] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-05-26T06:38:57.968Z] DEBUG: [runtime-status] [17973] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-05-26T06:38:57.968Z] DEBUG: [runtime-status] [17973] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-05-26T06:38:57.991Z] DEBUG: [runtime-status] [17974] Functions runtime initialized. {"cwd":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions","node_version":"15.13.0"}
+[debug] [2021-05-26T06:38:57.994Z] DEBUG: [runtime-status] [17974] Disabled runtime features: undefined
+[debug] [2021-05-26T06:38:57.997Z] DEBUG: [runtime-status] [17974] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-05-26T06:38:57.998Z] DEBUG: [runtime-status] [17974] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-05-26T06:38:58.001Z] DEBUG: [runtime-status] [17974] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-05-26T06:38:58.002Z] DEBUG: [runtime-status] [17974] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-05-26T06:38:58.003Z] DEBUG: [runtime-status] [17974] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-05-26T06:38:58.020Z] DEBUG: [runtime-status] [17973] Checked functions.config() {"config":{}}
+[debug] [2021-05-26T06:38:58.020Z] DEBUG: [runtime-status] [17973] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-05-26T06:38:58.021Z] DEBUG: [runtime-status] [17973] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-05-26T06:38:58.022Z] DEBUG: [runtime-status] [17973] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-05-26T06:38:58.023Z] DEBUG: [runtime-status] [17973] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-05-26T06:38:58.023Z] DEBUG: [runtime-status] [17973] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2021-05-26T06:38:58.050Z] DEBUG: [runtime-status] [17974] Checked functions.config() {"config":{}}
+[debug] [2021-05-26T06:38:58.051Z] DEBUG: [runtime-status] [17974] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-05-26T06:38:58.051Z] DEBUG: [runtime-status] [17974] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-05-26T06:38:58.053Z] DEBUG: [runtime-status] [17974] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-05-26T06:38:58.053Z] DEBUG: [runtime-status] [17974] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.12.0","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-05-26T06:38:58.054Z] DEBUG: [runtime-status] [17974] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/darren.behan/Documents/GitHub/inter-club-golf-live/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2021-05-26T06:38:58.137Z] DEBUG: [runtime-status] [17973] initializeApp(DEFAULT) {"storageBucket":"inter-club-golf-live.appspot.com","databaseURL":"https://inter-club-golf-live-default-rtdb.europe-west1.firebasedatabase.app","projectId":"inter-club-golf-live"}
+[debug] [2021-05-26T06:38:58.161Z] DEBUG: [runtime-status] [17974] initializeApp(DEFAULT) {"storageBucket":"inter-club-golf-live.appspot.com","databaseURL":"https://inter-club-golf-live-default-rtdb.europe-west1.firebasedatabase.app","projectId":"inter-club-golf-live"}
+[debug] [2021-05-26T06:38:58.545Z] DEBUG: [runtime-status] [17973] Trigger "api" has been found, beginning invocation!
+[debug] [2021-05-26T06:38:58.545Z] [functions] Beginning execution of "api"
+[debug] [2021-05-26T06:38:58.546Z] DEBUG: [runtime-status] [17973] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"}
+[debug] [2021-05-26T06:38:58.546Z] DEBUG: [runtime-status] [17973] Running api in mode HTTPS
+[debug] [2021-05-26T06:38:58.549Z] DEBUG: [runtime-status] [17973] Attempting to listen to socketPath: /var/folders/zq/2hjvzhrx7tx6yy0d6sbhhwdm0000gr/T/fire_emu_17973.sock
+[debug] [2021-05-26T06:38:58.554Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2021-05-26T06:38:58.555Z] DEBUG: [functions] Got req.url=/inter-club-golf-live/us-central1/api/match, mapping to path=/match
+[debug] [2021-05-26T06:38:58.564Z] DEBUG: [runtime-status] [17973] Ephemeral server handling GET request
+[debug] [2021-05-26T06:38:58.569Z] DEBUG: [runtime-status] [17974] Trigger "api" has been found, beginning invocation!
+[debug] [2021-05-26T06:38:58.569Z] [functions] Beginning execution of "api"
+[debug] [2021-05-26T06:38:58.569Z] DEBUG: [runtime-status] [17974] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"}
+[debug] [2021-05-26T06:38:58.569Z] DEBUG: [runtime-status] [17974] Running api in mode HTTPS
+[debug] [2021-05-26T06:38:58.570Z] DEBUG: [runtime-status] [17973] Ephemeral server survived.
+[debug] [2021-05-26T06:38:58.572Z] DEBUG: [runtime-status] [17974] Attempting to listen to socketPath: /var/folders/zq/2hjvzhrx7tx6yy0d6sbhhwdm0000gr/T/fire_emu_17974.sock
+[debug] [2021-05-26T06:38:58.576Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2021-05-26T06:38:58.577Z] DEBUG: [functions] Got req.url=/inter-club-golf-live/us-central1/api/logo192.png, mapping to path=/logo192.png
+[debug] [2021-05-26T06:38:58.582Z] DEBUG: [runtime-status] [17974] Ephemeral server handling GET request
+[debug] [2021-05-26T06:38:58.585Z] DEBUG: [runtime-status] [17974] Ephemeral server survived.
+[debug] [2021-05-26T06:38:58.617Z] [functions] Finished "api" in ~1s
+[debug] [2021-05-26T06:38:58.618Z] DEBUG: [worker-api-51dbe532-7abd-495e-b0d9-02c07748ac2e]: IDLE
+[debug] [2021-05-26T06:38:58.618Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[info] >  Error: ENOENT: no such file or directory, stat '/Users/darren.behan/Documents/GitHub/client/build/index.html' {"user":"Error: ENOENT: no such file or directory, stat '/Users/darren.behan/Documents/GitHub/client/build/index.html'","metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"\u001b[90m> \u001b[39m Error: ENOENT: no such file or directory, stat '/Users/darren.behan/Documents/GitHub/client/build/index.html'"}}
+[warn] ⚠  Google API requested!
+   - URL: "https://oauth2.googleapis.com/token"
+   - Be careful, this may be a production service. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Google API requested!\n   - URL: \"https://oauth2.googleapis.com/token\"\n   - Be careful, this may be a production service."}}
+[debug] [2021-05-26T06:39:00.661Z] [functions] Finished "api" in ~2s
+[debug] [2021-05-26T06:39:00.662Z] DEBUG: [worker-api-9a146c63-9ad5-4fcd-8035-e799f4e2d665]: IDLE
+[debug] [2021-05-26T06:39:00.664Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2021-05-26T06:43:45.076Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2021-05-26T06:43:45.078Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2021-05-26T06:43:45.079Z] Accepted request GET /inter-club-golf-live/us-central1/api/babel/parser/lib/index.js --> api
+[debug] [2021-05-26T06:43:45.079Z] DEBUG: [worker-pool] submitWork(triggerId=api)
+[debug] [2021-05-26T06:43:45.080Z] DEBUG: [worker-api-9a146c63-9ad5-4fcd-8035-e799f4e2d665]: Assigning socketPath: /var/folders/zq/2hjvzhrx7tx6yy0d6sbhhwdm0000gr/T/fire_emu_17973.sock
+[debug] [2021-05-26T06:43:45.081Z] DEBUG: [worker-api-9a146c63-9ad5-4fcd-8035-e799f4e2d665]: BUSY
+[debug] [2021-05-26T06:43:45.090Z] DEBUG: [runtime-status] [17973] Trigger "api" has been found, beginning invocation!
+[debug] [2021-05-26T06:43:45.090Z] [functions] Beginning execution of "api"
+[debug] [2021-05-26T06:43:45.091Z] DEBUG: [runtime-status] [17973] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"}
+[debug] [2021-05-26T06:43:45.091Z] DEBUG: [runtime-status] [17973] Running api in mode HTTPS
+[debug] [2021-05-26T06:43:45.091Z] DEBUG: [runtime-status] [17973] Attempting to listen to socketPath: /var/folders/zq/2hjvzhrx7tx6yy0d6sbhhwdm0000gr/T/fire_emu_17973.sock
+[debug] [2021-05-26T06:43:45.096Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2021-05-26T06:43:45.096Z] DEBUG: [functions] Got req.url=/inter-club-golf-live/us-central1/api/babel/parser/lib/index.js, mapping to path=/babel/parser/lib/index.js
+[debug] [2021-05-26T06:43:45.104Z] DEBUG: [runtime-status] [17973] Ephemeral server handling GET request
+[debug] [2021-05-26T06:43:45.109Z] DEBUG: [runtime-status] [17973] Ephemeral server survived.
+[debug] [2021-05-26T06:43:45.114Z] [functions] Finished "api" in ~1s
+[debug] [2021-05-26T06:43:45.115Z] DEBUG: [worker-api-9a146c63-9ad5-4fcd-8035-e799f4e2d665]: IDLE
+[debug] [2021-05-26T06:43:45.115Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] >  Error: ENOENT: no such file or directory, stat '/Users/darren.behan/Documents/GitHub/client/build/index.html' {"user":"Error: ENOENT: no such file or directory, stat '/Users/darren.behan/Documents/GitHub/client/build/index.html'","metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"\u001b[90m> \u001b[39m Error: ENOENT: no such file or directory, stat '/Users/darren.behan/Documents/GitHub/client/build/index.html'"}}
+[debug] [2021-05-26T06:43:45.130Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2021-05-26T06:43:45.130Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2021-05-26T06:43:45.130Z] Accepted request GET /inter-club-golf-live/us-central1/api/babel/parser/lib/index.js --> api
+[debug] [2021-05-26T06:43:45.131Z] DEBUG: [worker-pool] submitWork(triggerId=api)
+[debug] [2021-05-26T06:43:45.131Z] DEBUG: [worker-api-9a146c63-9ad5-4fcd-8035-e799f4e2d665]: Assigning socketPath: /var/folders/zq/2hjvzhrx7tx6yy0d6sbhhwdm0000gr/T/fire_emu_17973.sock
+[debug] [2021-05-26T06:43:45.132Z] DEBUG: [worker-api-9a146c63-9ad5-4fcd-8035-e799f4e2d665]: BUSY
+[debug] [2021-05-26T06:43:45.133Z] DEBUG: [runtime-status] [17973] Trigger "api" has been found, beginning invocation!
+[debug] [2021-05-26T06:43:45.133Z] [functions] Beginning execution of "api"
+[debug] [2021-05-26T06:43:45.133Z] DEBUG: [runtime-status] [17973] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"}
+[debug] [2021-05-26T06:43:45.134Z] DEBUG: [runtime-status] [17973] Running api in mode HTTPS
+[debug] [2021-05-26T06:43:45.134Z] DEBUG: [runtime-status] [17973] Attempting to listen to socketPath: /var/folders/zq/2hjvzhrx7tx6yy0d6sbhhwdm0000gr/T/fire_emu_17973.sock
+[debug] [2021-05-26T06:43:45.137Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2021-05-26T06:43:45.137Z] DEBUG: [functions] Got req.url=/inter-club-golf-live/us-central1/api/babel/parser/lib/index.js, mapping to path=/babel/parser/lib/index.js
+[debug] [2021-05-26T06:43:45.141Z] DEBUG: [runtime-status] [17973] Ephemeral server handling GET request
+[debug] [2021-05-26T06:43:45.143Z] DEBUG: [runtime-status] [17973] Ephemeral server survived.
+[debug] [2021-05-26T06:43:45.145Z] [functions] Finished "api" in ~1s
+[debug] [2021-05-26T06:43:45.146Z] DEBUG: [worker-api-9a146c63-9ad5-4fcd-8035-e799f4e2d665]: IDLE
+[debug] [2021-05-26T06:43:45.146Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] >  Error: ENOENT: no such file or directory, stat '/Users/darren.behan/Documents/GitHub/client/build/index.html' {"user":"Error: ENOENT: no such file or directory, stat '/Users/darren.behan/Documents/GitHub/client/build/index.html'","metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"\u001b[90m> \u001b[39m Error: ENOENT: no such file or directory, stat '/Users/darren.behan/Documents/GitHub/client/build/index.html'"}}
+[debug] [2021-05-26T06:43:45.151Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2021-05-26T06:43:45.151Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2021-05-26T06:43:45.151Z] Accepted request GET /inter-club-golf-live/us-central1/api/babel/parser/lib/index.js --> api
+[debug] [2021-05-26T06:43:45.152Z] DEBUG: [worker-pool] submitWork(triggerId=api)
+[debug] [2021-05-26T06:43:45.152Z] DEBUG: [worker-api-9a146c63-9ad5-4fcd-8035-e799f4e2d665]: Assigning socketPath: /var/folders/zq/2hjvzhrx7tx6yy0d6sbhhwdm0000gr/T/fire_emu_17973.sock
+[debug] [2021-05-26T06:43:45.152Z] DEBUG: [worker-api-9a146c63-9ad5-4fcd-8035-e799f4e2d665]: BUSY
+[debug] [2021-05-26T06:43:45.156Z] DEBUG: [runtime-status] [17973] Trigger "api" has been found, beginning invocation!
+[debug] [2021-05-26T06:43:45.157Z] [functions] Beginning execution of "api"
+[debug] [2021-05-26T06:43:45.157Z] DEBUG: [runtime-status] [17973] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"}
+[debug] [2021-05-26T06:43:45.157Z] DEBUG: [runtime-status] [17973] Running api in mode HTTPS
+[debug] [2021-05-26T06:43:45.157Z] DEBUG: [runtime-status] [17973] Attempting to listen to socketPath: /var/folders/zq/2hjvzhrx7tx6yy0d6sbhhwdm0000gr/T/fire_emu_17973.sock
+[debug] [2021-05-26T06:43:45.159Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2021-05-26T06:43:45.159Z] DEBUG: [functions] Got req.url=/inter-club-golf-live/us-central1/api/babel/parser/lib/index.js, mapping to path=/babel/parser/lib/index.js
+[debug] [2021-05-26T06:43:45.164Z] DEBUG: [runtime-status] [17973] Ephemeral server handling GET request
+[debug] [2021-05-26T06:43:45.165Z] DEBUG: [runtime-status] [17973] Ephemeral server survived.
+[debug] [2021-05-26T06:43:45.168Z] [functions] Finished "api" in ~1s
+[debug] [2021-05-26T06:43:45.169Z] DEBUG: [worker-api-9a146c63-9ad5-4fcd-8035-e799f4e2d665]: IDLE
+[debug] [2021-05-26T06:43:45.169Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] >  Error: ENOENT: no such file or directory, stat '/Users/darren.behan/Documents/GitHub/client/build/index.html' {"user":"Error: ENOENT: no such file or directory, stat '/Users/darren.behan/Documents/GitHub/client/build/index.html'","metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"\u001b[90m> \u001b[39m Error: ENOENT: no such file or directory, stat '/Users/darren.behan/Documents/GitHub/client/build/index.html'"}}
+[debug] [2021-05-26T06:44:12.523Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2021-05-26T06:44:12.523Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2021-05-26T06:44:12.524Z] Accepted request GET /inter-club-golf-live/us-central1/api/match --> api
+[debug] [2021-05-26T06:44:12.524Z] DEBUG: [worker-pool] submitWork(triggerId=api)
+[debug] [2021-05-26T06:44:12.524Z] DEBUG: [worker-api-9a146c63-9ad5-4fcd-8035-e799f4e2d665]: Assigning socketPath: /var/folders/zq/2hjvzhrx7tx6yy0d6sbhhwdm0000gr/T/fire_emu_17973.sock
+[debug] [2021-05-26T06:44:12.524Z] DEBUG: [worker-api-9a146c63-9ad5-4fcd-8035-e799f4e2d665]: BUSY
+[debug] [2021-05-26T06:44:12.525Z] DEBUG: [runtime-status] [17973] Trigger "api" has been found, beginning invocation!
+[debug] [2021-05-26T06:44:12.525Z] [functions] Beginning execution of "api"
+[debug] [2021-05-26T06:44:12.526Z] DEBUG: [runtime-status] [17973] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"}
+[debug] [2021-05-26T06:44:12.526Z] DEBUG: [runtime-status] [17973] Running api in mode HTTPS
+[debug] [2021-05-26T06:44:12.526Z] DEBUG: [runtime-status] [17973] Attempting to listen to socketPath: /var/folders/zq/2hjvzhrx7tx6yy0d6sbhhwdm0000gr/T/fire_emu_17973.sock
+[debug] [2021-05-26T06:44:12.528Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2021-05-26T06:44:12.528Z] DEBUG: [functions] Got req.url=/inter-club-golf-live/us-central1/api/match, mapping to path=/match
+[debug] [2021-05-26T06:44:12.533Z] DEBUG: [runtime-status] [17973] Ephemeral server handling GET request
+[debug] [2021-05-26T06:44:12.536Z] DEBUG: [runtime-status] [17973] Ephemeral server survived.
+[debug] [2021-05-26T06:44:12.623Z] [work-queue] {"queueLength":1,"workRunningCount":1}
+[debug] [2021-05-26T06:44:12.624Z] [work-queue] {"queueLength":0,"workRunningCount":2}
+[debug] [2021-05-26T06:44:12.624Z] Accepted request GET /inter-club-golf-live/us-central1/api/logo192.png --> api
+[debug] [2021-05-26T06:44:12.626Z] DEBUG: [worker-pool] submitWork(triggerId=api)
+[debug] [2021-05-26T06:44:12.626Z] DEBUG: [worker-api-51dbe532-7abd-495e-b0d9-02c07748ac2e]: Assigning socketPath: /var/folders/zq/2hjvzhrx7tx6yy0d6sbhhwdm0000gr/T/fire_emu_17974.sock
+[debug] [2021-05-26T06:44:12.626Z] DEBUG: [worker-api-51dbe532-7abd-495e-b0d9-02c07748ac2e]: BUSY
+[debug] [2021-05-26T06:44:12.627Z] DEBUG: [runtime-status] [17974] Trigger "api" has been found, beginning invocation!
+[debug] [2021-05-26T06:44:12.628Z] [functions] Beginning execution of "api"
+[debug] [2021-05-26T06:44:12.628Z] DEBUG: [runtime-status] [17974] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"}
+[debug] [2021-05-26T06:44:12.628Z] DEBUG: [runtime-status] [17974] Running api in mode HTTPS
+[debug] [2021-05-26T06:44:12.628Z] DEBUG: [runtime-status] [17974] Attempting to listen to socketPath: /var/folders/zq/2hjvzhrx7tx6yy0d6sbhhwdm0000gr/T/fire_emu_17974.sock
+[debug] [2021-05-26T06:44:12.630Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2021-05-26T06:44:12.630Z] DEBUG: [functions] Got req.url=/inter-club-golf-live/us-central1/api/logo192.png, mapping to path=/logo192.png
+[debug] [2021-05-26T06:44:12.635Z] DEBUG: [runtime-status] [17974] Ephemeral server handling GET request
+[debug] [2021-05-26T06:44:12.639Z] DEBUG: [runtime-status] [17974] Ephemeral server survived.
+[debug] [2021-05-26T06:44:12.640Z] [functions] Finished "api" in ~1s
+[debug] [2021-05-26T06:44:12.641Z] DEBUG: [worker-api-51dbe532-7abd-495e-b0d9-02c07748ac2e]: IDLE
+[debug] [2021-05-26T06:44:12.641Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[info] >  Error: ENOENT: no such file or directory, stat '/Users/darren.behan/Documents/GitHub/client/build/index.html' {"user":"Error: ENOENT: no such file or directory, stat '/Users/darren.behan/Documents/GitHub/client/build/index.html'","metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"\u001b[90m> \u001b[39m Error: ENOENT: no such file or directory, stat '/Users/darren.behan/Documents/GitHub/client/build/index.html'"}}
+[debug] [2021-05-26T06:44:14.583Z] [functions] Finished "api" in ~2s
+[debug] [2021-05-26T06:44:14.583Z] DEBUG: [worker-api-9a146c63-9ad5-4fcd-8035-e799f4e2d665]: IDLE
+[debug] [2021-05-26T06:44:14.584Z] [work-queue] {"queueLength":0,"workRunningCount":0}

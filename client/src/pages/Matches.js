@@ -1,21 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import DataAreaContext from '../utils/DataAreaContext';
 import Header from "../components/Header";
-import Table from '../components/MatchesTable';
-import PostMatchForm from '../components/PostMatchForm';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
+import Cards from '../components/Cards';
+import { Container, Row, Col } from 'react-bootstrap';
 
 function Matches() {
+  const { allMatches } = useContext(DataAreaContext);
   
   return (
     <>
     <Header />
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Table />
-      <PostMatchForm />
+    <Container>
+      <Row>
+        {allMatches.map(match => 
+          <Col lg={{ span: 4 }} md={{ span: 12 }} xs={{ span: 12 }} style={{ marginTop: '15px' }}>
+            <Cards match={ match } />
+          </Col>
+        )}
+      </Row>
     </Container>
-		</>
+    </>
   );
 }
 

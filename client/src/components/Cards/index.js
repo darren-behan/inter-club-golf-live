@@ -9,7 +9,7 @@ function Cards() {
   return (
     <CardDeck>
       {allMatches.map(match => 
-        <Card>
+        <Card key={ match._id } style={{ marginTop: '15px' }}>
           <Card.Body>
             <Card.Title> { match.competitionName } </Card.Title>
             <Card.Text>

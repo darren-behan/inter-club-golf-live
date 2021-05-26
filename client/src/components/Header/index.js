@@ -47,7 +47,7 @@ function Header() {
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link as={ Link } to="/signup" eventKey="/signup">
+                <Nav.Link as={ Link } to="/signup" eventKey="/signup" id="sign-up">
                   <FontAwesomeIcon icon={ faUserPlus } className='fa-lg'/>
                   <p style={{ marginBottom: '0' }}>Signup</p>
                 </Nav.Link>

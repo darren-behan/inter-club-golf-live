@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from "../components/Header";
-import Table from '../components/MatchesTable';
-import PostMatch from '../components/PostMatchForm';
+import Cards from '../components/Cards';
 import Container from '@material-ui/core/Container';
 
 function Home() {
@@ -10,8 +9,7 @@ function Home() {
     <>
     <Header />
     <Container component="main" maxWidth="xs">
-      <Table />
-      <PostMatch />
+      <Cards />
     </Container>
     </>
   );

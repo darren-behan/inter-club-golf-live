@@ -1,6 +1,7 @@
 import React from 'react';
 import './index.css';
 import { Card } from 'react-bootstrap';
+import Moment from 'react-moment';
 
 function Cards(props) {
 
@@ -22,7 +23,11 @@ function Cards(props) {
         </Card.Text>
       </Card.Body>
       <Card.Footer>
-        <small className="text-muted">Last updated: { props.match.updatedAt }</small>
+        <small className="text-muted">Last updated: 
+            <Moment format="DD/MM/YYYY - HH:MM">
+              { props.match.updatedAt }
+            </Moment>
+        </small>
       </Card.Footer>
     </Card>
   );

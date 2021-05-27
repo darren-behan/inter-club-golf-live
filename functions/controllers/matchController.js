@@ -52,8 +52,8 @@ module.exports = {
       teamTwoScore: calculateMatchScoreOnPost(request.body.numIndividualMatches),
       individualMatch: returnIndividualMatchArr(request.body.numIndividualMatches, request.body.teamOneName, request.body.teamTwoName),
       createdBy: request.user.username,
-      createdAt: moment().tz("Europe/Dublin").format("DD/MM/YY, HH:mm"),
-      updatedAt: moment().tz("Europe/Dublin").format("DD/MM/YY, HH:mm")
+      createdAt: moment().tz("Europe/Dublin").format(),
+      updatedAt: moment().tz("Europe/Dublin").format()
     };
 
     let document = addMatch(newMatch);
@@ -208,6 +208,6 @@ const matchDataToUpdate = (array) => {
     teamOneScore: teamOneOverallScore,
     teamTwoScore: teamTwoOverallScore,
     individualMatch: individualMatchArr,
-    updatedAt: moment().tz("Europe/Dublin").format("DD/MM/YY, HH:mm")
+    updatedAt: moment().tz("Europe/Dublin").format()
   }
 }

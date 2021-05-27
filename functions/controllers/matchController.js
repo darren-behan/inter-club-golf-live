@@ -1,5 +1,5 @@
 // Defining methods for the matchesController
-const moment = require('moment');
+const moment = require('moment-timezone');
 const { db } = require('../util/admin');
 
 module.exports = {
@@ -52,8 +52,8 @@ module.exports = {
       teamTwoScore: calculateMatchScoreOnPost(request.body.numIndividualMatches),
       individualMatch: returnIndividualMatchArr(request.body.numIndividualMatches, request.body.teamOneName, request.body.teamTwoName),
       createdBy: request.user.username,
-      createdAt: moment().format("DD/MM/YY, HH:mm"),
-      updatedAt: moment().format("DD/MM/YY, HH:mm")
+      createdAt: moment().tz("Europe/Dublin").format("DD/MM/YY, HH:mm"),
+      updatedAt: moment().tz("Europe/Dublin").format("DD/MM/YY, HH:mm")
     };
 
     let document = addMatch(newMatch);
@@ -208,6 +208,6 @@ const matchDataToUpdate = (array) => {
     teamOneScore: teamOneOverallScore,
     teamTwoScore: teamTwoOverallScore,
     individualMatch: individualMatchArr,
-    updatedAt: moment().format("DD/MM/YY, HH:mm")
+    updatedAt: moment().tz("Europe/Dublin").format("DD/MM/YY, HH:mm")
   }
 }

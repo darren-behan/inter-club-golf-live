@@ -15,11 +15,11 @@ function Filters() {
   
   return (
     <>
-    <Collapse in={isActive} style={{ margin: '1rem 1rem' }}>
+    <Collapse in={isActive} className='m-3'>
       <Form inline className="navbar-form" id="form-inline">
         <InputGroup className="search-box">
-          <FormControl type="text" id="search" placeholder="Filter by competition" style={{ backgroundColor: '#eef3f8', border: 'none' }} onChange={ handleInputChange }/>
-          <span className="input-group-addon"><FontAwesomeIcon icon={ faGlasses } style={{ color: 'green' }}/></span>
+          <FormControl type="text" className="m-3 m-sm-0" id="search" placeholder="Filter by competition" style={{ backgroundColor: '#eef3f8', border: 'none' }} onChange={ handleInputChange }/>
+          <span className="input-group-addon m-3 m-sm-0"><FontAwesomeIcon icon={ faGlasses } style={{ color: 'green' }}/></span>
         </InputGroup>
       </Form>
     </Collapse>

@@ -6,7 +6,7 @@ import Filters from '../components/Filters';
 import { Container, Row, Col } from 'react-bootstrap';
 
 function Matches() {
-  const { allMatches, filterValue } = useContext(DataAreaContext);
+  const { allMatches, filterValue, isActive } = useContext(DataAreaContext);
 
   const sortedMatches = allMatches.sort(function(a, b) {
     return new Date(b.updatedAt) - new Date(a.updatedAt);
@@ -17,7 +17,9 @@ function Matches() {
     <Container fluid={ true } style={{ padding: 0}}>
       <Header />
       <Container>
-        <Row style={{ backgroundColor: '#ffffff', margin: '1rem 0 0 0', boxShadow: '0 0 4px rgba(0,0,0,.1)', borderRadius: '.25rem' }}>
+        <Row 
+          className={(isActive) ? 'mt-3 mx-0' : ''}
+          style={{ backgroundColor: '#ffffff', boxShadow: '0 0 4px rgba(0,0,0,.1)', borderRadius: '.25rem' }}>
           <Filters />
         </Row>
         <Row>
@@ -25,7 +27,7 @@ function Matches() {
           (match.competitionName.toLowerCase()).includes(filterValue.toLowerCase())
           ?
           (
-            <Col lg={{ span: 4 }} md={{ span: 12 }} xs={{ span: 12 }} style={{ marginTop: '15px' }}>
+            <Col lg={{ span: 4 }} md={{ span: 12 }} xs={{ span: 12 }}  className='mt-3'>
               <Cards match={ match } />
             </Col> 
           ) : 

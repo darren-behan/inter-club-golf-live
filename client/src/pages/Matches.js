@@ -21,7 +21,7 @@ function Matches() {
     <Container fluid={ true } style={{ padding: 0}}>
       <Header />
       <Container>
-        <Row style={{ backgroundColor: '#ffffff', margin: '1rem 0 0 0', boxShadow: '0 0 4px rgba(0,0,0,.1)' }}>
+        <Row style={{ backgroundColor: '#ffffff', margin: '1rem 0 0 0', boxShadow: '0 0 4px rgba(0,0,0,.1)', borderRadius: '.25rem' }}>
           <Filters />
         </Row>
         <Row>

@@ -14,18 +14,18 @@ function Header() {
   return (
     <Navbar expand="md" sticky="top" id='navbar' className="navbar-light justify-content-center" style={{ backgroundColor: '#ffffff' }}>
       <Container>
-        <Navbar.Brand href="#home" style={{ color: 'green' }}>
-          <Bootstrap size={38}/>
-        </Navbar.Brand>
         <Button
           onClick={() => setActive(!isActive)}
           aria-controls="filters-collapse"
           aria-expanded={isActive}
           variant="outline-success"
-          style={{ margin: '0 0.5rem 0 0.5rem' }}
+          className='mx-3 ml-md-0'
         >
           Filters
         </Button>
+        <Navbar.Brand href="#home" style={{ color: 'green' }}>
+          <Bootstrap size={38}/>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-start">
           <Nav justify className="ml-auto" activeKey={location.pathname} style={{ borderBottom: '0' }}>

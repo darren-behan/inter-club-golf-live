@@ -12,10 +12,6 @@ function Matches() {
     return new Date(b.updatedAt) - new Date(a.updatedAt);
   });
   
-  sortedMatches.map(match =>
-    console.log(match.competitionName)
-  );
-  
   return (
     <>
     <Container fluid={ true } style={{ padding: 0}}>

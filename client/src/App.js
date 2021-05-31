@@ -25,6 +25,7 @@ function App() {
   const [allMatches, setAllMatches] = useState( [] );
   // This is used to store new match data to post in the database
   const [postMatchObj, setPostMatchObj] = useState({});
+  const [isActive, setActive] = useState(false);
 
   useEffect(() => {
     async function loadMatches() {
@@ -44,7 +45,7 @@ function App() {
   return (
     <>
       <DataAreaContext.Provider
-      value={{ isAuthenticated, allMatches, loginDataObj, postMatchObj, setIsAuthenticated, setAllMatches, setLoginDataObj, setPostMatchObj }}
+      value={{ isAuthenticated, allMatches, loginDataObj, postMatchObj, isActive, setIsAuthenticated, setAllMatches, setLoginDataObj, setPostMatchObj, setActive }}
       >
         <Router>
           <div>

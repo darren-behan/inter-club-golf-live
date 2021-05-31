@@ -2,13 +2,13 @@ import React, { useContext } from 'react';
 import './index.css';
 import { useLocation, Link } from 'react-router-dom';
 import DataAreaContext from '../../utils/DataAreaContext';
-import { Container, Navbar, Nav, Form, FormControl, NavDropdown, InputGroup } from 'react-bootstrap';
+import { Container, Navbar, Button, Nav, Form, FormControl, NavDropdown, InputGroup } from 'react-bootstrap';
 import { Bootstrap } from 'react-bootstrap-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faGolfBall, faSignInAlt, faUserPlus, faGlasses, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
-  const { isAuthenticated } = useContext(DataAreaContext);
+  const { isAuthenticated, isActive, setActive } = useContext(DataAreaContext);
   const location = useLocation();
 
   return (
@@ -17,6 +17,15 @@ function Header() {
         <Navbar.Brand href="#home" style={{ color: 'green' }}>
           <Bootstrap size={35}/>
         </Navbar.Brand>
+        <Button
+          onClick={() => setActive(!isActive)}
+          aria-controls="filters-collapse"
+          aria-expanded={isActive}
+          variant="outline-success"
+          style={{ margin: '0 1rem 0 1rem' }}
+        >
+          Filters
+        </Button>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-start">
           <Form inline className="navbar-form" id="form-inline">

@@ -6,24 +6,36 @@ import Filters from '../components/Filters';
 import { Container, Row, Col } from 'react-bootstrap';
 
 function Matches() {
-  const { allMatches } = useContext(DataAreaContext);
+  const { allMatches, filterValue } = useContext(DataAreaContext);
 
   const sortedMatches = allMatches.sort(function(a, b) {
     return new Date(b.updatedAt) - new Date(a.updatedAt);
   });
+  
+  sortedMatches.map(match =>
+    console.log(match.competitionName)
+  );
   
   return (
     <>
     <Container fluid={ true } style={{ padding: 0}}>
       <Header />
       <Container>
-        <Filters />
+        <Row style={{ backgroundColor: '#ffffff', margin: '1rem 0 0 0', boxShadow: '0 0 4px rgba(0,0,0,.1)' }}>
+          <Filters />
+        </Row>
         <Row>
-        {sortedMatches.map(match => 
-          <Col lg={{ span: 4 }} md={{ span: 12 }} xs={{ span: 12 }} style={{ marginTop: '15px' }}>
-            <Cards match={ match } />
-          </Col>
-        )}
+        {sortedMatches.map(match =>
+          (match.competitionName.toLowerCase()).includes(filterValue.toLowerCase())
+          ?
+          (
+            <Col lg={{ span: 4 }} md={{ span: 12 }} xs={{ span: 12 }} style={{ marginTop: '15px' }}>
+              <Cards match={ match } />
+            </Col> 
+          ) : 
+          null
+          )
+        }
         </Row>
       </Container>
     </Container>

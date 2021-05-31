@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import './index.css';
 import { useLocation, Link } from 'react-router-dom';
 import DataAreaContext from '../../utils/DataAreaContext';
-import { Container, Navbar, Button, Nav, Form, FormControl, NavDropdown, InputGroup } from 'react-bootstrap';
+import { Container, Navbar, Button, Nav, NavDropdown } from 'react-bootstrap';
 import { Bootstrap } from 'react-bootstrap-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faGolfBall, faSignInAlt, faUserPlus, faGlasses, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faGolfBall, faSignInAlt, faUserPlus, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
   const { isAuthenticated, isActive, setActive } = useContext(DataAreaContext);
@@ -15,25 +15,19 @@ function Header() {
     <Navbar expand="md" sticky="top" id='navbar' className="navbar-light justify-content-center" style={{ backgroundColor: '#ffffff' }}>
       <Container>
         <Navbar.Brand href="#home" style={{ color: 'green' }}>
-          <Bootstrap size={35}/>
+          <Bootstrap size={38}/>
         </Navbar.Brand>
         <Button
           onClick={() => setActive(!isActive)}
           aria-controls="filters-collapse"
           aria-expanded={isActive}
           variant="outline-success"
-          style={{ margin: '0 1rem 0 1rem' }}
+          style={{ margin: '0 0.5rem 0 0.5rem' }}
         >
           Filters
         </Button>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-start">
-          <Form inline className="navbar-form" id="form-inline">
-            <InputGroup className="search-box">
-              <FormControl type="text" id="search" placeholder="Search" style={{ backgroundColor: '#eef3f8', border: 'none' }} />
-              <span className="input-group-addon"><FontAwesomeIcon icon={ faGlasses } style={{ color: 'green' }}/></span>
-            </InputGroup>
-          </Form>
           <Nav justify className="ml-auto" activeKey={location.pathname} style={{ borderBottom: '0' }}>
             <Nav.Item>
               <Nav.Link as={ Link } to="/" eventKey="/">

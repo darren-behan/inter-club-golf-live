@@ -29,9 +29,10 @@ function Cards(props) {
       >
         Upcoming
       </Badge>
-    }
-            
+    }         
   }
+
+  var concatDateTime = props.match.matchDate + 'T' + props.match.matchTime + ':00+00:00';
 
   function handleClick(matchId) {
     const path = "/match/" + matchId;
@@ -58,15 +59,24 @@ function Cards(props) {
           </small>
           <br/>
           <small className="text-muted">
-            Match Date: { props.match.matchDate }
+            Match Date:
+            <br/>
+            <Moment format="DD/MM/YYYY">
+              { concatDateTime }
+            </Moment>
           </small>
           <br/>
           <small className="text-muted">
-            Match Time: { props.match.matchTime }
+            Match Time: 
+            <br/>
+            <Moment format="HH:MM">
+              { concatDateTime }
+            </Moment>
           </small>
           <br/>
-          <small className="text-muted">Last updated: 
-            <br/>          
+          <small className="text-muted">
+            Last updated at:
+            <br/>
             <Moment format="DD/MM/YYYY - HH:MM">
               { props.match.updatedAt }
             </Moment>

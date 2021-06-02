@@ -2,6 +2,8 @@
 const moment = require('moment-timezone');
 const { db } = require('../util/admin');
 
+const timeZoneDublin = "Europe/Dublin";
+
 module.exports = {
   findAll(request, response) {
       db
@@ -53,9 +55,9 @@ module.exports = {
       teamTwoScore: calculateMatchScoreOnPost(request.body.numIndividualMatches),
       individualMatch: returnIndividualMatchArr(request.body.numIndividualMatches, request.body.teamOneName, request.body.teamTwoName),
       createdBy: request.user.username,
-      createdAt: moment().tz("Europe/Dublin").format(),
-      updatedAt: moment().tz("Europe/Dublin").format(),
-      matchStatus: calculateMatchStatus()
+      createdAt: moment().tz(timeZoneDublin).format(),
+      updatedAt: moment().tz(timeZoneDublin).format(),
+      matchStatus: calculateMatchStatus(request.body.matchDate, request.body.matchTime)
     };
 
     let document = addMatch(newMatch);
@@ -211,10 +213,23 @@ const matchDataToUpdate = (array) => {
     teamOneScore: teamOneOverallScore,
     teamTwoScore: teamTwoOverallScore,
     individualMatch: individualMatchArr,
-    updatedAt: moment().tz("Europe/Dublin").format()
+    updatedAt: moment().tz(timeZoneDublin).format()
   }
 }
 
-const calculateMatchStatus = () => {
-  return "not started";
+const calculateMatchStatus = (matchDate, matchTime) => {
+  var concatDateTime = matchDate + 'T' + matchTime + ':00+00:00';
+  var start_time = moment().tz(timeZoneDublin).subtract(6, 'hours');
+  var end_time = moment().tz(timeZoneDublin).add(6, 'hours');
+
+  // if match date/time is within 6 hours either side of current date/time, return in progress 
+  if (moment(concatDateTime).isBetween(start_time, end_time)) {
+    return "in progress";
+  } else if (moment(concatDateTime).isAfter(end_time)) {
+    // if match date/time is after end_time, return not started
+    return "not started";
+  } else {
+    // if start_time is before current date/time, return complete
+    return "complete";
+  }
 }

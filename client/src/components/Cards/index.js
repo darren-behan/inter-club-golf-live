@@ -1,13 +1,37 @@
 import React from 'react';
 import './index.css';
 import { useHistory } from 'react-router-dom';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, Badge } from 'react-bootstrap';
 import Moment from 'react-moment';
 
 function Cards(props) {
   const history = useHistory();
 
-  const matchId = props.match.matchId;
+  const calculateMatchStatus = (matchStatus) => {
+    if (matchStatus === 'complete') {
+      return <Badge
+        variant="success"
+        className="float-right"
+      >
+        Complete
+      </Badge>
+    } else if (matchStatus === 'in progress') {
+      return <Badge
+        variant="warning"
+        className="float-right"
+      >
+        In progress
+      </Badge>
+    } else {
+      return <Badge
+        style={{ backgroundColor: "#f3f2ef" }}
+        className="float-right"
+      >
+        Upcoming
+      </Badge>
+    }
+            
+  }
 
   function handleClick(matchId) {
     const path = "/match/" + matchId;
@@ -17,8 +41,11 @@ function Cards(props) {
   return (
     <Card key={ props.match.matchId } style={{ boxShadow: '0 0 4px rgba(0,0,0,.1)' }}>
       <Card.Body style={{ borderRadius: '.25rem .25rem 0 0', background: 'linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 70%, rgba(0,170,8,1) 100%)' }}>
-        <Card.Title> { props.match.teamOneName } v { props.match.teamTwoName } </Card.Title>
+        <Card.Title> 
+          { props.match.teamOneName } v { props.match.teamTwoName }
+        </Card.Title>
         <Card.Text>
+          {calculateMatchStatus(props.match.matchStatus)}
           <small className="text-muted" style={{ fontStyle: 'italic' }}>
             Match Score:
           </small>
@@ -52,7 +79,7 @@ function Cards(props) {
           size="sm"
           className="float-right"
           onClick={() =>
-            handleClick(matchId)
+            handleClick(props.match.matchId)
           }
         >
           View match

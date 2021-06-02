@@ -25,7 +25,8 @@ module.exports = {
             individualMatch: doc.data().individualMatch,
             createdBy: doc.data().createdBy,
             createdAt: doc.data().createdAt,
-            updatedAt: doc.data().updatedAt
+            updatedAt: doc.data().updatedAt,
+            matchStatus: doc.data().matchStatus
           });
         });
         return response.status(200).json(matches);
@@ -53,7 +54,8 @@ module.exports = {
       individualMatch: returnIndividualMatchArr(request.body.numIndividualMatches, request.body.teamOneName, request.body.teamTwoName),
       createdBy: request.user.username,
       createdAt: moment().tz("Europe/Dublin").format(),
-      updatedAt: moment().tz("Europe/Dublin").format()
+      updatedAt: moment().tz("Europe/Dublin").format(),
+      matchStatus: calculateMatchStatus()
     };
 
     let document = addMatch(newMatch);
@@ -72,7 +74,8 @@ module.exports = {
         individualMatch: doc.data().individualMatch,
         createdBy: doc.data().createdBy,
         createdAt: doc.data().createdAt,
-        updatedAt: doc.data().updatedAt
+        updatedAt: doc.data().updatedAt,
+        matchStatus: doc.data().matchStatus
       };
       return response.status(200).json(matches);
     })
@@ -210,4 +213,8 @@ const matchDataToUpdate = (array) => {
     individualMatch: individualMatchArr,
     updatedAt: moment().tz("Europe/Dublin").format()
   }
+}
+
+const calculateMatchStatus = () => {
+  return "not started";
 }

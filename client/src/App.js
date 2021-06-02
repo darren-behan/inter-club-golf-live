@@ -10,6 +10,7 @@ import {
 import { trackPromise } from 'react-promise-tracker';
 import Home from './pages/Home';
 import Matches from './pages/Matches';
+import Match from './pages/Match';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Profile from './pages/Profile';
@@ -54,6 +55,7 @@ function App() {
             <Switch>
               <Route exact path={['/']} component={Home} />
               <Route exact path={['/matches']} component={Matches} />
+              <Route exact path={'/match/:id'} component={Match} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/signup' component={Signup} />
               <Route exact path='/profile' component={Profile} />

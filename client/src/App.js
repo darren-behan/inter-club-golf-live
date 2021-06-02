@@ -7,7 +7,6 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
-import { trackPromise } from 'react-promise-tracker';
 import Home from './pages/Home';
 import Matches from './pages/Matches';
 import Match from './pages/Match';
@@ -32,13 +31,11 @@ function App() {
 
   useEffect(() => {
     async function loadMatches() {
-      await trackPromise(
-        API.getAllMatches()
+      await API.getAllMatches()
         .then(res => {
           setAllMatches(res.data);
         })
-        .catch(err => console.log(err))
-      );
+        .catch(err => console.log(err));
     }
     loadMatches();
   }, []);

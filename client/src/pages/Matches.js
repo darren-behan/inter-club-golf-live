@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import DataAreaContext from '../utils/DataAreaContext';
+import { IsEmpty, Map } from "react-lodash";
 import Header from "../components/Header";
 import Cards from '../components/Cards';
 import Filters from '../components/Filters';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
 
 function Matches() {
   const { allMatches, filterValue, isActive } = useContext(DataAreaContext);
@@ -23,17 +24,26 @@ function Matches() {
           <Filters />
         </Row>
         <Row>
-        {sortedMatches.map(match =>
-          (match.competitionName.toLowerCase()).includes(filterValue.toLowerCase())
-          ?
-          (
-            <Col lg={{ span: 4 }} md={{ span: 12 }} xs={{ span: 12 }}  className='mt-3'>
-              <Cards match={ match } />
-            </Col> 
-          ) : 
-          null
-          )
-        }
+        <IsEmpty
+          value={sortedMatches}
+          yes={() =>
+            <Spinner animation="grow" variant="success" />
+          }
+          no={() => (
+            <Map collection={sortedMatches}
+              iteratee={match =>
+                (match.competitionName.toLowerCase()).includes(filterValue.toLowerCase())
+                ?
+                (
+                  <Col lg={{ span: 4 }} md={{ span: 12 }} xs={{ span: 12 }}  className='mt-3'>
+                    <Cards match={ match } />
+                  </Col> 
+                ) : 
+                null
+              }
+            />
+          )}
+        />
         </Row>
       </Container>
     </Container>

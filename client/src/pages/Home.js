@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from "../components/Header";
-import CardCarousel from '../components/Carousel';
+import Slider from '../components/Slider';
 import PostMatchForm from '../components/PostMatchForm';
 import { Container, Row } from 'react-bootstrap';
 
@@ -10,8 +10,8 @@ function Home() {
     <>
     <Header />
     <Container>
-      <Row className='flex-nowrap mt-4 pb-4' style={{ overflowX: 'auto' }}>
-        <CardCarousel />
+      <Row className='flex-nowrap mt-3 pb-4' style={{ overflowX: 'auto' }}>
+        <Slider />
       </Row>
       <PostMatchForm />
     </Container>

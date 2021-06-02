@@ -4,7 +4,7 @@ import DataAreaContext from '../../utils/DataAreaContext';
 import Cards from '../Cards';
 import { Col } from 'react-bootstrap';
 
-function CardCarousel() {
+function Slider() {
   const { allMatches } = useContext(DataAreaContext);
 
   return (
@@ -19,4 +19,4 @@ function CardCarousel() {
   );
 }
 
-export default CardCarousel;
+export default Slider;

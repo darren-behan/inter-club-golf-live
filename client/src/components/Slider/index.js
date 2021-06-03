@@ -17,7 +17,7 @@ function Slider() {
       no={() => (
         <Map collection={allMatches}
           iteratee={match =>
-            <Col lg={{ span: 4 }}>
+            <Col xs={{ span: 12 }} lg={{ span: 4 }}>
               <Cards match={ match } />
             </Col>
           }

@@ -10,7 +10,7 @@ function Home() {
     <>
     <Header />
     <Container>
-      <Row className='flex-nowrap mt-3 pb-4' style={{ overflowX: 'auto' }}>
+      <Row className='slider flex-nowrap mt-3 pb-4' style={{ overflowX: 'auto' }}>
         <Slider />
       </Row>
       <PostMatchForm />

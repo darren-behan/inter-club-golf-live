@@ -67,7 +67,7 @@ function Cards(props) {
           </small>
           <br/>
           <small className="text-muted">
-            Match Time: 
+            Tee Time: 
             <br/>
             <Moment format="HH:MM">
               { concatDateTime }

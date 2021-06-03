@@ -14,3 +14,12 @@ body {
   margin-left: 1rem;
   margin-right: 1rem;
 }
+
+.slider {
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.slider::-webkit-scrollbar {
+  display: none;
+}

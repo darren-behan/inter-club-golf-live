@@ -2,28 +2,19 @@ import React, { useContext } from 'react';
 import './index.css';
 import { useLocation, Link } from 'react-router-dom';
 import DataAreaContext from '../../utils/DataAreaContext';
-import { Container, Navbar, Button, Nav, NavDropdown } from 'react-bootstrap';
+import { Container, Navbar, Nav } from 'react-bootstrap';
 import { Bootstrap } from 'react-bootstrap-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faGolfBall, faSignInAlt, faUserPlus, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faGolfBall, faSignInAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
-  const { isAuthenticated, isActive, setActive } = useContext(DataAreaContext);
+  const { isAuthenticated } = useContext(DataAreaContext);
   const location = useLocation();
 
   return (
-    <Navbar expand="md" sticky="top" id='navbar' className="navbar-light justify-content-center py-3 py-sm-0" style={{ backgroundColor: '#ffffff' }}>
+    <Navbar expand="md" sticky="top" id='navbar' className="navbar-light justify-content-center py-3 py-sm-0 px-0" style={{ backgroundColor: '#ffffff' }}>
       <Container>
-        <Button
-          onClick={() => setActive(!isActive)}
-          aria-controls="filters-collapse"
-          aria-expanded={isActive}
-          variant="outline-success"
-          className='mx-3 ml-md-0'
-        >
-          Filters
-        </Button>
-        <Navbar.Brand href="#home" className='mx-3 mx-sm-0' style={{ color: 'green' }}>
+        <Navbar.Brand href="/" className='mx-3 mx-sm-0' style={{ color: 'green' }}>
           <Bootstrap size={38}/>
         </Navbar.Brand>
         <Navbar.Toggle className='mx-3 mx-sm-0'  aria-controls="basic-navbar-nav" />
@@ -59,19 +50,10 @@ function Header() {
             ) : (
               <>
               <Nav.Item className="mx-1 mx-sm-0">
-                <NavDropdown title={
-                  <div style={{display: "inline-block"}}>
-                    <FontAwesomeIcon icon={ faUserCircle } className='fa-lg'/>
-                    <p className='mb-0'> Me </p>
-                  </div>
-                } id="collasible-nav-dropdown">
-                  <NavDropdown.Item as={ Link } to="/profile" eventKey="/profile">
-                    Profile
-                  </NavDropdown.Item>
-                  <NavDropdown.Item as={ Link } to="/settings" eventKey="/settings">
-                    Settings
-                  </NavDropdown.Item>
-                </NavDropdown>
+                <Nav.Link className='p-3' as={ Link } to="/login" eventKey="/login">
+                  <FontAwesomeIcon icon={ faSignInAlt } className='fa-lg'/>
+                  <p className='mb-0'>Logout</p>
+                </Nav.Link>
               </Nav.Item>
               </>
             )}

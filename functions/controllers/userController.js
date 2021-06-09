@@ -10,7 +10,6 @@ const { validateLoginData, validateSignUpData } = require('../util/validators');
 
 module.exports = {
   loginUser(request, response) {
-    console.log(request.body);
     const user = {
       email: request.body.email,
       password: request.body.password
@@ -23,10 +22,7 @@ module.exports = {
     .auth()
     .signInWithEmailAndPassword(user.email, user.password)
     .then((data) => {
-      return data.user.getIdToken();
-    })
-    .then((token) => {
-      return response.json({ token });
+      return response.json(data.user);
     })
     .catch((error) => {
       console.error(error);

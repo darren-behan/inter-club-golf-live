@@ -43,7 +43,7 @@ const styles = makeStyles({
 
 function Login() {
 	let history = useHistory();
-	const { isAuthenticated, setIsAuthenticated, loginDataObj, setLoginDataObj } = useContext(DataAreaContext);
+	const { isAuthenticated, setIsAuthenticated, loginDataObj, setLoginDataObj, userDataObj, setUserDataObj } = useContext(DataAreaContext);
 	const [errors, setErrors] = useState( [] );
 	const [loading, setLoading] = useState( false );
 	const classes = styles();
@@ -58,6 +58,7 @@ function Login() {
 
   // Handles updating component state when the user types into the input field
   const handleInputChange = (event) => {
+		event.preventDefault();
     const { name, value } = event.target;
 		setLoginDataObj({...loginDataObj, [name]: value})
   };
@@ -70,7 +71,8 @@ function Login() {
       password: loginDataObj.password
 		})
 		.then((response) => {
-			localStorage.setItem('AuthToken', `Bearer ${response.data.token}`);
+			localStorage.setItem('AuthToken', `Bearer ${response.data.stsTokenManager.accessToken}`);
+			setUserDataObj(response.data);
 			setLoading(false);
 			setIsAuthenticated(true);
 		})
@@ -79,6 +81,8 @@ function Login() {
 			setLoading(false);
 		});
 	};
+
+	console.log(userDataObj);
 
 	return (
     <>

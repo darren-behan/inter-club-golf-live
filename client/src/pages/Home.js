@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import Slider from '../components/Slider';
-import PostMatchForm from '../components/PostMatchForm';
 import { Container, Row } from 'react-bootstrap';
 
 function Home() {
@@ -13,8 +13,8 @@ function Home() {
       <Row className='slider flex-nowrap mt-3 pb-4' style={{ overflowX: 'auto' }}>
         <Slider />
       </Row>
-      <PostMatchForm />
     </Container>
+    <Footer />
     </>
   );
 }

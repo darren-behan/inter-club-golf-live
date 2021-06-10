@@ -82,8 +82,6 @@ function Login() {
 		});
 	};
 
-	console.log(userDataObj);
-
 	return (
     <>
     <Header />

@@ -32,7 +32,7 @@ function Cards(props) {
     }         
   }
 
-  var concatDateTime = props.match.matchDate + 'T' + props.match.matchTime + ':00+00:00';
+  const concatDateTime = props.match.matchDate + 'T' + props.match.matchTime + ':00+00:00';
 
   function handleClick(matchId) {
     const path = "/match/" + matchId;

@@ -13,7 +13,7 @@ function Footer() {
     <Navbar id='navbar-footer' expand="md" variant="light" bg="light" fixed="bottom" className="navbar-light justify-content-center p-0" style={{ backgroundColor: '#ffffff' }}>
       {!isAuthenticated ? (
         <Navbar.Brand href="#home" className='mx-3 mx-sm-0' style={{ color: 'green' }}>
-          <p>The Creative Dream</p>
+          <p className='my-0'>The Creative Dream</p>
         </Navbar.Brand>
       ) : (
         <>

@@ -8,19 +8,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faGolfBall, faSignInAlt, faUserPlus, faFilter } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
-  const { isAuthenticated, resetFilterValues, setShow } = useContext(DataAreaContext);
+  const { isAuthenticated, resetFilterValues, setShow, userDataObj } = useContext(DataAreaContext);
   const location = useLocation();
 
   return (
     <Navbar expand="md" sticky="top" id='navbar' className="navbar-light justify-content-center py-3 py-sm-0 px-0" style={{ backgroundColor: '#ffffff' }}>
       <Container style={{ flexDirection: 'row' }}>
-        <Button
-          onClick={() => setShow(true)}
-          variant="outline-success"
-          className="mx-3 ml-sm-0"
-        >
-          <FontAwesomeIcon icon={ faFilter } className='fa-lg'/>
-        </Button>
+        {(location.pathname === "/matches" || location.pathname === `/usermatches/${userDataObj.uid}`) ? (
+          <Button
+            onClick={() => setShow(true)}
+            variant="outline-success"
+            className="mx-3 ml-sm-0"
+          >
+            <FontAwesomeIcon icon={ faFilter } className='fa-lg'/>
+          </Button>
+          ) : (
+            null
+          )
+        }
         <Navbar.Brand href="/" className='mx-3 mx-sm-0' style={{ color: 'green' }}>
           <Bootstrap size={38}/>
         </Navbar.Brand>

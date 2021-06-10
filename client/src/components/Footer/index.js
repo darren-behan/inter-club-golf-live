@@ -11,7 +11,7 @@ function Footer() {
 
   return (
     <Navbar id='navbar-footer' expand="md" variant="light" bg="light" fixed="bottom" className="navbar-light justify-content-center p-0" style={{ backgroundColor: '#ffffff' }}>
-      {isAuthenticated ? (
+      {!isAuthenticated ? (
         <Navbar.Brand href="#home" className='mx-3 mx-sm-0' style={{ color: 'green' }}>
           <p>The Creative Dream</p>
         </Navbar.Brand>
@@ -19,7 +19,7 @@ function Footer() {
         <>
         <Nav justify className="justify-content-center mb-0" style={{ flexDirection: 'row' }}>
           <Nav.Item className="">
-            <Nav.Link className='p-3' as={ Link } to={ "/usermatches/" + userDataObj.uid } eventKey={ "/usermatches/" + userDataObj.uid }>
+            <Nav.Link className='p-3' as={ Link } to={ "/usermatches/" + userDataObj.uid } eventKey={ `/usermatches/${userDataObj.uid}` }>
               <Button
                 variant="outline-success"
                 onClick={() => resetFilterValues()}

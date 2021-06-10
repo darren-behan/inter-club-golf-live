@@ -28,7 +28,7 @@ function App() {
   const [allMatches, setAllMatches] = useState( [] );
   // This is used to store new match data to post in the database
   const [postMatchObj, setPostMatchObj] = useState({});
-  const [isActive, setActive] = useState(false);
+  const [show, setShow] = useState(false);
   // This stores the value the user inputs to filter the results
   const [filterValue, setFilterValue] = useState("");
 
@@ -45,10 +45,14 @@ function App() {
 
   console.log(allMatches);
 
+  const resetFilterValues = () => {
+    setFilterValue("");
+  }
+
   return (
     <>
       <DataAreaContext.Provider
-      value={{ isAuthenticated, allMatches, loginDataObj, postMatchObj, isActive, filterValue, userDataObj, setIsAuthenticated, setAllMatches, setLoginDataObj, setPostMatchObj, setActive, setFilterValue, setUserDataObj }}
+      value={{ isAuthenticated, allMatches, loginDataObj, postMatchObj, show, filterValue, userDataObj, setIsAuthenticated, setAllMatches, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj, resetFilterValues }}
       >
         <Router>
           <div>

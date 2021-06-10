@@ -4,11 +4,11 @@ import { IsEmpty, Map } from "react-lodash";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Cards from '../components/Cards';
-import Filters from '../components/Filters';
+import FiltersModal from '../components/FiltersModal';
 import { Container, Row, Col } from 'react-bootstrap';
 
 function Matches() {
-  const { allMatches, filterValue, isActive, userDataObj } = useContext(DataAreaContext);
+  const { allMatches, filterValue, show, userDataObj } = useContext(DataAreaContext);
   let filterMatchesByUid;
 
   if (Object.keys(userDataObj).length > 0) {
@@ -27,9 +27,9 @@ function Matches() {
       <Header />
       <Container>
         <Row 
-          className={(isActive) ? 'mt-3 mx-0' : ''}
+          className={(show) ? 'mt-3 mx-0' : ''}
           style={{ backgroundColor: '#ffffff', boxShadow: '0 0 4px rgba(0,0,0,.1)', borderRadius: '.25rem' }}>
-          <Filters />
+          <FiltersModal />
         </Row>
         <Row>
         <IsEmpty

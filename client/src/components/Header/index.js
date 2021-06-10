@@ -2,18 +2,25 @@ import React, { useContext } from 'react';
 import './index.css';
 import { useLocation, Link } from 'react-router-dom';
 import DataAreaContext from '../../utils/DataAreaContext';
-import { Container, Navbar, Nav } from 'react-bootstrap';
+import { Container, Navbar, Nav, Button } from 'react-bootstrap';
 import { Bootstrap } from 'react-bootstrap-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faGolfBall, faSignInAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faGolfBall, faSignInAlt, faUserPlus, faFilter } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
-  const { isAuthenticated, resetFilterValues } = useContext(DataAreaContext);
+  const { isAuthenticated, resetFilterValues, setShow } = useContext(DataAreaContext);
   const location = useLocation();
 
   return (
     <Navbar expand="md" sticky="top" id='navbar' className="navbar-light justify-content-center py-3 py-sm-0 px-0" style={{ backgroundColor: '#ffffff' }}>
       <Container style={{ flexDirection: 'row' }}>
+        <Button
+          onClick={() => setShow(true)}
+          variant="outline-success"
+          className="mx-3 ml-sm-0"
+        >
+          <FontAwesomeIcon icon={ faFilter } className='fa-lg'/>
+        </Button>
         <Navbar.Brand href="/" className='mx-3 mx-sm-0' style={{ color: 'green' }}>
           <Bootstrap size={38}/>
         </Navbar.Brand>

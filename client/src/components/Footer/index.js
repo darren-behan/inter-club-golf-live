@@ -4,28 +4,20 @@ import { Link } from 'react-router-dom';
 import DataAreaContext from '../../utils/DataAreaContext';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserCircle, faGolfBall, faFilter, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faGolfBall, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 function Footer() {
-  const { isAuthenticated, show, setShow, userDataObj, resetFilterValues } = useContext(DataAreaContext);
+  const { isAuthenticated, userDataObj, resetFilterValues } = useContext(DataAreaContext);
 
   return (
     <Navbar id='navbar-footer' expand="md" variant="light" bg="light" fixed="bottom" className="navbar-light justify-content-center p-0" style={{ backgroundColor: '#ffffff' }}>
-      {!isAuthenticated ? (
+      {isAuthenticated ? (
         <Navbar.Brand href="#home" className='mx-3 mx-sm-0' style={{ color: 'green' }}>
           <p>The Creative Dream</p>
         </Navbar.Brand>
       ) : (
         <>
         <Nav justify className="justify-content-center mb-0" style={{ flexDirection: 'row' }}>
-          <Nav.Item className="p-3">
-            <Button
-              onClick={() => setShow(!show)}
-              variant="outline-success"
-            >
-              <FontAwesomeIcon icon={ faFilter } className='fa-lg'/>
-            </Button>
-          </Nav.Item>
           <Nav.Item className="">
             <Nav.Link className='p-3' as={ Link } to={ "/usermatches/" + userDataObj.uid } eventKey={ "/usermatches/" + userDataObj.uid }>
               <Button

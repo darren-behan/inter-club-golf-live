@@ -28,6 +28,7 @@ function App() {
   const [allMatches, setAllMatches] = useState( [] );
   // This is used to store new match data to post in the database
   const [postMatchObj, setPostMatchObj] = useState({});
+  // This is used to show the filters modal
   const [show, setShow] = useState(false);
   // This stores the value the user inputs to filter the results
   const [filterValue, setFilterValue] = useState("");

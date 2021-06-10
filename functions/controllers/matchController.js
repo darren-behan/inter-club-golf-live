@@ -26,6 +26,7 @@ module.exports = {
             teamTwoScore: doc.data().teamTwoScore,
             individualMatch: doc.data().individualMatch,
             createdBy: doc.data().createdBy,
+            createdByUid: doc.data().createdByUid,
             createdAt: doc.data().createdAt,
             updatedAt: doc.data().updatedAt,
             matchStatus: doc.data().matchStatus
@@ -42,7 +43,7 @@ module.exports = {
     if (request.body.teamOneName.trim() === "" || request.body.teamTwoName.trim() === "") {
       return response.status(400).json('Must not be empty');
     }
-
+    
     const newMatch = {
       username: request.user.username,
       matchDate: request.body.matchDate,
@@ -55,6 +56,7 @@ module.exports = {
       teamTwoScore: calculateMatchScoreOnPost(request.body.numIndividualMatches),
       individualMatch: returnIndividualMatchArr(request.body.numIndividualMatches, request.body.teamOneName, request.body.teamTwoName),
       createdBy: request.user.username,
+      createdByUid: request.user.uid,
       createdAt: moment().tz(timeZoneDublin).format(),
       updatedAt: moment().tz(timeZoneDublin).format(),
       matchStatus: calculateMatchStatus(request.body.matchDate, request.body.matchTime)
@@ -75,6 +77,7 @@ module.exports = {
         teamTwoScore: doc.data().teamTwoScore,
         individualMatch: doc.data().individualMatch,
         createdBy: doc.data().createdBy,
+        createdByUid: doc.data().createdByUid,
         createdAt: doc.data().createdAt,
         updatedAt: doc.data().updatedAt,
         matchStatus: doc.data().matchStatus

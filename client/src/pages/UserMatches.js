@@ -5,12 +5,19 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Cards from '../components/Cards';
 import Filters from '../components/Filters';
-import { Container, Row, Col, Spinner } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 function Matches() {
-  const { allMatches, filterValue, isActive } = useContext(DataAreaContext);
+  const { allMatches, filterValue, isActive, userDataObj } = useContext(DataAreaContext);
+  let filterMatchesByUid;
 
-  const sortedMatches = allMatches.sort(function(a, b) {
+  if (Object.keys(userDataObj).length > 0) {
+    filterMatchesByUid = allMatches.filter(match => match.createdByUid === userDataObj.uid)
+  } else {
+    filterMatchesByUid = []
+  }
+
+  const sortedMatches = filterMatchesByUid.sort(function(a, b) {
     return new Date(b.updatedAt) - new Date(a.updatedAt);
   });
   
@@ -28,7 +35,11 @@ function Matches() {
         <IsEmpty
           value={sortedMatches}
           yes={() =>
-            <Spinner animation="grow" variant="success" />
+            <div>
+              <p>
+                You have not matches created 🤨
+              </p>
+            </div>
           }
           no={() => (
             <Map collection={sortedMatches}

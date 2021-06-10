@@ -9,8 +9,6 @@ import { faUserCircle, faGolfBall, faFilter, faPlus } from '@fortawesome/free-so
 function Footer() {
   const { isAuthenticated, isActive, setActive, userDataObj } = useContext(DataAreaContext);
 
-  const myMatchesPath = "/matches/" + userDataObj.uid;
-
   return (
     <Navbar id='navbar-footer' expand="md" variant="light" bg="light" fixed="bottom" className="navbar-light justify-content-center p-0" style={{ backgroundColor: '#ffffff' }}>
       {!isAuthenticated ? (
@@ -34,7 +32,7 @@ function Footer() {
           </Nav.Item>
           {/* My Matches Button */}
           <Nav.Item className="">
-            <Nav.Link className='p-3' as={ Link } to={ myMatchesPath } eventKey={ myMatchesPath }>
+            <Nav.Link className='p-3' as={ Link } to={ "/usermatches/" + userDataObj.uid } eventKey={ "/usermatches/" + userDataObj.uid }>
               <Button
                 aria-controls="filters-collapse"
                 aria-expanded={isActive}
@@ -47,7 +45,7 @@ function Footer() {
           </Nav.Item>
           {/* Create Match Button */}
           <Nav.Item className="">
-            <Nav.Link className='p-3' as={ Link } to="/profile" eventKey="/profile">
+            <Nav.Link className='p-3' as={ Link } to="/creatematch" eventKey="/creatematch">
               <Button
                 aria-controls="filters-collapse"
                 aria-expanded={isActive}

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { useParams } from "react-router-dom";
 import DataAreaContext from '../utils/DataAreaContext';
+import Lib from '../utils/Lib';
 import { Map } from "react-lodash";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -8,14 +8,11 @@ import { Container, Row, Table } from 'react-bootstrap';
 import Moment from 'react-moment';
 
 function Match() {
-  const { id } = useParams()
-  const { allMatches } = useContext(DataAreaContext);
+  const { match } = useContext(DataAreaContext);
 
-  const match = allMatches.filter(match => match.matchId === id);
+  const concatDateTime = match.matchDate + 'T' + match.matchTime + ':00+00:00';
 
-  const concatDateTime = match[0].matchDate + 'T' + match[0].matchTime + ':00+00:00';
-
-  const individualMatches = match[0].individualMatch;
+  const individualMatches = match.individualMatch;
   const sortedIndividualMatches = individualMatches.sort(function(a, b) {
     return a.id - b.id;
   });
@@ -47,8 +44,8 @@ function Match() {
                     { concatDateTime }
                   </Moment>
                 </td>
-                <td>{ match[0].competitionName }</td>
-                <td>{ match[0].matchStatus }</td>
+                <td>{ match.competitionName }</td>
+                <td>{ Lib.capitalize(match.matchStatus) }</td>
               </tr>
             </tbody>
           </Table>
@@ -57,14 +54,14 @@ function Match() {
           <Table striped bordered hover variant="dark">
             <thead>
               <tr>
-                <th>{ match[0].teamOneName } (H)</th>
-                <th>{ match[0].teamTwoName } (A)</th>
+                <th>{ match.teamOneName } (H)</th>
+                <th>{ match.teamTwoName } (A)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>{ match[0].teamOneScore }</td>
-                <td>{ match[0].teamTwoScore }</td>
+                <td>{ match.teamOneScore }</td>
+                <td>{ match.teamTwoScore }</td>
               </tr>
             </tbody>
           </Table>
@@ -83,9 +80,9 @@ function Match() {
             <thead>
               <tr>
                 <th></th>
-                <th>{ match[0].teamOneName }</th>
+                <th>{ match.teamOneName }</th>
                 <th>Thru</th>
-                <th>{ match[0].teamTwoName }</th>
+                <th>{ match.teamTwoName }</th>
               </tr>
             </thead>
             <tbody>

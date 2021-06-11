@@ -5,7 +5,8 @@ import API from './utils/API';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from 'react-router-dom';
 import Home from './pages/Home';
 import Matches from './pages/Matches';
@@ -23,9 +24,12 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState( false );
   // This is used to create an object to capture the login details so we can send the data to the server, confirm the user and proceed to log them in
   const [loginDataObj, setLoginDataObj] = useState({});
+  // This is used to store the data of the logged in user
   const [userDataObj, setUserDataObj] = useState({});
   // This is used to store all matches in the database
   const [allMatches, setAllMatches] = useState( [] );
+  // This is used to store the match details when you want to view that specific match
+  const [match, setMatchObj] = useState({});
   // This is used to store new match data to post in the database
   const [postMatchObj, setPostMatchObj] = useState({});
   // This is used to show the filters modal
@@ -34,15 +38,16 @@ function App() {
   const [filterValue, setFilterValue] = useState("");
 
   useEffect(() => {
-    async function loadMatches() {
-      await API.getAllMatches()
-        .then(res => {
-          setAllMatches(res.data);
-        })
-        .catch(err => console.log(err));
-    }
     loadMatches();
   }, []);
+
+  async function loadMatches() {
+    await API.getAllMatches()
+      .then(res => {
+        setAllMatches(res.data);
+      })
+      .catch(err => console.log(err));
+  }
 
   console.log(allMatches);
 
@@ -53,15 +58,19 @@ function App() {
   return (
     <>
       <DataAreaContext.Provider
-      value={{ isAuthenticated, allMatches, loginDataObj, postMatchObj, show, filterValue, userDataObj, setIsAuthenticated, setAllMatches, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj, resetFilterValues }}
+      value={{ isAuthenticated, allMatches, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, setMatchObj, setIsAuthenticated, setAllMatches, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj, resetFilterValues, loadMatches }}
       >
         <Router>
           <div>
             <Switch>
-              <Route exact path={['/']} component={Home} />
-              <Route exact path={['/matches']} component={Matches} />
-              <Route exact path={['/usermatches/:id']} component={UserMatches} />
-              <Route exact path={'/match/:id'} component={Match} />
+              <Route exact path={'/'} component={Home} />
+              <Route exact path={'/matches'} component={Matches} />
+              <Route exact path={'/match/:id'}>
+                {(allMatches.length === 0) ? <Redirect to="/" /> : <Match />}
+              </Route>
+              <Route exact path={'/usermatches/:id'}>
+                {(allMatches.length === 0) ? <Redirect to="/" /> : <UserMatches />}
+              </Route>
               <Route exact path={'/creatematch'} component={CreateMatch} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/signup' component={Signup} />

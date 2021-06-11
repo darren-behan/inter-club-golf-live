@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext }  from 'react';
 import './index.css';
 import { useHistory } from 'react-router-dom';
+import DataAreaContext from '../../utils/DataAreaContext';
+import Lib from '../../utils/Lib';
 import { Card, Button, Badge } from 'react-bootstrap';
 import Moment from 'react-moment';
 
 function Cards(props) {
   const history = useHistory();
+  const { setMatchObj } = useContext(DataAreaContext);
 
   const calculateMatchStatus = (matchStatus) => {
     if (matchStatus === 'complete') {
@@ -13,21 +16,21 @@ function Cards(props) {
         variant="success"
         className="float-right"
       >
-        Complete
+        { Lib.capitalize(matchStatus) }
       </Badge>
     } else if (matchStatus === 'in progress') {
       return <Badge
         variant="warning"
         className="float-right"
       >
-        In progress
+        { Lib.capitalize(matchStatus) }
       </Badge>
     } else {
       return <Badge
         style={{ backgroundColor: "#f3f2ef" }}
         className="float-right"
       >
-        Upcoming
+        { Lib.capitalize(matchStatus) }
       </Badge>
     }         
   }
@@ -35,6 +38,7 @@ function Cards(props) {
   const concatDateTime = props.match.matchDate + 'T' + props.match.matchTime + ':00+00:00';
 
   function handleClick(matchId) {
+    setMatchObj(props.match);
     const path = "/match/" + matchId;
     history.push(path);
   }

@@ -104,11 +104,11 @@ module.exports = {
       return db.collection('matches').doc(matchId).delete();
     })
     .then(() => {
-      return response.json({ message: 'Delete successfull' });
+      return response.status(200).json({ message: 'Delete successful' });
     })
     .catch((err) => {
       console.error(err);
-      return response.status(500).json({ error: err.code });
+      return response.status(500).json({ message: err.code });
     });
   },
   updateMatch(request, response) {

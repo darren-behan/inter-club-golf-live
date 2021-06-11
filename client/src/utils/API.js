@@ -17,4 +17,10 @@ export default {
 		axios.defaults.headers.common = { Authorization: `${authToken}` };
     return axios.post('/match/create', matchData);
   },
+  // Deletes a match
+  deleteMatch: function(matchId) {
+    const authToken = localStorage.getItem('AuthToken');
+		axios.defaults.headers.common = { Authorization: `${authToken}` };
+    return axios.delete('/match/' + matchId);
+  },
 };

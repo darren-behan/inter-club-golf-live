@@ -16,7 +16,7 @@ function Matches() {
   
   return (
     <>
-    <Container fluid={ true } style={{ padding: 0}}>
+    <Container fluid={ true } style={{ padding: '0 0 85px 0' }}>
       <FiltersModal />
       <Header />
       <Container>

@@ -1,14 +1,16 @@
 import React, { useContext } from 'react';
+import API from '../utils/API';
 import DataAreaContext from '../utils/DataAreaContext';
 import Lib from '../utils/Lib';
 import { Map } from "react-lodash";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Container, Row, Table } from 'react-bootstrap';
+import DeleteModal from "../components/DeleteModal";
+import { Container, Row, Table, Button } from 'react-bootstrap';
 import Moment from 'react-moment';
 
 function Match() {
-  const { match } = useContext(DataAreaContext);
+  const { allMatches, match, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, setDeleteResponse } = useContext(DataAreaContext);
 
   const concatDateTime = match.matchDate + 'T' + match.matchTime + ':00+00:00';
 
@@ -17,9 +19,31 @@ function Match() {
     return a.id - b.id;
   });
 
+  function handleClick(matchId) {
+    API.deleteMatch(matchId)
+		.then((response) => {
+      setDeleteResponse({
+        message: response.data.message,
+        status: response.status
+      });
+			setDeleteModalShow(true);
+      Lib.removeByAttr(allMatches, 'matchId', matchId)
+		})
+		.catch(error => {
+      setDeleteResponse({
+        message: error.data.message,
+        status: error.status
+      });
+			console.log(error);
+		});
+  }
+
   return (
     <>
-    <Container fluid={ true } style={{ padding: 0}}>
+    <DeleteModal
+      show={deleteModalShow}
+    />
+    <Container fluid={ true } style={{ padding: '0 0 70px 0' }}>
       <Header />
       <Container>
         <Row>
@@ -113,6 +137,35 @@ function Match() {
             </thead>
           </Table>
         </Row>
+        {(isAuthenticated) && (match.createdByUid === userDataObj.uid) ? (
+          <>
+            <Row>
+              <Button
+                variant="outline-success"
+                size="sm"
+                className="float-left"
+                onClick={() =>
+                  setDeleteModalShow(true)
+                }
+              >
+                Update
+              </Button>
+              <Button
+                variant="danger"
+                size="sm"
+                className="float-right"
+                onClick={() =>
+                  handleClick(match.matchId)
+                }
+              >
+                Delete
+              </Button>
+            </Row>
+          </>
+        ) : (
+          null
+        )
+        }
       </Container>
       <Footer />
     </Container>

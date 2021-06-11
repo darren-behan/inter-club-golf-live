@@ -36,6 +36,8 @@ function App() {
   const [show, setShow] = useState(false);
   // This stores the value the user inputs to filter the results
   const [filterValue, setFilterValue] = useState("");
+  const [deleteModalShow, setDeleteModalShow] = useState(false);
+  const [deleteResponse, setDeleteResponse] = useState({});
 
   useEffect(() => {
     loadMatches();
@@ -58,7 +60,7 @@ function App() {
   return (
     <>
       <DataAreaContext.Provider
-      value={{ isAuthenticated, allMatches, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, setMatchObj, setIsAuthenticated, setAllMatches, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj, resetFilterValues, loadMatches }}
+      value={{ isAuthenticated, allMatches, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, deleteModalShow, deleteResponse, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAllMatches, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj, resetFilterValues, loadMatches }}
       >
         <Router>
           <div>

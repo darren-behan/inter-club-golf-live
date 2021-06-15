@@ -39,6 +39,37 @@ module.exports = {
         return response.status(500).json({ error: err.code});
       });
   },
+  getMatch(request, response) {
+    const matchId = request.params.matchId;
+    db
+    .collection('matches')
+    .doc(matchId)
+    .get()
+    .then((data) => {
+      let match = {
+        matchId: data.id,
+        competitionName: data.data().competitionName,
+        matchDate: data.data().matchDate,
+        matchTime: data.data().matchTime,
+        numIndividualMatches: data.data().numIndividualMatches,
+        teamOneName: data.data().teamOneName,
+        teamTwoName: data.data().teamTwoName,
+        teamOneScore: data.data().teamOneScore,
+        teamTwoScore: data.data().teamTwoScore,
+        individualMatch: data.data().individualMatch,
+        createdBy: data.data().createdBy,
+        createdByUid: data.data().createdByUid,
+        createdAt: data.data().createdAt,
+        updatedAt: data.data().updatedAt,
+        matchStatus: data.data().matchStatus
+      };
+      return response.status(200).json(match);
+    })
+    .catch((err) => {
+      console.error(err);
+      return response.status(500).json({ error: err.code});
+    });
+  },
   postMatch(request, response) {
     if (request.body.teamOneName.trim() === "" || request.body.teamTwoName.trim() === "") {
       return response.status(400).json('Must not be empty');

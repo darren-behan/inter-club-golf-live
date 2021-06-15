@@ -1,23 +1,46 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import API from '../utils/API';
 import DataAreaContext from '../utils/DataAreaContext';
 import Lib from '../utils/Lib';
 import { Map } from "react-lodash";
+import { useParams } from "react-router-dom";
+import { IsEmpty } from "react-lodash";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import DeleteModal from "../components/DeleteModal";
-import { Container, Row, Table, Button } from 'react-bootstrap';
+import { Container, Row, Table, Button, Spinner } from 'react-bootstrap';
 import Moment from 'react-moment';
+let isEmpty = require('lodash.isempty');
 
 function Match() {
-  const { appMatchesOnLoad, match, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, setDeleteResponse } = useContext(DataAreaContext);
+  const { appMatchesOnLoad, match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, setDeleteResponse } = useContext(DataAreaContext);
+  let { id } = useParams();
+  let concatDateTime;
+  let individualMatches;
+  let sortedIndividualMatches;
 
-  const concatDateTime = match.matchDate + 'T' + match.matchTime + ':00+00:00';
+  useEffect(() => {
+    if (!isEmpty(match)) return;
+    getMatchOnLoad();
+  }, []);
 
-  const individualMatches = match.individualMatch;
-  const sortedIndividualMatches = individualMatches.sort(function(a, b) {
-    return a.id - b.id;
-  });
+  async function getMatchOnLoad() {
+    await API.getMatch(id)
+      .then(res => {
+        setMatchObj(res.data);
+      })
+      .catch(err => console.log(err));
+  }
+
+  console.log(match);
+
+  if (!isEmpty(match)) {
+    concatDateTime = match.matchDate + 'T' + match.matchTime + ':00+00:00';
+    individualMatches = match.individualMatch;
+    sortedIndividualMatches = individualMatches.sort(function(a, b) {
+      return a.id - b.id;
+    });
+  }
 
   function handleClick(matchId) {
     API.deleteMatch(matchId)
@@ -39,137 +62,152 @@ function Match() {
   }
 
   return (
-    <>
-    <DeleteModal
-      show={deleteModalShow}
-    />
-    <Container fluid={ true } style={{ padding: '0 0 70px 0' }}>
-      <Header />
-      <Container>
-        <Row>
-          <Table striped bordered hover variant="dark">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Tee Time</th>
-                <th>Competition</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <Moment format="DD/MM/YYYY">
-                    { concatDateTime }
-                  </Moment>
-                </td>
-                <td>
-                  <Moment format="HH:MM">
-                    { concatDateTime }
-                  </Moment>
-                </td>
-                <td>{ match.competitionName }</td>
-                <td>{ Lib.capitalize(match.matchStatus) }</td>
-              </tr>
-            </tbody>
-          </Table>
-        </Row>
-        <Row>
-          <Table striped bordered hover variant="dark">
-            <thead>
-              <tr>
-                <th>{ match.teamOneName } (H)</th>
-                <th>{ match.teamTwoName } (A)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{ match.teamOneScore }</td>
-                <td>{ match.teamTwoScore }</td>
-              </tr>
-            </tbody>
-          </Table>
-        </Row>
-        <Row>
-          <Table striped bordered hover variant="dark">
-            <thead>
-              <tr>
-                <th>Individual Match Scores</th>
-              </tr>
-            </thead>
-          </Table>
-        </Row>
-        <Row>
-          <Table striped bordered hover variant="dark">
-            <thead>
-              <tr>
-                <th></th>
-                <th>{ match.teamOneName }</th>
-                <th>Thru</th>
-                <th>{ match.teamTwoName }</th>
-              </tr>
-            </thead>
-            <tbody>
-              <Map collection={sortedIndividualMatches}
-                iteratee={singleMatch =>
-                  <tr>
-                    <td>{ singleMatch.id }</td>
-                    <td>{ singleMatch.teamOneScore }</td>
-                    <td>{ singleMatch.holesPlayed }</td>
-                    <td>{ singleMatch.teamTwoScore }</td>
-                  </tr>
-                }
-              />
-            </tbody>
-          </Table>
-        </Row>
-        <Row>
-          <Table striped bordered hover variant="dark">
-            <thead>
-              <tr>
-                <th>
-                  Last updated:
-                  <Moment format="DD/MM/YYYY - HH:MM">
-                    { concatDateTime }
-                  </Moment>
-                  </th>
-              </tr>
-            </thead>
-          </Table>
-        </Row>
-        {(isAuthenticated) && (match.createdByUid === userDataObj.uid) ? (
-          <>
+    <IsEmpty
+      value={match}
+      yes={() =>
+        <Container fluid={ true } style={{ padding: '0 0 70px 0' }}>
+          <Header />
+          <Container>
             <Row>
-              <Button
-                variant="outline-success"
-                size="sm"
-                className="float-left"
-                onClick={() =>
-                  setDeleteModalShow(true)
-                }
-              >
-                Update
-              </Button>
-              <Button
-                variant="danger"
-                size="sm"
-                className="float-right"
-                onClick={() =>
-                  handleClick(match.matchId)
-                }
-              >
-                Delete
-              </Button>
+              <Spinner animation="grow" variant="success" />
             </Row>
-          </>
-        ) : (
-          null
-        )
-        }
-      </Container>
-      <Footer />
-    </Container>
-    </>
+          </Container>
+        </Container>
+      }
+      no={() => (
+        <>
+        <DeleteModal
+          show={deleteModalShow}
+        />
+        <Container fluid={ true } style={{ padding: '0 0 70px 0' }}>
+          <Header />
+          <Container>
+            <Row>
+              <Table striped bordered hover variant="dark">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Tee Time</th>
+                    <th>Competition</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <Moment format="DD/MM/YYYY">
+                        { concatDateTime }
+                      </Moment>
+                    </td>
+                    <td>
+                      <Moment format="HH:MM">
+                        { concatDateTime }
+                      </Moment>
+                    </td>
+                    <td>{ match.competitionName }</td>
+                    <td>{ Lib.capitalize(match.matchStatus) }</td>
+                  </tr>
+                </tbody>
+              </Table>
+            </Row>
+            <Row>
+              <Table striped bordered hover variant="dark">
+                <thead>
+                  <tr>
+                    <th>{ match.teamOneName } (H)</th>
+                    <th>{ match.teamTwoName } (A)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{ match.teamOneScore }</td>
+                    <td>{ match.teamTwoScore }</td>
+                  </tr>
+                </tbody>
+              </Table>
+            </Row>
+            <Row>
+              <Table striped bordered hover variant="dark">
+                <thead>
+                  <tr>
+                    <th>Individual Match Scores</th>
+                  </tr>
+                </thead>
+              </Table>
+            </Row>
+            <Row>
+              <Table striped bordered hover variant="dark">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>{ match.teamOneName }</th>
+                    <th>Thru</th>
+                    <th>{ match.teamTwoName }</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <Map collection={sortedIndividualMatches}
+                    iteratee={singleMatch =>
+                      <tr>
+                        <td>{ singleMatch.id }</td>
+                        <td>{ singleMatch.teamOneScore }</td>
+                        <td>{ singleMatch.holesPlayed }</td>
+                        <td>{ singleMatch.teamTwoScore }</td>
+                      </tr>
+                    }
+                  />
+                </tbody>
+              </Table>
+            </Row>
+            <Row>
+              <Table striped bordered hover variant="dark">
+                <thead>
+                  <tr>
+                    <th>
+                      Last updated:
+                      <Moment format="DD/MM/YYYY - HH:MM">
+                        { concatDateTime }
+                      </Moment>
+                      </th>
+                  </tr>
+                </thead>
+              </Table>
+            </Row>
+            {(isAuthenticated) && (match.createdByUid === userDataObj.uid) ? (
+              <>
+                <Row>
+                  <Button
+                    variant="outline-success"
+                    size="sm"
+                    className="float-left"
+                    onClick={() =>
+                      setDeleteModalShow(true)
+                    }
+                  >
+                    Update
+                  </Button>
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    className="float-right"
+                    onClick={() =>
+                      handleClick(match.matchId)
+                    }
+                  >
+                    Delete
+                  </Button>
+                </Row>
+              </>
+            ) : (
+              null
+            )
+            }
+          </Container>
+          <Footer />
+        </Container>
+        </>
+      )}
+    />
   )
 }
 

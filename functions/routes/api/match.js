@@ -9,7 +9,12 @@ router.route('/')
   // GET request to return all matches
   .get(matchesController.findAll);
 
-// Matches with "/api/matches/create"
+// Match with "/api/match/:matchId"
+router.route('/:matchId')
+  // GET request to return a match
+  .get(matchesController.getMatch);
+
+// Matches with "/api/match/create"
 router.route('/create')
   // POST request to create a match
   .post(auth, matchesController.postMatch);

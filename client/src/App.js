@@ -65,9 +65,7 @@ function App() {
             <Switch>
               <Route exact path={'/'} component={Home} />
               <Route exact path={'/matches'} component={Matches} />
-              <Route exact path={'/match/:id'}>
-                {(appMatchesOnLoad.length === 0) ? <Redirect to="/" /> : <Match />}
-              </Route>
+              <Route exact path={'/match/:id'} component={Match} />
               <Route exact path={'/usermatches/:id'}>
                 {(appMatchesOnLoad.length === 0) ? <Redirect to="/" /> : <UserMatches />}
               </Route>

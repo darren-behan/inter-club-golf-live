@@ -7,9 +7,13 @@ export default {
   loginUser: function(userData) {
     return axios.post('/user/login', userData);
   },
-  // Returns all matches
+  // Returns all matches on app load
   getMatchesOnLoad: function() {
     return axios.get('/match');
+  },
+  // Returns match when loading a single match
+  getMatch: function(matchId) {
+    return axios.get('/match/' + matchId);
   },
   // Posts a new match
   postMatch: function(matchData) {

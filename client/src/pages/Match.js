@@ -10,7 +10,7 @@ import { Container, Row, Table, Button } from 'react-bootstrap';
 import Moment from 'react-moment';
 
 function Match() {
-  const { allMatches, match, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, setDeleteResponse } = useContext(DataAreaContext);
+  const { appMatchesOnLoad, match, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, setDeleteResponse } = useContext(DataAreaContext);
 
   const concatDateTime = match.matchDate + 'T' + match.matchTime + ':00+00:00';
 
@@ -27,7 +27,7 @@ function Match() {
         status: response.status
       });
 			setDeleteModalShow(true);
-      Lib.removeByAttr(allMatches, 'matchId', matchId)
+      Lib.removeByAttr(appMatchesOnLoad, 'matchId', matchId)
 		})
 		.catch(error => {
       setDeleteResponse({

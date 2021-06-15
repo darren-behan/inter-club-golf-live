@@ -6,16 +6,16 @@ import Cards from '../Cards';
 import { Col, Spinner } from 'react-bootstrap';
 
 function Slider() {
-  const { allMatches } = useContext(DataAreaContext);
+  const { appMatchesOnLoad } = useContext(DataAreaContext);
 
   return (
     <IsEmpty
-      value={allMatches}
+      value={appMatchesOnLoad}
       yes={() =>
         <Spinner animation="grow" variant="success" />
       }
       no={() => (
-        <Map collection={allMatches}
+        <Map collection={appMatchesOnLoad}
           iteratee={match =>
             <Col xs={{ span: 12 }} lg={{ span: 4 }}>
               <Cards match={ match } />

@@ -8,11 +8,11 @@ import FiltersModal from '../components/FiltersModal';
 import { Container, Row, Col } from 'react-bootstrap';
 
 function Matches() {
-  const { allMatches, filterValue, show, userDataObj } = useContext(DataAreaContext);
+  const { appMatchesOnLoad, filterValue, show, userDataObj } = useContext(DataAreaContext);
   let filterMatchesByUid;
 
   if (Object.keys(userDataObj).length > 0) {
-    filterMatchesByUid = allMatches.filter(match => match.createdByUid === userDataObj.uid)
+    filterMatchesByUid = appMatchesOnLoad.filter(match => match.createdByUid === userDataObj.uid)
   } else {
     filterMatchesByUid = []
   }

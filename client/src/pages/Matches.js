@@ -8,9 +8,9 @@ import FiltersModal from '../components/FiltersModal';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
 
 function Matches() {
-  const { allMatches, filterValue } = useContext(DataAreaContext);
+  const { appMatchesOnLoad, filterValue } = useContext(DataAreaContext);
 
-  const sortedMatches = allMatches.sort(function(a, b) {
+  const sortedMatches = appMatchesOnLoad.sort(function(a, b) {
     return new Date(b.updatedAt) - new Date(a.updatedAt);
   });
   

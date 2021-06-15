@@ -8,7 +8,7 @@ export default {
     return axios.post('/user/login', userData);
   },
   // Returns all matches
-  getAllMatches: function() {
+  getMatchesOnLoad: function() {
     return axios.get('/match');
   },
   // Posts a new match

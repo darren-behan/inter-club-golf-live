@@ -38,7 +38,7 @@ const styles = makeStyles({
 });
 
 function PostMatch() {
-	const { allMatches, postMatchObj, setPostMatchObj, setAllMatches } = useContext(DataAreaContext);
+	const { appMatchesOnLoad, postMatchObj, setPostMatchObj, setAppMatchesOnLoad } = useContext(DataAreaContext);
 	const classes = styles();
 	const [loading, setLoading] = useState( false );
 
@@ -61,7 +61,7 @@ function PostMatch() {
       teamTwoName: postMatchObj.teamTwoName
 		})
 		.then((response) => {
-			setAllMatches([response.data, ...allMatches]);
+			setAppMatchesOnLoad([response.data, ...appMatchesOnLoad]);
       setLoading(false);
 		})
 		.catch(error => {

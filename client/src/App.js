@@ -27,7 +27,7 @@ function App() {
   // This is used to store the data of the logged in user
   const [userDataObj, setUserDataObj] = useState({});
   // This is used to store all matches in the database
-  const [allMatches, setAllMatches] = useState( [] );
+  const [appMatchesOnLoad, setAppMatchesOnLoad] = useState( [] );
   // This is used to store the match details when you want to view that specific match
   const [match, setMatchObj] = useState({});
   // This is used to store new match data to post in the database
@@ -36,31 +36,29 @@ function App() {
   const [show, setShow] = useState(false);
   // This stores the value the user inputs to filter the results
   const [filterValue, setFilterValue] = useState("");
+  // This stores the boolean value when the delete button has been clicked to show the delete modal
   const [deleteModalShow, setDeleteModalShow] = useState(false);
+  // This stores the server response on deleting a match which is used to be shown to the user
   const [deleteResponse, setDeleteResponse] = useState({});
 
   useEffect(() => {
-    loadMatches();
+    getAppMatchesOnLoad();
   }, []);
 
-  async function loadMatches() {
-    await API.getAllMatches()
+  async function getAppMatchesOnLoad() {
+    await API.getMatchesOnLoad()
       .then(res => {
-        setAllMatches(res.data);
+        setAppMatchesOnLoad(res.data);
       })
       .catch(err => console.log(err));
   }
 
-  console.log(allMatches);
-
-  const resetFilterValues = () => {
-    setFilterValue("");
-  }
+  console.log(appMatchesOnLoad);
 
   return (
     <>
       <DataAreaContext.Provider
-      value={{ isAuthenticated, allMatches, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, deleteModalShow, deleteResponse, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAllMatches, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj, resetFilterValues, loadMatches }}
+      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, deleteModalShow, deleteResponse, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj }}
       >
         <Router>
           <div>
@@ -68,10 +66,10 @@ function App() {
               <Route exact path={'/'} component={Home} />
               <Route exact path={'/matches'} component={Matches} />
               <Route exact path={'/match/:id'}>
-                {(allMatches.length === 0) ? <Redirect to="/" /> : <Match />}
+                {(appMatchesOnLoad.length === 0) ? <Redirect to="/" /> : <Match />}
               </Route>
               <Route exact path={'/usermatches/:id'}>
-                {(allMatches.length === 0) ? <Redirect to="/" /> : <UserMatches />}
+                {(appMatchesOnLoad.length === 0) ? <Redirect to="/" /> : <UserMatches />}
               </Route>
               <Route exact path={'/creatematch'} component={CreateMatch} />
               <Route exact path='/login' component={Login} />

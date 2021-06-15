@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faGolfBall, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 function Footer() {
-  const { isAuthenticated, userDataObj, resetFilterValues } = useContext(DataAreaContext);
+  const { isAuthenticated, userDataObj, setFilterValue } = useContext(DataAreaContext);
 
   return (
     <Navbar id='navbar-footer' expand="md" variant="light" bg="light" fixed="bottom" className="navbar-light justify-content-center p-0" style={{ backgroundColor: '#ffffff' }}>
@@ -22,7 +22,7 @@ function Footer() {
             <Nav.Link className='p-3' as={ Link } to={ "/usermatches/" + userDataObj.uid } eventKey={ `/usermatches/${userDataObj.uid}` }>
               <Button
                 variant="outline-success"
-                onClick={() => resetFilterValues()}
+                onClick={() => setFilterValue("")}
               >
                 <FontAwesomeIcon icon={ faGolfBall } className='fa-lg'/>
               </Button>
@@ -32,7 +32,7 @@ function Footer() {
             <Nav.Link className='p-3' as={ Link } to="/creatematch" eventKey="/creatematch">
               <Button
                 variant="outline-success"
-                onClick={() => resetFilterValues()}
+                onClick={() => setFilterValue("")}
               >
                 <FontAwesomeIcon icon={ faPlus } className='fa-lg'/>
               </Button>
@@ -42,7 +42,7 @@ function Footer() {
             <Nav.Link className='p-3' as={ Link } to="/profile" eventKey="/profile">
               <Button
                 variant="outline-success"
-                onClick={() => resetFilterValues()}
+                onClick={() => setFilterValue("")}
               >
                 <FontAwesomeIcon icon={ faUserCircle } className='fa-lg'/>
               </Button>

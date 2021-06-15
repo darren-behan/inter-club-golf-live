@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faGolfBall, faSignInAlt, faUserPlus, faFilter } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
-  const { isAuthenticated, resetFilterValues, setShow, userDataObj } = useContext(DataAreaContext);
+  const { isAuthenticated, setFilterValue, setShow, userDataObj } = useContext(DataAreaContext);
   const location = useLocation();
 
   return (
@@ -33,13 +33,13 @@ function Header() {
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-start">
           <Nav justify className="ml-auto mb-0" activeKey={location.pathname}>
             <Nav.Item className="mx-1 mx-sm-0">
-              <Nav.Link className='p-3' as={ Link } to="/" eventKey="/" onClick={() => resetFilterValues()}>
+              <Nav.Link className='p-3' as={ Link } to="/" eventKey="/" onClick={() => setFilterValue("")}>
                 <FontAwesomeIcon icon={ faHome } className='fa-lg'/>
                 <p className='mb-0'>Home</p>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item className="mx-1 mx-sm-0">
-              <Nav.Link className='p-3' as={ Link } to="/matches" eventKey="/matches" onClick={() => resetFilterValues()}>
+              <Nav.Link className='p-3' as={ Link } to="/matches" eventKey="/matches" onClick={() => setFilterValue("")}>
                 <FontAwesomeIcon icon={ faGolfBall } className='fa-lg'/>
                 <p className='mb-0'>Matches</p>
               </Nav.Link>
@@ -47,13 +47,13 @@ function Header() {
             {!isAuthenticated ? (
               <>
               <Nav.Item className="mx-1 mx-sm-0">
-                <Nav.Link className='p-3' as={ Link } to="/login" eventKey="/login" onClick={() => resetFilterValues()}>
+                <Nav.Link className='p-3' as={ Link } to="/login" eventKey="/login" onClick={() => setFilterValue("")}>
                   <FontAwesomeIcon icon={ faSignInAlt } className='fa-lg'/>
                   <p className='mb-0'>Login</p>
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item className="mx-1 mx-sm-0">
-                <Nav.Link className='p-3 pr-md-0' as={ Link } to="/signup" eventKey="/signup" id="sign-up" onClick={() => resetFilterValues()}>
+                <Nav.Link className='p-3 pr-md-0' as={ Link } to="/signup" eventKey="/signup" id="sign-up" onClick={() => setFilterValue("")}>
                   <FontAwesomeIcon icon={ faUserPlus } className='fa-lg'/>
                   <p className='mb-0'>Signup</p>
                 </Nav.Link>

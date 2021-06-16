@@ -67,7 +67,7 @@ function App() {
               <Route exact path={'/matches'} component={Matches} />
               <Route exact path={'/match/:id'} component={Match} />
               <Route exact path={'/usermatches/:id'}>
-                {(appMatchesOnLoad.length === 0) ? <Redirect to="/" /> : <UserMatches />}
+                {!isAuthenticated ? <Redirect to="/login" /> : <UserMatches />}
               </Route>
               <Route exact path={'/creatematch'} component={CreateMatch} />
               <Route exact path='/login' component={Login} />

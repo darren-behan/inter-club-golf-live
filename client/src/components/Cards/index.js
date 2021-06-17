@@ -5,6 +5,8 @@ import DataAreaContext from '../../utils/DataAreaContext';
 import Lib from '../../utils/Lib';
 import { Card, Button, Badge } from 'react-bootstrap';
 import Moment from 'react-moment';
+import 'moment-timezone';
+import * as moment from 'moment';
 
 function Cards(props) {
   const history = useHistory();
@@ -36,6 +38,7 @@ function Cards(props) {
   }
 
   const concatDateTime = props.match.matchDate + 'T' + props.match.matchTime + ':00+00:00';
+  const updatedAt = Lib.generateUserDateTime(props.match.updatedAt[0]);
 
   function handleClick(matchId) {
     setMatchObj(props.match);
@@ -65,6 +68,8 @@ function Cards(props) {
           <small className="text-muted">
             Match Date:
             <br/>
+            { props.match.matchDate }
+            <br/>
             <Moment format="DD/MM/YYYY">
               { concatDateTime }
             </Moment>
@@ -72,6 +77,8 @@ function Cards(props) {
           <br/>
           <small className="text-muted">
             Tee Time: 
+            <br/>
+            { props.match.matchTime }
             <br/>
             <Moment format="HH:MM">
               { concatDateTime }
@@ -82,7 +89,7 @@ function Cards(props) {
             Last updated at:
             <br/>
             <Moment format="DD/MM/YYYY - HH:MM">
-              { props.match.updatedAt }
+              { updatedAt }
             </Moment>
           </small>
         </Card.Text>

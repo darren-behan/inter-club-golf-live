@@ -10,12 +10,14 @@ import Footer from "../components/Footer";
 import DeleteModal from "../components/DeleteModal";
 import { Container, Row, Table, Button, Spinner } from 'react-bootstrap';
 import Moment from 'react-moment';
+import 'moment-timezone';
 let isEmpty = require('lodash.isempty');
 
 function Match() {
   const { appMatchesOnLoad, match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, setDeleteResponse } = useContext(DataAreaContext);
   let { id } = useParams();
   let concatDateTime;
+  let updatedAt;
   let individualMatches;
   let sortedIndividualMatches;
 
@@ -36,6 +38,7 @@ function Match() {
 
   if (!isEmpty(match)) {
     concatDateTime = match.matchDate + 'T' + match.matchTime + ':00+00:00';
+    updatedAt = Lib.generateUserDateTime(match.updatedAt[0]);
     individualMatches = match.individualMatch;
     sortedIndividualMatches = individualMatches.sort(function(a, b) {
       return a.id - b.id;
@@ -95,11 +98,15 @@ function Match() {
                 <tbody>
                   <tr>
                     <td>
+                      { match.matchDate }
+                      <br/>
                       <Moment format="DD/MM/YYYY">
                         { concatDateTime }
                       </Moment>
                     </td>
                     <td>
+                      { match.matchTime }
+                      <br/>
                       <Moment format="HH:MM">
                         { concatDateTime }
                       </Moment>
@@ -166,7 +173,7 @@ function Match() {
                     <th>
                       Last updated:
                       <Moment format="DD/MM/YYYY - HH:MM">
-                        { concatDateTime }
+                        { updatedAt }
                       </Moment>
                       </th>
                   </tr>

@@ -1,6 +1,6 @@
 // Defining methods for the matchesController
 const moment = require('moment-timezone');
-const { db } = require('../util/admin');
+const { db, admin } = require('../util/admin');
 
 const timeZoneDublin = "Europe/Dublin";
 
@@ -27,8 +27,8 @@ module.exports = {
             individualMatch: doc.data().individualMatch,
             createdBy: doc.data().createdBy,
             createdByUid: doc.data().createdByUid,
-            createdAt: doc.data().createdAt,
-            updatedAt: doc.data().updatedAt,
+            createdAt: [{_seconds: doc.data().createdAt._seconds, _nanoseconds: doc.data().createdAt._nanoseconds}],
+            updatedAt: [{_seconds: doc.data().updatedAt._seconds, _nanoseconds: doc.data().updatedAt._nanoseconds}],
             matchStatus: doc.data().matchStatus
           });
         });
@@ -59,8 +59,8 @@ module.exports = {
         individualMatch: data.data().individualMatch,
         createdBy: data.data().createdBy,
         createdByUid: data.data().createdByUid,
-        createdAt: data.data().createdAt,
-        updatedAt: data.data().updatedAt,
+        createdAt: [{_seconds: data.data().createdAt._seconds, _nanoseconds: data.data().createdAt._nanoseconds}],
+        updatedAt: [{_seconds: data.data().updatedAt._seconds, _nanoseconds: data.data().updatedAt._nanoseconds}],
         matchStatus: data.data().matchStatus
       };
       return response.status(200).json(match);
@@ -88,8 +88,8 @@ module.exports = {
       individualMatch: returnIndividualMatchArr(request.body.numIndividualMatches, request.body.teamOneName, request.body.teamTwoName),
       createdBy: request.user.username,
       createdByUid: request.user.uid,
-      createdAt: moment().tz(timeZoneDublin).format(),
-      updatedAt: moment().tz(timeZoneDublin).format(),
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       matchStatus: calculateMatchStatus(request.body.matchDate, request.body.matchTime)
     };
 
@@ -109,8 +109,8 @@ module.exports = {
         individualMatch: doc.data().individualMatch,
         createdBy: doc.data().createdBy,
         createdByUid: doc.data().createdByUid,
-        createdAt: doc.data().createdAt,
-        updatedAt: doc.data().updatedAt,
+        createdAt: [{_seconds: doc.data().createdAt._seconds, _nanoseconds: doc.data().createdAt._nanoseconds}],
+        updatedAt: [{_seconds: doc.data().updatedAt._seconds, _nanoseconds: doc.data().updatedAt._nanoseconds}],
         matchStatus: doc.data().matchStatus
       };
       return response.status(200).json(matches);
@@ -247,7 +247,7 @@ const matchDataToUpdate = (array) => {
     teamOneScore: teamOneOverallScore,
     teamTwoScore: teamTwoOverallScore,
     individualMatch: individualMatchArr,
-    updatedAt: moment().tz(timeZoneDublin).format()
+    updatedAt: admin.firestore.FieldValue.serverTimestamp()
   }
 }
 

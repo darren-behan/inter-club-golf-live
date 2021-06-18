@@ -8,6 +8,9 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import moment from 'moment';
+import 'moment-timezone';
+// const moment = require('moment-timezone');
 
 const styles = makeStyles({
 	paper: {
@@ -38,7 +41,7 @@ const styles = makeStyles({
 });
 
 function PostMatch() {
-	const { appMatchesOnLoad, postMatchObj, setPostMatchObj, setAppMatchesOnLoad } = useContext(DataAreaContext);
+	const { appMatchesOnLoad, postMatchObj, setPostMatchObj, setAppMatchesOnLoad, timeZone } = useContext(DataAreaContext);
 	const classes = styles();
 	const [loading, setLoading] = useState( false );
 
@@ -53,8 +56,9 @@ function PostMatch() {
 		event.preventDefault();
 		setLoading(true);
     API.postMatch({
-      matchDate: postMatchObj.matchDate,
-      matchTime: postMatchObj.matchTime,
+      matchDateTime: moment(`${postMatchObj.matchDate} ${postMatchObj.matchTime}`).format(),
+      createdAt: moment().format(),
+      updatedAt: moment().format(),
       competitionName: postMatchObj.competitionName,
       numIndividualMatches: parseInt(postMatchObj.numIndividualMatches),
       teamOneName: postMatchObj.teamOneName,

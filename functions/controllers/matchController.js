@@ -17,8 +17,7 @@ module.exports = {
           matches.push({
             matchId: doc.id,
             competitionName: doc.data().competitionName,
-            matchDate: doc.data().matchDate,
-            matchTime: doc.data().matchTime,
+            matchDateTime: doc.data().matchDateTime,
             numIndividualMatches: doc.data().numIndividualMatches,
             teamOneName: doc.data().teamOneName,
             teamTwoName: doc.data().teamTwoName,
@@ -27,8 +26,8 @@ module.exports = {
             individualMatch: doc.data().individualMatch,
             createdBy: doc.data().createdBy,
             createdByUid: doc.data().createdByUid,
-            createdAt: [{_seconds: doc.data().createdAt._seconds, _nanoseconds: doc.data().createdAt._nanoseconds}],
-            updatedAt: [{_seconds: doc.data().updatedAt._seconds, _nanoseconds: doc.data().updatedAt._nanoseconds}],
+            createdAt: doc.data().createdAt,
+            updatedAt: doc.data().updatedAt,
             matchStatus: doc.data().matchStatus
           });
         });
@@ -49,8 +48,7 @@ module.exports = {
       let match = {
         matchId: data.id,
         competitionName: data.data().competitionName,
-        matchDate: data.data().matchDate,
-        matchTime: data.data().matchTime,
+        matchDateTime: data.data().matchDateTime,
         numIndividualMatches: data.data().numIndividualMatches,
         teamOneName: data.data().teamOneName,
         teamTwoName: data.data().teamTwoName,
@@ -59,8 +57,8 @@ module.exports = {
         individualMatch: data.data().individualMatch,
         createdBy: data.data().createdBy,
         createdByUid: data.data().createdByUid,
-        createdAt: [{_seconds: data.data().createdAt._seconds, _nanoseconds: data.data().createdAt._nanoseconds}],
-        updatedAt: [{_seconds: data.data().updatedAt._seconds, _nanoseconds: data.data().updatedAt._nanoseconds}],
+        createdAt: data.data().createdAt,
+        updatedAt: data.data().updatedAt,
         matchStatus: data.data().matchStatus
       };
       return response.status(200).json(match);
@@ -77,8 +75,7 @@ module.exports = {
     
     const newMatch = {
       username: request.user.username,
-      matchDate: request.body.matchDate,
-      matchTime: request.body.matchTime,
+      matchDateTime: request.body.matchDateTime,
       competitionName: request.body.competitionName, // USER selection here will drive numIndividualMatches value
       numIndividualMatches: request.body.numIndividualMatches,
       teamOneName: request.body.teamOneName,
@@ -88,9 +85,9 @@ module.exports = {
       individualMatch: returnIndividualMatchArr(request.body.numIndividualMatches, request.body.teamOneName, request.body.teamTwoName),
       createdBy: request.user.username,
       createdByUid: request.user.uid,
-      createdAt: admin.firestore.FieldValue.serverTimestamp(),
-      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-      matchStatus: calculateMatchStatus(request.body.matchDate, request.body.matchTime)
+      createdAt: request.body.createdAt,
+      updatedAt: request.body.updatedAt,
+      matchStatus: "in progress" // calculateMatchStatus(request.body.matchDateTime, request.body.matchTime)
     };
 
     let document = addMatch(newMatch);
@@ -99,8 +96,7 @@ module.exports = {
       const matches = {
         matchId: doc.id,
         competitionName: doc.data().competitionName,
-        matchDate: doc.data().matchDate,
-        matchTime: doc.data().matchTime,
+        matchDateTime: doc.data().matchDateTime,
         numIndividualMatches: doc.data().numIndividualMatches,
         teamOneName: doc.data().teamOneName,
         teamTwoName: doc.data().teamTwoName,
@@ -109,8 +105,8 @@ module.exports = {
         individualMatch: doc.data().individualMatch,
         createdBy: doc.data().createdBy,
         createdByUid: doc.data().createdByUid,
-        createdAt: [{_seconds: doc.data().createdAt._seconds, _nanoseconds: doc.data().createdAt._nanoseconds}],
-        updatedAt: [{_seconds: doc.data().updatedAt._seconds, _nanoseconds: doc.data().updatedAt._nanoseconds}],
+        createdAt: doc.data().createdAt,
+        updatedAt: doc.data().updatedAt,
         matchStatus: doc.data().matchStatus
       };
       return response.status(200).json(matches);
@@ -247,7 +243,7 @@ const matchDataToUpdate = (array) => {
     teamOneScore: teamOneOverallScore,
     teamTwoScore: teamTwoOverallScore,
     individualMatch: individualMatchArr,
-    updatedAt: admin.firestore.FieldValue.serverTimestamp()
+    updatedAt: array.updatedAt,
   }
 }
 

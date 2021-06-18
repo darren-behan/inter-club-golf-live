@@ -40,9 +40,12 @@ function App() {
   const [deleteModalShow, setDeleteModalShow] = useState(false);
   // This stores the server response on deleting a match which is used to be shown to the user
   const [deleteResponse, setDeleteResponse] = useState({});
+  // This will store the users timezone
+  const [timeZone, setTimeZone] = useState("");
 
   useEffect(() => {
     getAppMatchesOnLoad();
+    setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
   }, []);
 
   async function getAppMatchesOnLoad() {
@@ -58,7 +61,7 @@ function App() {
   return (
     <>
       <DataAreaContext.Provider
-      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, deleteModalShow, deleteResponse, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj }}
+      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj }}
       >
         <Router>
           <div>

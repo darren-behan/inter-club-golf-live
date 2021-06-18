@@ -14,10 +14,8 @@ import 'moment-timezone';
 let isEmpty = require('lodash.isempty');
 
 function Match() {
-  const { appMatchesOnLoad, match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, setDeleteResponse } = useContext(DataAreaContext);
+  const { appMatchesOnLoad, match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, setDeleteResponse, timeZone } = useContext(DataAreaContext);
   let { id } = useParams();
-  let concatDateTime;
-  let updatedAt;
   let individualMatches;
   let sortedIndividualMatches;
 
@@ -37,8 +35,6 @@ function Match() {
   console.log(match);
 
   if (!isEmpty(match)) {
-    concatDateTime = match.matchDate + 'T' + match.matchTime + ':00+00:00';
-    updatedAt = Lib.generateUserDateTime(match.updatedAt[0]);
     individualMatches = match.individualMatch;
     sortedIndividualMatches = individualMatches.sort(function(a, b) {
       return a.id - b.id;
@@ -98,17 +94,13 @@ function Match() {
                 <tbody>
                   <tr>
                     <td>
-                      { match.matchDate }
-                      <br/>
-                      <Moment format="DD/MM/YYYY">
-                        { concatDateTime }
+                      <Moment tz={ timeZone } format="DD/MM/YYYY">
+                        { match.matchDateTime }
                       </Moment>
                     </td>
                     <td>
-                      { match.matchTime }
-                      <br/>
-                      <Moment format="HH:MM">
-                        { concatDateTime }
+                      <Moment tz={ timeZone } format="HH:mm z">
+                        { match.matchDateTime }
                       </Moment>
                     </td>
                     <td>{ match.competitionName }</td>
@@ -171,9 +163,9 @@ function Match() {
                 <thead>
                   <tr>
                     <th>
-                      Last updated:
-                      <Moment format="DD/MM/YYYY - HH:MM">
-                        { updatedAt }
+                      Last updated at:
+                      <Moment tz={ timeZone } format="DD/MM/YYYY HH:mm z">
+                        { match.updatedAt }
                       </Moment>
                       </th>
                   </tr>

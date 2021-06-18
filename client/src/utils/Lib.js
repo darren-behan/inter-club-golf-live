@@ -13,10 +13,5 @@ export default {
        }
     }
     return arr;
-  },
-  generateUserDateTime: function(dbDateTime) {
-    return new Date(
-      dbDateTime._seconds * 1000 + dbDateTime._nanoseconds / 1000000,
-    );
   }
 }

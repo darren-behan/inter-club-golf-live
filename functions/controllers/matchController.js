@@ -87,7 +87,8 @@ module.exports = {
       createdByUid: request.user.uid,
       createdAt: request.body.createdAt,
       updatedAt: request.body.updatedAt,
-      matchStatus: "in progress" // calculateMatchStatus(request.body.matchDateTime, request.body.matchTime)
+      timeZone: request.body.timeZone,
+      matchStatus: calculateMatchStatus(request.body.matchDateTime, request.body.createdAt, request.body.timeZone)
     };
 
     let document = addMatch(newMatch);
@@ -247,19 +248,17 @@ const matchDataToUpdate = (array) => {
   }
 }
 
-const calculateMatchStatus = (matchDate, matchTime) => {
-  var concatDateTime = matchDate + 'T' + matchTime + ':00+00:00';
-  var start_time = moment().tz(timeZoneDublin).subtract(6, 'hours');
-  var end_time = moment().tz(timeZoneDublin).add(6, 'hours');
+const calculateMatchStatus = (matchDateTime, createdAt, timeZone) => {
+  var end_time = moment(matchDateTime).tz(timeZone).add(6, 'hours');
 
-  // if match date/time is within 6 hours either side of current date/time, return in progress 
-  if (moment(concatDateTime).isBetween(start_time, end_time)) {
+  // if createdAt date/time is between the match date/time & before 6 hours after the match date/time, return in progress 
+  if (moment(createdAt).isBetween(matchDateTime, end_time)) {
     return "in progress";
-  } else if (moment(concatDateTime).isAfter(end_time)) {
-    // if match date/time is after end_time, return not started
+  } else if (moment(createdAt).isBefore(matchDateTime)) {
+    // if createdAt date/time is before match date/time, return not started
     return "not started";
   } else {
-    // if start_time is before current date/time, return complete
+    // if createdAt date/time is 6 hours after date/time, return complete
     return "complete";
   }
 }

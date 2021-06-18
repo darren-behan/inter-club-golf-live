@@ -56,6 +56,7 @@ function PostMatch() {
 		event.preventDefault();
 		setLoading(true);
     API.postMatch({
+			timeZone: timeZone,
       matchDateTime: moment(`${postMatchObj.matchDate} ${postMatchObj.matchTime}`).format(),
       createdAt: moment().format(),
       updatedAt: moment().format(),

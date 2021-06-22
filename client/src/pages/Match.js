@@ -8,13 +8,14 @@ import { IsEmpty } from "react-lodash";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import DeleteModal from "../components/DeleteModal";
+import UpdateModal from "../components/UpdateModal";
 import { Container, Row, Table, Button, Spinner } from 'react-bootstrap';
 import Moment from 'react-moment';
 import 'moment-timezone';
 let isEmpty = require('lodash.isempty');
 
 function Match() {
-  const { appMatchesOnLoad, match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, setDeleteResponse, timeZone } = useContext(DataAreaContext);
+  const { appMatchesOnLoad, match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, setDeleteResponse, timeZone, updateModalShow } = useContext(DataAreaContext);
   let { id } = useParams();
   let individualMatches;
   let sortedIndividualMatches;
@@ -77,6 +78,9 @@ function Match() {
         <>
         <DeleteModal
           show={deleteModalShow}
+        />
+        <UpdateModal
+          show={updateModalShow}
         />
         <Container fluid={ true } style={{ padding: '0 0 70px 0' }}>
           <Header />

@@ -218,7 +218,9 @@ const matchDataToUpdate = (array) => {
         teamOneScore: 0,
         teamTwoName: i.teamTwoName,
         teamTwoScore: 0,
-        holesPlayed: i.holesPlayed
+        holesPlayed: i.holesPlayed,
+        homeMatch: i.homeMatch,
+        id: i.id
       })
     } else if (i.teamOneScore < i.teamTwoScore) {
       teamTwoOverallScore += 1;
@@ -227,7 +229,9 @@ const matchDataToUpdate = (array) => {
         teamOneScore: 0,
         teamTwoName: i.teamTwoName,
         teamTwoScore: i.teamTwoScore,
-        holesPlayed: i.holesPlayed
+        holesPlayed: i.holesPlayed,
+        homeMatch: i.homeMatch,
+        id: i.id
       })
     } else if (i.teamOneScore > i.teamTwoScore) {
       teamOneOverallScore += 1;
@@ -236,7 +240,9 @@ const matchDataToUpdate = (array) => {
         teamOneScore: i.teamOneScore,
         teamTwoName: i.teamTwoName,
         teamTwoScore: 0,
-        holesPlayed: i.holesPlayed
+        holesPlayed: i.holesPlayed,
+        homeMatch: i.homeMatch,
+        id: i.id
       })
     }
   }
@@ -244,7 +250,7 @@ const matchDataToUpdate = (array) => {
     teamOneScore: teamOneOverallScore,
     teamTwoScore: teamTwoOverallScore,
     individualMatch: individualMatchArr,
-    updatedAt: array.updatedAt,
+    // updatedAt: array.updatedAt,
   }
 }
 

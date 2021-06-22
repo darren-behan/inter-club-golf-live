@@ -42,6 +42,8 @@ function App() {
   const [deleteResponse, setDeleteResponse] = useState({});
   // This will store the users timezone
   const [timeZone, setTimeZone] = useState("");
+  // This stores the boolean value when the delete button has been clicked to show the delete modal
+  const [updateModalShow, setUpdateModalShow] = useState(false);
 
   useEffect(() => {
     getAppMatchesOnLoad();
@@ -61,7 +63,7 @@ function App() {
   return (
     <>
       <DataAreaContext.Provider
-      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj }}
+      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, updateModalShow, setUpdateModalShow, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj }}
       >
         <Router>
           <div>

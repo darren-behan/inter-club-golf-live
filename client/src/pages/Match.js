@@ -15,7 +15,7 @@ import 'moment-timezone';
 let isEmpty = require('lodash.isempty');
 
 function Match() {
-  const { appMatchesOnLoad, match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, setDeleteResponse, timeZone, updateModalShow } = useContext(DataAreaContext);
+  const { appMatchesOnLoad, match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, setDeleteResponse, timeZone, updateModalShow, setUpdateModalShow } = useContext(DataAreaContext);
   let { id } = useParams();
   let individualMatches;
   let sortedIndividualMatches;
@@ -184,7 +184,7 @@ function Match() {
                     size="sm"
                     className="float-left"
                     onClick={() =>
-                      setDeleteModalShow(true)
+                      setUpdateModalShow(true)
                     }
                   >
                     Update
@@ -202,7 +202,20 @@ function Match() {
                 </Row>
               </>
             ) : (
-              null
+              <>
+                <Row>
+                  <Button
+                    variant="outline-success"
+                    size="sm"
+                    className="float-left"
+                    onClick={() =>
+                      setUpdateModalShow(true)
+                    }
+                  >
+                    Update
+                  </Button>
+                </Row>
+              </>
             )
             }
           </Container>

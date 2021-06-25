@@ -32,6 +32,8 @@ function App() {
   const [match, setMatchObj] = useState({});
   // This is used to store new match data to post in the database
   const [postMatchObj, setPostMatchObj] = useState({});
+  // This is used to store match data to update in the database
+  const [updateMatchObj, setUpdateMatchObj] = useState({});
   // This is used to show the filters modal
   const [show, setShow] = useState(false);
   // This stores the value the user inputs to filter the results
@@ -42,8 +44,10 @@ function App() {
   const [deleteResponse, setDeleteResponse] = useState({});
   // This will store the users timezone
   const [timeZone, setTimeZone] = useState("");
-  // This stores the boolean value when the delete button has been clicked to show the delete modal
+  // This stores the boolean value when the update button has been clicked to show the delete modal
   const [updateModalShow, setUpdateModalShow] = useState(false);
+  // This stores the server response on updating a match which is used to be shown to the user
+  const [updateResponse, setUpdateResponse] = useState({});
 
   useEffect(() => {
     getAppMatchesOnLoad();
@@ -63,7 +67,7 @@ function App() {
   return (
     <>
       <DataAreaContext.Provider
-      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, updateModalShow, setUpdateModalShow, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj }}
+      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, updateModalShow, updateResponse, updateMatchObj, setUpdateMatchObj, setUpdateResponse, setUpdateModalShow, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj }}
       >
         <Router>
           <div>

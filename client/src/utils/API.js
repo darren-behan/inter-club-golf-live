@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // In each function, we use axios to send our api route request to the server
 
-export default {
+const requests = {
   // Logs in a user
   loginUser: function(userData) {
     return axios.post('/user/login', userData);
@@ -27,4 +27,12 @@ export default {
 		axios.defaults.headers.common = { Authorization: `${authToken}` };
     return axios.delete('/match/' + matchId);
   },
+  // Update a match
+  updateMatch: function(matchData) {
+    const authToken = localStorage.getItem('AuthToken');
+		axios.defaults.headers.common = { Authorization: `${authToken}` };
+    return axios.put('/match/' + matchData.matchId, matchData);
+  },
 };
+
+export default requests;

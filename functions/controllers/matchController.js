@@ -2,8 +2,6 @@
 const moment = require('moment-timezone');
 const { db, admin } = require('../util/admin');
 
-const timeZoneDublin = "Europe/Dublin";
-
 module.exports = {
   findAll(request, response) {
       db
@@ -142,8 +140,8 @@ module.exports = {
   updateMatch(request, response) {
     let document = db.collection('matches').doc(`${request.params.matchId}`);
     document.update(matchDataToUpdate(request.body))
-    .then(()=> {
-      return response.json({message: 'Updated successfully'});
+    .then(doc => {
+      return response.status(200).json({message: 'Updated successfully'});
     })
     .catch((err) => {
       console.error(err);
@@ -205,7 +203,8 @@ const constructIndividualMatchArr = (numIndividualMatches, teamOneName, teamTwoN
   return individualMatchScoreArr
 }
 
-const matchDataToUpdate = (array) => {
+const matchDataToUpdate = (object) => {
+  let array = object.individualMatch;
   let individualMatchArr = [];
   let teamOneOverallScore = 0;
   let teamTwoOverallScore = 0;
@@ -228,7 +227,7 @@ const matchDataToUpdate = (array) => {
         teamOneName: i.teamOneName,
         teamOneScore: 0,
         teamTwoName: i.teamTwoName,
-        teamTwoScore: i.teamTwoScore,
+        teamTwoScore: parseInt(i.teamTwoScore),
         holesPlayed: i.holesPlayed,
         homeMatch: i.homeMatch,
         id: i.id
@@ -237,7 +236,7 @@ const matchDataToUpdate = (array) => {
       teamOneOverallScore += 1;
       individualMatchArr.push({
         teamOneName: i.teamOneName,
-        teamOneScore: i.teamOneScore,
+        teamOneScore: parseInt(i.teamOneScore),
         teamTwoName: i.teamTwoName,
         teamTwoScore: 0,
         holesPlayed: i.holesPlayed,
@@ -250,7 +249,7 @@ const matchDataToUpdate = (array) => {
     teamOneScore: teamOneOverallScore,
     teamTwoScore: teamTwoOverallScore,
     individualMatch: individualMatchArr,
-    // updatedAt: array.updatedAt,
+    updatedAt: object.updatedAt,
   }
 }
 

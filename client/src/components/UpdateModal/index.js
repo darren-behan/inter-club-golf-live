@@ -11,7 +11,7 @@ import moment from 'moment';
 import 'moment-timezone';
 
 function UpdateModal(props) {
-  const { setUpdateModalShow, match, updateResponse, updateMatchObj, setUpdateMatchObj } = useContext(DataAreaContext);
+  const { setUpdateModalShow, setMatchObj, match, setUpdateResponse, updateResponse, updateMatchObj, setUpdateMatchObj, appMatchesOnLoad } = useContext(DataAreaContext);
 	let history = useHistory();
 
   useEffect(() => {
@@ -28,34 +28,66 @@ function UpdateModal(props) {
         for (const key in object) {
           if (key === name) {
             object[key] = value;
+            updateMatchObj.updatedAt = moment().format();
           }
         }
         return;
       }
     }
   };
-  console.log(updateMatchObj);
+
+  const updateOverallMatchScore = (object) => {
+    console.log(object);
+    let array = object.individualMatch;
+    let teamOneOverallScore = 0;
+    let teamTwoOverallScore = 0;
+    for (const i of array) {
+      if (i.teamOneScore === i.teamTwoScore) {
+        teamOneOverallScore += 0.5;
+        teamTwoOverallScore += 0.5;
+      } else if (i.teamOneScore < i.teamTwoScore) {
+        teamTwoOverallScore += 1;
+      } else if (i.teamOneScore > i.teamTwoScore) {
+        teamOneOverallScore += 1;
+      }
+    }
+    return {
+      teamOneScore: teamOneOverallScore,
+      teamTwoScore: teamTwoOverallScore
+    }
+  }
 
   const handleUpdateClick = (event) => {
     event.preventDefault();
+    const updatedOverallMatchScore = updateOverallMatchScore(updateMatchObj);
+    updateMatchObj.teamOneScore = updatedOverallMatchScore.teamOneScore;
+    updateMatchObj.teamTwoScore = updatedOverallMatchScore.teamTwoScore;
     API.updateMatch({
       matchId: updateMatchObj.matchId,
       individualMatch: updateMatchObj.individualMatch,
       updatedAt: moment().format()
     })
     .then((response) => {
-      console.log(response.data);
-      // setMatchObj([response.data, ...match]);
-      setUpdateModalShow(false);
+      setUpdateResponse({
+        message: response.data.message,
+        status: response.status
+      });
+      setMatchObj({...updateMatchObj});
+      for(let i=0; i < appMatchesOnLoad.length; i++) {
+        if(appMatchesOnLoad[i].matchId == updateMatchObj.matchId) {
+          appMatchesOnLoad[i] = updateMatchObj;
+          console.log(appMatchesOnLoad);
+        }
+      }
     })
     .catch(error => {
       console.log(error);
-      // setLoading(false);
     });
   };
 
   function handleCloseClick(matchId) {
     setUpdateModalShow(false);
+    setUpdateResponse({});
     history.push(`/match/${matchId}`);
   }
 

@@ -140,7 +140,8 @@ module.exports = {
   updateMatch(request, response) {
     let document = db.collection('matches').doc(`${request.params.matchId}`);
     document.update(matchDataToUpdate(request.body))
-    .then(doc => {
+    .then(data => {
+      console.log(data);
       return response.status(200).json({message: 'Updated successfully'});
     })
     .catch((err) => {

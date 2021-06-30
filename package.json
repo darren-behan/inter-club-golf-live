@@ -27,7 +27,8 @@
     "express": "^4.17.1",
     "firebase": "^8.1.2",
     "material-ui-icons": "^1.0.0-beta.36",
-    "moment-timezone": "^0.5.33"
+    "moment-timezone": "^0.5.33",
+    "react-loading-overlay": "^1.0.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

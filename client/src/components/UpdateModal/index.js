@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import DataAreaContext from '../../utils/DataAreaContext';
 import Lib from '../../utils/Lib';
 import API from '../../utils/API';
-import { Button, Modal, Form, Col } from 'react-bootstrap';
+import { Button, Modal, Form, Col, Spinner } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Map } from "react-lodash";
 import TextField from '@material-ui/core/TextField';
@@ -13,6 +13,7 @@ import 'moment-timezone';
 function UpdateModal(props) {
   const { setUpdateModalShow, setMatchObj, match, setUpdateResponse, updateResponse, updateMatchObj, setUpdateMatchObj, appMatchesOnLoad } = useContext(DataAreaContext);
 	let history = useHistory();
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     setUpdateMatchObj({...match});
@@ -59,6 +60,7 @@ function UpdateModal(props) {
 
   const handleUpdateClick = (event) => {
     event.preventDefault();
+    setLoading(true);
     const updatedOverallMatchScore = updateOverallMatchScore(updateMatchObj);
     updateMatchObj.teamOneScore = updatedOverallMatchScore.teamOneScore;
     updateMatchObj.teamTwoScore = updatedOverallMatchScore.teamTwoScore;
@@ -73,12 +75,13 @@ function UpdateModal(props) {
         status: response.status
       });
       setMatchObj({...updateMatchObj});
-      for(let i=0; i < appMatchesOnLoad.length; i++) {
-        if(appMatchesOnLoad[i].matchId == updateMatchObj.matchId) {
+      for (let i = 0; i < appMatchesOnLoad.length; i++) {
+        if(appMatchesOnLoad[i].matchId === updateMatchObj.matchId) {
           appMatchesOnLoad[i] = updateMatchObj;
           console.log(appMatchesOnLoad);
         }
       }
+      setLoading(false);
     })
     .catch(error => {
       console.log(error);
@@ -98,8 +101,9 @@ function UpdateModal(props) {
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      backdrop="true"
     >
-      <Modal.Header>
+      <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
           Update Modal
         </Modal.Title>
@@ -198,7 +202,11 @@ function UpdateModal(props) {
           onClick={ (e) => handleUpdateClick(e) }
           variant="outline-success"
           >
-            Update
+          {isLoading ?
+            <Spinner animation="border" variant="success" /> 
+          :
+            'Update'
+          }
           </Button>
         }
       </Modal.Footer>

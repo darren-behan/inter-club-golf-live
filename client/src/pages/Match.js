@@ -78,9 +78,11 @@ function Match() {
         <>
         <DeleteModal
           show={deleteModalShow}
+          onHide={() => setDeleteModalShow(false)} 
         />
         <UpdateModal
           show={updateModalShow}
+          onHide={() => setUpdateModalShow(false)} 
         />
         <Container fluid={ true } style={{ padding: '0 0 70px 0' }}>
           <Header />

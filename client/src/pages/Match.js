@@ -15,7 +15,7 @@ import 'moment-timezone';
 let isEmpty = require('lodash.isempty');
 
 function Match() {
-  const { appMatchesOnLoad, match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, setDeleteResponse, timeZone, updateModalShow, setUpdateModalShow } = useContext(DataAreaContext);
+  const { match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, timeZone, updateModalShow, setUpdateModalShow } = useContext(DataAreaContext);
   let { id } = useParams();
   let individualMatches;
   let sortedIndividualMatches;
@@ -40,25 +40,6 @@ function Match() {
     sortedIndividualMatches = individualMatches.sort(function(a, b) {
       return a.id - b.id;
     });
-  }
-
-  function handleClick(matchId) {
-    API.deleteMatch(matchId)
-		.then((response) => {
-      setDeleteResponse({
-        message: response.data.message,
-        status: response.status
-      });
-			setDeleteModalShow(true);
-      Lib.removeByAttr(appMatchesOnLoad, 'matchId', matchId)
-		})
-		.catch(error => {
-      setDeleteResponse({
-        message: error.data.message,
-        status: error.status
-      });
-			console.log(error);
-		});
   }
 
   return (
@@ -196,7 +177,7 @@ function Match() {
                     size="sm"
                     className="float-right"
                     onClick={() =>
-                      handleClick(match.matchId)
+			                setDeleteModalShow(true)
                     }
                   >
                     Delete
@@ -204,20 +185,7 @@ function Match() {
                 </Row>
               </>
             ) : (
-              <>
-                <Row>
-                  <Button
-                    variant="outline-success"
-                    size="sm"
-                    className="float-left"
-                    onClick={() =>
-                      setUpdateModalShow(true)
-                    }
-                  >
-                    Update
-                  </Button>
-                </Row>
-              </>
+              null
             )
             }
           </Container>

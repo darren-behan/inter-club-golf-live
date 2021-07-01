@@ -134,7 +134,7 @@ module.exports = {
     })
     .catch((err) => {
       console.error(err);
-      return response.status(500).json({ message: err.code });
+      return response.status(500).json({ message: 'Something went wrong. Try again.' });
     });
   },
   updateMatch(request, response) {

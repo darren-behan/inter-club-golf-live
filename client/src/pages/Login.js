@@ -56,7 +56,7 @@ function Login() {
     };
 	}, [isAuthenticated]);
 
-  // Handles updating component state when the user types into the input field
+  // // Handles updating component state when the user types into the input field
   const handleInputChange = (event) => {
 		event.preventDefault();
     const { name, value } = event.target;
@@ -87,7 +87,7 @@ function Login() {
     <Header />
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
-			<div className={classes.paper}>
+			<div className="">
 				<Typography component="h1" variant="h5">
 					Login
 				</Typography>

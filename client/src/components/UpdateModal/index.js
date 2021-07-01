@@ -6,7 +6,6 @@ import { Button, Modal, Form, Col, Spinner } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Map } from "react-lodash";
 import TextField from '@material-ui/core/TextField';
-import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
 import 'moment-timezone';
 
@@ -83,8 +82,11 @@ function UpdateModal(props) {
       }
       setLoading(false);
     })
-    .catch(error => {
-      console.log(error);
+    .catch(() => {
+      setUpdateResponse({
+        message: "Something went wrong. Try again.",
+        status: 500
+      });
     });
   };
 
@@ -109,88 +111,92 @@ function UpdateModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form>
-          <Form.Row>
-            <Col>
-              <Form.Label>
-                Home Team: { Lib.capitalize(match.teamOneName) }
-              </Form.Label>
-              <br/>
-              <Form.Label>
-                Away Team: { Lib.capitalize(match.teamTwoName) }
-              </Form.Label>
-              <br/>
-              <Form.Label>
-                Competition: { Lib.capitalize(match.competitionName) }
-              </Form.Label>
-              <br/>
-              <Map collection={match.individualMatch}
-                iteratee={singleMatch =>
-                  <>
-                  <br/>
-                  <Form.Label>Match #{ singleMatch.id }</Form.Label>
-                  <br/>
-                  <Form.Label># of holes played</Form.Label>
-                  <Form.Control
-                    id={ singleMatch.id }
-                    defaultValue={ singleMatch.holesPlayed }
-                    name="holesPlayed"
-                    onChange={handleInputChange}
-                  />
-                  <Form.Label>
-                    { Lib.capitalize(singleMatch.teamOneName) } Score
-                  </Form.Label>
-                  <Form.Control 
-                    id={ singleMatch.id }
-                    defaultValue={ singleMatch.teamOneScore }
-                    name="teamOneScore"
-                    onChange={handleInputChange}
-                  />
-                  <Form.Label>
-                    { Lib.capitalize(singleMatch.teamTwoName) } Score
-                  </Form.Label>
-                  <Form.Control 
-                    id={ singleMatch.id }
-                    defaultValue={ singleMatch.teamTwoScore }
-                    name="teamTwoScore"
-                    onChange={handleInputChange}
-                  />
-                  </>
-                }
-              />
-              {/* <Form.Label>Match Date</Form.Label>
-              <TextField
-                disabled
-                defaultValue={ match.matchDateTime }
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="matchDate"
-                name="matchDate"
-                type="date"
-                autoFocus
-                onChange={handleInputChange}
-              />
-              <Form.Label>Match Time</Form.Label>
-              <TextField
-                disabled
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="matchTime"
-                id="matchTime"
-                type="time"
-                autoFocus
-                onChange={handleInputChange}
-              /> */}
-            </Col>
-          </Form.Row>
-        </Form>
+        {updateResponse.status === 200 || updateResponse.status === 500 ? (
+          `${ updateResponse.message }`
+        ) : (
+          <Form>
+            <Form.Row>
+              <Col>
+                <Form.Label>
+                  Home Team: { Lib.capitalize(match.teamOneName) }
+                </Form.Label>
+                <br/>
+                <Form.Label>
+                  Away Team: { Lib.capitalize(match.teamTwoName) }
+                </Form.Label>
+                <br/>
+                <Form.Label>
+                  Competition: { Lib.capitalize(match.competitionName) }
+                </Form.Label>
+                <br/>
+                <Map collection={match.individualMatch}
+                  iteratee={singleMatch =>
+                    <>
+                    <br/>
+                    <Form.Label>Match #{ singleMatch.id }</Form.Label>
+                    <br/>
+                    <Form.Label># of holes played</Form.Label>
+                    <Form.Control
+                      id={ singleMatch.id }
+                      defaultValue={ singleMatch.holesPlayed }
+                      name="holesPlayed"
+                      onChange={handleInputChange}
+                    />
+                    <Form.Label>
+                      { Lib.capitalize(singleMatch.teamOneName) } Score
+                    </Form.Label>
+                    <Form.Control 
+                      id={ singleMatch.id }
+                      defaultValue={ singleMatch.teamOneScore }
+                      name="teamOneScore"
+                      onChange={handleInputChange}
+                    />
+                    <Form.Label>
+                      { Lib.capitalize(singleMatch.teamTwoName) } Score
+                    </Form.Label>
+                    <Form.Control 
+                      id={ singleMatch.id }
+                      defaultValue={ singleMatch.teamTwoScore }
+                      name="teamTwoScore"
+                      onChange={handleInputChange}
+                    />
+                    </>
+                  }
+                />
+                {/* <Form.Label>Match Date</Form.Label>
+                <TextField
+                  disabled
+                  defaultValue={ match.matchDateTime }
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="matchDate"
+                  name="matchDate"
+                  type="date"
+                  autoFocus
+                  onChange={handleInputChange}
+                />
+                <Form.Label>Match Time</Form.Label>
+                <TextField
+                  disabled
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="matchTime"
+                  id="matchTime"
+                  type="time"
+                  autoFocus
+                  onChange={handleInputChange}
+                /> */}
+              </Col>
+            </Form.Row>
+          </Form>
+        )}
       </Modal.Body>
       <Modal.Footer>
-        {updateResponse.status === 200 ?
+        {updateResponse.status === 200 || updateResponse.status === 500 ?
           <Button 
           onClick={ () => handleCloseClick(match.matchId) }
           variant="outline-success"
@@ -203,7 +209,7 @@ function UpdateModal(props) {
           variant="outline-success"
           >
           {isLoading ?
-            <Spinner animation="border" variant="success" /> 
+            <Spinner animation="border" variant="light" /> 
           :
             'Update'
           }

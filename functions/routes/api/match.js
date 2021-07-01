@@ -25,6 +25,6 @@ router.route('/:matchId')
 
 router.route('/:matchId')
   // UPDATE request to update a match
-  .put(matchesController.updateMatch);
+  .put(auth, matchesController.updateMatch);
 
 module.exports = router;

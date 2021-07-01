@@ -71,16 +71,22 @@ function App() {
           <div>
             <Switch>
               <Route exact path={'/'} component={Home} />
+              <Route exact path='/login' component={Login} />
+              <Route exact path='/signup' component={Signup} />
               <Route exact path={'/matches'} component={Matches} />
               <Route exact path={'/match/:id'} component={Match} />
               <Route exact path={'/usermatches/:id'}>
                 {!isAuthenticated ? <Redirect to="/login" /> : <UserMatches />}
               </Route>
-              <Route exact path={'/creatematch'} component={CreateMatch} />
-              <Route exact path='/login' component={Login} />
-              <Route exact path='/signup' component={Signup} />
-              <Route exact path='/profile' component={Profile} />
-              <Route exact path='/settings' component={Settings} />
+              <Route exact path={'/creatematch'}>
+                {!isAuthenticated ? <Redirect to="/login" /> : <CreateMatch />}
+              </Route>
+              <Route exact path={'/profile'}>
+                {!isAuthenticated ? <Redirect to="/login" /> : <Profile />}
+              </Route>
+              <Route exact path={'/settings'}>
+                {!isAuthenticated ? <Redirect to="/login" /> : <Settings />}
+              </Route>
               <Route exact path='*' component={PageNotFound} />
             </Switch>
           </div>

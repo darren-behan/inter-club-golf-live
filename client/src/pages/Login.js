@@ -2,16 +2,15 @@ import React, { useContext, useState, useEffect } from 'react';
 import API from "../utils/API";
 import DataAreaContext from '../utils/DataAreaContext';
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { Container } from 'react-bootstrap';
 
 const styles = makeStyles({
 	paper: {
@@ -43,7 +42,7 @@ const styles = makeStyles({
 
 function Login() {
 	let history = useHistory();
-	const { isAuthenticated, setIsAuthenticated, loginDataObj, setLoginDataObj, userDataObj, setUserDataObj } = useContext(DataAreaContext);
+	const { isAuthenticated, setIsAuthenticated, loginDataObj, setLoginDataObj, setUserDataObj } = useContext(DataAreaContext);
 	const [errors, setErrors] = useState( [] );
 	const [loading, setLoading] = useState( false );
 	const classes = styles();
@@ -84,13 +83,9 @@ function Login() {
 
 	return (
     <>
-    <Header />
-		<Container component="main" maxWidth="xs">
-			<CssBaseline />
-			<div className="">
-				<Typography component="h1" variant="h5">
-					Login
-				</Typography>
+		<Container fluid={ true } style={{ padding: '0 0 70px 0' }}>
+    	<Header />
+			<Container>
 				<form className={classes.form} noValidate>
 					<TextField
 						variant="outlined"
@@ -136,7 +131,8 @@ function Login() {
 						</Grid>
 					</Grid>
 				</form>
-			</div>
+			</Container>
+			<Footer />
 		</Container>
 		</>
 	);

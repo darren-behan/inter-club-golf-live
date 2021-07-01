@@ -124,6 +124,7 @@ function PostMatch() {
 						name="numIndividualMatches"
 						id="numIndividualMatches"
 						type="number"
+            label="Enter number of individual matches"
 						autoFocus
 						onChange={handleInputChange}
 					/>
@@ -134,7 +135,7 @@ function PostMatch() {
 						fullWidth
 						name="teamOneName"
 						id="teamOneName"
-            label="Team One Name"
+            label="Home Team Name"
 						autoFocus
 						onChange={handleInputChange}
 					/>
@@ -145,7 +146,7 @@ function PostMatch() {
 						fullWidth
 						name="teamTwoName"
 						id="teamTwoName"
-            label="Team Two Name"
+            label="Away Team Name"
 						autoFocus
 						onChange={handleInputChange}
 					/>

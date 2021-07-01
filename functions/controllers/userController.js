@@ -107,7 +107,6 @@ module.exports = {
 		});
   },
   updateUserDetail(request, response) {
-    console.log(request.user);
     let document = db.collection('users').doc(`${request.user.email}`);
     document
     .update(request.body)

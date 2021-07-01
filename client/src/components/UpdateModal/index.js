@@ -37,7 +37,6 @@ function UpdateModal(props) {
   };
 
   const updateOverallMatchScore = (object) => {
-    console.log(object);
     let array = object.individualMatch;
     let teamOneOverallScore = 0;
     let teamTwoOverallScore = 0;
@@ -77,7 +76,6 @@ function UpdateModal(props) {
       for (let i = 0; i < appMatchesOnLoad.length; i++) {
         if(appMatchesOnLoad[i].matchId === updateMatchObj.matchId) {
           appMatchesOnLoad[i] = updateMatchObj;
-          console.log(appMatchesOnLoad);
         }
       }
       setLoading(false);

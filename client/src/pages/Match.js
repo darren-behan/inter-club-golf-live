@@ -33,8 +33,6 @@ function Match() {
       .catch(err => console.log(err));
   }
 
-  console.log(match);
-
   if (!isEmpty(match)) {
     individualMatches = match.individualMatch;
     sortedIndividualMatches = individualMatches.sort(function(a, b) {

@@ -7,6 +7,10 @@ const requests = {
   loginUser: function(userData) {
     return axios.post('/user/login', userData);
   },
+  // Sign up a user
+  signUpUser: function(userData) {
+    return axios.post('/user/signup', userData);
+  },
   // Returns all matches on app load
   getMatchesOnLoad: function() {
     return axios.get('/match');

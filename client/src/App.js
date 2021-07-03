@@ -24,6 +24,8 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState( false );
   // This is used to create an object to capture the login details so we can send the data to the server, confirm the user and proceed to log them in
   const [loginDataObj, setLoginDataObj] = useState({});
+  // This is used to create an object to capture the user sign up details so we can send the data to the server, create the user, proceed to create their account
+  const [signUpObj, setSignUpObj] = useState({});
   // This is used to store the data of the logged in user
   const [userDataObj, setUserDataObj] = useState({});
   // This is used to store all matches in the database
@@ -65,7 +67,7 @@ function App() {
   return (
     <>
       <DataAreaContext.Provider
-      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, updateModalShow, updateResponse, updateMatchObj, setUpdateMatchObj, setUpdateResponse, setUpdateModalShow, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj }}
+      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, updateModalShow, updateResponse, updateMatchObj, signUpObj, setSignUpObj, setUpdateMatchObj, setUpdateResponse, setUpdateModalShow, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj }}
       >
         <Router>
           <div>

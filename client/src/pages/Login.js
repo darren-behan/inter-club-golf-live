@@ -42,7 +42,7 @@ const styles = makeStyles({
 
 function Login() {
 	let history = useHistory();
-	const { isAuthenticated, setIsAuthenticated, loginDataObj, setLoginDataObj, setUserDataObj } = useContext(DataAreaContext);
+	const { isAuthenticated, setIsAuthenticated, loginDataObj, setLoginDataObj, setUserDataObj, userDataObj } = useContext(DataAreaContext);
 	const [errors, setErrors] = useState( [] );
 	const [loading, setLoading] = useState( false );
 	const classes = styles();
@@ -55,7 +55,7 @@ function Login() {
     };
 	}, [isAuthenticated]);
 
-  // // Handles updating component state when the user types into the input field
+  // Handles updating component state when the user types into the input field
   const handleInputChange = (event) => {
 		event.preventDefault();
     const { name, value } = event.target;
@@ -80,6 +80,7 @@ function Login() {
 			setLoading(false);
 		});
 	};
+	console.log(userDataObj)
 
 	return (
     <>

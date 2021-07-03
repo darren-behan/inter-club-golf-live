@@ -37,21 +37,20 @@ module.exports = {
       phoneNumber: request.body.phoneNumber,
       country: request.body.country,
       password: request.body.password,
-      confirmPassword: request.body.confirmPassword,
-      username: request.body.username
+      confirmPassword: request.body.confirmPassword
     };
 
     const { valid, errors } = validateSignUpData(newUser);
 
 	  if (!valid) return response.status(400).json(errors);
 
-    let token, userId;
-    db
-    .doc(`/users/${newUser.username}`)
+    let token, userId, userCredentials, userData;
+    db // First we check if the username the new user has entered is already in use
+    .doc(`/users/${newUser.email}`)
     .get()
     .then((doc) => {
       if (doc.exists) {
-        return response.status(400).json({ username: 'this username is already taken' });
+        return response.status(400).json({ username: 'this email is already taken' });
       } else {
         return firebase
         .auth()
@@ -62,27 +61,27 @@ module.exports = {
       }
     })
     .then((data) => {
+      userData = data.user;
       userId = data.user.uid;
       return data.user.getIdToken();
     })
     .then((idtoken) => {
       token = idtoken;
-      const userCredentials = {
+      userCredentials = {
         firstName: newUser.firstName,
         lastName: newUser.lastName,
-        username: newUser.username,
         phoneNumber: newUser.phoneNumber,
         country: newUser.country,
         email: newUser.email,
         createdAt: new Date().toISOString(),
-        userId
+        userId: userId
       };
       return db
-      .doc(`/users/${newUser.username}`)
+      .doc(`/users/${newUser.email}`)
       .set(userCredentials);
     })
     .then(()=>{
-      return response.status(201).json({ token });
+      return response.status(201).json(userData);
     })
     .catch((err) => {
 			console.error(err);

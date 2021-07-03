@@ -72,7 +72,7 @@ module.exports = {
     }
     
     const newMatch = {
-      username: request.user.username,
+      email: request.user.email,
       matchDateTime: request.body.matchDateTime,
       competitionName: request.body.competitionName, // USER selection here will drive numIndividualMatches value
       numIndividualMatches: request.body.numIndividualMatches,
@@ -81,7 +81,7 @@ module.exports = {
       teamOneScore: calculateMatchScoreOnPost(request.body.numIndividualMatches),
       teamTwoScore: calculateMatchScoreOnPost(request.body.numIndividualMatches),
       individualMatch: returnIndividualMatchArr(request.body.numIndividualMatches, request.body.teamOneName, request.body.teamTwoName),
-      createdBy: request.user.username,
+      createdBy: request.user.email,
       createdByUid: request.user.uid,
       createdAt: request.body.createdAt,
       updatedAt: request.body.updatedAt,

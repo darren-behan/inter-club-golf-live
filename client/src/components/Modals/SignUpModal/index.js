@@ -8,16 +8,17 @@ import 'moment-timezone';
 
 function SignUpModal(props) {
 	let history = useHistory();
-  const { signUpResponse, setSignUpModalShow } = useContext(DataAreaContext);
+  const { signUpResponse, setSignUpModalShow, setSignUpObj } = useContext(DataAreaContext);
   
   const onClick = (e) => {
     e.preventDefault();
-    if (signUpResponse === 400) {
+    if (signUpResponse.status === 400) {
       history.push('/login');
     } else {
       history.push('/');
     }
     setSignUpModalShow(false);
+    setSignUpObj({});
   };
 
   return (
@@ -27,9 +28,8 @@ function SignUpModal(props) {
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      backdrop="true"
     >
-      <Modal.Header closeButton />
+      <Modal.Header />
       <Modal.Body>
         { signUpResponse.message }
       </Modal.Body>

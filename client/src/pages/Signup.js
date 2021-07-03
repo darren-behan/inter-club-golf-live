@@ -117,19 +117,10 @@ const inputFieldValues = [
 
 function Signup() {
 	let history = useHistory();
-	const { signUpObj, setSignUpObj, setIsAuthenticated, isAuthenticated, setUserDataObj, signUpRequestErrors, setSignUpRequestErrors, signUpModalShow, setSignUpModalShow } = useContext(DataAreaContext);
-	console.log(signUpRequestErrors);
+	const { signUpObj, setSignUpObj, setIsAuthenticated, setUserDataObj, signUpResponse, setSignUpResponse, signUpModalShow, setSignUpModalShow } = useContext(DataAreaContext);
   const [errors, setErrors] = useState({});
 	const [loading, setLoading] = useState( false );
 	const classes = styles();
-	
-	// useEffect is listening on load of page
-  // If isAuthenticated changes to true, the user is navigated to the home page 
-  useEffect(() => {
-    if(isAuthenticated) {
-      history.push('/');
-    };
-	}, [isAuthenticated]);
 
   // Handles updating component state when the user types into the input field
   const handleInputChange = (event) => {
@@ -183,11 +174,16 @@ function Signup() {
 		.then((response) => {
 			localStorage.setItem('AuthToken', `Bearer ${response.data.stsTokenManager.accessToken}`);
 			setUserDataObj(response.data);
+			setSignUpResponse({
+				message: "Signup successful",
+				status: 200
+			});
 			setLoading(false);
 			setIsAuthenticated(true);
+			setSignUpModalShow(true);
 		})
 		.catch(error => {
-			setSignUpRequestErrors({
+			setSignUpResponse({
 				message: error.response.data.error,
 				status: error.response.status
 			});

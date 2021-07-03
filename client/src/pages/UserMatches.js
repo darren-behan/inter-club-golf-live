@@ -4,7 +4,7 @@ import { IsEmpty, Map } from "react-lodash";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Cards from '../components/Cards';
-import FiltersModal from '../components/FiltersModal';
+import FiltersModal from '../components/Modals/FiltersModal';
 import { Container, Row, Col } from 'react-bootstrap';
 
 function Matches() {

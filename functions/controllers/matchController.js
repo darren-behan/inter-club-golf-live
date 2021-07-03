@@ -164,6 +164,8 @@ const calculateMatchScoreOnPost = (value) => {
 const returnIndividualMatchArr = (numIndividualMatches, teamOneName, teamTwoName) => {
   if (numIndividualMatches === 5) {
     return constructIndividualMatchArr(numIndividualMatches, teamOneName, teamTwoName);
+  } else if (numIndividualMatches === 7) {
+    return constructIndividualMatchArr(numIndividualMatches, teamOneName, teamTwoName);
   } else if (numIndividualMatches === 9) {
     return constructIndividualMatchArr(numIndividualMatches, teamOneName, teamTwoName);
   } else {

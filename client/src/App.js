@@ -50,6 +50,10 @@ function App() {
   const [updateModalShow, setUpdateModalShow] = useState(false);
   // This stores the server response on updating a match which is used to be shown to the user
   const [updateResponse, setUpdateResponse] = useState({});
+  // This stores the request response when attempting to sign up
+  const [signUpRequestErrors, setSignUpRequestErrors] = useState({});
+  // This stores the boolean value when a 400 response is received, it will set to true to show the sign up modal
+  const [signUpModalShow, setSignUpModalShow] = useState(false);
 
   useEffect(() => {
     getAppMatchesOnLoad();
@@ -67,7 +71,7 @@ function App() {
   return (
     <>
       <DataAreaContext.Provider
-      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, updateModalShow, updateResponse, updateMatchObj, signUpObj, setSignUpObj, setUpdateMatchObj, setUpdateResponse, setUpdateModalShow, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj }}
+      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, updateModalShow, updateResponse, updateMatchObj, signUpObj, signUpRequestErrors, signUpModalShow, setSignUpModalShow, setSignUpRequestErrors, setSignUpObj, setUpdateMatchObj, setUpdateResponse, setUpdateModalShow, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj }}
       >
         <Router>
           <div>

@@ -10,7 +10,6 @@ import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import moment from 'moment';
 import 'moment-timezone';
-// const moment = require('moment-timezone');
 
 const styles = makeStyles({
 	paper: {

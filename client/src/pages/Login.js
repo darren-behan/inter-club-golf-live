@@ -5,12 +5,13 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Container } from 'react-bootstrap';
 
 const styles = makeStyles({
 	paper: {
@@ -80,13 +81,13 @@ function Login() {
 			setLoading(false);
 		});
 	};
-	console.log(userDataObj)
 
 	return (
     <>
-		<Container fluid={ true } style={{ padding: '0 0 70px 0' }}>
     	<Header />
-			<Container>
+			<Container component="main" maxWidth="xs">
+				<CssBaseline />
+				<div className={classes.paper}>
 				<form className={classes.form} noValidate>
 					<TextField
 						variant="outlined"
@@ -132,9 +133,9 @@ function Login() {
 						</Grid>
 					</Grid>
 				</form>
+				</div>
 			</Container>
 			<Footer />
-		</Container>
 		</>
 	);
 }

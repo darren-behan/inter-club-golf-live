@@ -25,8 +25,7 @@ module.exports = {
       return response.json(data.user);
     })
     .catch((error) => {
-      console.error(error);
-      return response.status(403).json({ general: 'wrong credentials, please try again'});
+      return response.status(403).json({ error: error.code });
     })
   },
   signUpUser(request, response) {
@@ -45,21 +44,12 @@ module.exports = {
 	  if (!valid) return response.status(400).json(errors);
 
     let token, userId, userCredentials, userData;
-    db // First we check if the username the new user has entered is already in use
-    .doc(`/users/${newUser.email}`)
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        return response.status(400).json({ username: 'this email is already taken' });
-      } else {
-        return firebase
-        .auth()
-        .createUserWithEmailAndPassword(
-          newUser.email, 
-          newUser.password
-        );
-      }
-    })
+    firebase
+    .auth()
+    .createUserWithEmailAndPassword(
+      newUser.email, 
+      newUser.password
+    )
     .then((data) => {
       userData = data.user;
       userId = data.user.uid;
@@ -84,12 +74,7 @@ module.exports = {
       return response.status(201).json(userData);
     })
     .catch((err) => {
-			console.error(err);
-			if (err.code === 'auth/email-already-in-use') {
-				return response.status(400).json({ email: 'Email already in use' });
-			} else {
-				return response.status(500).json({ general: 'Something went wrong, please try again' });
-			}
+      return response.status(400).json({ error: err.code });
 		});
   },
   getUserDetail(request, response) {
@@ -101,7 +86,6 @@ module.exports = {
       return response.json(doc);
 		})
 		.catch((error) => {
-			console.error(error);
 			return response.status(500).json({ error: error.code });
 		});
   },
@@ -115,7 +99,6 @@ module.exports = {
       });
 		})
 		.catch((error) => {
-			console.error(error);
 			return response.status(500).json({
         message: "Cannot Update the value"
       });

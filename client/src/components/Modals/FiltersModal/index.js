@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import './index.css';
-import DataAreaContext from '../../utils/DataAreaContext';
+import DataAreaContext from '../../../utils/DataAreaContext';
 import { Modal, Form, FormControl, InputGroup, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';

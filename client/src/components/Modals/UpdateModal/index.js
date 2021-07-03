@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import DataAreaContext from '../../utils/DataAreaContext';
-import Lib from '../../utils/Lib';
-import API from '../../utils/API';
+import DataAreaContext from '../../../utils/DataAreaContext';
+import Lib from '../../../utils/Lib';
+import API from '../../../utils/API';
 import { Button, Modal, Form, Col, Spinner } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Map } from "react-lodash";

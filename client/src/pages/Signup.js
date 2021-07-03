@@ -1,16 +1,18 @@
 import React, { useContext, useState, useEffect } from 'react';
 import API from "../utils/API";
 import DataAreaContext from '../utils/DataAreaContext';
+import SignUpModal from "../components/Modals/SignUpModal";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Container } from 'react-bootstrap';
 
 const styles = makeStyles({
 	paper: {
@@ -115,11 +117,9 @@ const inputFieldValues = [
 
 function Signup() {
 	let history = useHistory();
-	const { signUpObj, setSignUpObj, setIsAuthenticated, isAuthenticated, setUserDataObj } = useContext(DataAreaContext);
-  const [requestErrors, setRequestErrors] = useState({});
-	console.log(requestErrors);
+	const { signUpObj, setSignUpObj, setIsAuthenticated, isAuthenticated, setUserDataObj, signUpRequestErrors, setSignUpRequestErrors, signUpModalShow, setSignUpModalShow } = useContext(DataAreaContext);
+	console.log(signUpRequestErrors);
   const [errors, setErrors] = useState({});
-	console.log(errors);
 	const [loading, setLoading] = useState( false );
 	const classes = styles();
 	
@@ -181,15 +181,18 @@ function Signup() {
       confirmPassword: signUpObj.confirmPassword
 		})
 		.then((response) => {
-			console.log(response);
 			localStorage.setItem('AuthToken', `Bearer ${response.data.stsTokenManager.accessToken}`);
 			setUserDataObj(response.data);
 			setLoading(false);
 			setIsAuthenticated(true);
 		})
 		.catch(error => {
-			setRequestErrors(error.response);
+			setSignUpRequestErrors({
+				message: error.response.data.error,
+				status: error.response.status
+			});
 			setLoading(false);
+			setSignUpModalShow(true);
 		});
 	};
 
@@ -213,56 +216,61 @@ function Signup() {
 
   return (
     <>
-		<Container fluid={ true } style={{ padding: '0 0 70px 0' }}>
+			<SignUpModal
+				show={signUpModalShow}
+				onHide={() => setSignUpModalShow(false)} 
+			/>
     	<Header />
-			<Container>
-				<form className={classes.form} noValidate>
-					{inputFieldValues.map((inputFieldValue, index) => {
-						return (
-							<TextField
-								key={index}
-								variant="outlined"
-								margin="normal"
-								required={inputFieldValue.required}
-								fullWidth={inputFieldValue.fullWidth}
-								id={inputFieldValue.id}
-								label={inputFieldValue.label}
-								name={inputFieldValue.name}
-								type={inputFieldValue.type}
-								error={errors[inputFieldValue.name]}
-								autoComplete={inputFieldValue.autoComplete}
-								autoFocus={inputFieldValue.autoFocus}
-								onChange={handleInputChange}
-								{...(errors[inputFieldValue.name] && {
-									error: true,
-									helperText: errors[inputFieldValue.name]
-								})}
-							/>
-						);
-					})}
-					<Button
-						type="submit"
-						fullWidth
-						variant="contained"
-						color="primary"
-						className={classes.submit}
-						onClick={handleSubmit}
-						disabled={loading || !formIsValid()}
-					>
-						Create account
-						{loading && <CircularProgress size={30} className={classes.progess} />}
-					</Button>
-					<Grid container>
-						<Grid item>
-							<Link href="login" variant="body2">
-								{"Already have an account? Login"}
-							</Link>
+			<Container component="main" maxWidth="xs">
+				<CssBaseline />
+				<div className={classes.paper}>
+					<form className={classes.form} noValidate>
+						{inputFieldValues.map((inputFieldValue, index) => {
+							return (
+								<TextField
+									key={index}
+									variant="outlined"
+									margin="normal"
+									required={inputFieldValue.required}
+									fullWidth={inputFieldValue.fullWidth}
+									id={inputFieldValue.id}
+									label={inputFieldValue.label}
+									name={inputFieldValue.name}
+									type={inputFieldValue.type}
+									error={errors[inputFieldValue.name]}
+									autoComplete={inputFieldValue.autoComplete}
+									autoFocus={inputFieldValue.autoFocus}
+									onChange={handleInputChange}
+									{...(errors[inputFieldValue.name] && {
+										error: true,
+										helperText: errors[inputFieldValue.name]
+									})}
+								/>
+							);
+						})}
+						<Button
+							type="submit"
+							fullWidth
+							variant="contained"
+							color="primary"
+							className={classes.submit}
+							onClick={handleSubmit}
+							disabled={loading || !formIsValid()}
+						>
+							Create account
+							{loading && <CircularProgress size={30} className={classes.progess} />}
+						</Button>
+						<Grid container>
+							<Grid item>
+								<Link href="login" variant="body2">
+									{"Already have an account? Login"}
+								</Link>
+							</Grid>
 						</Grid>
-					</Grid>
-				</form>
+					</form>
+				</div>
 			</Container>
 			<Footer />
-		</Container>
 		</>
   )
 }

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
-import API from '../../utils/API';
-import DataAreaContext from '../../utils/DataAreaContext';
-import Lib from '../../utils/Lib';
+import API from '../../../utils/API';
+import DataAreaContext from '../../../utils/DataAreaContext';
+import Lib from '../../../utils/Lib';
 import { Button, Modal, Spinner } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
@@ -65,7 +65,7 @@ function DeleteModal(props) {
         :
           <Button 
           onClick={ () => handleDeleteClick(match.matchId) }
-          variant="outline-success"
+          variant="danger"
           >
           {isLoading ?
             <Spinner animation="border" variant="light" /> 

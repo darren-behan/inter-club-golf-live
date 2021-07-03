@@ -24,4 +24,9 @@ router.route('/signup')
   // POST request to signup a USER
   .post(userController.signUpUser);
 
+// Matches with "/api/user/signup/"
+router.route('/signout')
+  // POST request to signup a USER
+  .post(auth, userController.signOutUser);
+
 module.exports = router;

@@ -77,6 +77,17 @@ module.exports = {
       return response.status(400).json({ error: err.code });
 		});
   },
+  signOutUser(request, response) {
+    firebase
+    .auth()
+    .signOut()
+		.then((doc) => {
+      return response.status(200).json({ message: "logout successful" });
+		})
+		.catch((error) => {
+			return response.status(500).json({ error: error.code });
+		});
+  },
   getUserDetail(request, response) {
     let userData = {};
     admin

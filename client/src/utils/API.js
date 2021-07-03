@@ -11,6 +11,12 @@ const requests = {
   signUpUser: function(userData) {
     return axios.post('/user/signup', userData);
   },
+  // Sign up a user
+  signOutUser: function() {
+    const authToken = localStorage.getItem('AuthToken');
+		axios.defaults.headers.common = { Authorization: `${authToken}` };
+    return axios.post('/user/signout');
+  },
   // Returns all matches on app load
   getMatchesOnLoad: function() {
     return axios.get('/match');

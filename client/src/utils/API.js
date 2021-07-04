@@ -1,4 +1,5 @@
 import axios from 'axios';
+axios.defaults.baseURL = "https://us-central1-inter-club-golf-live.cloudfunctions.net/api";
 
 // In each function, we use axios to send our api route request to the server
 
@@ -14,7 +15,9 @@ const requests = {
   // Sign up a user
   signOutUser: function() {
     const authToken = localStorage.getItem('AuthToken');
-		axios.defaults.headers.common = { Authorization: `${authToken}` };
+    axios.defaults.headers.common = {
+      Authorization: `${authToken}`
+    };
     return axios.post('/user/signout');
   },
   // Returns all matches on app load
@@ -28,19 +31,25 @@ const requests = {
   // Posts a new match
   postMatch: function(matchData) {
     const authToken = localStorage.getItem('AuthToken');
-		axios.defaults.headers.common = { Authorization: `${authToken}` };
+    axios.defaults.headers.common = {
+      Authorization: `${authToken}`
+    };
     return axios.post('/match/create', matchData);
   },
   // Deletes a match
   deleteMatch: function(matchId) {
     const authToken = localStorage.getItem('AuthToken');
-		axios.defaults.headers.common = { Authorization: `${authToken}` };
+    axios.defaults.headers.common = {
+      Authorization: `${authToken}`
+    };
     return axios.delete('/match/' + matchId);
   },
   // Update a match
   updateMatch: function(matchData) {
     const authToken = localStorage.getItem('AuthToken');
-		axios.defaults.headers.common = { Authorization: `${authToken}` };
+    axios.defaults.headers.common = {
+      Authorization: `${authToken}`
+    };
     return axios.put('/match/' + matchData.matchId, matchData);
   },
 };

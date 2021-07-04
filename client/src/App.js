@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  useEffect,
+  useState
+} from 'react';
 import './App.css';
 import DataAreaContext from "./utils/DataAreaContext";
 import API from './utils/API';
@@ -18,10 +21,12 @@ import Signup from './pages/Signup';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import PageNotFound from './pages/PageNotFound';
+import axios from 'axios';
+axios.defaults.baseURL = "https://us-central1[...].cloudfunctions.net/api";
 
 function App() {
   // This is used to confirm the user is logged in and redirect them to the home page
-  const [isAuthenticated, setIsAuthenticated] = useState( false );
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   // This is used to create an object to capture the login details so we can send the data to the server, confirm the user and proceed to log them in
   const [loginDataObj, setLoginDataObj] = useState({});
   // This is used to create an object to capture the user sign up details so we can send the data to the server, create the user, proceed to create their account
@@ -29,7 +34,7 @@ function App() {
   // This is used to store the data of the logged in user
   const [userDataObj, setUserDataObj] = useState({});
   // This is used to store all matches in the database
-  const [appMatchesOnLoad, setAppMatchesOnLoad] = useState( [] );
+  const [appMatchesOnLoad, setAppMatchesOnLoad] = useState([]);
   // This is used to store the match details when you want to view that specific match
   const [match, setMatchObj] = useState({});
   // This is used to store new match data to post in the database
@@ -68,37 +73,118 @@ function App() {
       .catch(err => console.log(err));
   }
 
-  return (
-    <>
-      <DataAreaContext.Provider
-      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, updateModalShow, updateResponse, updateMatchObj, signUpObj, signUpResponse, signUpModalShow, setSignUpModalShow, setSignUpResponse, setSignUpObj, setUpdateMatchObj, setUpdateResponse, setUpdateModalShow, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj }}
-      >
-        <Router>
-          <div>
-            <Switch>
-              <Route exact path={'/'} component={Home} />
-              <Route exact path='/login' component={Login} />
-              <Route exact path='/signup' component={Signup} />
-              <Route exact path={'/matches'} component={Matches} />
-              <Route exact path={'/match/:id'} component={Match} />
-              <Route exact path={'/usermatches/:id'}>
-                {!isAuthenticated ? <Redirect to="/login" /> : <UserMatches />}
-              </Route>
-              <Route exact path={'/creatematch'}>
-                {!isAuthenticated ? <Redirect to="/login" /> : <CreateMatch />}
-              </Route>
-              <Route exact path={'/profile'}>
-                {!isAuthenticated ? <Redirect to="/login" /> : <Profile />}
-              </Route>
-              <Route exact path={'/settings'}>
-                {!isAuthenticated ? <Redirect to="/login" /> : <Settings />}
-              </Route>
-              <Route exact path='*' component={PageNotFound} />
-            </Switch>
-          </div>
-        </Router>
-      </DataAreaContext.Provider>
-    </>
+  return ( <
+    >
+    <
+    DataAreaContext.Provider value = {
+      {
+        isAuthenticated,
+        appMatchesOnLoad,
+        loginDataObj,
+        postMatchObj,
+        show,
+        filterValue,
+        userDataObj,
+        match,
+        deleteModalShow,
+        deleteResponse,
+        timeZone,
+        updateModalShow,
+        updateResponse,
+        updateMatchObj,
+        signUpObj,
+        signUpResponse,
+        signUpModalShow,
+        setSignUpModalShow,
+        setSignUpResponse,
+        setSignUpObj,
+        setUpdateMatchObj,
+        setUpdateResponse,
+        setUpdateModalShow,
+        setDeleteResponse,
+        setDeleteModalShow,
+        setMatchObj,
+        setIsAuthenticated,
+        setAppMatchesOnLoad,
+        setLoginDataObj,
+        setPostMatchObj,
+        setShow,
+        setFilterValue,
+        setUserDataObj
+      }
+    } >
+    <
+    Router >
+    <
+    div >
+    <
+    Switch >
+    <
+    Route exact path = {
+      '/'
+    }
+    component = {
+      Home
+    }
+    /> <
+    Route exact path = '/login'
+    component = {
+      Login
+    }
+    /> <
+    Route exact path = '/signup'
+    component = {
+      Signup
+    }
+    /> <
+    Route exact path = {
+      '/matches'
+    }
+    component = {
+      Matches
+    }
+    /> <
+    Route exact path = {
+      '/match/:id'
+    }
+    component = {
+      Match
+    }
+    /> <
+    Route exact path = {
+      '/usermatches/:id'
+    } > {
+      !isAuthenticated ? < Redirect to = "/login" / > : < UserMatches / >
+    } <
+    /Route> <
+    Route exact path = {
+      '/creatematch'
+    } > {
+      !isAuthenticated ? < Redirect to = "/login" / > : < CreateMatch / >
+    } <
+    /Route> <
+    Route exact path = {
+      '/profile'
+    } > {
+      !isAuthenticated ? < Redirect to = "/login" / > : < Profile / >
+    } <
+    /Route> <
+    Route exact path = {
+      '/settings'
+    } > {
+      !isAuthenticated ? < Redirect to = "/login" / > : < Settings / >
+    } <
+    /Route> <
+    Route exact path = '*'
+    component = {
+      PageNotFound
+    }
+    /> <
+    /Switch> <
+    /div> <
+    /Router> <
+    /DataAreaContext.Provider> <
+    />
   );
 }
 

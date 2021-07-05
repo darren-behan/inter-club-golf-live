@@ -1,5 +1,5 @@
 import axios from 'axios';
-axios.defaults.baseURL = "https://us-central1-inter-club-golf-live.cloudfunctions.net/api";
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
 // In each function, we use axios to send our api route request to the server
 

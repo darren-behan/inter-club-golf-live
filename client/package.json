@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^12.4.0",
     "bootstrap": "^4.6.0",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "lodash": "^4.17.21",
     "lodash.isempty": "^4.4.0",
     "moment": "^2.29.1",
@@ -49,6 +50,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "https://us-central1-inter-club-golf-live.cloudfunctions.net/api"
+  }
 }

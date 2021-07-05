@@ -19,33 +19,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install -g yarn
-      - name: yarn install, build and test
-        run: |
-          yarn install
-          yarn build
-      - name: Archive Build
-        uses: actions/upload-artifact@v2
-        with:
-          name: build
-          path: build
-
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Download Build
-        uses: actions/download-artifact@v2
-        with:
-          name: build
-          path: build
+      - run: npm ci
+      - run: npm run build
       - name: Depoy to Firebase
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
         env:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_INTER_CLUB_GOLF_LIVE }}'
-          projectId: inter-club-golf-live
+          FIREBASE_SERVICE_ACCOUNT_INTER_CLUB_GOLF_LIVE: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_INTER_CLUB_GOLF_LIVE }}'

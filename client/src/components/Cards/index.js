@@ -46,7 +46,7 @@ function Cards(props) {
     <Card key={ props.match.matchId } style={{ boxShadow: '0 0 4px rgba(0,0,0,.1)' }}>
       <Card.Body style={{ borderRadius: '.25rem .25rem 0 0', background: 'linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 70%, rgba(0,170,8,1) 100%)' }}>
         <Card.Title> 
-          { props.match.teamOneName } v { props.match.teamTwoName }
+          { Lib.capitalize(props.match.teamOneName) } v { Lib.capitalize(props.match.teamTwoName) }
         </Card.Title>
         <Card.Text>
           {calculateMatchStatus(props.match.matchStatus)}
@@ -58,7 +58,7 @@ function Cards(props) {
         </Card.Text>
         <Card.Text>
           <small className="text-muted">
-            Competition: { props.match.competitionName }
+            Competition: { Lib.capitalize(props.match.competitionName) }
           </small>
           <br/>
           <small className="text-muted">

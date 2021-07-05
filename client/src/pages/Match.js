@@ -88,7 +88,7 @@ function Match() {
                         { match.matchDateTime }
                       </Moment>
                     </td>
-                    <td>{ match.competitionName }</td>
+                    <td>{ Lib.capitalize(match.competitionName) }</td>
                     <td>{ Lib.capitalize(match.matchStatus) }</td>
                   </tr>
                 </tbody>
@@ -98,8 +98,8 @@ function Match() {
               <Table striped bordered hover variant="dark">
                 <thead>
                   <tr>
-                    <th>{ match.teamOneName } (H)</th>
-                    <th>{ match.teamTwoName } (A)</th>
+                    <th>{ Lib.capitalize(match.teamOneName) } (H)</th>
+                    <th>{ Lib.capitalize(match.teamTwoName) } (A)</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -124,9 +124,9 @@ function Match() {
                 <thead>
                   <tr>
                     <th></th>
-                    <th>{ match.teamOneName }</th>
+                    <th>{ Lib.capitalize(match.teamOneName) }</th>
                     <th>Thru</th>
-                    <th>{ match.teamTwoName }</th>
+                    <th>{ Lib.capitalize(match.teamTwoName) }</th>
                   </tr>
                 </thead>
                 <tbody>

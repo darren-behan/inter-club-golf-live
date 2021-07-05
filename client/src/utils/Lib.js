@@ -1,7 +1,10 @@
 export default {
   // Logs in a user
-  capitalize: function(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+  capitalize: function(str) {
+    return [...str].reduce(
+      (s, c, i, a) => s + (i === 0 || a[i - 1] === ' ' ? c.toUpperCase() : c),
+      ''
+    )
   },
   removeByAttr: function(arr, attr, value){
     var i = arr.length;

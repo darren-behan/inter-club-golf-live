@@ -18,8 +18,6 @@ import Signup from './pages/Signup';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import PageNotFound from './pages/PageNotFound';
-import axios from 'axios';
-axios.defaults.baseURL = "https://us-central1[...].cloudfunctions.net/api";
 
 function App() {
   // This is used to confirm the user is logged in and redirect them to the home page

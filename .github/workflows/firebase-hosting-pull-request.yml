@@ -19,12 +19,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm ci
       - run: cd client && npm install
       - run: npm run build
-      - name: Depoy to Firebase
-        uses: w9jds/firebase-action@master
+      - name: Deploy to Firebase
+        - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          args: deploy --only hosting
-        env:
-          FIREBASE_SERVICE_ACCOUNT_INTER_CLUB_GOLF_LIVE: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_INTER_CLUB_GOLF_LIVE }}'
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_INTER_CLUB_GOLF_LIVE }}'
+          projectId: inter-club-golf-live

@@ -4,13 +4,13 @@
 name: Deploy to Firebase Hosting on PR
 'on': pull_request
 jobs:
-  build_and_preview:
+  build:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [10]
+        node-version: [10.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -42,7 +42,7 @@ jobs:
             name: build
             path: build
         - name: Depoy to Firebase
-          uses: FirebaseExtended/action-hosting-deploy@v0
+          uses: w9jds/firebase-action@master
           with:
             args: deploy --only hosting
           env:

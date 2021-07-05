@@ -1,4 +1,5 @@
 import axios from 'axios';
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
 // In each function, we use axios to send our api route request to the server
 

@@ -109,7 +109,7 @@ module.exports = {
     })
     .catch((err) => {
 			console.error(err);
-			return response.status(500).json({ error: 'Something went wrong' });
+			return response.status(400).json({ error: 'Something went wrong' });
 		});
   },
   deleteMatch(request, response) {

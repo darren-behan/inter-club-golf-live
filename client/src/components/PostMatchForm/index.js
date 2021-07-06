@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import API from "../../utils/API";
 import DataAreaContext from '../../utils/DataAreaContext';
+import CreateMatchModal from '../Modals/CreateMatchModal';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -40,7 +41,7 @@ const styles = makeStyles({
 });
 
 function PostMatch() {
-	const { appMatchesOnLoad, postMatchObj, setPostMatchObj, setAppMatchesOnLoad, timeZone } = useContext(DataAreaContext);
+	const { appMatchesOnLoad, postMatchObj, setPostMatchObj, setAppMatchesOnLoad, timeZone, createMathModalShow, setCreateMatchModalShow, setCreateMatchResponse } = useContext(DataAreaContext);
 	const classes = styles();
 	const [loading, setLoading] = useState( false );
 
@@ -66,15 +67,31 @@ function PostMatch() {
 		})
 		.then((response) => {
 			setAppMatchesOnLoad([response.data, ...appMatchesOnLoad]);
+			setCreateMatchResponse({
+				matchId: response.data.matchId,
+				message: "Match created successfully",
+				status: 200
+			});
+			setCreateMatchModalShow(true);
       setLoading(false);
 		})
 		.catch(error => {
 			console.log(error);
+			setCreateMatchResponse({
+				message: error.response.data.error,
+				status: error.response.status
+			});
+			setCreateMatchModalShow(true);
 			setLoading(false);
 		});
 	};
 
 	return (
+		<>
+		<CreateMatchModal
+			show={createMathModalShow}
+			onHide={() => setCreateMatchModalShow(false)} 
+		/>
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<div className={classes.paper}>
@@ -164,6 +181,7 @@ function PostMatch() {
 				</form>
 			</div>
 		</Container>
+		</>
 	);
 }
 

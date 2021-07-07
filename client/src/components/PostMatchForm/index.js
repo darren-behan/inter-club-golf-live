@@ -107,7 +107,6 @@ function PostMatch() {
 						id="matchDate"
 						name="matchDate"
 						type="date"
-						autoFocus
 						onChange={handleInputChange}
 					/>
 					<TextField
@@ -118,7 +117,6 @@ function PostMatch() {
 						name="matchTime"
 						id="matchTime"
 						type="time"
-						autoFocus
 						onChange={handleInputChange}
 					/>
 					<TextField
@@ -129,7 +127,6 @@ function PostMatch() {
 						name="competitionName"
 						id="competitionName"
             label="Competition Name"
-						autoFocus
 						onChange={handleInputChange}
 					/>
 					<TextField
@@ -141,7 +138,6 @@ function PostMatch() {
 						id="numIndividualMatches"
 						type="number"
             label="Enter number of individual matches"
-						autoFocus
 						onChange={handleInputChange}
 					/>
 					<TextField
@@ -152,7 +148,6 @@ function PostMatch() {
 						name="teamOneName"
 						id="teamOneName"
             label="Home Team Name"
-						autoFocus
 						onChange={handleInputChange}
 					/>
 					<TextField
@@ -163,7 +158,6 @@ function PostMatch() {
 						name="teamTwoName"
 						id="teamTwoName"
             label="Away Team Name"
-						autoFocus
 						onChange={handleInputChange}
 					/>
 					<Button

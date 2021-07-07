@@ -23,9 +23,7 @@
 
 ## Usage
 
-🚨 View live demo <a href="">here</a> 🏌️‍♀️🏌️‍♂️
-
-![Preview](./client/src/assets/img/ "Preview of Golfers Choice App")
+🚨 View live demo <a href="https://inter-club-golf-live.web.app/">here</a> 🏌️‍♀️🏌️‍♂️
 
 ## License
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import LocalStorage from './services/LocalStorage/LocalStorage.service';
 import DataAreaContext from "./utils/DataAreaContext";
 import API from './utils/API';
 import {
@@ -17,7 +18,13 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
-import PageNotFound from './pages/PageNotFound';
+import PageNotFound from './pages/PageNotFound';import TagManager from 'react-gtm-module'
+
+const tagManagerArgs = {
+    gtmId: process.env.GTM_ID
+} 
+
+TagManager.initialize(tagManagerArgs)
 
 function App() {
   // This is used to confirm the user is logged in and redirect them to the home page

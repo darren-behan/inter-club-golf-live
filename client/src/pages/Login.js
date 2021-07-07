@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import API from "../utils/API";
 import DataAreaContext from '../utils/DataAreaContext';
+import LocalStorage from '../services/LocalStorage/LocalStorage.service';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useHistory } from 'react-router-dom';
@@ -71,7 +72,7 @@ function Login() {
       password: loginDataObj.password
 		})
 		.then((response) => {
-			localStorage.setItem('AuthToken', `Bearer ${response.data.stsTokenManager.accessToken}`);
+			LocalStorage.set('AuthToken', `Bearer ${response.data.stsTokenManager.accessToken}`);
 			setUserDataObj(response.data);
 			setLoading(false);
 			setIsAuthenticated(true);

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import './index.css';
 import API from "../../utils/API";
+import LocalStorage from '../../services/LocalStorage/LocalStorage.service';
 import { useLocation, Link } from 'react-router-dom';
 import DataAreaContext from '../../utils/DataAreaContext';
 import { Container, Navbar, Nav, Button } from 'react-bootstrap';
@@ -18,7 +19,7 @@ function Header() {
     API.signOutUser({})
 		.then((response) => {
       console.log(response);
-			localStorage.setItem('AuthToken', "");
+			LocalStorage.remove('AuthToken');
 			setUserDataObj({});
 			setIsAuthenticated(false);
 		})

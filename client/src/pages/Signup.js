@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import API from "../utils/API";
 import DataAreaContext from '../utils/DataAreaContext';
+import LocalStorage from '../services/LocalStorage/LocalStorage.service';
 import SignUpModal from "../components/Modals/SignUpModal";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -172,7 +173,7 @@ function Signup() {
       confirmPassword: signUpObj.confirmPassword
 		})
 		.then((response) => {
-			localStorage.setItem('AuthToken', `Bearer ${response.data.stsTokenManager.accessToken}`);
+			LocalStorage.set('AuthToken', `Bearer ${response.data.stsTokenManager.accessToken}`);
 			setUserDataObj(response.data);
 			setSignUpResponse({
 				message: "Signup successful",

@@ -51,7 +51,7 @@ const inputFieldValues = [
 		required: true,
 		fullWidth: true,
 		autoComplete: "autoComplete",
-		autoFocus: true,
+		autoFocus: false,
 		type: ""
 	},
 	{
@@ -61,7 +61,7 @@ const inputFieldValues = [
 		required: true,
 		fullWidth: true,
 		autoComplete: "autoComplete",
-		autoFocus: true,
+		autoFocus: false,
 		type: ""
 	},
 	{
@@ -71,7 +71,7 @@ const inputFieldValues = [
 		required: true,
 		fullWidth: true,
 		autoComplete: "autoComplete",
-		autoFocus: true,
+		autoFocus: false,
 		type: "number"
 	},
 	{
@@ -81,7 +81,7 @@ const inputFieldValues = [
 		required: true,
 		fullWidth: true,
 		autoComplete: "autoComplete",
-		autoFocus: true,
+		autoFocus: false,
 		type: ""
 	},
 	{
@@ -91,7 +91,7 @@ const inputFieldValues = [
 		required: true,
 		fullWidth: true,
 		autoComplete: "autoComplete",
-		autoFocus: true,
+		autoFocus: false,
 		type: ""
 	},
 	{
@@ -101,7 +101,7 @@ const inputFieldValues = [
 		required: true,
 		fullWidth: true,
 		autoComplete: "autoComplete",
-		autoFocus: true,
+		autoFocus: false,
 		type: "password"
 	},
 	{
@@ -111,7 +111,7 @@ const inputFieldValues = [
 		required: true,
 		fullWidth: true,
 		autoComplete: "autoComplete",
-		autoFocus: true,
+		autoFocus: false,
 		type: "password"
 	},
 ];

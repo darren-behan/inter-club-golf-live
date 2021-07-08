@@ -13,6 +13,8 @@ import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import firebase from "firebase/app";
+import "firebase/auth";
 
 const styles = makeStyles({
 	paper: {
@@ -44,7 +46,7 @@ const styles = makeStyles({
 
 function Login() {
 	let history = useHistory();
-	const { isAuthenticated, setIsAuthenticated, loginDataObj, setLoginDataObj, setUserDataObj } = useContext(DataAreaContext);
+	const { isAuthenticated, setIsAuthenticated, loginDataObj, setLoginDataObj, setUserDataObj, userDataObj } = useContext(DataAreaContext);
 	const [errors, setErrors] = useState( [] );
 	const [loading, setLoading] = useState( false );
 	const classes = styles();
@@ -67,17 +69,17 @@ function Login() {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		setLoading(true);
-    API.loginUser({
-      email: loginDataObj.email,
-      password: loginDataObj.password
+		firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+		.then(() => {
+			return firebase.auth().signInWithEmailAndPassword(loginDataObj.email, loginDataObj.password);
 		})
-		.then((response) => {
-			LocalStorage.set('AuthToken', `Bearer ${response.data.stsTokenManager.accessToken}`);
-			setUserDataObj(response.data);
-			setLoading(false);
+		.then((res) => {
 			setIsAuthenticated(true);
+			setUserDataObj(res);
+			LocalStorage.set('AuthToken', `Bearer ${res.Aa}`);
+			setLoading(false);
 		})
-		.catch(error => {
+		.catch((error) => {
 			setErrors(error.response);
 			setLoading(false);
 		});

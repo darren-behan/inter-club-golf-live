@@ -6,7 +6,7 @@ module.exports = (request, response, next) => {
 		idToken = request.headers.authorization.split('Bearer ')[1];
 	} else {
 		console.error('No token found');
-		return response.status(403).json({ error: 'Unauthorized' });
+		return response.status(400).json({ error: 'Unauthorized' });
 	}
 	admin
 	.auth()
@@ -21,6 +21,6 @@ module.exports = (request, response, next) => {
 	})
 	.catch((err) => {
 		console.error('Error while verifying token', err);
-		return response.status(403).json(err);
+		return response.status(400).json(err);
 	});
 };

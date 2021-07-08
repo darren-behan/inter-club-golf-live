@@ -9,25 +9,6 @@ firebase.initializeApp(config);
 const { validateLoginData, validateSignUpData } = require('../util/validators');
 
 module.exports = {
-  loginUser(request, response) {
-    const user = {
-      email: request.body.email,
-      password: request.body.password
-    }
-
-    const { valid, errors } = validateLoginData(user);
-    if (!valid) return response.status(400).json(errors);
-  
-    firebase
-    .auth()
-    .signInWithEmailAndPassword(user.email, user.password)
-    .then((data) => {
-      return response.json(data.user);
-    })
-    .catch((error) => {
-      return response.status(403).json({ error: error.code });
-    })
-  },
   signUpUser(request, response) {
     const newUser = {
       firstName: request.body.firstName,
@@ -75,44 +56,6 @@ module.exports = {
     })
     .catch((err) => {
       return response.status(400).json({ error: err.code });
-		});
-  },
-  signOutUser(request, response) {
-    firebase
-    .auth()
-    .signOut()
-		.then((doc) => {
-      return response.status(200).json({ message: "logout successful" });
-		})
-		.catch((error) => {
-			return response.status(500).json({ error: error.code });
-		});
-  },
-  getUserDetail(request, response) {
-    let userData = {};
-    admin
-    .auth()
-    .getUser(request.user.user_id)
-		.then((doc) => {
-      return response.json(doc);
-		})
-		.catch((error) => {
-			return response.status(500).json({ error: error.code });
-		});
-  },
-  updateUserDetail(request, response) {
-    let document = db.collection('users').doc(`${request.user.email}`);
-    document
-    .update(request.body)
-		.then(() => {
-      return response.json({
-        message: 'Updated successfully'
-      });
-		})
-		.catch((error) => {
-			return response.status(500).json({
-        message: "Cannot Update the value"
-      });
 		});
   }
 }

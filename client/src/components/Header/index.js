@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import './index.css';
-import API from "../../utils/API";
 import LocalStorage from '../../services/LocalStorage/LocalStorage.service';
 import { useLocation, Link } from 'react-router-dom';
 import DataAreaContext from '../../utils/DataAreaContext';
@@ -8,6 +7,8 @@ import { Container, Navbar, Nav, Button } from 'react-bootstrap';
 import { Bootstrap } from 'react-bootstrap-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faGolfBall, faSignInAlt, faUserPlus, faFilter } from '@fortawesome/free-solid-svg-icons';
+import firebase from "firebase/app";
+import "firebase/auth";
 
 function Header() {
   const { isAuthenticated, setFilterValue, setShow, userDataObj, setUserDataObj, setIsAuthenticated } = useContext(DataAreaContext);
@@ -16,9 +17,8 @@ function Header() {
 
   const onClickSignOutUser = (e) => {
 		e.preventDefault();
-    API.signOutUser({})
+    firebase.auth().signOut()
 		.then((response) => {
-      console.log(response);
 			LocalStorage.remove('AuthToken');
 			setUserDataObj({});
 			setIsAuthenticated(false);

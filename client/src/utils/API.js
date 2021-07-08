@@ -5,19 +5,9 @@ axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 // In each function, we use axios to send our api route request to the server
 
 const requests = {
-  // Logs in a user
-  loginUser: function(userData) {
-    return axios.post('/user/login', userData);
-  },
   // Sign up a user
   signUpUser: function(userData) {
     return axios.post('/user/signup', userData);
-  },
-  // Sign up a user
-  signOutUser: function() {
-    const authToken = LocalStorage.get('AuthToken');
-		axios.defaults.headers.common = { Authorization: `${authToken}` };
-    return axios.post('/user/signout');
   },
   // Returns all matches on app load
   getMatchesOnLoad: function() {

@@ -19,6 +19,8 @@ import Signup from './pages/Signup';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import PageNotFound from './pages/PageNotFound';
+import firebase from "firebase/app";
+import "firebase/auth";
 
 function App() {
   // This is used to confirm the user is logged in and redirect them to the home page
@@ -61,6 +63,7 @@ function App() {
   const [createMathModalShow, setCreateMatchModalShow] = useState(false);
 
   useEffect(() => {
+    authenticateUser();
     getAppMatchesOnLoad();
     setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
   }, []);
@@ -71,6 +74,22 @@ function App() {
         setAppMatchesOnLoad(res.data);
       })
       .catch(err => console.log(err));
+  }
+
+  function authenticateUser() {
+    firebase.auth().onAuthStateChanged((user) => {
+      console.log(user);
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        setIsAuthenticated(true);
+        setUserDataObj(user);
+        LocalStorage.set('AuthToken', `Bearer ${user.Aa}`);
+      } else {
+        // User is signed out
+        firebase.auth().signOut();
+      }
+    });
   }
 
   return (

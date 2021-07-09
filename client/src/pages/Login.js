@@ -1,9 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
-import API from "../utils/API";
 import DataAreaContext from '../utils/DataAreaContext';
 import LocalStorage from '../services/LocalStorage/LocalStorage.service';
 import Header from "../components/Header";
-import Footer from "../components/Footer";
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -46,7 +44,7 @@ const styles = makeStyles({
 
 function Login() {
 	let history = useHistory();
-	const { isAuthenticated, setIsAuthenticated, loginDataObj, setLoginDataObj, setUserDataObj, userDataObj } = useContext(DataAreaContext);
+	const { isAuthenticated, setIsAuthenticated, loginDataObj, setLoginDataObj, setUserDataObj } = useContext(DataAreaContext);
 	const [errors, setErrors] = useState( [] );
 	const [loading, setLoading] = useState( false );
 	const classes = styles();
@@ -138,7 +136,6 @@ function Login() {
 				</form>
 				</div>
 			</Container>
-			<Footer />
 		</>
 	);
 }

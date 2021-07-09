@@ -1,11 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import API from "../utils/API";
 import DataAreaContext from '../utils/DataAreaContext';
 import LocalStorage from '../services/LocalStorage/LocalStorage.service';
 import SignUpModal from "../components/Modals/SignUpModal";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
-import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
@@ -117,8 +115,7 @@ const inputFieldValues = [
 ];
 
 function Signup() {
-	let history = useHistory();
-	const { signUpObj, setSignUpObj, setIsAuthenticated, setUserDataObj, signUpResponse, setSignUpResponse, signUpModalShow, setSignUpModalShow } = useContext(DataAreaContext);
+	const { signUpObj, setSignUpObj, setIsAuthenticated, setUserDataObj, setSignUpResponse, signUpModalShow, setSignUpModalShow } = useContext(DataAreaContext);
   const [errors, setErrors] = useState({});
 	const [loading, setLoading] = useState( false );
 	const classes = styles();
@@ -267,7 +264,6 @@ function Signup() {
 					</form>
 				</div>
 			</Container>
-			<Footer />
 		</>
   )
 }

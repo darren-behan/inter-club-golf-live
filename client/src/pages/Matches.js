@@ -43,7 +43,7 @@ function Matches() {
         />
         </Row>
       </Container>
-      <Footer />
+      {/* <Footer /> */}
     </Container>
     </>
   );

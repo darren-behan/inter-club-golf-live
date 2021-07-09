@@ -61,6 +61,8 @@ function App() {
   const [createMatchResponse, setCreateMatchResponse] = useState({});
   // This stores the boolean value when a 400 response is received, it will set to true to show the sign up modal
   const [createMathModalShow, setCreateMatchModalShow] = useState(false);
+  // This is to handle the opening and closing of the burger menu
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     authenticateUser();
@@ -78,7 +80,6 @@ function App() {
 
   function authenticateUser() {
     firebase.auth().onAuthStateChanged((user) => {
-      console.log(user);
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
@@ -95,7 +96,7 @@ function App() {
   return (
     <>
       <DataAreaContext.Provider
-      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, updateModalShow, updateResponse, updateMatchObj, signUpObj, signUpResponse, signUpModalShow, createMatchResponse, createMathModalShow, setCreateMatchModalShow, setCreateMatchResponse, setSignUpModalShow, setSignUpResponse, setSignUpObj, setUpdateMatchObj, setUpdateResponse, setUpdateModalShow, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj }}
+      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, updateModalShow, updateResponse, updateMatchObj, signUpObj, signUpResponse, signUpModalShow, createMatchResponse, createMathModalShow, sidebarOpen, setSidebarOpen, setCreateMatchModalShow, setCreateMatchResponse, setSignUpModalShow, setSignUpResponse, setSignUpObj, setUpdateMatchObj, setUpdateResponse, setUpdateModalShow, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj }}
       >
         <Router>
           <div>

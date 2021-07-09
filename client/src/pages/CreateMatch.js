@@ -12,7 +12,7 @@ function Home() {
     <Container>
       <PostMatchForm />
     </Container>
-    <Footer />
+    {/* <Footer /> */}
     </>
   );
 }

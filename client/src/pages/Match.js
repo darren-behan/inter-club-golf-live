@@ -187,7 +187,7 @@ function Match() {
             )
             }
           </Container>
-          <Footer />
+          {/* <Footer /> */}
         </Container>
         </>
       )}

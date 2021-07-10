@@ -1,17 +1,19 @@
 import React, { useContext, useState } from 'react';
 import API from "../utils/API";
 import DataAreaContext from '../utils/DataAreaContext';
-import LocalStorage from '../services/LocalStorage/LocalStorage.service';
-import SignUpModal from "../components/Modals/SignUpModal";
+import UserAuthModal from "../components/Modals/UserAuthModal";
 import Header from "../components/Header";
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import firebase from "firebase/app";
+import "firebase/auth";
 
 const styles = makeStyles({
 	paper: {
@@ -62,29 +64,29 @@ const inputFieldValues = [
 		autoFocus: false,
 		type: ""
 	},
-	{
-		name: "phoneNumber",
-		label: "Phone Number",
-		id: "phoneNumber",
-		required: true,
-		fullWidth: true,
-		autoComplete: "autoComplete",
-		autoFocus: false,
-		type: "number"
-	},
-	{
-		name: "country",
-		label: "Country Of Residence",
-		id: "country",
-		required: true,
-		fullWidth: true,
-		autoComplete: "autoComplete",
-		autoFocus: false,
-		type: ""
-	},
+	// {
+	// 	name: "phoneNumber",
+	// 	label: "Phone Number",
+	// 	id: "phoneNumber",
+	// 	required: true,
+	// 	fullWidth: true,
+	// 	autoComplete: "autoComplete",
+	// 	autoFocus: false,
+	// 	type: "number"
+	// },
+	// {
+	// 	name: "country",
+	// 	label: "Country Of Residence",
+	// 	id: "country",
+	// 	required: true,
+	// 	fullWidth: true,
+	// 	autoComplete: "autoComplete",
+	// 	autoFocus: false,
+	// 	type: ""
+	// },
 	{
 		name: "email",
-		label: "Email",
+		label: "Email address",
 		id: "email",
 		required: true,
 		fullWidth: true,
@@ -115,7 +117,7 @@ const inputFieldValues = [
 ];
 
 function Signup() {
-	const { signUpObj, setSignUpObj, setIsAuthenticated, setUserDataObj, setSignUpResponse, signUpModalShow, setSignUpModalShow } = useContext(DataAreaContext);
+	const { signUpObj, setSignUpObj, setUserDataObj, setUserAuthResponse, userAuthModalShow, setUserAuthModalShow } = useContext(DataAreaContext);
   const [errors, setErrors] = useState({});
 	const [loading, setLoading] = useState( false );
 	const classes = styles();
@@ -160,33 +162,35 @@ function Signup() {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		setLoading(true);
-    API.signUpUser({
-      firstName: signUpObj.firstName,
-      lastName: signUpObj.lastName,
-      phoneNumber: signUpObj.phoneNumber,
-      country: signUpObj.country,
-      email: signUpObj.email,
-      password: signUpObj.password,
-      confirmPassword: signUpObj.confirmPassword
-		})
+
+    firebase
+    .auth()
+    .createUserWithEmailAndPassword(
+      signUpObj.email, 
+      signUpObj.password
+    )
 		.then((response) => {
-			LocalStorage.set('AuthToken', `Bearer ${response.data.stsTokenManager.accessToken}`);
-			setUserDataObj(response.data);
-			setSignUpResponse({
-				message: "Signup successful",
+			console.log(response);
+			response.user.sendEmailVerification();
+			response.user.updateProfile({
+				displayName: `${signUpObj.firstName} ${signUpObj.lastName}`
+			});
+			setUserDataObj(response.user);
+			firebase.auth().signOut();
+			setUserAuthResponse({
+				message: "You're signup has been received. We've sent you an email verification. Please verify your email through the email you received to be able to complete the signup process.",
 				status: 200
 			});
 			setLoading(false);
-			setIsAuthenticated(true);
-			setSignUpModalShow(true);
-		})
+			setUserAuthModalShow(true);
+	})
 		.catch(error => {
-			setSignUpResponse({
-				message: error.response.data.error,
-				status: error.response.status
+			setUserAuthResponse({
+				message: error.message,
+				status: 400
 			});
 			setLoading(false);
-			setSignUpModalShow(true);
+			setUserAuthModalShow(true);
 		});
 	};
 
@@ -195,7 +199,6 @@ function Signup() {
 			signUpObj.firstName &&
 			signUpObj.lastName &&
 			signUpObj.phoneNumber &&
-			signUpObj.country &&
 			signUpObj.email &&
 			signUpObj.password &&
 			signUpObj.confirmPassword &&
@@ -210,14 +213,17 @@ function Signup() {
 
   return (
     <>
-			<SignUpModal
-				show={signUpModalShow}
-				onHide={() => setSignUpModalShow(false)} 
+			<UserAuthModal
+				show={userAuthModalShow}
+				onHide={() => setUserAuthModalShow(false)} 
 			/>
     	<Header />
 			<Container component="main" maxWidth="xs">
 				<CssBaseline />
 				<div className={classes.paper}>
+					<Typography component="h1" variant="h5">
+						Create account
+					</Typography>
 					<form className={classes.form} noValidate>
 						{inputFieldValues.map((inputFieldValue, index) => {
 							return (
@@ -257,7 +263,7 @@ function Signup() {
 						<Grid container>
 							<Grid item>
 								<Link href="login" variant="body2">
-									{"Already have an account? Login"}
+									{"Already have an account? Sign in"}
 								</Link>
 							</Grid>
 						</Grid>

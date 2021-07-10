@@ -8,17 +8,17 @@ import 'moment-timezone';
 
 function SignUpModal(props) {
 	let history = useHistory();
-  const { signUpResponse, setSignUpModalShow, setSignUpObj } = useContext(DataAreaContext);
+  const { userAuthResponse, setSignUpObj, setUserAuthModalShow, setLoginDataObj, setForm } = useContext(DataAreaContext);
   
   const onClick = (e) => {
     e.preventDefault();
-    if (signUpResponse.status === 400) {
-      history.push('/login');
-    } else {
-      history.push('/');
-    }
-    setSignUpModalShow(false);
+    history.push('/login');
+    setUserAuthModalShow(false);
     setSignUpObj({});
+    setLoginDataObj({
+      email: "",
+      password: ""});
+    setForm(true);
   };
 
   return (
@@ -31,24 +31,15 @@ function SignUpModal(props) {
     >
       <Modal.Header />
       <Modal.Body>
-        { signUpResponse.message }
+        { userAuthResponse.message }
       </Modal.Body>
       <Modal.Footer>
-        {signUpResponse.status === 200 ?
-          <Button 
-          onClick={onClick}
-          variant="outline-success"
-          >
-            Close
-          </Button>
-          :
-          <Button
-          variant="outline-success"
-          onClick={onClick}
-          >
-            Login
-          </Button>
-        }
+        <Button 
+        onClick={onClick}
+        variant="outline-success"
+        >
+          {userAuthResponse.status === 400 ? "Close" : "Login"}
+        </Button>
       </Modal.Footer>
     </Modal>
     </>

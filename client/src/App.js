@@ -49,20 +49,22 @@ function App() {
   const [deleteResponse, setDeleteResponse] = useState({});
   // This will store the users timezone
   const [timeZone, setTimeZone] = useState("");
-  // This stores the boolean value when the update button has been clicked to show the delete modal
+  // This stores the boolean value when the update button has been clicked to show the update modal
   const [updateModalShow, setUpdateModalShow] = useState(false);
   // This stores the server response on updating a match which is used to be shown to the user
   const [updateResponse, setUpdateResponse] = useState({});
-  // This stores the request response when attempting to sign up
-  const [signUpResponse, setSignUpResponse] = useState({});
-  // This stores the boolean value when a 400 response is received, it will set to true to show the sign up modal
-  const [signUpModalShow, setSignUpModalShow] = useState(false);
+  // This stores the request response when attempting to sign up and login
+  const [userAuthResponse, setUserAuthResponse] = useState({});
+  // This stores the boolean value to show & close the user auth modal for login & sign up purposes
+  const [userAuthModalShow, setUserAuthModalShow] = useState(false);
   // This stores the request response when attempting to create a match
   const [createMatchResponse, setCreateMatchResponse] = useState({});
   // This stores the boolean value when a 400 response is received, it will set to true to show the sign up modal
   const [createMathModalShow, setCreateMatchModalShow] = useState(false);
   // This is to handle the opening and closing of the burger menu
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  // This is used to dispaly the login form if true or reset password form if false
+	const [form, setForm] = useState(true);
 
   useEffect(() => {
     authenticateUser();
@@ -79,13 +81,13 @@ function App() {
   }
 
   function authenticateUser() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
+    firebase.auth().onAuthStateChanged((response) => {
+      if (response.user.emailVerified) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         setIsAuthenticated(true);
-        setUserDataObj(user);
-        LocalStorage.set('AuthToken', `Bearer ${user.Aa}`);
+        setUserDataObj(response.user);
+        LocalStorage.set('AuthToken', `Bearer ${response.user.Aa}`);
       } else {
         // User is signed out
         firebase.auth().signOut();
@@ -96,7 +98,7 @@ function App() {
   return (
     <>
       <DataAreaContext.Provider
-      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, updateModalShow, updateResponse, updateMatchObj, signUpObj, signUpResponse, signUpModalShow, createMatchResponse, createMathModalShow, sidebarOpen, setSidebarOpen, setCreateMatchModalShow, setCreateMatchResponse, setSignUpModalShow, setSignUpResponse, setSignUpObj, setUpdateMatchObj, setUpdateResponse, setUpdateModalShow, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj }}
+      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, updateModalShow, updateResponse, updateMatchObj, signUpObj, userAuthResponse, userAuthModalShow, createMatchResponse, createMathModalShow, sidebarOpen, form, setForm, setSidebarOpen, setCreateMatchModalShow, setCreateMatchResponse, setUserAuthModalShow, setUserAuthResponse, setSignUpObj, setUpdateMatchObj, setUpdateResponse, setUpdateModalShow, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj }}
       >
         <Router>
           <div>

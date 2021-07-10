@@ -1,11 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
 import DataAreaContext from '../utils/DataAreaContext';
 import LocalStorage from '../services/LocalStorage/LocalStorage.service';
+import UserAuthModal from "../components/Modals/UserAuthModal";
 import Header from "../components/Header";
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
@@ -44,8 +46,7 @@ const styles = makeStyles({
 
 function Login() {
 	let history = useHistory();
-	const { isAuthenticated, setIsAuthenticated, loginDataObj, setLoginDataObj, setUserDataObj } = useContext(DataAreaContext);
-	const [errors, setErrors] = useState( [] );
+	const { isAuthenticated, setIsAuthenticated, loginDataObj, setLoginDataObj, setUserDataObj, setUserAuthResponse, setUserAuthModalShow, userAuthModalShow, form, setForm } = useContext(DataAreaContext);
 	const [loading, setLoading] = useState( false );
 	const classes = styles();
 	
@@ -64,76 +65,171 @@ function Login() {
 		setLoginDataObj({...loginDataObj, [name]: value})
   };
 
-	const handleSubmit = (event) => {
+	const handleLoginSubmit = (event) => {
 		event.preventDefault();
 		setLoading(true);
 		firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
 		.then(() => {
 			return firebase.auth().signInWithEmailAndPassword(loginDataObj.email, loginDataObj.password);
 		})
-		.then((res) => {
-			setIsAuthenticated(true);
-			setUserDataObj(res);
-			LocalStorage.set('AuthToken', `Bearer ${res.Aa}`);
-			setLoading(false);
+		.then((response) => {
+      if (response.user.emailVerified) {
+				setIsAuthenticated(true);
+				setUserDataObj(response.user);
+				LocalStorage.set('AuthToken', `Bearer ${response.user.Aa}`);
+				setLoading(false);
+			} else {
+				response.user.sendEmailVerification();
+				setUserAuthResponse({
+					message: "Your email is not verified. A verification email has been sent to your email address. Please verify your email to continue to login.",
+					status: 200
+				});
+				setLoginDataObj({});
+				setLoading(false);
+				setUserAuthModalShow(true);
+			}
 		})
 		.catch((error) => {
-			setErrors(error.response);
+			setUserAuthResponse({
+				message: error.message,
+				status: 400
+			});
 			setLoading(false);
+			setUserAuthModalShow(true);
+		});
+	};
+
+	const handleResetPasswordSubmit = (event) => {
+		event.preventDefault();
+		setLoading(true);
+		firebase.auth().sendPasswordResetEmail(loginDataObj.email)
+		.then(() => {
+			setUserAuthResponse({
+				message: "A password reset email has been sent.",
+				status: 200
+			});
+			setLoading(false);
+			setUserAuthModalShow(true);
+		})
+		.catch((error) => {
+			setUserAuthResponse({
+				message: error.message,
+				status: 400
+			});
+			setLoading(false);
+			setUserAuthModalShow(true);
 		});
 	};
 
 	return (
     <>
+			<UserAuthModal
+				show={userAuthModalShow}
+				onHide={() => setUserAuthModalShow(false)} 
+			/>
     	<Header />
 			<Container component="main" maxWidth="xs">
 				<CssBaseline />
 				<div className={classes.paper}>
-				<form className={classes.form} noValidate>
-					<TextField
-						variant="outlined"
-						margin="normal"
-						required
-						fullWidth
-						id="email"
-						label="Email Address"
-						name="email"
-						autoComplete="email"
-						autoFocus
-						onChange={handleInputChange}
-					/>
-					<TextField
-						variant="outlined"
-						margin="normal"
-						required
-						fullWidth
-						name="password"
-						label="Password"
-						type="password"
-						id="password"
-						autoComplete="current-password"
-						onChange={handleInputChange}
-					/>
-					<Button
-						type="submit"
-						fullWidth
-						variant="contained"
-						color="primary"
-						className={classes.submit}
-						onClick={handleSubmit}
-						disabled={loading || !loginDataObj.email || !loginDataObj.password}
-					>
-						Sign In
-						{loading && <CircularProgress size={30} className={classes.progess} />}
-					</Button>
-					<Grid container>
-						<Grid item>
-							<Link href="signup" variant="body2">
-								{"Don't have an account? Sign Up"}
-							</Link>
-						</Grid>
-					</Grid>
-				</form>
+					{(form === true) ? (
+						<>
+						<Typography component="h1" variant="h5">
+							Sign in
+						</Typography>
+						<form className={classes.form} noValidate>
+							<TextField
+								variant="outlined"
+								margin="normal"
+								required
+								fullWidth
+								id="email"
+								label="Email address"
+								name="email"
+								value={loginDataObj.email}
+								autoComplete="email"
+								onChange={handleInputChange}
+							/>
+							<TextField
+								variant="outlined"
+								margin="normal"
+								required
+								fullWidth
+								name="password"
+								label="Password"
+								value={loginDataObj.password}
+								type="password"
+								id="password"
+								autoComplete="current-password"
+								onChange={handleInputChange}
+							/>
+							<Button
+								type="submit"
+								fullWidth
+								variant="contained"
+								color="primary"
+								className={classes.submit}
+								onClick={(e) => handleLoginSubmit(e)}
+								disabled={loading || !loginDataObj.email || !loginDataObj.password}
+							>
+								Sign In
+								{loading && <CircularProgress size={30} className={classes.progess} />}
+							</Button>
+							<Grid container>
+								<Grid item>
+									<Link href="signup" variant="body2">
+										{"Don't have an account? Sign Up"}
+									</Link>
+								</Grid>
+							</Grid>
+							<Grid container>
+								<Grid item>
+									<Link onClick={() => {setForm(false)}} variant="body2">
+										{"Forgot your password?"}
+									</Link>
+								</Grid>
+							</Grid>
+						</form>
+						</>
+						) : (
+						<>
+						<Typography component="h1" variant="h5">
+							Reset password
+						</Typography>
+						<form className={classes.form} noValidate>
+							<TextField
+								variant="outlined"
+								margin="normal"
+								required
+								fullWidth
+								id="email"
+								label="Email address"
+								name="email"
+								autoComplete="email"
+								onChange={handleInputChange}
+							/>
+							<Button
+								type="submit"
+								fullWidth
+								variant="contained"
+								color="primary"
+								className={classes.submit}
+								onClick={(e) => handleResetPasswordSubmit(e)}
+								disabled={loading || !loginDataObj.email}
+							>
+								Reset password
+								{loading && <CircularProgress size={30} className={classes.progess} />}
+							</Button>
+							<Grid container>
+								<Grid item>
+									<Link onClick={() => {setForm(true)}} variant="body2">
+										{"Sign in"}
+									</Link>
+								</Grid>
+							</Grid>
+						</form>
+						</>
+						)
+					}
 				</div>
 			</Container>
 		</>

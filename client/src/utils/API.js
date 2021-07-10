@@ -5,9 +5,9 @@ axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 // In each function, we use axios to send our api route request to the server
 
 const requests = {
-  // Sign up a user
-  signUpUser: function(userData) {
-    return axios.post('/user/signup', userData);
+  // Update user
+  updateUser: function(userData) {
+    return axios.post('/user/update', userData);
   },
   // Returns all matches on app load
   getMatchesOnLoad: function() {

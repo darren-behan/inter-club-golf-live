@@ -163,6 +163,11 @@ function Signup() {
 		event.preventDefault();
 		setLoading(true);
 
+		const actionCodeSettings = {
+			url: 'https://inter-club-golf-live.web.app/login',
+			handleCodeInApp: false
+		};
+
     firebase
     .auth()
     .createUserWithEmailAndPassword(
@@ -171,7 +176,7 @@ function Signup() {
     )
 		.then((response) => {
 			console.log(response);
-			response.user.sendEmailVerification();
+			response.user.sendEmailVerification(actionCodeSettings);
 			response.user.updateProfile({
 				displayName: `${signUpObj.firstName} ${signUpObj.lastName}`
 			});
@@ -198,7 +203,6 @@ function Signup() {
 		const isValid =
 			signUpObj.firstName &&
 			signUpObj.lastName &&
-			signUpObj.phoneNumber &&
 			signUpObj.email &&
 			signUpObj.password &&
 			signUpObj.confirmPassword &&

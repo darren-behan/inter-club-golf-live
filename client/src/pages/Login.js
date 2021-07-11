@@ -65,9 +65,15 @@ function Login() {
 		setLoginDataObj({...loginDataObj, [name]: value})
   };
 
+	const actionCodeSettings = {
+		url: 'https://inter-club-golf-live.web.app/login',
+		handleCodeInApp: false
+	};
+
 	const handleLoginSubmit = (event) => {
 		event.preventDefault();
 		setLoading(true);
+
 		firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
 		.then(() => {
 			return firebase.auth().signInWithEmailAndPassword(loginDataObj.email, loginDataObj.password);
@@ -79,7 +85,7 @@ function Login() {
 				LocalStorage.set('AuthToken', `Bearer ${response.user.Aa}`);
 				setLoading(false);
 			} else {
-				response.user.sendEmailVerification();
+				response.user.sendEmailVerification(actionCodeSettings);
 				setUserAuthResponse({
 					message: "Your email is not verified. A verification email has been sent to your email address. Please verify your email to continue to login.",
 					status: 200
@@ -102,7 +108,7 @@ function Login() {
 	const handleResetPasswordSubmit = (event) => {
 		event.preventDefault();
 		setLoading(true);
-		firebase.auth().sendPasswordResetEmail(loginDataObj.email)
+		firebase.auth().sendPasswordResetEmail(loginDataObj.email, actionCodeSettings)
 		.then(() => {
 			setUserAuthResponse({
 				message: "A password reset email has been sent.",

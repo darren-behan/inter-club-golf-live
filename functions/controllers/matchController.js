@@ -119,21 +119,13 @@ module.exports = {
     db
     .collection('matches')
     .doc(matchId)
-    .get()
-    .then((doc) => {
-      if (doc.data().username !== request.user.username) {
-        return response.status(403).json({
-          error:"Unauthorized"
-        })
-      }
-      return db.collection('matches').doc(matchId).delete();
-    })
+    .delete()
     .then(() => {
       return response.status(200).json({ message: 'Delete successful' });
     })
     .catch((err) => {
       console.error(err);
-      return response.status(500).json({ message: 'Something went wrong. Try again.' });
+      return response.status(500).json({ message: err.message });
     });
   },
   updateMatch(request, response) {

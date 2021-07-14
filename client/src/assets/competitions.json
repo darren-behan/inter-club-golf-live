@@ -1,0 +1,242 @@
+[
+	{
+		"name": "[All-Ireland] Men's Barton Shield",
+		"matches": 2,
+		"singlePlayer": false,
+    "gender": "men"
+	},
+	{
+		"name": "[All-Ireland] Men's Jimmy Bruen Shield",
+		"matches": 5,
+		"singlePlayer": false,
+    "gender": "men"
+	},
+	{
+		"name": "[All-Ireland] Men's Junior Cup",
+		"matches": 5,
+		"singlePlayer": true,
+    "gender": "men"
+	},
+	{
+		"name": "[All-Ireland] Men's Pierce Purcell Shield",
+		"matches": 5,
+		"singlePlayer": false,
+    "gender": "men"
+	},
+	{
+		"name": "[All-Ireland] Men's Four-Ball Championship",
+		"matches": 5,
+		"singlePlayer": false,
+    "gender": "men"
+	},
+	{
+		"name": "[All-Ireland] Men's Fred Perry Trophy",
+		"matches": 5,
+		"singlePlayer": false,
+    "gender": "men"
+	},
+	{
+		"name": "[All-Ireland] Men's Senior Cup",
+		"matches": 5,
+		"singlePlayer": true,
+    "gender": "men"
+	},
+	{
+		"name": "[All-Ireland] Mixed Foursomes",
+		"matches": 5,
+		"singlePlayer": false,
+    "gender": "both"
+	},
+	{
+		"name": "[Connacht] Connacht Shield",
+		"matches": 5,
+		"singlePlayer": false,
+    "gender": "men"
+	},
+	{
+		"name": "[Connacht] Jack O'Sullivan Trophy",
+		"matches": 5,
+		"singlePlayer": false,
+    "gender": "men"
+	},
+	{
+		"name": "[Leinster] Barton Cup",
+		"matches": 5,
+		"singlePlayer": false,
+    "gender": "men"
+	},
+	{
+		"name": "[Leinster] Metropolitan Trophy",
+		"matches": 7,
+		"singlePlayer": true,
+    "gender": "men"
+	},
+	{
+		"name": "[Leinster] Provincial Towns Cup",
+		"matches": 7,
+		"singlePlayer": true,
+    "gender": "men"
+	},
+	{
+		"name": "[Ulster] Belfast & District Cup",
+		"matches": 7,
+		"singlePlayer": true,
+    "gender": "men"
+	},
+	{
+		"name": "[Ulster] Ulster Cup (North)",
+		"matches": 7,
+		"singlePlayer": true,
+    "gender": "men"
+	},
+	{
+		"name": "[Ulster] Ulster Cup (South)",
+		"matches": 7,
+		"singlePlayer": true,
+    "gender": "men"
+	},
+	{
+		"name": "Munster Country Club",
+		"matches": 7,
+		"singlePlayer": true,
+    "gender": "men"
+	},
+	{
+		"name": "Women's Challenge Cup",
+		"matches": 5,
+		"singlePlayer": true,
+    "gender": "women"
+	},
+	{
+		"name": "Women's Intermediate Cup",
+		"matches": 5,
+		"singlePlayer": true,
+    "gender": "women"
+	},
+	{
+		"name": "Women's Junior Cup",
+		"matches": 5,
+		"singlePlayer": true,
+    "gender": "women"
+	},
+	{
+		"name": "Women's Junior Foursomes",
+		"matches": 3,
+		"singlePlayer": false,
+    "gender": "women"
+	},
+	{
+		"name": "Women's Minor Cup",
+		"matches": 5,
+		"singlePlayer": true,
+    "gender": "women"
+	},
+	{
+		"name": "Women's Senior Cup",
+		"matches": 5,
+		"singlePlayer": true,
+    "gender": "women"
+	},
+	{
+		"name": "Women's Senior Foursomes",
+		"matches": 3,
+		"singlePlayer": false,
+    "gender": "women"
+	},
+	{
+		"name": "Revive Active Women's All-Ireland Four-Ball",
+		"matches": 5,
+		"singlePlayer": false,
+    "gender": "women"
+	},
+	{
+		"name": "Women's Connacht Trophy",
+		"matches": 5,
+		"singlePlayer": true,
+    "gender": "women"
+	},
+	{
+		"name": "[Leinster] Under-15 Boys' Inter-Club",
+		"matches": 5,
+		"singlePlayer": true,
+    "gender": "junior"
+	},
+	{
+		"name": "Boys' Fred Daly",
+		"matches": 5,
+		"singlePlayer": true,
+    "gender": "junior"
+	},
+	{
+		"name": "Boys' Junior Foursomes",
+		"matches": 2,
+		"singlePlayer": false,
+    "gender": "junior"
+	},
+	{
+		"name": "Irish Boys Inter-Club Championship",
+		"matches": 5,
+		"singlePlayer": true,
+    "gender": "junior"
+	},
+	{
+		"name": "Irish Girls Inter-Club Championship",
+		"matches": 3,
+		"singlePlayer": true,
+    "gender": "junior"
+	},
+	{
+		"name": "Boys U-18 Inter-Club (Ennis) Munster",
+		"matches": 5,
+		"singlePlayer": false,
+    "gender": "junior"
+	},
+	{
+		"name": "Boys U-18 Inter-Club (Cobh) (Munster)",
+		"matches": 5,
+		"singlePlayer": false,
+    "gender": "junior"
+	},
+	{
+		"name": "Boys U-18 Inter-Club (Kanturk) (Munster)",
+		"matches": 5,
+		"singlePlayer": false,
+    "gender": "junior"
+	},
+	{
+		"name": "Boys U-18 Inter-Club (Clonmel) (Munster)",
+		"matches": 5,
+		"singlePlayer": false,
+    "gender": "junior"
+	},
+	{
+		"name": "Area Final Boys U-18 Inter-Club (Cahir Park) Munster",
+		"matches": 5,
+		"singlePlayer": false,
+    "gender": "junior"
+	},
+	{
+		"name": "Area Final Boys U-18 Inter-Club (Newcastle West) Munster",
+		"matches": 5,
+		"singlePlayer": false,
+    "gender": "junior"
+	},
+	{
+		"name": "CONNACHT U16 Boys Inter Club (Athenry) (Stableford)",
+		"matches": 5,
+		"singlePlayer": true,
+    "gender": "junior"
+	},
+	{
+		"name": "Girl's Inter-Club (Connacht) (Ballina)",
+		"matches": 5,
+		"singlePlayer": false,
+    "gender": "junior"
+	},
+	{
+		"name": "Girl's Inter-Club (Munster) - Adare Manor",
+		"matches": 5,
+		"singlePlayer": false,
+    "gender": "junior"
+	}
+]

@@ -15,6 +15,8 @@ module.exports = {
           matches.push({
             matchId: doc.id,
             competitionName: doc.data().competitionName,
+            competitionRegion: doc.data().competitionRegion,
+            competitionRound: doc.data().competitionRound,
             matchDateTime: doc.data().matchDateTime,
             numIndividualMatches: doc.data().numIndividualMatches,
             teamOneName: doc.data().teamOneName,
@@ -45,6 +47,8 @@ module.exports = {
       let match = {
         matchId: data.id,
         competitionName: data.data().competitionName,
+        competitionRegion: data.data().competitionRegion,
+        competitionRound: data.data().competitionRound,
         matchDateTime: data.data().matchDateTime,
         numIndividualMatches: data.data().numIndividualMatches,
         teamOneName: data.data().teamOneName,
@@ -65,22 +69,18 @@ module.exports = {
     });
   },
   postMatch(request, response) {
-    if (request.body.teamOneName.trim() === "" || request.body.teamTwoName.trim() === "") {
-      return response.status(400).json('Must not be empty');
-    }
-    
     const newMatch = {
-      email: request.user.email,
       matchDateTime: request.body.matchDateTime,
       competitionName: request.body.competitionName, // USER selection here will drive numIndividualMatches value
+      competitionRegion: request.body.competitionRegion,
+      competitionRound: request.body.competitionRound,
       numIndividualMatches: request.body.numIndividualMatches,
       teamOneName: request.body.teamOneName,
       teamTwoName: request.body.teamTwoName,
       teamOneScore: calculateMatchScoreOnPost(request.body.numIndividualMatches),
       teamTwoScore: calculateMatchScoreOnPost(request.body.numIndividualMatches),
       individualMatch: returnIndividualMatchArr(request.body.numIndividualMatches, request.body.teamOneName, request.body.teamTwoName),
-      createdBy: request.user.email,
-      createdByUid: request.user.uid,
+      createdByUid: request.body.uid,
       createdAt: request.body.createdAt,
       updatedAt: request.body.updatedAt,
       timeZone: request.body.timeZone,
@@ -93,6 +93,8 @@ module.exports = {
       const matches = {
         matchId: doc.id,
         competitionName: doc.data().competitionName,
+        competitionRegion: doc.data().competitionRegion,
+        competitionRound: doc.data().competitionRound,
         matchDateTime: doc.data().matchDateTime,
         numIndividualMatches: doc.data().numIndividualMatches,
         teamOneName: doc.data().teamOneName,
@@ -109,7 +111,7 @@ module.exports = {
     })
     .catch((err) => {
 			console.error(err);
-			return response.status(400).json({ error: 'Something went wrong' });
+			return response.status(400).json({ error: err.message });
 		});
   },
   deleteMatch(request, response) {
@@ -159,7 +161,11 @@ const calculateMatchScoreOnPost = (value) => {
 }
 
 const returnIndividualMatchArr = (numIndividualMatches, teamOneName, teamTwoName) => {
-  if (numIndividualMatches === 5) {
+  if (numIndividualMatches === 2) {
+    return constructIndividualMatchArr(numIndividualMatches, teamOneName, teamTwoName);
+  } else if (numIndividualMatches === 3) {
+    return constructIndividualMatchArr(numIndividualMatches, teamOneName, teamTwoName);
+  } else if (numIndividualMatches === 5) {
     return constructIndividualMatchArr(numIndividualMatches, teamOneName, teamTwoName);
   } else if (numIndividualMatches === 7) {
     return constructIndividualMatchArr(numIndividualMatches, teamOneName, teamTwoName);

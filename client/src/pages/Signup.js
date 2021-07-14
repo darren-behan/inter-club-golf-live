@@ -64,26 +64,6 @@ const inputFieldValues = [
 		autoFocus: false,
 		type: ""
 	},
-	// {
-	// 	name: "phoneNumber",
-	// 	label: "Phone Number",
-	// 	id: "phoneNumber",
-	// 	required: true,
-	// 	fullWidth: true,
-	// 	autoComplete: "autoComplete",
-	// 	autoFocus: false,
-	// 	type: "number"
-	// },
-	// {
-	// 	name: "country",
-	// 	label: "Country Of Residence",
-	// 	id: "country",
-	// 	required: true,
-	// 	fullWidth: true,
-	// 	autoComplete: "autoComplete",
-	// 	autoFocus: false,
-	// 	type: ""
-	// },
 	{
 		name: "email",
 		label: "Email address",

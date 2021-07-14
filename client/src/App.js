@@ -82,12 +82,12 @@ function App() {
 
   function authenticateUser() {
     firebase.auth().onAuthStateChanged((response) => {
-      if (response.user.emailVerified) {
+      if (response.emailVerified) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         setIsAuthenticated(true);
-        setUserDataObj(response.user);
-        LocalStorage.set('AuthToken', `Bearer ${response.user.Aa}`);
+        setUserDataObj(response);
+        LocalStorage.set('AuthToken', `Bearer ${response.Aa}`);
       } else {
         // User is signed out
         firebase.auth().signOut();

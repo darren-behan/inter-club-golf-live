@@ -79,7 +79,7 @@ module.exports = {
       teamTwoName: request.body.teamTwoName,
       teamOneScore: calculateMatchScoreOnPost(request.body.numIndividualMatches),
       teamTwoScore: calculateMatchScoreOnPost(request.body.numIndividualMatches),
-      individualMatch: returnIndividualMatchArr(request.body.numIndividualMatches, request.body.teamOneName, request.body.teamTwoName),
+      individualMatch: request.body.individualMatch,
       createdByUid: request.body.uid,
       createdAt: request.body.createdAt,
       updatedAt: request.body.updatedAt,
@@ -150,54 +150,6 @@ async function addMatch(newMatch) {
 
 const calculateMatchScoreOnPost = (value) => {
   return value / 2;
-}
-
-const returnIndividualMatchArr = (numIndividualMatches, teamOneName, teamTwoName) => {
-  if (numIndividualMatches === 2) {
-    return constructIndividualMatchArr(numIndividualMatches, teamOneName, teamTwoName);
-  } else if (numIndividualMatches === 3) {
-    return constructIndividualMatchArr(numIndividualMatches, teamOneName, teamTwoName);
-  } else if (numIndividualMatches === 5) {
-    return constructIndividualMatchArr(numIndividualMatches, teamOneName, teamTwoName);
-  } else if (numIndividualMatches === 7) {
-    return constructIndividualMatchArr(numIndividualMatches, teamOneName, teamTwoName);
-  } else if (numIndividualMatches === 9) {
-    return constructIndividualMatchArr(numIndividualMatches, teamOneName, teamTwoName);
-  } else {
-    return;
-  }
-}
-
-const constructIndividualMatchArr = (numIndividualMatches, teamOneName, teamTwoName) => {
-  const individualMatchScoreArr = [];
-  for (let i = 0; i < numIndividualMatches; i++) {
-    if (i < Math.ceil(numIndividualMatches / 2)) {
-      individualMatchScoreArr.push(
-        {
-          'id': i + 1,
-          'teamOneName': teamOneName,
-          'teamOneScore': 0,
-          'teamTwoName': teamTwoName,
-          'teamTwoScore': 0,
-          'holesPlayed': 0,
-          'homeMatch': true
-        }
-      )
-    } else {
-      individualMatchScoreArr.push(
-        {
-          'id': i + 1,
-          'teamOneName': teamOneName,
-          'teamOneScore': 0,
-          'teamTwoName': teamTwoName,
-          'teamTwoScore': 0,
-          'holesPlayed': 0,
-          'homeMatch': false
-        }
-      )
-    }
-  }
-  return individualMatchScoreArr
 }
 
 const matchDataToUpdate = (object) => {

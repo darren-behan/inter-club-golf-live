@@ -8,7 +8,7 @@ import 'moment-timezone';
 
 function CreateMatchModal(props) {
 	let history = useHistory();
-  const { createMatchResponse, setCreateMatchModalShow } = useContext(DataAreaContext);
+  const { createMatchResponse, setCreateMatchModalShow, setPostMatchObj } = useContext(DataAreaContext);
   
   const onClick = (e) => {
     e.preventDefault();
@@ -17,6 +17,7 @@ function CreateMatchModal(props) {
     } else {
       const path = "/match/" + createMatchResponse.matchId;
       history.push(path);
+      setPostMatchObj({});
       setCreateMatchModalShow(false);
     }
   };

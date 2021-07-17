@@ -14,6 +14,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import moment from 'moment';
 import 'moment-timezone';
 import competition from '../../assets/competitions.json';
+import matchData from '../../assets/matchdata.json';
+let isEmpty = require('lodash.isempty');
 
 const styles = makeStyles((theme) => ({
 	paper: {
@@ -165,18 +167,6 @@ const inputFieldValues = [
 		helperText: "Choose the round of the competition"
 	},
 	{
-		name: "numIndividualMatches",
-		label: "",
-		id: "numIndividualMatches",
-		required: true,
-		fullWidth: true,
-		autoComplete: "autoComplete",
-		autoFocus: false,
-		type: "number",
-		select: false,
-		helperText: "Choose the number of individual matches"
-	},
-	{
 		name: "teamOneName",
 		label: "",
 		id: "teamOneName",
@@ -199,7 +189,19 @@ const inputFieldValues = [
 		type: "",
 		select: false,
 		helperText: "Choose the away team name"
-	},
+	}
+	// {
+	// 	name: "numIndividualMatches",
+	// 	label: "",
+	// 	id: "numIndividualMatches",
+	// 	required: true,
+	// 	fullWidth: true,
+	// 	autoComplete: "autoComplete",
+	// 	autoFocus: false,
+	// 	type: "number",
+	// 	select: false,
+	// 	helperText: "Choose the number of individual matches"
+	// }
 ];
 
 function PostMatch() {
@@ -207,6 +209,7 @@ function PostMatch() {
   const [errors, setErrors] = useState({});
 	const classes = styles();
 	const [loading, setLoading] = useState( false );
+	let filteredMatchArray = [];
 
   // Handles updating component state when the user types into the input field
   const handleInputChange = (event) => {
@@ -214,6 +217,210 @@ function PostMatch() {
     const { name, value } = event.target;
 		setPostMatchObj({...postMatchObj, [name]: value})
   };
+
+  const handleIndividualMatchFieldInputChange = (event) => {
+		event.preventDefault();
+    const { name, value } = event.target;
+
+		for (let i = 0; i < filteredMatchArray.length; i++) {
+			let match = filteredMatchArray[i];
+			let keys = Object.keys(filteredMatchArray[i]);
+			for (let i = 0; i < keys.length; i++) {
+				if (name === keys[i]) {
+					match[name] = value;
+					setPostMatchObj({...postMatchObj, "individualMatchesArray": filteredMatchArray})
+					return;
+				}
+			}
+		}
+  };
+
+	let homeTeamName = postMatchObj['teamOneName'];
+	let awayTeamName = postMatchObj['teamTwoName'];
+	let competitionName = postMatchObj['competitionName'];
+	
+	const competitors = [
+		{
+			name: homeTeamName
+		},
+		{
+			name: awayTeamName
+		}
+	];
+	let competitionObject;
+
+	const getIndividualMatchFields = () => {
+		let textFields = [];
+		for(let i = 0; i < competition.length; i++) {
+			if (competition[i].name == competitionName) {
+				competitionObject = competition[i];
+			}
+		}
+
+		if (isEmpty(competitionObject)) return;
+		if (isEmpty(homeTeamName)) return;
+		if (isEmpty(awayTeamName)) return;
+
+		matchData.filter(function(value, index, arr){ 
+			if (index < competitionObject.matches) {
+				filteredMatchArray.push(value);
+			}
+		});
+		
+		for (let i = 0; i < competitionObject.matches; i++) {
+			{competitionObject.singlePlayer === true ? 
+				textFields.push(
+					<>
+					<TextField
+						key={i+1}
+						variant="outlined"
+						margin="normal"
+						fullWidth
+						id={'homeMatch' + (i + 1) + 'PlayerAName'}
+						label=''
+						name={'homeMatch' + (i + 1) + 'PlayerAName'}
+						type=''
+						select={false}
+						error={errors['homeMatch' + (i + 1) + 'PlayerAName']}
+						autoComplete={'autoComplete'}
+						autoFocus={false}
+						onChange={handleIndividualMatchFieldInputChange}
+						helperText={`Match ${(i + 1)}: ${Lib.capitalize(homeTeamName)} player name (if known)`}
+					/>
+					<TextField
+						key={i+1}
+						variant="outlined"
+						margin="normal"
+						fullWidth
+						id={'awayMatch' + (i + 1) + 'PlayerAName'}
+						label=''
+						name={'awayMatch' + (i + 1) + 'PlayerAName'}
+						type=''
+						select={false}
+						error={errors['awayMatch' + (i + 1) + 'PlayerAName']}
+						autoComplete={'autoComplete'}
+						autoFocus={false}
+						onChange={handleIndividualMatchFieldInputChange}
+						helperText={`Match ${(i + 1)}: ${Lib.capitalize(awayTeamName)} player name (if known)`}
+					/>
+					<TextField
+						key={i+1}
+						variant="outlined"
+						margin="normal"
+						fullWidth
+						id={'match' + (i + 1) + 'Destination'}
+						label=''
+						name={'match' + (i + 1) + 'Destination'}
+						type=''
+						select={true}
+						error={errors['match' + (i + 1) + 'Destination']}
+						autoComplete={'autoComplete'}
+						autoFocus={false}
+						onChange={handleIndividualMatchFieldInputChange}
+						helperText={'Choose the course the match is played at'}
+					>
+						{competitors.map((clubName, index) => (
+							<MenuItem key={index} value={clubName.name}>
+								{Lib.capitalize(clubName.name)}
+							</MenuItem>
+						))}
+					</TextField>
+					</>
+				) :
+				textFields.push(
+					<>
+					<TextField
+						key={i+1}
+						variant="outlined"
+						margin="normal"
+						fullWidth
+						id={'homeMatch' + (i + 1) + 'PlayerAName'}
+						label=''
+						name={'homeMatch' + (i + 1) + 'PlayerAName'}
+						type=''
+						select={false}
+						error={errors['homeMatch' + (i + 1) + 'PlayerAName']}
+						autoComplete={'autoComplete'}
+						autoFocus={false}
+						onChange={handleIndividualMatchFieldInputChange}
+						helperText={`Match ${(i + 1)}: ${Lib.capitalize(homeTeamName)} player A name (if known)`}
+					/>
+					<TextField
+						key={i+1}
+						variant="outlined"
+						margin="normal"
+						fullWidth
+						id={'homeMatch' + (i + 1) + 'PlayerBName'}
+						label=''
+						name={'homeMatch' + (i + 1) + 'PlayerBName'}
+						type=''
+						select={false}
+						error={errors['homeMatch' + (i + 1) + 'PlayerBName']}
+						autoComplete={'autoComplete'}
+						autoFocus={false}
+						onChange={handleIndividualMatchFieldInputChange}
+						helperText={`Match ${(i + 1)}: ${Lib.capitalize(homeTeamName)} player B name (if known)`}
+					/>
+					<TextField
+						key={i+1}
+						variant="outlined"
+						margin="normal"
+						fullWidth
+						id={'awayMatch' + (i + 1) + 'PlayerAName'}
+						label=''
+						name={'awayMatch' + (i + 1) + 'PlayerAName'}
+						type=''
+						select={false}
+						error={errors['awayMatch' + (i + 1) + 'PlayerAName']}
+						autoComplete={'autoComplete'}
+						autoFocus={false}
+						onChange={handleIndividualMatchFieldInputChange}
+						helperText={`Match ${(i + 1)}: ${Lib.capitalize(awayTeamName)} player A name (if known)`}
+					/>
+					<TextField
+						key={i+1}
+						variant="outlined"
+						margin="normal"
+						fullWidth
+						id={'awayMatch' + (i + 1) + 'PlayerBName'}
+						label=''
+						name={'awayMatch' + (i + 1) + 'PlayerBName'}
+						type=''
+						select={false}
+						error={errors['awayMatch' + (i + 1) + 'PlayerBName']}
+						autoComplete={'autoComplete'}
+						autoFocus={false}
+						onChange={handleIndividualMatchFieldInputChange}
+						helperText={`Match ${(i + 1)}: ${Lib.capitalize(awayTeamName)} player B name (if known)`}
+					/>
+					<TextField
+						key={i+1}
+						variant="outlined"
+						margin="normal"
+						fullWidth
+						id={'match' + (i + 1) + 'Destination'}
+						label=''
+						name={'match' + (i + 1) + 'Destination'}
+						type=''
+						select={true}
+						error={errors['match' + (i + 1) + 'Destination']}
+						autoComplete={'autoComplete'}
+						autoFocus={false}
+						onChange={handleIndividualMatchFieldInputChange}
+						helperText={'Choose the course the match is played at'}
+					>
+						{competitors.map((clubName, index) => (
+							<MenuItem key={index} value={clubName.name}>
+								{Lib.capitalize(clubName.name)}
+							</MenuItem>
+						))}
+					</TextField>
+					</>
+				)
+			}
+		}
+		return textFields;
+	}
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -226,7 +433,8 @@ function PostMatch() {
       competitionName: postMatchObj.competitionName,
       competitionRegion: postMatchObj.competitionRegion,
       competitionRound: postMatchObj.competitionRound,
-      numIndividualMatches: parseInt(postMatchObj.numIndividualMatches),
+      numIndividualMatches: competitionObject.matches,
+			individualMatch: postMatchObj.individualMatchesArray,
       teamOneName: postMatchObj.teamOneName,
       teamTwoName: postMatchObj.teamTwoName,
 			uid: userDataObj.uid
@@ -259,7 +467,6 @@ function PostMatch() {
 			postMatchObj.competitionName &&
 			postMatchObj.competitionRegion &&
 			postMatchObj.competitionRound &&
-			postMatchObj.numIndividualMatches &&
 			postMatchObj.teamOneName &&
 			postMatchObj.teamTwoName &&
 			Object.values(errors).every((x) => x === "");
@@ -329,6 +536,7 @@ function PostMatch() {
 							</TextField>
 						)
 					})}
+					{getIndividualMatchFields()}
 					<Button
 						type="submit"
 						fullWidth

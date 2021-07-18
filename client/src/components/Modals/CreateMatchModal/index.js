@@ -8,16 +8,15 @@ import 'moment-timezone';
 
 function CreateMatchModal(props) {
 	let history = useHistory();
-  const { createMatchResponse, setCreateMatchModalShow, setPostMatchObj } = useContext(DataAreaContext);
+  const { createMatchResponse, setCreateMatchModalShow } = useContext(DataAreaContext);
   
   const onClick = (e) => {
     e.preventDefault();
-    if (createMatchResponse.status === 400) {
-      setCreateMatchModalShow(false);
-    } else {
+    if (createMatchResponse.status === 200) {
       const path = "/match/" + createMatchResponse.matchId;
       history.push(path);
-      setPostMatchObj({});
+      setCreateMatchModalShow(false);
+    } else {
       setCreateMatchModalShow(false);
     }
   };

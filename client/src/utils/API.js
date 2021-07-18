@@ -19,7 +19,6 @@ const requests = {
   },
   // Posts a new match
   postMatch: function(matchData) {
-    console.log(matchData);
     const authToken = LocalStorage.get('AuthToken');
 		axios.defaults.headers.common = { Authorization: `${authToken}` };
     return axios.post('/match/create', matchData);

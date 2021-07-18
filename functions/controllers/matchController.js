@@ -130,14 +130,15 @@ module.exports = {
   },
   updateMatch(request, response) {
     let document = db.collection('matches').doc(`${request.params.matchId}`);
-    document.update(matchDataToUpdate(request.body))
+    document.update(request.body)
     .then(data => {
       return response.status(200).json({message: 'Updated successfully'});
     })
     .catch((err) => {
       console.error(err);
-      return response.status(500).json({ 
-        error: err.code 
+      return response.status(400).json({ 
+        error: err.code,
+        message: err
       });
     });
   }
@@ -150,56 +151,6 @@ async function addMatch(newMatch) {
 
 const calculateMatchScoreOnPost = (value) => {
   return value / 2;
-}
-
-const matchDataToUpdate = (object) => {
-  let array = object.individualMatch;
-  let individualMatchArr = [];
-  let teamOneOverallScore = 0;
-  let teamTwoOverallScore = 0;
-  for (const i of array) {
-    if (i.teamOneScore === i.teamTwoScore) {
-      teamOneOverallScore += 0.5;
-      teamTwoOverallScore += 0.5;
-      individualMatchArr.push({
-        teamOneName: i.teamOneName,
-        teamOneScore: 0,
-        teamTwoName: i.teamTwoName,
-        teamTwoScore: 0,
-        holesPlayed: i.holesPlayed,
-        homeMatch: i.homeMatch,
-        id: i.id
-      })
-    } else if (i.teamOneScore < i.teamTwoScore) {
-      teamTwoOverallScore += 1;
-      individualMatchArr.push({
-        teamOneName: i.teamOneName,
-        teamOneScore: 0,
-        teamTwoName: i.teamTwoName,
-        teamTwoScore: parseInt(i.teamTwoScore),
-        holesPlayed: i.holesPlayed,
-        homeMatch: i.homeMatch,
-        id: i.id
-      })
-    } else if (i.teamOneScore > i.teamTwoScore) {
-      teamOneOverallScore += 1;
-      individualMatchArr.push({
-        teamOneName: i.teamOneName,
-        teamOneScore: parseInt(i.teamOneScore),
-        teamTwoName: i.teamTwoName,
-        teamTwoScore: 0,
-        holesPlayed: i.holesPlayed,
-        homeMatch: i.homeMatch,
-        id: i.id
-      })
-    }
-  }
-  return {
-    teamOneScore: teamOneOverallScore,
-    teamTwoScore: teamTwoOverallScore,
-    individualMatch: individualMatchArr,
-    updatedAt: object.updatedAt,
-  }
 }
 
 const calculateMatchStatus = (matchDateTime, createdAt, timeZone) => {

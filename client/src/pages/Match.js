@@ -15,14 +15,16 @@ import 'moment-timezone';
 let isEmpty = require('lodash.isempty');
 
 function Match() {
-  const { match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, timeZone, updateModalShow, setUpdateModalShow } = useContext(DataAreaContext);
+  const { match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, timeZone, updateModalShow, setUpdateModalShow, setUpdateMatchObj, updateMatchObj } = useContext(DataAreaContext);
   let { id } = useParams();
   let individualMatches;
   let sortedIndividualMatches;
 
   useEffect(() => {
+    setUpdateMatchObj({...match});
     if (!isEmpty(match)) return;
     getMatchOnLoad();
+    setUpdateMatchObj({...match});
   }, []);
 
   async function getMatchOnLoad() {
@@ -36,7 +38,7 @@ function Match() {
   if (!isEmpty(match)) {
     individualMatches = match.individualMatch;
     sortedIndividualMatches = individualMatches.sort(function(a, b) {
-      return a.id - b.id;
+      return a.individualMatchId - b.individualMatchId;
     });
   }
 
@@ -133,10 +135,10 @@ function Match() {
                   <Map collection={sortedIndividualMatches}
                     iteratee={singleMatch =>
                       <tr>
-                        <td>{ singleMatch.id }</td>
-                        <td>{ singleMatch.teamOneScore }</td>
+                        <td>{ singleMatch.individualMatchId }</td>
+                        <td>{ singleMatch.homeMatchScore }</td>
                         <td>{ singleMatch.holesPlayed }</td>
-                        <td>{ singleMatch.teamTwoScore }</td>
+                        <td>{ singleMatch.awayMatchScore }</td>
                       </tr>
                     }
                   />

@@ -155,7 +155,6 @@ function Signup() {
       signUpObj.password
     )
 		.then((response) => {
-			console.log(response);
 			response.user.sendEmailVerification(actionCodeSettings);
 			response.user.updateProfile({
 				displayName: `${signUpObj.firstName} ${signUpObj.lastName}`

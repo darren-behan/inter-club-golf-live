@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import DataAreaContext from '../../../utils/DataAreaContext';
 import Lib from '../../../utils/Lib';
 import API from '../../../utils/API';
+import UpdateMatchForm from '../../UpdateMatchForm/index.js';
 import { Button, Modal, Form, Col, Spinner } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Map } from "react-lodash";
@@ -17,35 +18,17 @@ function UpdateModal(props) {
     setUpdateMatchObj({...match});
   }, []);
 
-  // Handles updating component state when the user types into the input field
-  const handleInputChange = (event) => {
-    event.preventDefault();
-    const { id, name, value } = event.target;
-
-    for (let object of updateMatchObj.individualMatch) {
-      if (parseInt(id) === object.id) {
-        for (const key in object) {
-          if (key === name) {
-            object[key] = value;
-            updateMatchObj.updatedAt = moment().format();
-          }
-        }
-        return;
-      }
-    }
-  };
-
   const updateOverallMatchScore = (object) => {
     let array = object.individualMatch;
     let teamOneOverallScore = 0;
     let teamTwoOverallScore = 0;
     for (const i of array) {
-      if (i.teamOneScore === i.teamTwoScore) {
+      if (i.homeMatchScore === i.awayMatchScore) {
         teamOneOverallScore += 0.5;
         teamTwoOverallScore += 0.5;
-      } else if (i.teamOneScore < i.teamTwoScore) {
+      } else if (i.homeMatchScore < i.awayMatchScore) {
         teamTwoOverallScore += 1;
-      } else if (i.teamOneScore > i.teamTwoScore) {
+      } else if (i.homeMatchScore > i.awayMatchScore) {
         teamOneOverallScore += 1;
       }
     }
@@ -63,6 +46,13 @@ function UpdateModal(props) {
     updateMatchObj.teamTwoScore = updatedOverallMatchScore.teamTwoScore;
     API.updateMatch({
       matchId: updateMatchObj.matchId,
+      matchStatus: updateMatchObj.matchStatus,
+      competitionRegion: updateMatchObj.competitionRegion,
+      competitionRound: updateMatchObj.competitionRound,
+      teamOneName: updateMatchObj.teamOneName,
+      teamOneScore: updateMatchObj.teamOneScore,
+      teamTwoName: updateMatchObj.teamTwoName,
+      teamTwoScore: updateMatchObj.teamTwoScore,
       individualMatch: updateMatchObj.individualMatch,
       updatedAt: moment().format()
     })
@@ -79,10 +69,10 @@ function UpdateModal(props) {
       }
       setLoading(false);
     })
-    .catch(() => {
+    .catch((error) => {
       setUpdateResponse({
-        message: "Something went wrong. Try again.",
-        status: 500
+        message: error.message,
+        status: 400
       });
     });
   };
@@ -104,96 +94,18 @@ function UpdateModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Update Modal
+          Update match
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {updateResponse.status === 200 || updateResponse.status === 500 ? (
+        {updateResponse.status === 200 || updateResponse.status === 400 ? (
           `${ updateResponse.message }`
         ) : (
-          <Form>
-            <Form.Row>
-              <Col>
-                <Form.Label>
-                  Home Team: { Lib.capitalize(match.teamOneName) }
-                </Form.Label>
-                <br/>
-                <Form.Label>
-                  Away Team: { Lib.capitalize(match.teamTwoName) }
-                </Form.Label>
-                <br/>
-                <Form.Label>
-                  Competition: { Lib.capitalize(match.competitionName) }
-                </Form.Label>
-                <br/>
-                <Map collection={match.individualMatch}
-                  iteratee={singleMatch =>
-                    <>
-                    <br/>
-                    <Form.Label>Match #{ singleMatch.id }</Form.Label>
-                    <br/>
-                    <Form.Label># of holes played</Form.Label>
-                    <Form.Control
-                      id={ singleMatch.id }
-                      defaultValue={ singleMatch.holesPlayed }
-                      name="holesPlayed"
-                      onChange={handleInputChange}
-                    />
-                    <Form.Label>
-                      { Lib.capitalize(singleMatch.teamOneName) } Score
-                    </Form.Label>
-                    <Form.Control 
-                      id={ singleMatch.id }
-                      defaultValue={ singleMatch.teamOneScore }
-                      name="teamOneScore"
-                      onChange={handleInputChange}
-                    />
-                    <Form.Label>
-                      { Lib.capitalize(singleMatch.teamTwoName) } Score
-                    </Form.Label>
-                    <Form.Control 
-                      id={ singleMatch.id }
-                      defaultValue={ singleMatch.teamTwoScore }
-                      name="teamTwoScore"
-                      onChange={handleInputChange}
-                    />
-                    </>
-                  }
-                />
-                {/* <Form.Label>Match Date</Form.Label>
-                <TextField
-                  disabled
-                  defaultValue={ match.matchDateTime }
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="matchDate"
-                  name="matchDate"
-                  type="date"
-                  autoFocus
-                  onChange={handleInputChange}
-                />
-                <Form.Label>Match Time</Form.Label>
-                <TextField
-                  disabled
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="matchTime"
-                  id="matchTime"
-                  type="time"
-                  autoFocus
-                  onChange={handleInputChange}
-                /> */}
-              </Col>
-            </Form.Row>
-          </Form>
+          <UpdateMatchForm />
         )}
       </Modal.Body>
       <Modal.Footer>
-        {updateResponse.status === 200 || updateResponse.status === 500 ?
+        {updateResponse.status === 200 || updateResponse.status === 400 ?
           <Button 
           onClick={ () => handleCloseClick(match.matchId) }
           variant="outline-success"

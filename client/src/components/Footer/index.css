@@ -1,0 +1,21 @@
+h6 {
+  font-size: 1rem;
+  line-height: 1.375;
+  color: #030929;
+}
+
+.list-group-item .link {
+  color: #818494;
+  font-weight: 400;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.list-group-item .link a:hover {
+  color: #90d28a;
+  text-decoration: none;
+}
+
+footer {
+  background: #ffffff;
+}

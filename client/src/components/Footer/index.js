@@ -1,15 +1,76 @@
 import React from 'react';
 import './index.css';
-import { Navbar } from 'react-bootstrap';
+import { Container, Row, Col, ListGroup, NavLink } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function Footer() {
 
   return (
-    <Navbar id='navbar-footer' expand="md" variant="light" bg="light" fixed="" className="navbar-light justify-content-center p-0" style={{ backgroundColor: '#ffffff' }}>
-      <Navbar.Brand href="#home" className='mx-3 mx-sm-0' style={{ color: 'green' }}>
-        <p className='my-0'>The Creative Dream</p>
-      </Navbar.Brand>
-    </Navbar>
+    <>
+    <footer style={{ boxShadow: '0 0 4px rgba(0,0,0,.1)' }}>
+      <Container fluid className="pt-5">
+        <Container>
+          <Row>
+            <Col className="col-6 mb-3">
+              <h6 className="mb-4 font-weight-bold text-uppercase">Company</h6>
+              <ListGroup>
+                <ListGroup.Item className="bg-transparent border-0 p-0 mb-2">
+                  <NavLink as={ Link } to="/" className="link p-0">
+                    About
+                  </NavLink>
+                </ListGroup.Item>
+                <ListGroup.Item className="bg-transparent border-0 p-0 mb-2">
+                  <NavLink as={ Link } to="/login" className="link p-0">
+                    Login
+                  </NavLink>
+                </ListGroup.Item>
+                <ListGroup.Item className="bg-transparent border-0 p-0 mb-2">
+                  <NavLink as={ Link } to="/signup" className="link p-0">
+                    Join
+                  </NavLink>
+                </ListGroup.Item>
+                <ListGroup.Item className="bg-transparent border-0 p-0 mb-2">
+                  <NavLink as={ Link } to="/" className="link p-0">
+                    Advertising
+                  </NavLink>
+                </ListGroup.Item>
+                <ListGroup.Item className="bg-transparent border-0 p-0 mb-2">
+                  <NavLink as={ Link } to="/" className="link p-0">
+                    Site map
+                  </NavLink>
+                </ListGroup.Item>
+              </ListGroup>
+            </Col>
+
+            <Col className="col-6 mb-3">
+              <h6 className="mb-4 font-weight-bold text-uppercase">Help &amp; Support</h6>
+              <ListGroup>
+                <ListGroup.Item className="bg-transparent border-0 p-0 mb-2">
+                  <NavLink as={ Link } to="/" className="link p-0">
+                    Contact Us
+                  </NavLink>
+                </ListGroup.Item>
+                <ListGroup.Item className="bg-transparent border-0 p-0 mb-2">
+                  <NavLink as={ Link } to="/" className="link p-0">
+                    Privacy Policy
+                  </NavLink>
+                </ListGroup.Item>
+              </ListGroup>
+            </Col>
+          </Row>
+        </Container>
+        <Row style={{ backgroundColor: '#f3f2ef', boxShadow: '0 0 4px rgba(0,0,0,.2)' }}>
+          <Col className="col-12">
+            <div className="py-4 d-flex justify-content-center align-items-center">
+              <a href="https://www.thecreativedream.ie" target="_blank" style={{ textDecoration: "none", color: "#000000" }}>
+                &copy; The Creative Dream
+              </a>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </footer>
+    </>
   );
 }
 

@@ -13,8 +13,8 @@ function Home() {
       <Row className='slider flex-nowrap mt-3 pb-4' style={{ overflowX: 'auto' }}>
         <Slider />
       </Row>
-      {/* <Footer /> */}
     </Container>
+    <Footer />
     </>
   );
 }

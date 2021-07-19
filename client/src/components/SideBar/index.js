@@ -14,7 +14,6 @@ const StyledMenu = styled.nav`
   width: 100%;
   display: flex;
   flex-direction: column;
-  // justify-content: center;
   background: #f3f2ef;
   transform: ${({ open }) => open ? 'translateX(0)' : 'translateX(-100%)'};
   height: 100vh;
@@ -70,7 +69,7 @@ function SideBar() {
   return (
     <>
     <StyledMenu open={sidebarOpen}>
-      <Burger open={sidebarOpen} setOpen={setSidebarOpen} />
+      <Burger open={sidebarOpen} setOpen={setSidebarOpen} style={{ float: "right" }}/>
       <Nav justify className="mb-0 flex-column" activeKey={location.pathname}>
         <Nav.Item className="mx-0">
           <Nav.Link className='px-0 py-4' as={ Link } to="/" eventKey="/" onClick={() => onClick()}>

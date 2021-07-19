@@ -129,7 +129,7 @@ const inputFieldValues = [
 		autoComplete: "autoComplete",
 		autoFocus: false,
 		type: "time",
-		defaultValue: "00:00",
+		defaultValue: "00:23",
 		select: false,
 		helperText: "Choose the match time"
 	},

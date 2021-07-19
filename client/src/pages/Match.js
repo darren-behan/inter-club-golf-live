@@ -161,7 +161,7 @@ function Match() {
             </Row>
             {(isAuthenticated) && (match.createdByUid === userDataObj.uid) ? (
               <>
-                <Row>
+                <Row className="d-grid gap-2">
                   <Button
                     variant="outline-success"
                     size="sm"

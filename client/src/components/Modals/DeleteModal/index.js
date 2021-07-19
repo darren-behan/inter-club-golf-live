@@ -45,7 +45,7 @@ function DeleteModal(props) {
       centered
       backdrop="true"
     >
-      <Modal.Header closeButton>
+      <Modal.Header>
         <Modal.Title id="contained-modal-title-vcenter">
           {deleteResponse.status === 200 || deleteResponse.status === 500 ? (
             `${ deleteResponse.message }`

@@ -22,7 +22,7 @@ function FiltersModal() {
       backdrop="static"
       keyboard={false}
     >
-      <Modal.Header closeButton>
+      <Modal.Header>
         <Modal.Title>Filters</Modal.Title>
       </Modal.Header>
       <Modal.Body>

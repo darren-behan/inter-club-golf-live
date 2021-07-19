@@ -92,7 +92,7 @@ function UpdateModal(props) {
       centered
       backdrop="true"
     >
-      <Modal.Header closeButton>
+      <Modal.Header>
         <Modal.Title id="contained-modal-title-vcenter">
           Update match
         </Modal.Title>

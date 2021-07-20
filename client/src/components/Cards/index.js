@@ -43,7 +43,7 @@ function Cards(props) {
   }
 
   return (
-    <Card key={ props.match.matchId } style={{ boxShadow: '0 0 4px rgba(0,0,0,.1)' }}>
+    <Card key={ props.match.matchId } style={{ boxShadow: '0 0 4px rgba(0,0,0,.1)', width: '18rem' }} className='mx-3 ms-sm-0'>
       <Card.Body style={{ borderRadius: '.25rem .25rem 0 0', background: 'linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 70%, rgba(0,170,8,1) 100%)' }}>
         <Card.Title> 
           { Lib.capitalize(props.match.teamOneName) } v { Lib.capitalize(props.match.teamTwoName) }

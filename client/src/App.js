@@ -104,7 +104,7 @@ function App() {
           <div>
             <Switch>
               <Route exact path={'/'} component={Home} />
-              <Route exact path={'/matches/:competition'} component={Competition} />
+              <Route exact path={'/competition/:competition'} component={Competition} />
               <Route exact path={'/match/:id'} component={Match} />
               <Route exact path='/login' component={Login}>
                 {isAuthenticated ? <Redirect to="/matches" /> : <UserMatches />}

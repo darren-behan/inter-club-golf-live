@@ -21,7 +21,7 @@ function Header() {
             Inter Club Golf Live
           </NavLink>
         </Navbar.Brand>
-        {(location.pathname === "/matches" || location.pathname === `/usermatches/${userDataObj.uid}`) ? (
+        {(location.pathname === "/competition" || location.pathname === `/usermatches/${userDataObj.uid}`) ? (
           <Button
             onClick={() => setShow(true)}
             variant="outline-success"

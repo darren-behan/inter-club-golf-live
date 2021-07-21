@@ -77,12 +77,6 @@ function SideBar() {
             <span className='mb-0'> Home</span>
           </Nav.Link>
         </Nav.Item>
-        <Nav.Item className="mx-0">
-          <Nav.Link className='px-0 py-4' as={ Link } to="/matches" eventKey="/matches" onClick={() => onClick()}>
-            <FontAwesomeIcon icon={ faGolfBall } className='fa-lg'/>
-            <span className='mb-0'> Matches</span>
-          </Nav.Link>
-        </Nav.Item>
         {!isAuthenticated ? (
           <>
           <Nav.Item className="mx-0">

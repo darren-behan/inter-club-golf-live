@@ -10,7 +10,7 @@ import {
   Redirect
 } from 'react-router-dom';
 import Home from './pages/Home';
-import Matches from './pages/Matches';
+import Competition from './pages/Competitions';
 import UserMatches from './pages/UserMatches';
 import Match from './pages/Match';
 import CreateMatch from './pages/CreateMatch';
@@ -104,7 +104,7 @@ function App() {
           <div>
             <Switch>
               <Route exact path={'/'} component={Home} />
-              <Route exact path={'/matches'} component={Matches} />
+              <Route exact path={'/matches/:competition'} component={Competition} />
               <Route exact path={'/match/:id'} component={Match} />
               <Route exact path='/login' component={Login}>
                 {isAuthenticated ? <Redirect to="/matches" /> : <UserMatches />}

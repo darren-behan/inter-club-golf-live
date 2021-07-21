@@ -13,6 +13,10 @@ const requests = {
   getMatchesOnLoad: function() {
     return axios.get('/match');
   },
+  // Returns all matches for competition searched
+  getMatchesByCompetitionOnLoad: function(competition) {
+    return axios.get('/competition/' + competition);
+  },
   // Returns match when loading a single match
   getMatch: function(matchId) {
     return axios.get('/match/' + matchId);

@@ -1,19 +1,30 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import DataAreaContext from '../utils/DataAreaContext';
+import API from '../utils/API';
 import { IsEmpty, Map } from "react-lodash";
+import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Cards from '../components/Cards';
 import FiltersModal from '../components/Modals/FiltersModal';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
 
-function Competition() {
-  const { appMatchesOnLoad, filterValue } = useContext(DataAreaContext);
+function Competition () {
+  const { appMatchesOnLoad, filterValue, matchesByCompetition, setMatchesByCompetition } = useContext(DataAreaContext);
+  let { competition } = useParams();
   console.log(appMatchesOnLoad);
 
-  const sortedMatches = appMatchesOnLoad.sort(function(a, b) {
-    return new Date(b.updatedAt) - new Date(a.updatedAt);
-  });
+  useEffect(() => {
+    getMatchesByCompetition();
+  }, []);
+
+  async function getMatchesByCompetition() {
+    await API.getMatchesByCompetitionOnLoad(competition)
+      .then(res => {
+        setMatchesByCompetition(res.data);
+      })
+      .catch(err => console.log(err));
+  }
   
   return (
     <>
@@ -22,12 +33,12 @@ function Competition() {
       <Header />
       <Row>
       <IsEmpty
-        value={sortedMatches}
+        value={matchesByCompetition}
         yes={() =>
           <Spinner animation="grow" variant="success" />
         }
         no={() => (
-          <Map collection={sortedMatches}
+          <Map collection={matchesByCompetition}
             iteratee={match =>
               (match.competitionName.toLowerCase()).includes(filterValue.toLowerCase())
               ?

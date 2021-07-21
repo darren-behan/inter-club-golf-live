@@ -28,8 +28,8 @@ module.exports = {
             createdAt: doc.data().createdAt,
             updatedAt: doc.data().updatedAt,
             matchStatus: doc.data().matchStatus
+            });
           });
-        });
         return response.status(200).json(matches);
       })
       .catch((err) => {

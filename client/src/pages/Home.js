@@ -2,7 +2,7 @@ import React from 'react';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Carousel from '../components/Carousel';
-import { Container, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 function Home() {
 

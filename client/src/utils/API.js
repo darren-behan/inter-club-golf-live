@@ -1,6 +1,6 @@
 import axios from 'axios';
 import LocalStorage from '../services/LocalStorage/LocalStorage.service';
-axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL_DEV;
 
 // In each function, we use axios to send our api route request to the server
 

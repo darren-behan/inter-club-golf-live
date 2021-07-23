@@ -1,0 +1,46 @@
+[
+  {
+		"id": 1,
+    "round": "1"
+  },
+  {
+		"id": 2,
+    "round": "2"
+  },
+  {
+		"id": 3,
+    "round": "3"
+  },
+  {
+		"id": 4,
+    "round": "4"
+  },
+  {
+		"id": 5,
+    "round": "5"
+  },
+  {
+		"id": 6,
+    "round": "6"
+  },
+  {
+		"id": 7,
+    "round": "last 32"
+  },
+  {
+		"id": 8,
+    "round": "last 16"
+  },
+  {
+		"id": 9,
+    "round": "quarter finals"
+  },
+  {
+		"id": 10,
+    "round": "semi finals"
+  },
+  {
+		"id": 11,
+    "round": "final"
+  }
+]

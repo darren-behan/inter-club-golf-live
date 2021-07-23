@@ -11,3 +11,20 @@ body {
 .slider::-webkit-scrollbar {
   display: none;
 }
+
+caption {
+  text-align: center;
+  color: #000000;
+}
+
+th {
+  text-align: center;
+  color: #0a66c2;
+  background: #ffffff!important;
+}
+
+td {
+  min-width: 100px;
+  text-align: center;
+  vertical-align: middle;
+}

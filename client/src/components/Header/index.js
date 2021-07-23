@@ -17,11 +17,11 @@ function Header() {
     <Navbar expand="md" sticky="top" id='navbar' className="navbar-light justify-content-center py-3 px-0" style={{ backgroundColor: '#ffffff' }}>
       <Container style={{ flexDirection: 'row', padding: "0px" }}>
         <Navbar.Brand className='mx-3 mx-sm-0' style={{ color: '#000000' }}>
-          <NavLink as={ Link } to="/" className="link p-0" style={{ color: '#000000' }}>
+          <NavLink as={ Link } to="/" className="link p-0" style={{ color: '#0a66c2', fontWeight: '900' }}>
             Inter Club Golf Live
           </NavLink>
         </Navbar.Brand>
-        {(location.pathname === "/competition" || location.pathname === `/usermatches/${userDataObj.uid}`) ? (
+        {(location.pathname === "/competition/:competition" || location.pathname === `/usermatches/${userDataObj.uid}`) ? (
           <Button
             onClick={() => setShow(true)}
             variant="outline-success"

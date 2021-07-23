@@ -16,6 +16,7 @@ import moment from 'moment';
 import 'moment-timezone';
 import competition from '../../assets/competitions.json';
 import matchData from '../../assets/matchdata.json';
+import rounds from '../../assets/competitionRounds.json';
 let isEmpty = require('lodash.isempty');
 
 const styles = makeStyles((theme) => ({
@@ -51,42 +52,6 @@ const styles = makeStyles((theme) => ({
 		position: 'absolute'
 	}
 }));
-
-const rounds = [
-  {
-    round: '1'
-  },
-  {
-    round: '2'
-  },
-  {
-    round: '3'
-  },
-  {
-    round: '4'
-  },
-  {
-    round: '5'
-  },
-  {
-    round: '6'
-  },
-  {
-    round: 'last 32'
-  },
-  {
-    round: 'last 16'
-  },
-  {
-    round: 'quarter finals'
-  },
-  {
-    round: 'semi finals'
-  },
-  {
-    round: 'final'
-  },
-];
 
 const regions = [
   {
@@ -444,7 +409,7 @@ function PostMatch() {
       updatedAt: moment().format(),
       competitionName: postMatchObj.competitionName,
       competitionRegion: postMatchObj.competitionRegion,
-      competitionRound: postMatchObj.competitionRound,
+      competitionRound: getCompetitionRound(postMatchObj.competitionRound),
       numIndividualMatches: competitionObject.matches,
 			individualMatch: !isEmpty(postMatchObj.individualMatchesArray) ? postMatchObj.individualMatchesArray : filteredMatchArray,
       teamOneName: postMatchObj.teamOneName,
@@ -473,6 +438,14 @@ function PostMatch() {
 			setLoading(false);
 		});
 	};
+
+	const getCompetitionRound = (competitionRound) => {
+		rounds.map(function(round) {
+			if (competitionRound === round.round) {
+				return round;
+			}
+		})
+	}
 
 	const formIsValid = () => {
 		const isValid =

@@ -41,25 +41,22 @@ function Competition () {
   });
 
   const removedDuplicateRounds = Lib.eliminateDuplicates(roundArray);
-  console.log(removedDuplicateRounds);
 
-  const getTableRows = () => {
-    for (let i = 0; i < matchesByCompetition.length; i++) {
-      // return (
-        <>
-        <tr>
-          <td>{Lib.capitalize(matchesByCompetition[i].teamOneName)}</td>
-          <td style={{ background: '#0a66c2' }}>
-            {getScore(matchesByCompetition[i])}
-          </td>
-          <td>{Lib.capitalize(matchesByCompetition[i].teamTwoName)}</td>
-        </tr>
-        <tr>
-          <td colspan="3">{Lib.capitalize(matchesByCompetition[i].matchStatus)}</td>
-        </tr>
-        </>
-      // )
-    }
+  const getTableRows = (match) => {
+    return (
+      <>
+      <tr>
+        <td>{Lib.capitalize(match.teamOneName)}</td>
+        <td style={{ background: '#0a66c2' }}>
+          {getScore(match)}
+        </td>
+        <td>{Lib.capitalize(match.teamTwoName)}</td>
+      </tr>
+      <tr>
+        <td colspan="3">{Lib.capitalize(match.matchStatus)}</td>
+      </tr>
+      </>
+    )
   }
 
   const getScore = (match) => {
@@ -113,18 +110,7 @@ function Competition () {
                 <tbody>
                 {matchesByCompetition.map(function(match) {
                   return (
-                    <>
-                    <tr>
-                      <td>{Lib.capitalize(match.teamOneName)}</td>
-                      <td style={{ background: '#0a66c2' }}>
-                        {getScore(match)}
-                      </td>
-                      <td>{Lib.capitalize(match.teamTwoName)}</td>
-                    </tr>
-                    <tr>
-                      <td colspan="3">{Lib.capitalize(match.matchStatus)}</td>
-                    </tr>
-                    </>
+                    getTableRows(match)
                   )}
                 )}
                 </tbody>
@@ -146,18 +132,7 @@ function Competition () {
                     {matchesByCompetition.map(function(match) {
                       if (match.competitionRound.round === round) {
                         return (
-                          <>
-                          <tr>
-                            <td>{Lib.capitalize(match.teamOneName)}</td>
-                            <td style={{ background: '#0a66c2' }}>
-                              {getScore(match)}
-                            </td>
-                            <td>{Lib.capitalize(match.teamTwoName)}</td>
-                          </tr>
-                          <tr>
-                            <td colspan="3">{Lib.capitalize(match.matchStatus)}</td>
-                          </tr>
-                          </>
+                          getTableRows(match)
                         )
                       }}
                     )}

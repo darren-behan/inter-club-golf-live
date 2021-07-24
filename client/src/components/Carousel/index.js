@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
 import './index.css';
-import { IsEmpty, Map } from "react-lodash";
+import { Map } from "react-lodash";
 import DataAreaContext from '../../utils/DataAreaContext';
 import Cards from '../Cards';
-import { Spinner } from 'react-bootstrap';
 
 function Carousel() {
   const { appMatchesOnLoad } = useContext(DataAreaContext);
@@ -11,18 +10,10 @@ function Carousel() {
   return (
     <div className="container px-0 py-3">
       <div className="cards-container">
-        <IsEmpty
-          value={appMatchesOnLoad}
-          yes={() =>
-            <Spinner animation="grow" variant="success" />
+        <Map collection={appMatchesOnLoad}
+          iteratee={match =>
+            <Cards match={ match } />
           }
-          no={() => (
-            <Map collection={appMatchesOnLoad}
-              iteratee={match =>
-                <Cards match={ match } />
-              }
-            />
-          )}
         />
       </div>
     </div>

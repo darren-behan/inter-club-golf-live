@@ -1,13 +1,12 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState} from 'react';
 import DataAreaContext from '../utils/DataAreaContext';
 import API from '../utils/API';
 import Lib from '../utils/Lib';
-import { IsEmpty, Map } from "react-lodash";
+import { IsEmpty } from "react-lodash";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import FiltersModal from '../components/Modals/FiltersModal';
-import competitionRounds from '../assets/competitionRounds.json';
 import { Container, Table, Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
@@ -17,8 +16,10 @@ function Competition () {
   const { filterValue, matchesByCompetition, setMatchesByCompetition } = useContext(DataAreaContext);
   let { competition } = useParams();
   const competitionName = decodeURIComponent(competition);
+  const [response, setResponse] = useState({})
 
   useEffect(() => {
+    setMatchesByCompetition([]);
     getMatchesByCompetition();
   }, []);
 
@@ -26,6 +27,7 @@ function Competition () {
     await API.getMatchesByCompetitionOnLoad(competition)
       .then(res => {
         setMatchesByCompetition(res.data);
+        setResponse({ code: 200 });
       })
       .catch(err => console.log(err));
   }
@@ -93,13 +95,23 @@ function Competition () {
         <IsEmpty
           value={matchesByCompetition}
           yes={() =>
-            <Spinner animation="grow" variant="success" />
+            <>
+            {response.code === 200 ?
+              <div style={{ textAlign: "center" }}>
+                <h5>There are no matches created for this tournament yet 🙁</h5>
+              </div>
+              :
+              <div style={{ textAlign: "center" }}>
+                <Spinner animation="grow" style={{ color: "#0a66c2" }} />
+              </div>
+            }
+            </>
           }
           no={() => (
             <>
             {removedDuplicateRounds.length === 1 ?
               <Table hover size="sm" className="table-hover caption-top">
-                <caption style={{ color: '#0a66c2', fontWeight: '900' }}>{Lib.capitalize(removedDuplicateRounds[0])}</caption>
+                <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>{Lib.capitalize(removedDuplicateRounds[0])}</caption>
                 <thead>
                   <tr>
                     <th>Home Team</th>
@@ -120,7 +132,7 @@ function Competition () {
               {removedDuplicateRounds.map(function(round) {
                 return (
                   <Table hover size="sm" className="table-hover caption-top">
-                    <caption style={{ color: '#0a66c2', fontWeight: '900' }}>{Lib.capitalize(round)}</caption>
+                    <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>{Lib.capitalize(round)}</caption>
                     <thead>
                       <tr>
                         <th>Home Team</th>

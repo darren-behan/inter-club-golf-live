@@ -12,7 +12,9 @@ function Slider() {
     <IsEmpty
       value={appMatchesOnLoad}
       yes={() =>
-        <Spinner animation="grow" variant="success" />
+        <div style={{ textAlign: "center" }}>
+          <Spinner animation="grow" style={{ color: "#0a66c2" }} />
+        </div>
       }
       no={() => (
         <Map collection={appMatchesOnLoad}

@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import moment from 'moment';
 import 'moment-timezone';
-import competition from '../../assets/competitions.json';
+import competition from '../../assets/data/competitions.json';
 let isEmpty = require('lodash.isempty');
 
 const styles = makeStyles((theme) => ({

@@ -19,6 +19,7 @@ import Signup from './pages/Signup';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import PageNotFound from './pages/PageNotFound';
+import Wrapper from './components/Wrapper/index.js';
 import firebase from "firebase/app";
 import "firebase/auth";
 
@@ -103,7 +104,7 @@ function App() {
       value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, show, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, updateModalShow, updateResponse, updateMatchObj, signUpObj, userAuthResponse, userAuthModalShow, createMatchResponse, createMathModalShow, sidebarOpen, form, matchesByCompetition, setMatchesByCompetition, setForm, setSidebarOpen, setCreateMatchModalShow, setCreateMatchResponse, setUserAuthModalShow, setUserAuthResponse, setSignUpObj, setUpdateMatchObj, setUpdateResponse, setUpdateModalShow, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShow, setFilterValue, setUserDataObj }}
       >
         <Router>
-          <div>
+          <Wrapper>
             <Switch>
               <Route exact path={'/'} component={Home} />
               <Route exact path={'/competition/:competition'} component={Competition} />
@@ -128,7 +129,7 @@ function App() {
               </Route>
               <Route exact path='*' component={PageNotFound} />
             </Switch>
-          </div>
+          </Wrapper>
         </Router>
       </DataAreaContext.Provider>
     </>

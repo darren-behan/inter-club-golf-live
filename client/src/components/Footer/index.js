@@ -9,7 +9,7 @@ function Footer() {
     <>
     <footer style={{ boxShadow: '0 0 4px rgba(0,0,0,.1)' }}>
       <Container className="pt-5">
-        <Row className="mb-3">
+        <Row>
           <Col className="col-6 px-3 px-md-0 mx-0 text-center">
             <h6 className="mb-4 font-weight-bold text-uppercase">Company</h6>
             <ListGroup>

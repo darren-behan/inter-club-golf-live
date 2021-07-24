@@ -118,7 +118,7 @@ function UpdateModal(props) {
           variant="outline-success"
           >
           {isLoading ?
-            <Spinner animation="border" variant="light" /> 
+            <Spinner animation="border" style={{ color: "#0a66c2" }} /> 
           :
             'Update'
           }

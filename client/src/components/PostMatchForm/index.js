@@ -14,9 +14,9 @@ import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import moment from 'moment';
 import 'moment-timezone';
-import competition from '../../assets/competitions.json';
-import matchData from '../../assets/matchdata.json';
-import rounds from '../../assets/competitionRounds.json';
+import competition from '../../assets/data/competitions.json';
+import matchData from '../../assets/data/matchdata.json';
+import rounds from '../../assets/data/competitionRounds.json';
 let isEmpty = require('lodash.isempty');
 
 const styles = makeStyles((theme) => ({
@@ -180,7 +180,16 @@ function PostMatch() {
   const handleInputChange = (event) => {
 		event.preventDefault();
     const { name, value } = event.target;
-		setPostMatchObj({...postMatchObj, [name]: value})
+
+		if (name === "competitionRound") {
+			rounds.map(function(round) {
+				if (value === round.round) {
+					return setPostMatchObj({...postMatchObj, [name]: round});
+				}
+			});
+		} else {
+			setPostMatchObj({...postMatchObj, [name]: value});
+		}
   };
 
   const handleIndividualMatchFieldInputChange = (event, child) => {
@@ -409,7 +418,7 @@ function PostMatch() {
       updatedAt: moment().format(),
       competitionName: postMatchObj.competitionName,
       competitionRegion: postMatchObj.competitionRegion,
-      competitionRound: getCompetitionRound(postMatchObj.competitionRound),
+      competitionRound: postMatchObj.competitionRound,
       numIndividualMatches: competitionObject.matches,
 			individualMatch: !isEmpty(postMatchObj.individualMatchesArray) ? postMatchObj.individualMatchesArray : filteredMatchArray,
       teamOneName: postMatchObj.teamOneName,
@@ -438,14 +447,6 @@ function PostMatch() {
 			setLoading(false);
 		});
 	};
-
-	const getCompetitionRound = (competitionRound) => {
-		rounds.map(function(round) {
-			if (competitionRound === round.round) {
-				return round;
-			}
-		})
-	}
 
 	const formIsValid = () => {
 		const isValid =

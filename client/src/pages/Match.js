@@ -49,8 +49,8 @@ function Match() {
         <Container fluid={ true } style={{ padding: '0 0 70px 0' }}>
           <Header />
           <Container>
-            <Row>
-              <Spinner animation="grow" variant="success" />
+            <Row style={{ textAlign: "center" }}>
+              <Spinner animation="grow" style={{ color: "#0a66c2" }} />
             </Row>
           </Container>
         </Container>

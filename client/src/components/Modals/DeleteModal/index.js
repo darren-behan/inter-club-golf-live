@@ -68,7 +68,7 @@ function DeleteModal(props) {
           variant="danger"
           >
           {isLoading ?
-            <Spinner animation="border" variant="light" /> 
+            <Spinner animation="border" style={{ color: "#0a66c2" }} /> 
           :
             'Delete'
           }

@@ -39,7 +39,7 @@ caption {
 }
 
 th {
-  text-align: center;
+  text-align: center!important;
   color: #0a66c2;
   background: #ffffff!important;
 }

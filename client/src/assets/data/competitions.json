@@ -1,11 +1,5 @@
 [
 	{
-		"name": "[All-Ireland] Men's Barton Shield",
-		"matches": 2,
-		"singlePlayer": false,
-    "gender": "men"
-	},
-	{
 		"name": "[All-Ireland] Men's Jimmy Bruen Shield",
 		"matches": 5,
 		"singlePlayer": false,
@@ -102,6 +96,12 @@
     "gender": "men"
 	},
 	{
+		"name": "South Leinster",
+		"matches": 7,
+		"singlePlayer": true,
+    "gender": "men"
+	},
+	{
 		"name": "Women's Challenge Cup",
 		"matches": 5,
 		"singlePlayer": true,
@@ -165,12 +165,6 @@
 		"name": "Boys' Fred Daly",
 		"matches": 5,
 		"singlePlayer": true,
-    "gender": "junior"
-	},
-	{
-		"name": "Boys' Junior Foursomes",
-		"matches": 2,
-		"singlePlayer": false,
     "gender": "junior"
 	},
 	{

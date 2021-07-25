@@ -6,7 +6,7 @@ import { IsEmpty } from "react-lodash";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import FiltersModal from '../components/Modals/FiltersModal';
+import FiltersOffCanvas from '../components/FiltersOffCanvas';
 import { Container, Table, Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
@@ -86,7 +86,7 @@ function Competition () {
   return (
     <>
     <Container fluid={ true } className="p-0">
-      <FiltersModal />
+      <FiltersOffCanvas />
       <Header />
       <div>
         <div style={{ paddingTop: '15px', textAlign: 'center' }}>

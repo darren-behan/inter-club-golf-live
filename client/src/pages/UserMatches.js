@@ -4,7 +4,7 @@ import { IsEmpty, Map } from "react-lodash";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Cards from '../components/Cards';
-import FiltersModal from '../components/Modals/FiltersModal';
+import FiltersOffCanvas from '../components/FiltersOffCanvas';
 import { Container, Row, Col } from 'react-bootstrap';
 
 function Matches() {
@@ -29,7 +29,7 @@ function Matches() {
         <Row 
           className={(show) ? 'mt-3 mx-0' : ''}
           style={{ backgroundColor: '#ffffff', boxShadow: '0 0 4px rgba(0,0,0,.1)', borderRadius: '.25rem' }}>
-          <FiltersModal />
+          <FiltersOffCanvas />
         </Row>
         <Row>
         <IsEmpty

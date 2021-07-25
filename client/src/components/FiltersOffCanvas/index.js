@@ -18,7 +18,7 @@ function FiltersOffCanvas() {
     <>
     <Offcanvas show={showFilters} onHide={handleClose}>
       <Offcanvas.Header closeButton>
-        <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+        <Offcanvas.Title>Filters</Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
         No filters available yet

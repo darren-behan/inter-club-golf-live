@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
-  const { setShowFilters, userDataObj, sidebarOpen, setSidebarOpen } = useContext(DataAreaContext);
+  const { setShowFilters, sidebarOpen, setSidebarOpen } = useContext(DataAreaContext);
   const location = useLocation();
   const node = useRef();
   let { competition } = useParams();

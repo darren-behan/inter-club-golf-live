@@ -40,6 +40,14 @@ const styles = makeStyles((theme) => ({
       width: '25ch',
     },
   },
+	textField: {
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#0a66c2"
+    },
+    "& .MuiSvgIcon-root": {
+      fill: "#0a66c2"
+    }
+	},
 	submit: {
 		margin: 3
 	},
@@ -470,7 +478,7 @@ function PostMatch() {
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<div className={classes.paper}>
-				<Typography component="h1" variant="h5">
+				<Typography component="h1" variant="h5" style={{ color: "#0a66c2" }}>
 					Create Match
 				</Typography>
 				<form className={classes.form} noValidate>
@@ -478,6 +486,7 @@ function PostMatch() {
 						return (
 							<TextField
 								key={index}
+								className={classes.textField}
 								variant="outlined"
 								margin="normal"
 								required={inputFieldValue.required}
@@ -525,7 +534,7 @@ function PostMatch() {
 						)
 					})}
 					{!isEmpty(postMatchObj.competitionName) && !isEmpty(postMatchObj.teamOneName) && !isEmpty(postMatchObj.teamTwoName) ?
-						<Typography component="h1" variant="h5">
+						<Typography component="h1" variant="h5" style={{ color: "#0a66c2" }}>
 							Individual Matches
 						</Typography>
 						:

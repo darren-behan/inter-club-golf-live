@@ -32,7 +32,18 @@ const styles = makeStyles((theme) => ({
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
       width: '25ch',
+    }
+  },
+	textField: {
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#0a66c2"
     },
+    "& .MuiSvgIcon-root": {
+      fill: "#0a66c2"
+    }
+	},
+	notchedOutline: {
+    borderColor: '#0a66c2 !important'
   },
 	submit: {
 		margin: 3
@@ -295,6 +306,7 @@ function UpdateMatch() {
 						id={i}
 					>
 						<TextField
+							className={classes.textField}
 							key={i+1}
 							variant="outlined"
 							margin="normal"
@@ -312,6 +324,7 @@ function UpdateMatch() {
 							helperText={`Match ${individualMatch.individualMatchId}: Update ${Lib.capitalize(homeTeamName)} player name`}
 						/>
 						<TextField
+							className={classes.textField}
 							key={i+1}
 							variant="outlined"
 							margin="normal"
@@ -329,6 +342,7 @@ function UpdateMatch() {
 							helperText={`Match ${individualMatch.individualMatchId}: If the ${Lib.capitalize(homeTeamName)} player is winning, enter the number of holes they are up by, otherwise, enter 0`}
 						/>
 						<TextField
+							className={classes.textField}
 							key={i+1}
 							variant="outlined"
 							margin="normal"
@@ -346,6 +360,7 @@ function UpdateMatch() {
 							helperText={`Match ${individualMatch.individualMatchId}: Update the number of holes played`}
 						/>
 						<TextField
+							className={classes.textField}
 							key={i+1}
 							variant="outlined"
 							margin="normal"
@@ -363,6 +378,7 @@ function UpdateMatch() {
 							helperText={`Match ${individualMatch.individualMatchId}: Update ${Lib.capitalize(awayTeamName)} player name`}
 						/>
 						<TextField
+							className={classes.textField}
 							key={i+1}
 							variant="outlined"
 							margin="normal"
@@ -380,6 +396,7 @@ function UpdateMatch() {
 							helperText={`Match ${individualMatch.individualMatchId}: If the ${Lib.capitalize(awayTeamName)} player is winning, enter the number of holes they are up by, otherwise, enter 0`}
 						/>
 						<TextField
+							className={classes.textField}
 							key={i+1}
 							variant="outlined"
 							margin="normal"
@@ -412,6 +429,7 @@ function UpdateMatch() {
 						id={i}
 					>
 						<TextField
+							className={classes.textField}
 							key={i+1}
 							variant="outlined"
 							margin="normal"
@@ -429,6 +447,7 @@ function UpdateMatch() {
 							helperText={`Match ${individualMatch.individualMatchId}: Update ${Lib.capitalize(homeTeamName)} player A name`}
 						/>
 						<TextField
+							className={classes.textField}
 							key={i+1}
 							variant="outlined"
 							margin="normal"
@@ -446,6 +465,7 @@ function UpdateMatch() {
 							helperText={`Match ${individualMatch.individualMatchId}: Update ${Lib.capitalize(homeTeamName)} player B name`}
 						/>
 						<TextField
+							className={classes.textField}
 							key={i+1}
 							variant="outlined"
 							margin="normal"
@@ -463,6 +483,7 @@ function UpdateMatch() {
 							helperText={`Match ${individualMatch.individualMatchId}: If the ${Lib.capitalize(homeTeamName)} players are winning, enter the number of holes they are up by, otherwise, enter 0`}
 						/>
 						<TextField
+							className={classes.textField}
 							key={i+1}
 							variant="outlined"
 							margin="normal"
@@ -480,6 +501,7 @@ function UpdateMatch() {
 							helperText={`Match ${individualMatch.individualMatchId}: Update the number of holes played`}
 						/>
 						<TextField
+							className={classes.textField}
 							key={i+1}
 							variant="outlined"
 							margin="normal"
@@ -497,6 +519,7 @@ function UpdateMatch() {
 							helperText={`Match ${individualMatch.individualMatchId}: Update ${Lib.capitalize(awayTeamName)} player A name`}
 						/>
 						<TextField
+							className={classes.textField}
 							key={i+1}
 							variant="outlined"
 							margin="normal"
@@ -514,6 +537,7 @@ function UpdateMatch() {
 							helperText={`Match ${individualMatch.individualMatchId}: Update ${Lib.capitalize(awayTeamName)} player B name`}
 						/>
 						<TextField
+							className={classes.textField}
 							key={i+1}
 							variant="outlined"
 							margin="normal"
@@ -531,6 +555,7 @@ function UpdateMatch() {
 							helperText={`Match ${individualMatch.individualMatchId}: If the ${Lib.capitalize(awayTeamName)} players are winning, enter the number of holes they are up by, otherwise, enter 0`}
 						/>
 						<TextField
+							className={classes.textField}
 							key={i+1}
 							variant="outlined"
 							margin="normal"
@@ -572,6 +597,7 @@ function UpdateMatch() {
 						return (
 							<TextField
 								key={index}
+								className={classes.textField}
 								variant="outlined"
 								margin="normal"
 								required={inputFieldValue.required}
@@ -628,7 +654,7 @@ function UpdateMatch() {
 							</TextField>
 						)
 					})}
-					<Typography component="h1" variant="h5">
+					<Typography component="h1" variant="h5" style={{ color: "#0a66c2" }}>
 						Individual Matches
 					</Typography>
 					{getIndividualMatchFields()}

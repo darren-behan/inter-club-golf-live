@@ -37,9 +37,13 @@ function Home() {
     <IsEmpty
       value={appMatchesOnLoad}
       yes={() =>
+        <>
+        <br />
         <Row style={{ justifyContent: "center" }}>
           <Spinner animation="grow" style={{ color: "#0a66c2" }} />
         </Row>
+        <br />
+        </>
       }
       no={() => (
         <Carousel className='mt-3 pb-4'/>

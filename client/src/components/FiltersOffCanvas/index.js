@@ -1,18 +1,40 @@
 import React, { useContext } from 'react';
 import './index.css';
 import DataAreaContext from '../../utils/DataAreaContext';
-import { Offcanvas } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGlasses } from '@fortawesome/free-solid-svg-icons';
+import Lib from '../../utils/Lib';
+import { Offcanvas, Button, Form, FloatingLabel } from 'react-bootstrap';
 
-function FiltersOffCanvas() {
+function FiltersOffCanvas(props) {
   const { showFilters, setShowFilters, setFilterValue } = useContext(DataAreaContext);
   const handleClose = () => setShowFilters(false);
 
+  function submitHandler(e) {
+    e.preventDefault();
+  }
+
   // Handles updating component state when the user types into the input field
   function handleInputChange(event) {
+    event.preventDefault();
+    console.log(event.target.value);
     setFilterValue(event.target.value);
   };
+
+  function handleApplyFiltersSubmit(event) {
+    event.preventDefault();
+    setShowFilters(false);
+  };
+
+  function handleClearFiltersSubmit(event) {
+    event.preventDefault();
+    setFilterValue("");
+    setShowFilters(false);
+  };
+
+  let golfClubsTeamOneName = props.matchesByCompetition.map(({ teamOneName }) => teamOneName);
+  let golfClubsTeamTwoName = props.matchesByCompetition.map(({ teamTwoName }) => teamTwoName);
+  let golfClubs = golfClubsTeamOneName.concat(golfClubsTeamTwoName);
+
+  const removedDuplicateGolfClubs = Lib.eliminateDuplicates(golfClubs);
   
   return (
     <>
@@ -21,7 +43,25 @@ function FiltersOffCanvas() {
         <Offcanvas.Title>Filters</Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
-        No filters available yet
+        <Form onSubmit={(e) => submitHandler(e)}>
+          <FloatingLabel controlId="floatingSelect" label="Filter competition matches by golf club">
+            <Form.Select aria-label="Filter competition matches by golf club" onChange={(e) => handleInputChange(e)}>
+              <option>{""}</option>
+              {removedDuplicateGolfClubs.map(function(golfClub) {
+                return (
+                  <option value={golfClub}>{Lib.capitalize(golfClub)}</option>
+                )
+              })}
+            </Form.Select>
+          </FloatingLabel>
+          <br />
+          <Button variant="outline-primary" onClick={handleApplyFiltersSubmit} className="me-2">
+            Apply filters
+          </Button>
+          <Button variant="outline-danger" onClick={handleClearFiltersSubmit} className="me-2">
+            Clear filters
+          </Button>
+        </Form>
       </Offcanvas.Body>
     </Offcanvas>
     </>

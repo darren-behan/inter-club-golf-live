@@ -13,13 +13,14 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 function Competition () {
-  const { filterValue, matchesByCompetition, setMatchesByCompetition, setMatchObj } = useContext(DataAreaContext);
+  const { filterValue, setFilterValue, matchesByCompetition, setMatchesByCompetition, setMatchObj } = useContext(DataAreaContext);
   let { competition } = useParams();
   const history = useHistory();
   const competitionName = decodeURIComponent(competition);
-  const [response, setResponse] = useState({})
+  const [response, setResponse] = useState({});
 
   useEffect(() => {
+    setFilterValue("");
     setMatchesByCompetition([]);
     getMatchesByCompetition();
   }, []);
@@ -46,20 +47,22 @@ function Competition () {
   const removedDuplicateRounds = Lib.eliminateDuplicates(roundArray);
 
   const getTableRows = (match) => {
-    return (
-      <>
-      <tr onClick={(e) => onClickRow(e, match)}>
-        <td>{Lib.capitalize(match.teamOneName)}</td>
-        <td style={{ background: '#0a66c2' }}>
-          {getScore(match)}
-        </td>
-        <td>{Lib.capitalize(match.teamTwoName)}</td>
-      </tr>
-      <tr>
-        <td colspan="3">{Lib.capitalize(match.matchStatus)}</td>
-      </tr>
-      </>
-    )
+    if (match.teamOneName.includes(filterValue.toLowerCase()) || match.teamTwoName.includes(filterValue.toLowerCase())) {
+      return (
+        <>
+        <tr key={match.matchId} onClick={(e) => onClickRow(e, match)}>
+          <td>{Lib.capitalize(match.teamOneName)}</td>
+          <td style={{ background: '#0a66c2' }}>
+            {getScore(match)}
+          </td>
+          <td>{Lib.capitalize(match.teamTwoName)}</td>
+        </tr>
+        <tr>
+          <td colspan="3">{Lib.capitalize(match.matchStatus)}</td>
+        </tr>
+        </>
+      )
+    }
   }
 
   const onClickRow = (e, match) => {
@@ -94,7 +97,9 @@ function Competition () {
   return (
     <>
     <Container fluid={ true } className="p-0">
-      <FiltersOffCanvas />
+      <FiltersOffCanvas
+        matchesByCompetition={matchesByCompetition}
+      />
       <Header />
       <div>
         <div style={{ paddingTop: '15px', textAlign: 'center' }}>
@@ -106,12 +111,18 @@ function Competition () {
             <>
             {response.code === 200 ?
               <div style={{ textAlign: "center" }}>
+                <br />
+                <br />
                 <h5>There are no matches created for this tournament yet 🙁</h5>
               </div>
               :
+              <>
+              <br />
               <div style={{ textAlign: "center" }}>
                 <Spinner animation="grow" style={{ color: "#0a66c2" }} />
               </div>
+              <br />
+              </>
             }
             </>
           }

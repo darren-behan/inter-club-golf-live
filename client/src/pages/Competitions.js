@@ -98,7 +98,7 @@ function Competition () {
     <>
     <Container fluid={ true } className="p-0">
       <FiltersOffCanvas
-        matchesByCompetition={matchesByCompetition}
+        matches={matchesByCompetition}
       />
       <Header />
       <div>

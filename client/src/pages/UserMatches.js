@@ -29,7 +29,9 @@ function Matches() {
         <Row 
           className={(show) ? 'mt-3 mx-0' : ''}
           style={{ backgroundColor: '#ffffff', boxShadow: '0 0 4px rgba(0,0,0,.1)', borderRadius: '.25rem' }}>
-          <FiltersOffCanvas />
+          <FiltersOffCanvas 
+            matches={sortedMatches}
+          />
         </Row>
         <Row>
         <IsEmpty

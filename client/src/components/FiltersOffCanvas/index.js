@@ -30,8 +30,8 @@ function FiltersOffCanvas(props) {
     setShowFilters(false);
   };
 
-  let golfClubsTeamOneName = props.matchesByCompetition.map(({ teamOneName }) => teamOneName);
-  let golfClubsTeamTwoName = props.matchesByCompetition.map(({ teamTwoName }) => teamTwoName);
+  let golfClubsTeamOneName = props.matches.map(({ teamOneName }) => teamOneName);
+  let golfClubsTeamTwoName = props.matches.map(({ teamTwoName }) => teamTwoName);
   let golfClubs = golfClubsTeamOneName.concat(golfClubsTeamTwoName);
 
   const removedDuplicateGolfClubs = Lib.eliminateDuplicates(golfClubs);

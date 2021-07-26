@@ -27,7 +27,8 @@ module.exports = {
             createdByUid: doc.data().createdByUid,
             createdAt: doc.data().createdAt,
             updatedAt: doc.data().updatedAt,
-            matchStatus: doc.data().matchStatus
+            matchStatus: doc.data().matchStatus,
+            singlePlayer: doc.data().singlePlayer
             });
           });
         return response.status(200).json(matches);
@@ -59,7 +60,8 @@ module.exports = {
         createdByUid: data.data().createdByUid,
         createdAt: data.data().createdAt,
         updatedAt: data.data().updatedAt,
-        matchStatus: data.data().matchStatus
+        matchStatus: data.data().matchStatus,
+        singlePlayer: data.data().singlePlayer
       };
       return response.status(200).json(match);
     })
@@ -84,7 +86,8 @@ module.exports = {
       createdAt: request.body.createdAt,
       updatedAt: request.body.updatedAt,
       timeZone: request.body.timeZone,
-      matchStatus: calculateMatchStatus(request.body.matchDateTime, request.body.createdAt, request.body.timeZone)
+      matchStatus: calculateMatchStatus(request.body.matchDateTime, request.body.createdAt, request.body.timeZone),
+      singlePlayer: request.body.singlePlayer
     };
 
     let document = addMatch(newMatch);
@@ -105,7 +108,8 @@ module.exports = {
         createdByUid: doc.data().createdByUid,
         createdAt: doc.data().createdAt,
         updatedAt: doc.data().updatedAt,
-        matchStatus: doc.data().matchStatus
+        matchStatus: doc.data().matchStatus,
+        singlePlayer: doc.data().singlePlayer
       };
       return response.status(200).json(matches);
     })

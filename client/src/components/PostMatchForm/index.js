@@ -435,7 +435,8 @@ function PostMatch() {
 			individualMatch: !isEmpty(postMatchObj.individualMatchesArray) ? postMatchObj.individualMatchesArray : filteredMatchArray,
       teamOneName: postMatchObj.teamOneName,
       teamTwoName: postMatchObj.teamTwoName,
-			uid: userDataObj.uid
+			uid: userDataObj.uid,
+			singlePlayer: competitionObject.singlePlayer
 		})
 		.then((response) => {
 			setAppMatchesOnLoad([response.data, ...appMatchesOnLoad]);

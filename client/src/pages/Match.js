@@ -10,12 +10,15 @@ import Footer from "../components/Footer";
 import DeleteModal from "../components/Modals/DeleteModal";
 import UpdateModal from "../components/Modals/UpdateModal";
 import { Container, Row, Table, Button, Spinner } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Moment from 'react-moment';
 import 'moment-timezone';
 let isEmpty = require('lodash.isempty');
 
 function Match() {
-  const { match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, timeZone, updateModalShow, setUpdateModalShow, setUpdateMatchObj, updateMatchObj } = useContext(DataAreaContext);
+  const { match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, timeZone, updateModalShow, setUpdateModalShow, setUpdateMatchObj } = useContext(DataAreaContext);
   let { id } = useParams();
   let individualMatches;
   let sortedIndividualMatches;
@@ -42,6 +45,118 @@ function Match() {
     });
   }
 
+  const getScore = () => {
+    if (match.teamOneScore > match.teamTwoScore) {
+      return (
+        <div style={{ color: '#ffffff', fontWeight: '900' }}>
+          <span style={{ float: 'left' }}><FontAwesomeIcon icon={ faArrowLeft } className='fa-sm' /></span>{match.teamOneScore} - {match.teamTwoScore}
+        </div>
+      )
+    } else if (match.teamOneScore < match.teamTwoScore) {
+      return (
+        <div style={{ color: '#ffffff', fontWeight: '900' }}>
+          {match.teamOneScore} - {match.teamTwoScore}<span style={{ float: 'right' }}><FontAwesomeIcon icon={ faArrowRight } className='fa-sm' /></span>
+        </div>
+      )
+    } else {
+      return (
+        <div style={{ color: '#ffffff', fontWeight: '900' }}>
+          A/S
+        </div>
+      )
+    }
+  }
+
+  const getIndividualMatchScore = (match) => {
+    if (match.homeMatchScore > match.awayMatchScore) {
+      return (
+        <div style={{ color: '#ffffff', fontWeight: '900' }}>
+          <span style={{ float: 'left' }}><FontAwesomeIcon icon={ faArrowLeft } className='fa-sm' /></span>{match.homeMatchScore} up
+        </div>
+      )
+    } else if (match.homeMatchScore < match.awayMatchScore) {
+      return (
+        <div style={{ color: '#ffffff', fontWeight: '900' }}>
+          {match.awayMatchScore} up<span style={{ float: 'right' }}><FontAwesomeIcon icon={ faArrowRight } className='fa-sm' /></span>
+        </div>
+      )
+    } else {
+      return (
+        <div style={{ color: '#ffffff', fontWeight: '900' }}>
+          A/S
+        </div>
+      )
+    }
+  }
+
+  const getHomePlayerNames = (singleMatch) => {
+    if (match.singlePlayer === true) {
+      if (singleMatch.homeMatchPlayerAName !== "empty") {
+        return (
+          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
+            {Lib.capitalize(singleMatch.homeMatchPlayerAName)}
+          </p>
+        )
+      } else {
+        return (
+          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
+            {match.teamOneName}
+          </p>
+        )
+      }
+    } else if (match.singlePlayer === false) {
+      if (singleMatch.homeMatchPlayerAName !== "empty" && singleMatch.homeMatchPlayerBName !== "empty") {
+        return  (
+          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
+          {Lib.capitalize(singleMatch.homeMatchPlayerAName)}
+          <br />
+          {Lib.capitalize(singleMatch.homeMatchPlayerBName)}
+          </p>
+        )
+      } else {
+        return (
+          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
+            {Lib.capitalize(match.teamOneName)}
+          </p>
+        )
+      }
+    }
+  }
+
+  const getAwayPlayerNames = (singleMatch) => {
+    if (match.singlePlayer === true) {
+      if (singleMatch.awayMatchPlayerAName !== "empty") {
+        return (
+          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
+            {Lib.capitalize(singleMatch.awayMatchPlayerAName)}
+          </p>
+        )
+      } else {
+        return (
+          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
+            {Lib.capitalize(match.teamTwoName)}
+          </p>
+        )
+      }
+    } else if (match.singlePlayer === false) {
+      if (singleMatch.awayMatchPlayerAName !== "empty" && singleMatch.awayMatchPlayerBName !== "empty") {
+        return  (
+          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
+          {Lib.capitalize(singleMatch.awayMatchPlayerAName)}
+          <br />
+          {Lib.capitalize(singleMatch.awayMatchPlayerBName)}
+          </p>
+        )
+      } else {
+        return (
+          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
+            {Lib.capitalize(match.teamTwoName)}
+          </p>
+        )
+      }
+    }
+  }
+
   return (
     <IsEmpty
       value={match}
@@ -49,8 +164,12 @@ function Match() {
         <Container fluid={ true } style={{ padding: '0 0 70px 0' }}>
           <Header />
           <Container>
-            <Row style={{ textAlign: "center" }}>
-              <Spinner animation="grow" style={{ color: "#0a66c2" }} />
+            <Row>
+              <div style={{ textAlign: "center" }}>
+                <br />
+                <br />
+                <Spinner animation="grow" style={{ color: "#0a66c2" }} />
+              </div>
             </Row>
           </Container>
         </Container>
@@ -65,132 +184,142 @@ function Match() {
           show={updateModalShow}
           onHide={() => setUpdateModalShow(false)} 
         />
-        <Container fluid={ true } style={{ padding: '0 0 70px 0' }}>
-          <Header />
-          <Container>
-            <Row>
-              <Table striped bordered hover variant="dark">
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Tee Time</th>
-                    <th>Competition</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <Moment tz={ timeZone } format="DD/MM/YYYY">
-                        { match.matchDateTime }
-                      </Moment>
-                    </td>
-                    <td>
-                      <Moment tz={ timeZone } format="HH:mm z">
-                        { match.matchDateTime }
-                      </Moment>
-                    </td>
-                    <td>{ Lib.capitalize(match.competitionName) }</td>
-                    <td>{ Lib.capitalize(match.matchStatus) }</td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Row>
-            <Row>
-              <Table striped bordered hover variant="dark">
-                <thead>
-                  <tr>
-                    <th>{ Lib.capitalize(match.teamOneName) } (H)</th>
-                    <th>{ Lib.capitalize(match.teamTwoName) } (A)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{ match.teamOneScore }</td>
-                    <td>{ match.teamTwoScore }</td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Row>
-            <Row>
-              <Table striped bordered hover variant="dark">
-                <thead>
-                  <tr>
-                    <th>Individual Match Scores</th>
-                  </tr>
-                </thead>
-              </Table>
-            </Row>
-            <Row>
-              <Table striped bordered hover variant="dark">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>{ Lib.capitalize(match.teamOneName) }</th>
-                    <th>Thru</th>
-                    <th>{ Lib.capitalize(match.teamTwoName) }</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <Map collection={sortedIndividualMatches}
-                    iteratee={singleMatch =>
-                      <tr>
-                        <td>{ singleMatch.individualMatchId }</td>
-                        <td>{ singleMatch.homeMatchScore }</td>
-                        <td>{ singleMatch.holesPlayed }</td>
-                        <td>{ singleMatch.awayMatchScore }</td>
-                      </tr>
-                    }
-                  />
-                </tbody>
-              </Table>
-            </Row>
-            <Row>
-              <Table striped bordered hover variant="dark">
-                <thead>
-                  <tr>
-                    <th>
-                      Last updated at:
-                      <Moment tz={ timeZone } format="DD/MM/YYYY HH:mm z">
-                        { match.updatedAt }
-                      </Moment>
-                      </th>
-                  </tr>
-                </thead>
-              </Table>
-            </Row>
-            {(isAuthenticated) && (match.createdByUid === userDataObj.uid) ? (
-              <>
-                <Row className="d-grid gap-2">
-                  <Button
-                    variant="outline-success"
-                    size="sm"
-                    className="float-left"
-                    onClick={() =>
-                      setUpdateModalShow(true)
-                    }
-                  >
-                    Update
-                  </Button>
-                  <Button
-                    variant="danger"
-                    size="sm"
-                    className="float-right"
-                    onClick={() =>
-			                setDeleteModalShow(true)
-                    }
-                  >
-                    Delete
-                  </Button>
-                </Row>
-              </>
-            ) : (
-              null
-            )
-            }
-          </Container>
-          {/* <Footer /> */}
+        <Header />
+        <Container>
+          <Row style={{ marginTop: '10px'}}>
+            <Table hover size="sm" className="table-hover caption-top">
+              <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>Match Score</caption>
+              <tbody>
+                <tr key={match.matchId}>
+                  <td style={{ background: '#ffffff' }}>{Lib.capitalize(match.teamOneName)}</td>
+                  <td style={{ background: '#0a66c2' }}>
+                    {getScore()}
+                  </td>
+                  <td style={{ background: '#ffffff' }}>{Lib.capitalize(match.teamTwoName)}</td>
+                </tr>
+              </tbody>
+            </Table>
+          </Row>
+          <Row>
+            <div style={{ textAlign: 'left' }}>
+              <h6>Competition:&nbsp;<span style={{ color: "#0a66c2" }}>{ Lib.capitalize(match.competitionName) }</span></h6>
+              <h6>Competition Round:&nbsp;<span style={{ color: "#0a66c2" }}>{ Lib.capitalize(match.competitionRound.round) }</span></h6>
+              <h6>Match Status:&nbsp;<span style={{ color: "#0a66c2" }}>{ Lib.capitalize(match.matchStatus) }</span></h6>
+              <h6>
+                Match Date:&nbsp;
+                <span style={{ color: "#0a66c2" }}>
+                  <Moment tz={ timeZone } format="DD/MM/YYYY">
+                    { match.matchDateTime }
+                  </Moment>
+                </span>
+              </h6>
+              <h6>
+                Tee Time:&nbsp;
+                <span style={{ color: "#0a66c2" }}>
+                  <Moment tz={ timeZone } format="HH:mm z">
+                    { match.matchDateTime }
+                  </Moment>
+                </span>
+              </h6>
+            </div>
+          </Row>
+          <br />
+          <Row>
+            <Table hover size="sm" className="table-hover caption-top">
+              <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>Individual Match Scores</caption>
+              <thead>
+                <tr>
+                  <th>{ Lib.capitalize(match.teamOneName) }</th>
+                  <th>Score</th>
+                  <th>{ Lib.capitalize(match.teamTwoName) }</th>
+                </tr>
+              </thead>
+              <tbody>
+                <Map collection={sortedIndividualMatches}
+                  iteratee={singleMatch =>
+                    <>
+                    <tr>
+                      <td colspan="3" style={{ background: "#ffffff", textAlign: "left" }}>
+                        {singleMatch.matchDestination === "empty" ?
+                          <>
+                          Match {singleMatch.individualMatchId} destination unknown
+                          </>
+                        :
+                          <>
+                          Match {singleMatch.individualMatchId} contested in&nbsp;
+                          <span style={{ color: "#0a66c2", fontWeight: "500" }}>
+                            {Lib.capitalize(singleMatch.matchDestination)}
+                          </span>
+                          </>
+                        }
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>{getHomePlayerNames(singleMatch)}</td>
+                      <td style={{ background: '#0a66c2' }}>
+                        {getIndividualMatchScore(singleMatch)}
+                      </td>
+                      <td>{getAwayPlayerNames(singleMatch)}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="3">Holes played <span style={{ color: "#0a66c2", fontWeight: "500" }}>{singleMatch.holesPlayed}</span></td>
+                    </tr>
+                    <br />
+                    </>
+                  }
+                />
+              </tbody>
+            </Table>
+          </Row>
+          {(isAuthenticated) && (match.createdByUid === userDataObj.uid) ? (
+            <>
+              <Row className="d-grid gap-2">
+                <Button
+                  variant="outline-success"
+                  size="sm"
+                  className="float-left"
+                  onClick={() =>
+                    setUpdateModalShow(true)
+                  }
+                >
+                  Update
+                </Button>
+                <Button
+                  variant="danger"
+                  size="sm"
+                  className="float-right"
+                  onClick={() =>
+                    setDeleteModalShow(true)
+                  }
+                >
+                  Delete
+                </Button>
+              </Row>
+              <br />
+            </>
+          ) : (
+            null
+          )
+          }
+          <Row>
+            <h6>
+              Last updated on&nbsp;
+              <span style={{ color: "#0a66c2" }}>
+                <Moment tz={ timeZone } format="DD/MM/YYYY">
+                  { match.updatedAt }
+                </Moment>
+              </span>
+              &nbsp;at&nbsp;
+              <span style={{ color: "#0a66c2" }}>
+                <Moment tz={ timeZone } format="HH:mm">
+                  { match.updatedAt }
+                </Moment>
+              </span>
+            </h6>
+          </Row>
+          <br />
         </Container>
+        <Footer />
         </>
       )}
     />

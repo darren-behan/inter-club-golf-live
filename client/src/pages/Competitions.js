@@ -3,7 +3,7 @@ import DataAreaContext from '../utils/DataAreaContext';
 import API from '../utils/API';
 import Lib from '../utils/Lib';
 import { IsEmpty } from "react-lodash";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import FiltersOffCanvas from '../components/FiltersOffCanvas';
@@ -13,8 +13,9 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 function Competition () {
-  const { filterValue, matchesByCompetition, setMatchesByCompetition } = useContext(DataAreaContext);
+  const { filterValue, matchesByCompetition, setMatchesByCompetition, setMatchObj } = useContext(DataAreaContext);
   let { competition } = useParams();
+  const history = useHistory();
   const competitionName = decodeURIComponent(competition);
   const [response, setResponse] = useState({})
 
@@ -47,7 +48,7 @@ function Competition () {
   const getTableRows = (match) => {
     return (
       <>
-      <tr>
+      <tr onClick={(e) => onClickRow(e, match)}>
         <td>{Lib.capitalize(match.teamOneName)}</td>
         <td style={{ background: '#0a66c2' }}>
           {getScore(match)}
@@ -59,6 +60,13 @@ function Competition () {
       </tr>
       </>
     )
+  }
+
+  const onClickRow = (e, match) => {
+    e.preventDefault();
+    setMatchObj(match);
+    const path = "/match/" + match.matchId;
+    history.push(path);
   }
 
   const getScore = (match) => {

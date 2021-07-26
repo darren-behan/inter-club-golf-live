@@ -35,6 +35,7 @@ function FiltersOffCanvas(props) {
   let golfClubs = golfClubsTeamOneName.concat(golfClubsTeamTwoName);
 
   const removedDuplicateGolfClubs = Lib.eliminateDuplicates(golfClubs);
+  const sortedGolfClubs = removedDuplicateGolfClubs.sort();
   
   return (
     <>
@@ -47,7 +48,7 @@ function FiltersOffCanvas(props) {
           <FloatingLabel controlId="floatingSelect" label="Filter competition matches by golf club">
             <Form.Select aria-label="Filter competition matches by golf club" onChange={(e) => handleInputChange(e)}>
               <option>{""}</option>
-              {removedDuplicateGolfClubs.map(function(golfClub) {
+              {sortedGolfClubs.map(function(golfClub) {
                 return (
                   <option value={golfClub}>{Lib.capitalize(golfClub)}</option>
                 )

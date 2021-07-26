@@ -102,7 +102,7 @@ function Competition () {
       />
       <Header />
       <div>
-        <div style={{ paddingTop: '15px', textAlign: 'center' }}>
+        <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
           <h4>{competitionName}</h4>
         </div>
         <IsEmpty

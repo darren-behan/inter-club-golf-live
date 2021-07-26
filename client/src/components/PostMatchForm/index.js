@@ -21,10 +21,13 @@ let isEmpty = require('lodash.isempty');
 
 const styles = makeStyles((theme) => ({
 	paper: {
-		marginTop: 8,
+		paddingTop: 10,
+		paddingLeft: 10,
+		paddingRight: 10,
 		display: 'flex',
 		flexDirection: 'column',
-		alignItems: 'center'
+		alignItems: 'center',
+		backgroundColor: '#ffffff'
 	},
 	avatar: {
 		margin: 1,
@@ -49,7 +52,8 @@ const styles = makeStyles((theme) => ({
     }
 	},
 	submit: {
-		margin: 3
+		margin: 0,
+		marginBottom: 30
 	},
 	customError: {
 		color: 'red',

@@ -93,11 +93,11 @@ function Match() {
     if (match.singlePlayer === true) {
       return (
         singleMatch.homeMatchPlayerAName !== "empty" ? (
-          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
+          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.8rem" }}>
             {Lib.capitalize(singleMatch.homeMatchPlayerAName)}
           </p>
         ) : (
-          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
+          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.8rem" }}>
             {match.teamOneName}
           </p>
         )
@@ -105,13 +105,13 @@ function Match() {
     } else {
       return (
         singleMatch.homeMatchPlayerAName !== "empty" && singleMatch.homeMatchPlayerBName !== "empty" ? (
-          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
+          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.8rem" }}>
           {Lib.capitalize(singleMatch.homeMatchPlayerAName)}
           <br />
           {Lib.capitalize(singleMatch.homeMatchPlayerBName)}
           </p>
         ) : (
-          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
+          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.8rem" }}>
             {Lib.capitalize(match.teamOneName)}
           </p>
         )
@@ -123,11 +123,11 @@ function Match() {
     if (match.singlePlayer === true) {
       return (
         singleMatch.awayMatchPlayerAName !== "empty" ? (
-          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
+          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.8rem" }}>
             {Lib.capitalize(singleMatch.awayMatchPlayerAName)}
           </p>
         ) : (
-          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
+          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.8rem" }}>
             {Lib.capitalize(match.teamTwoName)}
           </p>
         )
@@ -135,13 +135,13 @@ function Match() {
     } else {
       return (
         singleMatch.awayMatchPlayerAName !== "empty" && singleMatch.awayMatchPlayerBName !== "empty" ? (
-          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
+          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.8rem" }}>
           {Lib.capitalize(singleMatch.awayMatchPlayerAName)}
           <br />
           {Lib.capitalize(singleMatch.awayMatchPlayerBName)}
           </p>
         ) : (
-          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
+          <p style={{ margin: "0px", alignItems: "center", fontSize: "0.8rem" }}>
             {Lib.capitalize(match.teamTwoName)}
           </p>
         )

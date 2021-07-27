@@ -110,10 +110,10 @@ function App() {
               <Route exact path={'/competition/:competition'} component={Competition} />
               <Route exact path={'/match/:id'} component={Match} />
               <Route exact path='/login' component={Login}>
-                {isAuthenticated ? <Redirect to="/matches" /> : <UserMatches />}
+                {isAuthenticated ? <Redirect to="/" /> : <Login />}
               </Route>
               <Route exact path='/signup' component={Signup}>
-                {isAuthenticated ? <Redirect to="/matches" /> : <UserMatches />}
+                {isAuthenticated ? <Redirect to="/" /> : <Signup />}
               </Route>
               <Route exact path={'/usermatches/:id'}>
                 {!isAuthenticated ? <Redirect to="/login" /> : <UserMatches />}

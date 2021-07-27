@@ -58,7 +58,7 @@ function Competition () {
           <td>{Lib.capitalize(match.teamTwoName)}</td>
         </tr>
         <tr>
-          <td colspan="3">{Lib.capitalize(match.matchStatus)}</td>
+          <td colSpan="3">{Lib.capitalize(match.matchStatus)}</td>
         </tr>
         </>
       )

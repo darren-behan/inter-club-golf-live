@@ -91,69 +91,61 @@ function Match() {
 
   const getHomePlayerNames = (singleMatch) => {
     if (match.singlePlayer === true) {
-      if (singleMatch.homeMatchPlayerAName !== "empty") {
-        return (
+      return (
+        singleMatch.homeMatchPlayerAName !== "empty" ? (
           <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
             {Lib.capitalize(singleMatch.homeMatchPlayerAName)}
           </p>
-        )
-      } else {
-        return (
+        ) : (
           <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
             {match.teamOneName}
           </p>
         )
-      }
-    } else if (match.singlePlayer === false) {
-      if (singleMatch.homeMatchPlayerAName !== "empty" && singleMatch.homeMatchPlayerBName !== "empty") {
-        return  (
+      )
+    } else {
+      return (
+        singleMatch.homeMatchPlayerAName !== "empty" && singleMatch.homeMatchPlayerBName !== "empty" ? (
           <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
           {Lib.capitalize(singleMatch.homeMatchPlayerAName)}
           <br />
           {Lib.capitalize(singleMatch.homeMatchPlayerBName)}
           </p>
-        )
-      } else {
-        return (
+        ) : (
           <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
             {Lib.capitalize(match.teamOneName)}
           </p>
         )
-      }
+      )
     }
   }
 
   const getAwayPlayerNames = (singleMatch) => {
     if (match.singlePlayer === true) {
-      if (singleMatch.awayMatchPlayerAName !== "empty") {
-        return (
+      return (
+        singleMatch.awayMatchPlayerAName !== "empty" ? (
           <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
             {Lib.capitalize(singleMatch.awayMatchPlayerAName)}
           </p>
-        )
-      } else {
-        return (
+        ) : (
           <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
             {Lib.capitalize(match.teamTwoName)}
           </p>
         )
-      }
-    } else if (match.singlePlayer === false) {
-      if (singleMatch.awayMatchPlayerAName !== "empty" && singleMatch.awayMatchPlayerBName !== "empty") {
-        return  (
+      )
+    } else {
+      return (
+        singleMatch.awayMatchPlayerAName !== "empty" && singleMatch.awayMatchPlayerBName !== "empty" ? (
           <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
           {Lib.capitalize(singleMatch.awayMatchPlayerAName)}
           <br />
           {Lib.capitalize(singleMatch.awayMatchPlayerBName)}
           </p>
-        )
-      } else {
-        return (
+        ) : (
           <p style={{ margin: "0px", alignItems: "center", fontSize: "0.7rem" }}>
             {Lib.capitalize(match.teamTwoName)}
           </p>
         )
-      }
+      )
     }
   }
 
@@ -239,7 +231,7 @@ function Match() {
                   iteratee={singleMatch =>
                     <>
                     <tr>
-                      <td colspan="3" style={{ background: "#ffffff", textAlign: "left" }}>
+                      <td colSpan="3" style={{ background: "#ffffff", textAlign: "left" }}>
                         {singleMatch.matchDestination === "empty" ?
                           <>
                           Match {singleMatch.individualMatchId} destination unknown
@@ -262,9 +254,8 @@ function Match() {
                       <td>{getAwayPlayerNames(singleMatch)}</td>
                     </tr>
                     <tr>
-                      <td colspan="3">Holes played <span style={{ color: "#0a66c2", fontWeight: "500" }}>{singleMatch.holesPlayed}</span></td>
+                      <td colSpan="3">Holes played <span style={{ color: "#0a66c2", fontWeight: "500" }}>{singleMatch.holesPlayed}</span></td>
                     </tr>
-                    <br />
                     </>
                   }
                 />

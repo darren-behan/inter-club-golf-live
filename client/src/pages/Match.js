@@ -179,7 +179,7 @@ function Match() {
         <Header />
         <Container>
           <Row style={{ marginTop: '10px'}}>
-            <Table hover size="sm" className="table-hover caption-top">
+            <Table size="sm" className="caption-top">
               <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>Match Score</caption>
               <tbody>
                 <tr key={match.matchId}>
@@ -217,7 +217,7 @@ function Match() {
           </Row>
           <br />
           <Row>
-            <Table hover size="sm" className="table-hover caption-top">
+            <Table size="sm" className="caption-top">
               <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>Individual Match Scores</caption>
               <thead>
                 <tr>
@@ -256,6 +256,7 @@ function Match() {
                     <tr>
                       <td colSpan="3">Holes played <span style={{ color: "#0a66c2", fontWeight: "500" }}>{singleMatch.holesPlayed}</span></td>
                     </tr>
+                    <br />
                     </>
                   }
                 />

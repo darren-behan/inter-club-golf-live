@@ -50,7 +50,7 @@ function Competition () {
     if (match.teamOneName.includes(filterValue.toLowerCase()) || match.teamTwoName.includes(filterValue.toLowerCase())) {
       return (
         <>
-        <tr key={match.matchId} onClick={(e) => onClickRow(e, match)}>
+        <tr key={match.matchId} onClick={(e) => onClickRow(e, match)} style={{ cursor: "pointer" }}>
           <td>{Lib.capitalize(match.teamOneName)}</td>
           <td style={{ background: '#0a66c2' }}>
             {getScore(match)}
@@ -129,7 +129,7 @@ function Competition () {
           no={() => (
             <>
             {removedDuplicateRounds.length === 1 ?
-              <Table hover size="sm" className="table-hover caption-top">
+              <Table hover size="sm" className="caption-top">
                 <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>{Lib.capitalize(removedDuplicateRounds[0])}</caption>
                 <thead>
                   <tr>
@@ -150,7 +150,7 @@ function Competition () {
               <>
               {removedDuplicateRounds.map(function(round) {
                 return (
-                  <Table hover size="sm" className="table-hover caption-top">
+                  <Table hover size="sm" className="caption-top">
                     <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>{Lib.capitalize(round)}</caption>
                     <thead>
                       <tr>

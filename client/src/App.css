@@ -49,3 +49,16 @@ td {
   text-align: center;
   vertical-align: middle;
 }
+
+.ads-row {
+  width: 325px!important;
+  justify-content: center!important;
+}
+
+ins {
+  width: 325px!important;
+}
+
+iframe {
+  width: 325px!important;
+}

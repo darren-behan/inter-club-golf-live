@@ -15,7 +15,6 @@ function FiltersOffCanvas(props) {
   // Handles updating component state when the user types into the input field
   function handleInputChange(event) {
     event.preventDefault();
-    console.log(event.target.value);
     setFilterValue(event.target.value);
   };
 

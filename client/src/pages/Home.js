@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import DataAreaContext from '../utils/DataAreaContext';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -7,6 +7,7 @@ import ComboBox from '../components/ComboBox';
 import HeroImage from '../assets/img/home-hero.jpg';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { IsEmpty } from "react-lodash";
+import AdSense from 'react-adsense';
 
 function Home() {
   const { appMatchesOnLoad } = useContext(DataAreaContext);
@@ -33,6 +34,16 @@ function Home() {
           </Container>
         </div>
       </Col>
+    </Row>
+    <Row className="ads-row mx-3">
+      <AdSense.Google
+        client={process.env.REACT_APP_GOOGLE_ADSENSE}
+        slot='4238602370'
+        style={{ display: 'block' }}
+        format='auto'
+        responsive='true'
+        layoutKey='-gw-1+2a-9x+5c'
+      />
     </Row>
     <IsEmpty
       value={appMatchesOnLoad}

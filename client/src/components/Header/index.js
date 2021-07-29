@@ -23,7 +23,7 @@ function Header() {
         </div>
         <Navbar.Brand className='mx-3 mx-sm-0' style={{ color: '#000000' }}>
           <NavLink as={ Link } to="/" className="link p-0" style={{ color: '#0a66c2', fontWeight: '500' }}>
-            Inter Club Golf Live
+            Inter Club Golf Ireland
           </NavLink>
         </Navbar.Brand>
         {(location.pathname === `/competition/${competition}`) ? (

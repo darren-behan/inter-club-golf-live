@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import TagManager from 'react-gtm-module';
 
 const tagManagerArgs = {
-    gtmId: "GTM-KNRGFQ8"
+    gtmId: process.env.REACT_APP_GTM_ID
 }
 
 TagManager.initialize(tagManagerArgs)

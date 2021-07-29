@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
-  const { setShowFilters, sidebarOpen, setSidebarOpen } = useContext(DataAreaContext);
+  const { setShowFilters, sidebarOpen, setSidebarOpen, userDataObj } = useContext(DataAreaContext);
   const location = useLocation();
   const node = useRef();
   let { competition } = useParams();
@@ -26,7 +26,7 @@ function Header() {
             Inter Club Golf Ireland
           </NavLink>
         </Navbar.Brand>
-        {(location.pathname === `/competition/${competition}`) ? (
+        {(location.pathname === `/competition/${competition}` || location.pathname === `/usermatches/${userDataObj.uid}`) ? (
           <Button
             onClick={() => setShowFilters(true)}
             variant="outline-light"

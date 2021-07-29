@@ -3,7 +3,10 @@ import './index.css';
 import { useHistory } from 'react-router-dom';
 import DataAreaContext from '../../utils/DataAreaContext';
 import Lib from '../../utils/Lib';
-import { Card, Button, Badge } from 'react-bootstrap';
+import { Card, Button, Badge, ListGroup } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Moment from 'react-moment';
 import 'moment-timezone';
 
@@ -14,14 +17,14 @@ function Cards(props) {
   const calculateMatchStatus = (matchStatus) => {
     if (matchStatus === 'complete') {
       return <Badge
-        variant="success"
+        bg="success"
         className="float-right"
       >
         { Lib.capitalize(matchStatus) }
       </Badge>
     } else if (matchStatus === 'in progress') {
       return <Badge
-        variant="warning"
+        bg="warning"
         className="float-right"
       >
         { Lib.capitalize(matchStatus) }
@@ -36,6 +39,36 @@ function Cards(props) {
     }         
   }
 
+  const getScore = () => {
+    if (props.match.teamOneScore > props.match.teamTwoScore) {
+      return (
+        <>
+          {Lib.capitalize(props.match.teamOneName)}&nbsp;
+          <span>
+            <FontAwesomeIcon icon={ faArrowLeft } className='fa-sm' />
+          </span>
+          &nbsp;{props.match.teamOneScore} - {props.match.teamTwoScore}&nbsp;{Lib.capitalize(props.match.teamTwoName)}
+        </>
+      )
+    } else if (props.match.teamOneScore < props.match.teamTwoScore) {
+      return (
+        <>
+          {Lib.capitalize(props.match.teamOneName)}&nbsp;{props.match.teamOneScore} - {props.match.teamTwoScore}&nbsp;
+          <span>
+            <FontAwesomeIcon icon={ faArrowRight } className='fa-sm' />
+          </span>
+          &nbsp;{Lib.capitalize(props.match.teamTwoName)}
+        </>
+      )
+    } else {
+      return (
+        <>
+          {Lib.capitalize(props.match.teamOneName)}&nbsp;-&nbsp;A/S&nbsp;-&nbsp;{Lib.capitalize(props.match.teamTwoName)}
+        </>
+      )
+    }
+  }
+
   function handleClick(matchId) {
     setMatchObj(props.match);
     const path = "/match/" + matchId;
@@ -43,52 +76,39 @@ function Cards(props) {
   }
 
   return (
-    <Card key={ props.match.matchId } style={{ boxShadow: '0 0 4px rgba(0,0,0,.1)', width: '18rem' }} className='mx-3 ms-sm-0'>
-      <Card.Body style={{ borderRadius: '.25rem .25rem 0 0', background: 'linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 70%, rgba(0,170,8,1) 100%)' }}>
-        <Card.Title> 
-          { Lib.capitalize(props.match.teamOneName) } v { Lib.capitalize(props.match.teamTwoName) }
-        </Card.Title>
-        <Card.Text>
-          {calculateMatchStatus(props.match.matchStatus)}
-          <small className="text-muted" style={{ fontStyle: 'italic' }}>
-            Match Score:
-          </small>
-          <br/>
-          { props.match.teamOneScore } - { props.match.teamTwoScore }
-        </Card.Text>
-        <Card.Text>
-          <small className="text-muted">
-            Competition: { Lib.capitalize(props.match.competitionName) }
-          </small>
-          <br/>
-          <small className="text-muted">
-            Match Date:
-            <br/>
+    <Card key={ props.match.matchId } style={{ boxShadow: '0 0 4px rgba(0,0,0,.1)' }} className='mx-3 ms-sm-0'>
+      <Card.Body className="p-0" style={{ borderRadius: '.25rem .25rem 0 0', background: 'linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 70%, rgba(0,170,8,1) 100%)' }}>
+        <Card.Header style={{ backgroundColor: "#0a66c2", color: "#ffffff", fontWeight: "600" }}>
+          {props.match.matchStatus === "not started" ? (
+            `${Lib.capitalize(props.match.teamOneName)} v ${Lib.capitalize(props.match.teamTwoName)}`
+          ) : (
+            getScore()
+          )}
+        </Card.Header>
+        <ListGroup variant="flush">
+          <ListGroup.Item>
+            {calculateMatchStatus(props.match.matchStatus)}
+          </ListGroup.Item>
+          <ListGroup.Item>
+            { Lib.capitalize(props.match.competitionName) }
+          </ListGroup.Item>
+          <ListGroup.Item>
+            Date:&nbsp;
             <Moment tz={ timeZone } format="DD/MM/YYYY">
               { props.match.matchDateTime }
             </Moment>
-          </small>
-          <br/>
-          <small className="text-muted">
-            Tee Time: 
-            <br/>
+          </ListGroup.Item>
+          <ListGroup.Item>
+            Tee-time:&nbsp;
             <Moment tz={ timeZone } format="HH:mm z">
               { props.match.matchDateTime }
             </Moment>
-          </small>
-          <br/>
-          <small className="text-muted">
-            Last updated at:
-            <br/>
-            <Moment tz={ timeZone } format="DD/MM/YYYY HH:mm z">
-              { props.match.updatedAt }
-            </Moment>
-          </small>
-        </Card.Text>
+          </ListGroup.Item>
+        </ListGroup>
       </Card.Body>
       <Card.Footer style={{ backgroundColor: '#ffffff' }}>
         <Button
-          variant="outline-dark"
+          variant="outline-primary"
           size="sm"
           className="float-right"
           onClick={() =>

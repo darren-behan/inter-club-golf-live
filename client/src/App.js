@@ -17,7 +17,7 @@ import CreateMatch from './pages/CreateMatch';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Profile from './pages/Profile';
-import Settings from './pages/Settings';
+import About from './pages/About';
 import PageNotFound from './pages/PageNotFound';
 import Wrapper from './components/Wrapper/index.js';
 import firebase from "firebase/app";
@@ -107,6 +107,7 @@ function App() {
           <Wrapper>
             <Switch>
               <Route exact path={'/'} component={Home} />
+              <Route exact path={'/about'} component={About} />
               <Route exact path={'/competition/:competition'} component={Competition} />
               <Route exact path={'/match/:id'} component={Match} />
               <Route exact path='/login' component={Login}>
@@ -123,9 +124,6 @@ function App() {
               </Route>
               <Route exact path={'/profile'}>
                 {!isAuthenticated ? <Redirect to="/login" /> : <Profile />}
-              </Route>
-              <Route exact path={'/settings'}>
-                {!isAuthenticated ? <Redirect to="/login" /> : <Settings />}
               </Route>
               <Route exact path='*' component={PageNotFound} />
             </Switch>

@@ -14,7 +14,7 @@ function Footer() {
             <h6 className="mb-4 font-weight-bold text-uppercase">Company</h6>
             <ListGroup>
               <ListGroup.Item className="bg-transparent border-0 p-0 mb-2">
-                <NavLink as={ Link } to="/" className="link p-0">
+                <NavLink as={ Link } to="/about" className="link p-0">
                   About
                 </NavLink>
               </ListGroup.Item>

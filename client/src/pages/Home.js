@@ -1,23 +1,18 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import DataAreaContext from '../utils/DataAreaContext';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Carousel from '../components/Carousel';
 import ComboBox from '../components/ComboBox';
-import HeroImage from '../assets/img/home-hero.jpg';
-import { Container, Row, Col, Spinner } from 'react-bootstrap';
+import { Row, Col, Spinner } from 'react-bootstrap';
 import { IsEmpty } from "react-lodash";
 import AdSense from 'react-adsense';
 
 function Home() {
   const { appMatchesOnLoad } = useContext(DataAreaContext);
   const RowStyles = {
-    backgroundImage: 'url(' + HeroImage + ')',
-    height: "70vh",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
+    height: "71vh",
     margin: 0,
-    borderBottomColor: '1px solid rgba(0,0,0,.1)',
     justifyContent: "center"
   };
 
@@ -25,17 +20,26 @@ function Home() {
     <>
     <Header />
     <Row style={ RowStyles }>
-      <Col className="combo-wrapper p-0">
-        <div className="hero-content mx-3">
-          <Container className="search-wrapper-container">
-            <Row className="search-wrapper" style={{ justifyContent: "center" }}>
-              <ComboBox />
-            </Row>
-          </Container>
+      <Col className="pt-4" xs={{ span: 12 }}>
+        <p className="mx-1" style={{ fontSize: "2rem", fontWeight: "900" }}>
+          Support your
+          <br />
+          club on the
+          <br />
+          inter club
+          <br />
+          stage
+        </p>
+        <p className="m-0 mx-1" style={{ fontSize: "1rem" }}>
+          Know your clubs upcoming, in progress &amp; completed inter club matches across various golf tournaments.
+        </p>
+        <br />
+        <div className="mx-1">
+          <ComboBox />
         </div>
       </Col>
     </Row>
-    <Row className="ads-row mx-3">
+    {/* <Row className="ads-row mx-3">
       <AdSense.Google
         client={process.env.REACT_APP_GOOGLE_ADSENSE}
         slot='4238602370'
@@ -44,12 +48,11 @@ function Home() {
         responsive='true'
         layoutKey='-gw-1+2a-9x+5c'
       />
-    </Row>
+    </Row> */}
     <IsEmpty
       value={appMatchesOnLoad}
       yes={() =>
         <>
-        <br />
         <Row style={{ justifyContent: "center" }}>
           <Spinner animation="grow" style={{ color: "#0a66c2" }} />
         </Row>

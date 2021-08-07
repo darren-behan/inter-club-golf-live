@@ -19,7 +19,7 @@ function About() {
         </Col>
         <Col xs={{ span: 12 }}>
           <p style={{ fontSize: "0.9rem" }}>
-            At interclubgolfireland.ie our purpose is to provide a simple &amp; efficient platform for golf clubs to create visibility over their clubs inter club golf matches. Whether you’re a relative or friend of a player representing the golf club or even a club member, interclubgolfireland.ie is the right place for people to unite, follow and share their passion for the sport of golf at the amateur level. 
+            At interclubgolfireland.ie our purpose is to provide a simple &amp; efficient platform for golf clubs to create visibility over their clubs inter club golf matches. Whether you’re a relative or friend of a player representing the golf club or even a club member, interclubgolfireland.ie is the place for people to unite, follow and share their passion for the sport of golf at the amateur level. 
           </p>
           <p style={{ fontSize: "0.9rem" }}>
             <span style={{ fontWeight: "500", fontSize: "1rem" }}>About thecreativedream.ie:</span> At The Creative Dream, we're passionate about helping businesses build an online presence. With years experience working in fast paced digital companies, we have knowledge in helping to build long-term digital strategies. We work collaboratively to make your business dreams and visions come through. Creativity and drive for helping businesses is what we are most passionate about.

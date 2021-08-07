@@ -11,7 +11,8 @@ const useStyles = makeStyles({
       color: "#ffffff"
     },
     "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#ffffff"
+      borderColor: "#0a66c2",
+      backgroundColor: "#0a66c2"
     },
     "& .MuiSvgIcon-root": {
       fill: "#ffffff!important"
@@ -40,7 +41,6 @@ function ComboBox() {
       className={classes.root}
       options={competitions}
       getOptionLabel={(option) => option.name}
-      style={{ maxWidth: 500 }}
       onInputChange={handleInputChange}
       renderInput={(params) => <TextField {...params} label="Choose a competition" variant="outlined" />}
     />

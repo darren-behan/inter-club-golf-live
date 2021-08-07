@@ -2,28 +2,6 @@ body {
   background-color: #f3f2ef!important;
 }
 
-.hero-content {
-  position: absolute;
-  top: 250px;
-  left: 0;
-  right: 0;
-  margin-top: -100px;
-  display: flex;
-  justify-content: center;
-}
-
-.search-wrapper-container {
-  margin: 0!important;
-}
-
-.search-wrapper {
-  max-height: 200px;
-  background-color: rgba(0,0,0,0.2);
-  padding: 16px 18px;
-  box-sizing: border-box;
-  border-radius: 3px;
-}
-
 .slider {
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;

@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import API from "../utils/API";
 import DataAreaContext from '../utils/DataAreaContext';
 import UserAuthModal from "../components/Modals/UserAuthModal";
 import Header from "../components/Header";

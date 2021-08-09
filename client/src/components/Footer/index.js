@@ -58,7 +58,7 @@ function Footer() {
           </Col>
           <Col className="col-12 px-0">
             <div className="py-4 d-flex justify-content-center align-items-center">
-              <a href="https://www.thecreativedream.ie" target="_blank" style={{ textDecoration: "none", color: "#000000" }}>
+              <a href="https://www.thecreativedream.ie" target="_blank" rel="noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                 &copy; The Creative Dream
               </a>
             </div>

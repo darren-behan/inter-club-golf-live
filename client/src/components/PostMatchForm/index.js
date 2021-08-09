@@ -240,7 +240,7 @@ function PostMatch() {
 	const getIndividualMatchFields = () => {
 		let textFields = [];
 		for(let i = 0; i < competition.length; i++) {
-			if (competition[i].name == competitionName) {
+			if (competition[i].name === competitionName) {
 				competitionObject = competition[i];
 			}
 		}

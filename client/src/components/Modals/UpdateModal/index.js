@@ -1,11 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import DataAreaContext from '../../../utils/DataAreaContext';
-import Lib from '../../../utils/Lib';
 import API from '../../../utils/API';
 import UpdateMatchForm from '../../UpdateMatchForm/index.js';
-import { Button, Modal, Form, Col, Spinner } from 'react-bootstrap';
+import { Button, Modal, Spinner } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import { Map } from "react-lodash";
 import moment from 'moment';
 import 'moment-timezone';
 

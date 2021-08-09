@@ -77,7 +77,7 @@ function Cards(props) {
 
   return (
     <Card key={ props.match.matchId } style={{ boxShadow: '0 0 4px rgba(0,0,0,.1)' }} className='mx-3 ms-sm-0'>
-      <Card.Body className="p-0" style={{ borderRadius: '.25rem .25rem 0 0', background: 'linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 70%, rgba(0,170,8,1) 100%)' }}>
+      <Card.Body className="p-0" style={{ borderRadius: '.25rem .25rem 0 0' }}>
         <Card.Header style={{ backgroundColor: "#0a66c2", color: "#ffffff", fontWeight: "600" }}>
           {props.match.matchStatus === "not started" ? (
             `${Lib.capitalize(props.match.teamOneName)} v ${Lib.capitalize(props.match.teamTwoName)}`

@@ -150,6 +150,19 @@ const inputFieldValues = [
 		helperText: "Choose the round of the competition"
 	},
 	{
+		name: "neutralVenueName",
+		label: "",
+		id: "neutralVenueName",
+		required: true,
+		fullWidth: true,
+		autoComplete: "autoComplete",
+		autoFocus: false,
+		type: "",
+		defaultValue: "",
+		select: false,
+		helperText: "Enter the venue for the match if it is neutral"
+	},
+	{
 		name: "teamOneName",
 		label: "",
 		id: "teamOneName",
@@ -225,6 +238,7 @@ function PostMatch() {
 
 	let homeTeamName = postMatchObj['teamOneName'];
 	let awayTeamName = postMatchObj['teamTwoName'];
+	let neutralVenueName = postMatchObj['neutralVenueName'];
 	let competitionName = postMatchObj['competitionName'];
 	
 	const competitors = [
@@ -233,6 +247,9 @@ function PostMatch() {
 		},
 		{
 			name: awayTeamName
+		},
+		{
+			name: neutralVenueName
 		}
 	];
 	let competitionObject;

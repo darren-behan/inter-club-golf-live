@@ -208,11 +208,25 @@ function UpdateMatch() {
 			fullWidth: true,
 			autoComplete: "autoComplete",
 			autoFocus: false,
-			value: updateMatchObj.competitionRound,
+			value: updateMatchObj.competitionRound.round,
 			disabled: false,
 			type: "",
 			select: true,
 			helperText: "Update competition round"
+		},
+		{
+			name: "neutralVenueName",
+			label: "",
+			id: "neutralVenueName",
+			required: true,
+			fullWidth: true,
+			autoComplete: "autoComplete",
+			autoFocus: false,
+			value: Lib.capitalize(updateMatchObj['individualMatch'][0]['matchDestination']),
+			disabled: false,
+			type: "",
+			select: false,
+			helperText: "Enter the venue for the match if it is neutral"
 		},
 		{
 			name: "teamOneName",
@@ -222,7 +236,7 @@ function UpdateMatch() {
 			fullWidth: true,
 			autoComplete: "autoComplete",
 			autoFocus: false,
-			value: updateMatchObj.teamOneName,
+			value: Lib.capitalize(updateMatchObj.teamOneName),
 			disabled: false,
 			type: "",
 			select: false,
@@ -236,7 +250,7 @@ function UpdateMatch() {
 			fullWidth: true,
 			autoComplete: "autoComplete",
 			autoFocus: false,
-			value: updateMatchObj.teamTwoName,
+			value: Lib.capitalize(updateMatchObj.teamTwoName),
 			disabled: false,
 			type: "",
 			select: false,
@@ -273,6 +287,7 @@ function UpdateMatch() {
 
 	let homeTeamName = updateMatchObj['teamOneName'];
 	let awayTeamName = updateMatchObj['teamTwoName'];
+	let neutralVenueName = updateMatchObj['individualMatch'][0]['matchDestination'];
 	let competitionName = updateMatchObj['competitionName'];
 	
 	const competitors = [
@@ -281,6 +296,9 @@ function UpdateMatch() {
 		},
 		{
 			name: awayTeamName
+		},
+		{
+			name: neutralVenueName
 		}
 	];
 	let competitionObject;

@@ -18,6 +18,7 @@ function Competition () {
   const history = useHistory();
   const competitionName = decodeURIComponent(competition);
   const [response, setResponse] = useState({});
+  const [matchesObjByRegion, setMatchesObjByRegion] = useState({});
 
   useEffect(() => {
     setFilterValue("");
@@ -29,22 +30,68 @@ function Competition () {
     await API.getMatchesByCompetitionOnLoad(competition)
       .then(res => {
         setMatchesByCompetition(res.data);
+        setMatchesObjByRegion(matchesByRegion(res.data));
         setResponse({ code: 200 });
       })
       .catch(err => console.log(err));
   }
 
-  const rounds = matchesByCompetition.map(function(match) {
-    return match.competitionRound;
+  const matchesByRegion = (matches) => {
+    let matchesByRegion = {};
+
+    for (let i = 0; i < matches.length; i++) {
+      const match = matches[i];
+      
+      const region = match.competitionRegion;
+      const matchId = match.matchId;
+
+      if (!matchesByRegion.hasOwnProperty(region)) {
+        matchesByRegion[region] = {};
+      }
+
+      if (!matchesByRegion[region].hasOwnProperty(matchId)) {
+        matchesByRegion[region][matchId] = {};
+      }
+      
+      matchesByRegion[region][matchId] = match;
+    }
+
+    return matchesByRegion;
+  }
+
+  const regions = matchesByCompetition.map(function(match) {
+    return match.competitionRegion;
   });
 
-  const sortedRounds = rounds.sort(Lib.compare);
+  const sortedRegions = Lib.eliminateDuplicates(regions).sort();
 
-  const roundArray = sortedRounds.map(function(round) {
-    return round.round;
-  });
+  const returnMatchesByRegionInArray = (region) => {
+    let matches = [];
 
-  const removedDuplicateRounds = Lib.eliminateDuplicates(roundArray);
+    for (const key in matchesObjByRegion) {
+      if (key === region) {
+        for (const key in matchesObjByRegion[region]) {
+          matches.push(matchesObjByRegion[region][key]);
+        }
+      }
+    }
+
+    return matches;
+  }
+
+  const getRoundsByRegion = (matches) => {
+    const rounds = matches.map(function(match) {
+      return match.competitionRound;
+    });
+  
+    const sortedRounds = rounds.sort(Lib.compare);
+  
+    const roundArray = sortedRounds.map(function(round) {
+      return round.round;
+    });
+  
+    return Lib.eliminateDuplicates(roundArray);
+  }
 
   const getTableRows = (match) => {
     if (match.teamOneName.includes(filterValue.toLowerCase()) || match.teamTwoName.includes(filterValue.toLowerCase())) {
@@ -128,51 +175,50 @@ function Competition () {
           }
           no={() => (
             <>
-            {removedDuplicateRounds.length === 1 ?
-              <Table hover size="sm" className="caption-top">
-                <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>{Lib.capitalize(removedDuplicateRounds[0])}</caption>
-                <thead>
-                  <tr>
-                    <th>Home Team</th>
-                    <th>Score</th>
-                    <th>Away Team</th>
-                  </tr>
-                </thead>
-                <tbody>
-                {matchesByCompetition.map(function(match) {
-                  return (
-                    getTableRows(match)
-                  )}
-                )}
-                </tbody>
-              </Table>
-              :
-              <>
-              {removedDuplicateRounds.map(function(round) {
-                return (
-                  <Table hover size="sm" className="caption-top">
-                    <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>{Lib.capitalize(round)}</caption>
-                    <thead>
-                      <tr>
-                        <th>Home Team</th>
-                        <th>Score</th>
-                        <th>Away Team</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    {matchesByCompetition.map(function(match) {
-                      if (match.competitionRound.round === round) {
-                        return (
-                          getTableRows(match)
-                        )
-                      }}
-                    )}
-                    </tbody>
-                  </Table>
-                )}
+            {sortedRegions.map(function(region) {
+              let matchesArrByRegion = returnMatchesByRegionInArray(region);
+              let rounds = getRoundsByRegion(matchesArrByRegion);
+              return (
+                <>
+                <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
+                  <h4>{Lib.capitalize(region)}</h4>
+                </div>
+                <div>
+                  <>
+                  {
+                    rounds.map(function(round) {
+                      return (
+                        <>
+                        <Table hover size="sm" className="caption-top">
+                          <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>{Lib.capitalize(round)}</caption>
+                          <thead>
+                            <tr>
+                              <th>Home Team</th>
+                              <th>Score</th>
+                              <th>Away Team</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {
+                              matchesArrByRegion.map(function(match) {
+                                if (match.competitionRound.round === round) {
+                                  return (
+                                    getTableRows(match)
+                                  )
+                                }
+                              })
+                            }
+                          </tbody>
+                        </Table>
+                        </>
+                      )}
+                    )
+                  }
+                  </>
+                </div>
+                </>
               )}
-              </>
-            }
+            )}
             </>
           )}
         />

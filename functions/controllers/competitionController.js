@@ -16,7 +16,9 @@ module.exports = {
         competitionMatches.push({
           matchId: doc.id,
           competitionName: doc.data().competitionName,
+          competitionConcatRegion: doc.data().competitionConcatRegion,
           competitionRegion: doc.data().competitionRegion,
+          competitionRegionArea: doc.data().competitionRegionArea,
           competitionRound: doc.data().competitionRound,
           matchDateTime: doc.data().matchDateTime,
           numIndividualMatches: doc.data().numIndividualMatches,
@@ -24,6 +26,7 @@ module.exports = {
           teamTwoName: doc.data().teamTwoName,
           teamOneScore: doc.data().teamOneScore,
           teamTwoScore: doc.data().teamTwoScore,
+          neutralVenueName: doc.data().neutralVenueName,
           individualMatch: doc.data().individualMatch,
           createdByUid: doc.data().createdByUid,
           createdAt: doc.data().createdAt,

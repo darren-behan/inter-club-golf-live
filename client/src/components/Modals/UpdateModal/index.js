@@ -6,6 +6,7 @@ import { Button, Modal, Spinner } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import 'moment-timezone';
+let isEmpty = require('lodash.isempty');
 
 function UpdateModal(props) {
   const { setUpdateModalShow, setMatchObj, match, setUpdateResponse, updateResponse, updateMatchObj, setUpdateMatchObj, appMatchesOnLoad } = useContext(DataAreaContext);
@@ -45,12 +46,15 @@ function UpdateModal(props) {
     API.updateMatch({
       matchId: updateMatchObj.matchId,
       matchStatus: updateMatchObj.matchStatus,
+			competitionConcatRegion: !isEmpty(updateMatchObj.competitionRegionArea) ? updateMatchObj.competitionRegion + " " + updateMatchObj.competitionRegionArea : updateMatchObj.competitionRegion,
       competitionRegion: updateMatchObj.competitionRegion,
+			competitionRegionArea: !isEmpty(updateMatchObj.competitionRegionArea) ? updateMatchObj.competitionRegionArea : "",
       competitionRound: updateMatchObj.competitionRound,
       teamOneName: updateMatchObj.teamOneName,
       teamOneScore: updateMatchObj.teamOneScore,
       teamTwoName: updateMatchObj.teamTwoName,
       teamTwoScore: updateMatchObj.teamTwoScore,
+      neutralVenueName: updateMatchObj.neutralVenueName,
       individualMatch: updateMatchObj.individualMatch,
       updatedAt: moment().format()
     })

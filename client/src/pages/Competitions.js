@@ -42,28 +42,28 @@ function Competition () {
     for (let i = 0; i < matches.length; i++) {
       const match = matches[i];
       
-      const region = match.competitionRegion;
+      const concatRegion = match.competitionConcatRegion;
       const matchId = match.matchId;
 
-      if (!matchesByRegion.hasOwnProperty(region)) {
-        matchesByRegion[region] = {};
+      if (!matchesByRegion.hasOwnProperty(concatRegion)) {
+        matchesByRegion[concatRegion] = {};
       }
 
-      if (!matchesByRegion[region].hasOwnProperty(matchId)) {
-        matchesByRegion[region][matchId] = {};
+      if (!matchesByRegion[concatRegion].hasOwnProperty(matchId)) {
+        matchesByRegion[concatRegion][matchId] = {};
       }
       
-      matchesByRegion[region][matchId] = match;
+      matchesByRegion[concatRegion][matchId] = match;
     }
 
     return matchesByRegion;
   }
 
-  const regions = matchesByCompetition.map(function(match) {
-    return match.competitionRegion;
+  const concatRegions = matchesByCompetition.map(function(match) {
+    return match.competitionConcatRegion;
   });
 
-  const sortedRegions = Lib.eliminateDuplicates(regions).sort();
+  const sortedRegions = Lib.eliminateDuplicates(concatRegions).sort();
 
   const returnMatchesByRegionInArray = (region) => {
     let matches = [];

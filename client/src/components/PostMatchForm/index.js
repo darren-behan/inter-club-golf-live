@@ -83,6 +83,24 @@ const regions = [
   }
 ];
 
+const regionAreas = [
+  {
+    regionArea: 'north'
+  },
+  {
+    regionArea: 'south'
+  },
+  {
+    regionArea: 'east'
+  },
+  {
+    regionArea: 'west'
+  },
+  {
+    regionArea: 'central'
+  }
+];
+
 const inputFieldValues = [
 	{
 		name: "matchDate",
@@ -134,7 +152,20 @@ const inputFieldValues = [
 		type: "",
 		defaultValue: "",
 		select: true,
-		helperText: "Choose the region the competition is located"
+		helperText: "Choose the region the competition is played in"
+	},
+	{
+		name: "competitionRegionArea",
+		label: "",
+		id: "competitionRegionArea",
+		required: true,
+		fullWidth: true,
+		autoComplete: "autoComplete",
+		autoFocus: false,
+		type: "",
+		defaultValue: "",
+		select: true,
+		helperText: "Choose the area of the region the competition is played in (if applicable)"
 	},
 	{
 		name: "competitionRound",
@@ -241,20 +272,27 @@ function PostMatch() {
 	let neutralVenueName = postMatchObj['neutralVenueName'];
 	let competitionName = postMatchObj['competitionName'];
 	
-	const competitors = [
+	let competitors = [
 		{
 			name: homeTeamName
 		},
 		{
 			name: awayTeamName
-		},
-		{
-			name: neutralVenueName
 		}
 	];
+
+
 	let competitionObject;
 
 	const getIndividualMatchFields = () => {
+		if (!isEmpty(neutralVenueName)) {
+			competitors.push(
+				{
+					name: neutralVenueName
+				}
+			)
+		}
+
 		let textFields = [];
 		for(let i = 0; i < competition.length; i++) {
 			if (competition[i].name === competitionName) {
@@ -446,12 +484,15 @@ function PostMatch() {
       createdAt: moment().format(),
       updatedAt: moment().format(),
       competitionName: postMatchObj.competitionName,
+			competitionConcatRegion: !isEmpty(postMatchObj.competitionRegionArea) ? postMatchObj.competitionRegion + " " + postMatchObj.competitionRegionArea : postMatchObj.competitionRegion,
       competitionRegion: postMatchObj.competitionRegion,
+			competitionRegionArea: !isEmpty(postMatchObj.competitionRegionArea) ? postMatchObj.competitionRegionArea : "",
       competitionRound: postMatchObj.competitionRound,
       numIndividualMatches: competitionObject.matches,
 			individualMatch: !isEmpty(postMatchObj.individualMatchesArray) ? postMatchObj.individualMatchesArray : filteredMatchArray,
       teamOneName: postMatchObj.teamOneName,
       teamTwoName: postMatchObj.teamTwoName,
+      neutralVenueName: postMatchObj.neutralVenueName,
 			uid: userDataObj.uid,
 			singlePlayer: competitionObject.singlePlayer
 		})
@@ -538,6 +579,15 @@ function PostMatch() {
 									regions.map((region, index) => (
 										<MenuItem key={index} value={region.region}>
 											{Lib.capitalize(region.region)}
+										</MenuItem>
+									))
+									:
+									null
+								}
+								{inputFieldValue.id === 'competitionRegionArea' ? 
+									regionAreas.map((regionArea, index) => (
+										<MenuItem key={index} value={regionArea.regionArea}>
+											{Lib.capitalize(regionArea.regionArea)}
 										</MenuItem>
 									))
 									:

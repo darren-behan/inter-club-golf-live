@@ -117,6 +117,24 @@ function UpdateMatch() {
 		}
 	];
 	
+	const regionAreas = [
+		{
+			regionArea: 'north'
+		},
+		{
+			regionArea: 'south'
+		},
+		{
+			regionArea: 'east'
+		},
+		{
+			regionArea: 'west'
+		},
+		{
+			regionArea: 'central'
+		}
+	];
+	
 	const matchStatuses = [
 		{
 			status: 'not started'
@@ -201,6 +219,20 @@ function UpdateMatch() {
 			helperText: "Update competition region"
 		},
 		{
+			name: "competitionRegionArea",
+			label: "",
+			id: "competitionRegionArea",
+			required: true,
+			fullWidth: true,
+			autoComplete: "autoComplete",
+			autoFocus: false,
+			value: updateMatchObj.competitionRegionArea,
+			disabled: false,
+			type: "",
+			select: true,
+			helperText: "Update the area of the region the competition is played in (if applicable)"
+		},
+		{
 			name: "competitionRound",
 			label: "",
 			id: "competitionRound",
@@ -222,7 +254,7 @@ function UpdateMatch() {
 			fullWidth: true,
 			autoComplete: "autoComplete",
 			autoFocus: false,
-			value: Lib.capitalize(updateMatchObj['individualMatch'][0]['matchDestination']),
+			value: !isEmpty(updateMatchObj.neutralVenueName) ? Lib.capitalize(updateMatchObj.neutralVenueName) : updateMatchObj.neutralVenueName,
 			disabled: false,
 			type: "",
 			select: false,
@@ -287,7 +319,7 @@ function UpdateMatch() {
 
 	let homeTeamName = updateMatchObj['teamOneName'];
 	let awayTeamName = updateMatchObj['teamTwoName'];
-	let neutralVenueName = updateMatchObj['individualMatch'][0]['matchDestination'];
+	let neutralVenueName = updateMatchObj['neutralVenueName'];
 	let competitionName = updateMatchObj['competitionName'];
 	
 	const competitors = [
@@ -296,14 +328,19 @@ function UpdateMatch() {
 		},
 		{
 			name: awayTeamName
-		},
-		{
-			name: neutralVenueName
 		}
 	];
 	let competitionObject;
 
 	const getIndividualMatchFields = () => {
+		if (!isEmpty(neutralVenueName)) {
+			competitors.push(
+				{
+					name: neutralVenueName
+				}
+			)
+		}
+
 		let textFields = [];
 		for(let i = 0; i < competition.length; i++) {
 			if (competition[i].name === competitionName) {
@@ -646,6 +683,15 @@ function UpdateMatch() {
 									regions.map((region, index) => (
 										<MenuItem key={index} value={region.region}>
 											{Lib.capitalize(region.region)}
+										</MenuItem>
+									))
+									:
+									null
+								}
+								{inputFieldValue.id === 'competitionRegionArea' ? 
+									regionAreas.map((region, index) => (
+										<MenuItem key={index} value={region.regionArea}>
+											{Lib.capitalize(region.regionArea)}
 										</MenuItem>
 									))
 									:

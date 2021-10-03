@@ -9,12 +9,13 @@ import 'moment-timezone';
 let isEmpty = require('lodash.isempty');
 
 function UpdateModal(props) {
-  const { setUpdateModalShow, setMatchObj, match, setUpdateResponse, updateResponse, updateMatchObj, setUpdateMatchObj, appMatchesOnLoad } = useContext(DataAreaContext);
+  const { setUpdateModalShow, setMatchObj, match, setUpdateResponse, updateResponse, updateMatchObj, setUpdateMatchObj, setOldUpdateMatchObj, appMatchesOnLoad } = useContext(DataAreaContext);
 	let history = useHistory();
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     setUpdateMatchObj({...match});
+    setOldUpdateMatchObj({...match});
   }, []);
 
   const updateOverallMatchScore = (object) => {

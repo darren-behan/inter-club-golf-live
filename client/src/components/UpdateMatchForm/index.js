@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Lib from "../../utils/Lib";
 import DataAreaContext from '../../utils/DataAreaContext';
 import { makeStyles } from '@material-ui/core/styles';
@@ -59,9 +59,13 @@ const styles = makeStyles((theme) => ({
 }));
 
 function UpdateMatch() {
-	const { updateMatchObj, setUpdateMatchObj, timeZone } = useContext(DataAreaContext);
+	const { updateMatchObj, setUpdateMatchObj, timeZone, oldUpdateMatchObj, setOldUpdateMatchObj } = useContext(DataAreaContext);
   const [errors, setErrors] = useState({});
 	const classes = styles();
+
+  useEffect(() => {
+    setOldUpdateMatchObj({...updateMatchObj});
+  }, [updateMatchObj]);
 
 	const rounds = [
 		{
@@ -294,8 +298,23 @@ function UpdateMatch() {
   const handleInputChange = (event) => {
 		event.preventDefault();
     const { name, value } = event.target;
-		setUpdateMatchObj({...updateMatchObj, [name]: value})
+		if (name === "neutralVenueName" || name === "teamOneName" || name === "teamTwoName") {
+			updateIndividualMatchDestination(name, value);
+		}
+		setUpdateMatchObj({...updateMatchObj, [name]: value});
   };
+
+	function updateIndividualMatchDestination(name, value) {
+		let oldValue = oldUpdateMatchObj[name];
+		
+		for (let i = 0; i < updateMatchObj.individualMatch.length; i++) {
+			let individualMatch = updateMatchObj.individualMatch[i];
+			if (individualMatch.matchDestination === oldValue) {
+				individualMatch.matchDestination = value;
+				setUpdateMatchObj({...updateMatchObj, "individualMatch": updateMatchObj.individualMatch});
+			}
+		}
+	}
 
   // Handles updating component state when the user types into the input field
 	const handleIndividualMatchFieldInputChange = (event, child) => {
@@ -308,7 +327,11 @@ function UpdateMatch() {
 				let object = updateMatchObj.individualMatch[i];
         for (const key in object) {
           if (key === name) {
-            object[key] = value;
+						if (value != "" && (name === "awayMatchScore" || name === "homeMatchScore")) {
+							object[key] = parseInt(value);
+						} else {
+							object[key] = value;
+						}
 						setUpdateMatchObj({...updateMatchObj, "individualMatch": updateMatchObj.individualMatch});
           }
         }

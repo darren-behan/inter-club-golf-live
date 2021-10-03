@@ -179,7 +179,7 @@ function Match() {
         <Header />
         <Container>
           <Row style={{ marginTop: '10px'}}>
-            <Table size="sm" className="caption-top">
+            <Table size="sm" className="caption-top" style={{ tableLayout: 'fixed' }}>
               <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>Match Score</caption>
               <tbody>
                 <tr key={match.matchId}>
@@ -217,7 +217,7 @@ function Match() {
           </Row>
           <br />
           <Row>
-            <Table size="sm" className="caption-top">
+            <Table size="sm" className="caption-top" style={{ tableLayout: 'fixed' }}>
               <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>Individual Match Scores</caption>
               <thead>
                 <tr>
@@ -234,7 +234,7 @@ function Match() {
                       <td colSpan="3" style={{ background: "#ffffff", textAlign: "left" }}>
                         {singleMatch.matchDestination === "empty" ?
                           <>
-                          Match {singleMatch.individualMatchId} destination unknown
+                          Match {singleMatch.individualMatchId} destination not provided
                           </>
                         :
                           <>

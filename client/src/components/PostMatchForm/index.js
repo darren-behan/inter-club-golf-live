@@ -189,7 +189,7 @@ const inputFieldValues = [
 		autoComplete: "autoComplete",
 		autoFocus: false,
 		type: "",
-		defaultValue: "",
+		value: "",
 		select: false,
 		helperText: "Enter the venue for the match if it is neutral"
 	},
@@ -202,7 +202,7 @@ const inputFieldValues = [
 		autoComplete: "autoComplete",
 		autoFocus: false,
 		type: "",
-		defaultValue: "",
+		value: "",
 		select: false,
 		helperText: "Choose the home team name"
 	},
@@ -215,14 +215,14 @@ const inputFieldValues = [
 		autoComplete: "autoComplete",
 		autoFocus: false,
 		type: "",
-		defaultValue: "",
+		value: "",
 		select: false,
 		helperText: "Choose the away team name"
 	}
 ];
 
 function PostMatch() {
-	const { appMatchesOnLoad, postMatchObj, setPostMatchObj, userDataObj, setAppMatchesOnLoad, timeZone, createMathModalShow, setCreateMatchModalShow, setCreateMatchResponse, setMatchObj } = useContext(DataAreaContext);
+	const { appMatchesOnLoad, postMatchObj, setPostMatchObj, userDataObj, setAppMatchesOnLoad, timeZone, createMathModalShow, setCreateMatchModalShow, setCreateMatchResponse, setMatchObj, oldPostMatchObj, setOldPostMatchObj } = useContext(DataAreaContext);
   const [errors, setErrors] = useState({});
 	const classes = styles();
 	const [loading, setLoading] = useState( false );
@@ -232,10 +232,21 @@ function PostMatch() {
     setPostMatchObj({});
   }, []);
 
+  useEffect(() => {
+    setOldPostMatchObj({...postMatchObj});
+  }, [postMatchObj]);
+
   // Handles updating component state when the user types into the input field
   const handleInputChange = (event) => {
 		event.preventDefault();
     const { name, value } = event.target;
+
+		if (name === "neutralVenueName" || name === "teamOneName" || name === "teamTwoName") {
+			if (!postMatchObj.hasOwnProperty("individualMatchesArray")) {
+				postMatchObj["individualMatchesArray"] = [];
+			}
+			updateIndividualMatchDestination(name, value);
+		}
 
 		if (name === "competitionRound") {
 			rounds.map(function(round) {
@@ -247,6 +258,19 @@ function PostMatch() {
 			setPostMatchObj({...postMatchObj, [name]: value});
 		}
   };
+
+	function updateIndividualMatchDestination(name, value) {
+		let oldValue = oldPostMatchObj[name];
+		
+		for (let i = 0; i < postMatchObj.individualMatchesArray.length; i++) {
+			let individualMatch = postMatchObj.individualMatchesArray[i];
+			if (!individualMatch.hasOwnProperty("matchDestination")) continue;
+			if (individualMatch.matchDestination.toLowerCase() === oldValue.toLowerCase()) {
+				individualMatch.matchDestination = Lib.capitalize(value);
+				setPostMatchObj({...postMatchObj, "individualMatchesArray": postMatchObj.individualMatch});
+			}
+		}
+	}
 
   const handleIndividualMatchFieldInputChange = (event, child) => {
 		event.preventDefault();
@@ -283,6 +307,7 @@ function PostMatch() {
 
 
 	let competitionObject;
+	let matchDestination = "";
 
 	const getIndividualMatchFields = () => {
 		if (!isEmpty(neutralVenueName)) {
@@ -294,7 +319,7 @@ function PostMatch() {
 		}
 
 		let textFields = [];
-		for(let i = 0; i < competition.length; i++) {
+		for (let i = 0; i < competition.length; i++) {
 			if (competition[i].name === competitionName) {
 				competitionObject = competition[i];
 			}
@@ -311,6 +336,14 @@ function PostMatch() {
 		});
 		
 		for (let i = 0; i < competitionObject.matches; i++) {
+			if (postMatchObj.individualMatchesArray.length === 0) {
+				matchDestination = "";
+			} else if (postMatchObj.individualMatchesArray[i].matchDestination === "empty") {
+				matchDestination = "";
+			} else {
+				matchDestination = postMatchObj.individualMatchesArray[i].matchDestination;
+			}
+
 			{competitionObject.singlePlayer === true ? 
 				textFields.push(
 					<>
@@ -363,6 +396,7 @@ function PostMatch() {
 							autoComplete={'autoComplete'}
 							autoFocus={false}
 							onChange={handleIndividualMatchFieldInputChange}
+							value={matchDestination.toLowerCase()}
 							helperText={'Choose the course the match is played at'}
 						>
 							{competitors.map((clubName, index) => (
@@ -492,7 +526,7 @@ function PostMatch() {
 			individualMatch: !isEmpty(postMatchObj.individualMatchesArray) ? postMatchObj.individualMatchesArray : filteredMatchArray,
       teamOneName: postMatchObj.teamOneName,
       teamTwoName: postMatchObj.teamTwoName,
-      neutralVenueName: postMatchObj.neutralVenueName,
+      neutralVenueName: !isEmpty(postMatchObj.neutralVenueName) ? postMatchObj.neutralVenueName : "",
 			uid: userDataObj.uid,
 			singlePlayer: competitionObject.singlePlayer
 		})

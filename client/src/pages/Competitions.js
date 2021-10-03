@@ -189,7 +189,7 @@ function Competition () {
                     rounds.map(function(round) {
                       return (
                         <>
-                        <Table hover size="sm" className="caption-top">
+                        <Table hover size="sm" className="caption-top" style={{ tableLayout: 'fixed' }}>
                           <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>{Lib.capitalize(round)}</caption>
                           <thead>
                             <tr>

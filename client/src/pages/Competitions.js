@@ -3,6 +3,7 @@ import DataAreaContext from '../utils/DataAreaContext';
 import API from '../utils/API';
 import Lib from '../utils/Lib';
 import { IsEmpty } from "react-lodash";
+import { orderBy } from "lodash";
 import { useParams, useHistory } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -11,6 +12,7 @@ import { Container, Table, Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import moment from 'moment';
 
 function Competition () {
   const { filterValue, setFilterValue, matchesByCompetition, setMatchesByCompetition, setMatchObj } = useContext(DataAreaContext);
@@ -18,7 +20,7 @@ function Competition () {
   const history = useHistory();
   const competitionName = decodeURIComponent(competition);
   const [response, setResponse] = useState({});
-  const [matchesObjByRegion, setMatchesObjByRegion] = useState({});
+  const [matchesObjByYearRegion, setMatchesObjByYearRegion] = useState({});
 
   useEffect(() => {
     setFilterValue("");
@@ -30,60 +32,65 @@ function Competition () {
     await API.getMatchesByCompetitionOnLoad(competition)
       .then(res => {
         setMatchesByCompetition(res.data);
-        setMatchesObjByRegion(matchesByRegion(res.data));
+        setMatchesObjByYearRegion(matchesByYearRegion(res.data));
         setResponse({ code: 200 });
       })
       .catch(err => console.log(err));
   }
 
-  const matchesByRegion = (matches) => {
-    let matchesByRegion = {};
+  const matchesByYearRegion = (matches) => {
+    let matchesByYearRegion = {};
 
     for (let i = 0; i < matches.length; i++) {
       const match = matches[i];
       
+      const matchYear = moment(match.matchDateTime).format('YYYY');
       const concatRegion = match.competitionConcatRegion;
       const matchId = match.matchId;
 
-      if (!matchesByRegion.hasOwnProperty(concatRegion)) {
-        matchesByRegion[concatRegion] = {};
+      if (!matchesByYearRegion.hasOwnProperty(matchYear)) {
+        matchesByYearRegion[matchYear] = {};
       }
 
-      if (!matchesByRegion[concatRegion].hasOwnProperty(matchId)) {
-        matchesByRegion[concatRegion][matchId] = {};
+      if (!matchesByYearRegion[matchYear].hasOwnProperty(concatRegion)) {
+        matchesByYearRegion[matchYear][concatRegion] = {};
+      }
+
+      if (!matchesByYearRegion[matchYear][concatRegion].hasOwnProperty(matchId)) {
+        matchesByYearRegion[matchYear][concatRegion][matchId] = {};
       }
       
-      matchesByRegion[concatRegion][matchId] = match;
+      matchesByYearRegion[matchYear][concatRegion][matchId] = match;
     }
 
+    return matchesByYearRegion;
+  }
+
+  const uniqueMatchYears = Lib.eliminateDuplicates(orderBy(matchesByCompetition, "matchDateTime", "desc").map(({ matchDateTime }) => moment(matchDateTime).format('YYYY'))).sort(function(a, b) {
+    return b - a;
+  });
+
+  const getMatchesByRegion = (matches) => {
+    let matchesByRegion = [];
+    
+    for (const key in matches) {
+      matchesByRegion.push(matches[key]);
+    }
+  
     return matchesByRegion;
   }
 
-  const concatRegions = matchesByCompetition.map(function(match) {
-    return match.competitionConcatRegion;
-  });
-
-  const sortedRegions = Lib.eliminateDuplicates(concatRegions).sort();
-
-  const returnMatchesByRegionInArray = (region) => {
-    let matches = [];
-
-    for (const key in matchesObjByRegion) {
-      if (key === region) {
-        for (const key in matchesObjByRegion[region]) {
-          matches.push(matchesObjByRegion[region][key]);
-        }
-      }
+  const getRoundsByRegion = (matches) => {
+    let rounds = [];
+    
+    for (const key in matches) {
+      rounds.push(matches[key].competitionRound);
     }
-
-    return matches;
+  
+    return rounds;
   }
 
-  const getRoundsByRegion = (matches) => {
-    const rounds = matches.map(function(match) {
-      return match.competitionRound;
-    });
-  
+  const getSortedRounds= (rounds) => {
     const sortedRounds = rounds.sort(Lib.compare);
   
     const roundArray = sortedRounds.map(function(round) {
@@ -153,7 +160,7 @@ function Competition () {
           <h4>{competitionName}</h4>
         </div>
         <IsEmpty
-          value={matchesByCompetition}
+          value={matchesObjByYearRegion}
           yes={() =>
             <>
             {response.code === 200 ?
@@ -175,50 +182,65 @@ function Competition () {
           }
           no={() => (
             <>
-            {sortedRegions.map(function(region) {
-              let matchesArrByRegion = returnMatchesByRegionInArray(region);
-              let rounds = getRoundsByRegion(matchesArrByRegion);
+            {uniqueMatchYears.map(function(matchYear) {
+              let matchesByRegions = matchesObjByYearRegion[matchYear];
+              let regions = Object.keys(matchesByRegions).sort()
               return (
                 <>
                 <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
-                  <h4>{Lib.capitalize(region)}</h4>
+                  <h4>{Lib.capitalize(matchYear)}</h4>
                 </div>
-                <div>
                   <>
-                  {
-                    rounds.map(function(round) {
-                      return (
+                  {regions.map(function(region) {
+                    let matchesByRegion = matchesByRegions[region];
+                    let matches = getMatchesByRegion(matchesByRegion);
+                    let rounds = getRoundsByRegion(matchesByRegion);
+                    let sortedRounds = getSortedRounds(rounds);
+                    return (
+                      <>
+                      <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
+                        <h4>{Lib.capitalize(region)}</h4>
+                      </div>
+                      <div>
                         <>
-                        <Table hover size="sm" className="caption-top" style={{ tableLayout: 'fixed' }}>
-                          <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>{Lib.capitalize(round)}</caption>
-                          <thead>
-                            <tr>
-                              <th>Home Team</th>
-                              <th>Score</th>
-                              <th>Away Team</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {
-                              matchesArrByRegion.map(function(match) {
-                                if (match.competitionRound.round === round) {
-                                  return (
-                                    getTableRows(match)
-                                  )
-                                }
-                              })
-                            }
-                          </tbody>
-                        </Table>
+                        {
+                          sortedRounds.map(function(round) {
+                            return (
+                              <>
+                              <Table hover size="sm" className="caption-top" style={{ tableLayout: 'fixed' }}>
+                                <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>{Lib.capitalize(round)}</caption>
+                                <thead>
+                                  <tr>
+                                    <th>Home Team</th>
+                                    <th>Score</th>
+                                    <th>Away Team</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {
+                                    matches.map(function(match) {
+                                      if (match.competitionRound.round === round) {
+                                        return (
+                                          getTableRows(match)
+                                        )
+                                      }
+                                    })
+                                  }
+                                </tbody>
+                              </Table>
+                              </>
+                            )}
+                          )
+                        }
                         </>
-                      )}
+                      </div>
+                      </>
                     )
-                  }
+                  })}
                   </>
-                </div>
                 </>
-              )}
-            )}
+              )
+            })}
             </>
           )}
         />

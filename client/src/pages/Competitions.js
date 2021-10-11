@@ -23,7 +23,10 @@ function Competition () {
   const [matchesObjByYearRegion, setMatchesObjByYearRegion] = useState({});
 
   useEffect(() => {
-    setFilterValue("");
+    setFilterValue({
+      year: moment().format('YYYY'),
+      golfClub: ""
+    });
     setMatchesByCompetition([]);
     getMatchesByCompetition();
   }, []);
@@ -101,7 +104,8 @@ function Competition () {
   }
 
   const getTableRows = (match) => {
-    if (match.teamOneName.includes(filterValue.toLowerCase()) || match.teamTwoName.includes(filterValue.toLowerCase())) {
+    if (match.teamOneName.toLowerCase().includes(filterValue.golfClub.toLowerCase()) ||
+        match.teamTwoName.toLowerCase().includes(filterValue.golfClub.toLowerCase())) {
       return (
         <>
         <tr key={match.matchId} onClick={(e) => onClickRow(e, match)} style={{ cursor: "pointer" }}>
@@ -185,61 +189,63 @@ function Competition () {
             {uniqueMatchYears.map(function(matchYear) {
               let matchesByRegions = matchesObjByYearRegion[matchYear];
               let regions = Object.keys(matchesByRegions).sort()
-              return (
-                <>
-                <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
-                  <h4>{Lib.capitalize(matchYear)}</h4>
-                </div>
+              if (matchYear === filterValue.year) {
+                return (
                   <>
-                  {regions.map(function(region) {
-                    let matchesByRegion = matchesByRegions[region];
-                    let matches = getMatchesByRegion(matchesByRegion);
-                    let rounds = getRoundsByRegion(matchesByRegion);
-                    let sortedRounds = getSortedRounds(rounds);
-                    return (
-                      <>
-                      <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
-                        <h4>{Lib.capitalize(region)}</h4>
-                      </div>
-                      <div>
+                  <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
+                    <h4>{Lib.capitalize(matchYear)}</h4>
+                  </div>
+                    <>
+                    {regions.map(function(region) {
+                      let matchesByRegion = matchesByRegions[region];
+                      let matches = getMatchesByRegion(matchesByRegion);
+                      let rounds = getRoundsByRegion(matchesByRegion);
+                      let sortedRounds = getSortedRounds(rounds);
+                      return (
                         <>
-                        {
-                          sortedRounds.map(function(round) {
-                            return (
-                              <>
-                              <Table hover size="sm" className="caption-top" style={{ tableLayout: 'fixed' }}>
-                                <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>{Lib.capitalize(round)}</caption>
-                                <thead>
-                                  <tr>
-                                    <th>Home Team</th>
-                                    <th>Score</th>
-                                    <th>Away Team</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {
-                                    matches.map(function(match) {
-                                      if (match.competitionRound.round === round) {
-                                        return (
-                                          getTableRows(match)
-                                        )
-                                      }
-                                    })
-                                  }
-                                </tbody>
-                              </Table>
-                              </>
-                            )}
-                          )
-                        }
+                        <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
+                          <h4>{Lib.capitalize(region)}</h4>
+                        </div>
+                        <div>
+                          <>
+                          {
+                            sortedRounds.map(function(round) {
+                              return (
+                                <>
+                                <Table hover size="sm" className="caption-top" style={{ tableLayout: 'fixed' }}>
+                                  <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>{Lib.capitalize(round)}</caption>
+                                  <thead>
+                                    <tr>
+                                      <th>Home Team</th>
+                                      <th>Score</th>
+                                      <th>Away Team</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {
+                                      matches.map(function(match) {
+                                        if (match.competitionRound.round === round) {
+                                          return (
+                                            getTableRows(match)
+                                          )
+                                        }
+                                      })
+                                    }
+                                  </tbody>
+                                </Table>
+                                </>
+                              )}
+                            )
+                          }
+                          </>
+                        </div>
                         </>
-                      </div>
-                      </>
-                    )
-                  })}
+                      )
+                    })}
+                    </>
                   </>
-                </>
-              )
+                )
+              }
             })}
             </>
           )}

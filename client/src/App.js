@@ -45,7 +45,7 @@ function App() {
   // This is used to show the filters modal
   const [showFilters, setShowFilters] = useState(false);
   // This stores the value the user inputs to filter the results
-  const [filterValue, setFilterValue] = useState("");
+  const [filterValue, setFilterValue] = useState({});
   // This stores the boolean value when the delete button has been clicked to show the delete modal
   const [deleteModalShow, setDeleteModalShow] = useState(false);
   // This stores the server response on deleting a match which is used to be shown to the user

@@ -110,7 +110,14 @@ function FiltersOffCanvas(props) {
             <Form.Select aria-label="Filter matches by golf club" onChange={(e) => handleInputChange(e, "golfClub")}>
               {filterValue.year === filterObject.year ? (
                 <>
-                <option>{!isEmpty(filterValue.golfClub) ? (Lib.capitalize(filterValue.golfClub)) : ""}</option>
+                {!isEmpty(filterValue.golfClub) ?
+                  <>
+                  <option>{Lib.capitalize(filterValue.golfClub)}</option>
+                  <option>{""}</option>
+                  </>
+                  :
+                  <option>{""}</option>
+                }
                 {sortedGolfClubs.map(function(golfClub) {
                   if (filterValue.golfClub !== golfClub) {
                     return (
@@ -121,7 +128,14 @@ function FiltersOffCanvas(props) {
                 </>
               ) : (
                 <>
-                <option>{!isEmpty(filterObject.golfClub) ? (Lib.capitalize(filterObject.golfClub)) : ""}</option>
+                {!isEmpty(filterObject.golfClub) ?
+                  <>
+                  <option>{Lib.capitalize(filterObject.golfClub)}</option>
+                  <option>{""}</option>
+                  </>
+                  :
+                  <option>{""}</option>
+                }
                 {sortedGolfClubs.map(function(golfClub) {
                   if (filterObject.golfClub !== golfClub) {
                     return (

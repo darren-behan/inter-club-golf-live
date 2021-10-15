@@ -11,6 +11,7 @@ function FiltersOffCanvas(props) {
   const { showFilters, setShowFilters, setFilterValue, filterValue } = useContext(DataAreaContext);
   const [filterObject, setFilterObject] = useState({
     year: moment().format('YYYY'),
+    region: "",
     golfClub: ""
   });
   let golfClubListByYear;
@@ -39,14 +40,22 @@ function FiltersOffCanvas(props) {
     return b - a;
   });
 
+  let matchRegions = golfClubListByYear.map(({ competitionConcatRegion }) => competitionConcatRegion);
+  let removedDuplicateMatchRegions = Lib.eliminateDuplicates(matchRegions);
+  let sortedMatchRegions = removedDuplicateMatchRegions.sort();
+
   // Handles updating component state when the user types into the input field
   function handleInputChange(event, key) {
     event.preventDefault();
 
     if (key === "year") {
-      setFilterValue({...filterValue, "golfClub": ""});
+      setFilterValue({...filterValue,
+        "golfClub": "",
+        "region": ""
+      });
       setFilterObject({
         year: event.target.value,
+        region: "",
         golfClub: ""
       });
     } else {
@@ -63,10 +72,12 @@ function FiltersOffCanvas(props) {
   const handleClose = () => {
     setFilterValue({
       year: moment().format('YYYY'),
+      region: "",
       golfClub: ""
     });
     setFilterObject({
       year: moment().format('YYYY'),
+      region: "",
       golfClub: ""
     });
     setShowFilters(false);
@@ -76,10 +87,12 @@ function FiltersOffCanvas(props) {
     event.preventDefault();
     setFilterValue({
       year: moment().format('YYYY'),
+      region: "",
       golfClub: ""
     });
     setFilterObject({
       year: moment().format('YYYY'),
+      region: "",
       golfClub: ""
     });
     setShowFilters(false);
@@ -103,6 +116,48 @@ function FiltersOffCanvas(props) {
                   )
                 }
               })}
+            </Form.Select>
+          </FloatingLabel>
+          <br />
+          <FloatingLabel controlId="floatingSelect" label="Filter by region">
+            <Form.Select aria-label="Filter by region" onChange={(e) => handleInputChange(e, "region")}>
+              {filterValue.year === filterObject.year ? (
+                <>
+                {!isEmpty(filterValue.region) ?
+                  <>
+                  <option>{Lib.capitalize(filterValue.region)}</option>
+                  <option>{""}</option>
+                  </>
+                  :
+                  <option>{""}</option>
+                }
+                {sortedMatchRegions.map(function(region) {
+                  if (filterValue.region !== region) {
+                    return (
+                      <option value={region}>{Lib.capitalize(region)}</option>
+                    )
+                  }
+                })}
+                </>
+              ) : (
+                <>
+                {!isEmpty(filterObject.region) ?
+                  <>
+                  <option>{Lib.capitalize(filterObject.region)}</option>
+                  <option>{""}</option>
+                  </>
+                  :
+                  <option>{""}</option>
+                }
+                {sortedMatchRegions.map(function(region) {
+                  if (filterObject.region !== region) {
+                    return (
+                      <option value={region}>{Lib.capitalize(region)}</option>
+                    )
+                  }
+                })}
+                </>
+              )}
             </Form.Select>
           </FloatingLabel>
           <br />

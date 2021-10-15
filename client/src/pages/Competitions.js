@@ -26,6 +26,7 @@ function Competition () {
     setFilterValue({
       year: moment().format('YYYY'),
       region: "",
+      round: "",
       golfClub: ""
     });
     setMatchesByCompetition([]);
@@ -214,32 +215,60 @@ function Competition () {
                               <>
                               {
                                 sortedRounds.map(function(round) {
-                                  return (
-                                    <>
-                                    <Table hover size="sm" className="caption-top" style={{ tableLayout: 'fixed' }}>
-                                      <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>{Lib.capitalize(round)}</caption>
-                                      <thead>
-                                        <tr>
-                                          <th>Home Team</th>
-                                          <th>Score</th>
-                                          <th>Away Team</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        {
-                                          matches.map(function(match) {
-                                            if (match.competitionRound.round === round) {
-                                              return (
-                                                getTableRows(match)
-                                              )
-                                            }
-                                          })
-                                        }
-                                      </tbody>
-                                    </Table>
-                                    </>
-                                  )}
-                                )
+                                  if (filterValue.round === "") {
+                                    return (
+                                      <>
+                                      <Table hover size="sm" className="caption-top" style={{ tableLayout: 'fixed' }}>
+                                        <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>{Lib.capitalize(round)}</caption>
+                                        <thead>
+                                          <tr>
+                                            <th>Home Team</th>
+                                            <th>Score</th>
+                                            <th>Away Team</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          {
+                                            matches.map(function(match) {
+                                              if (match.competitionRound.round === round) {
+                                                return (
+                                                  getTableRows(match)
+                                                )
+                                              }
+                                            })
+                                          }
+                                        </tbody>
+                                      </Table>
+                                      </>
+                                    )
+                                  }  else if (round === filterValue.round) {
+                                    return (
+                                      <>
+                                      <Table hover size="sm" className="caption-top" style={{ tableLayout: 'fixed' }}>
+                                        <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>{Lib.capitalize(round)}</caption>
+                                        <thead>
+                                          <tr>
+                                            <th>Home Team</th>
+                                            <th>Score</th>
+                                            <th>Away Team</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          {
+                                            matches.map(function(match) {
+                                              if (match.competitionRound.round === round) {
+                                                return (
+                                                  getTableRows(match)
+                                                )
+                                              }
+                                            })
+                                          }
+                                        </tbody>
+                                      </Table>
+                                      </>
+                                    )
+                                  }
+                                })
                               }
                               </>
                             </div>

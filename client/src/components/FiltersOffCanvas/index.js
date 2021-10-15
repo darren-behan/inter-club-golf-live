@@ -12,6 +12,7 @@ function FiltersOffCanvas(props) {
   const [filterObject, setFilterObject] = useState({
     year: moment().format('YYYY'),
     region: "",
+    round: "",
     golfClub: ""
   });
   let golfClubListByYear;
@@ -44,6 +45,10 @@ function FiltersOffCanvas(props) {
   let removedDuplicateMatchRegions = Lib.eliminateDuplicates(matchRegions);
   let sortedMatchRegions = removedDuplicateMatchRegions.sort();
 
+  let matchRounds = golfClubListByYear.map(({ competitionRound }) => competitionRound.round);
+  let removedDuplicateMatchRounds = Lib.eliminateDuplicates(matchRounds);
+  let sortedMatchRounds = removedDuplicateMatchRounds.sort();
+
   // Handles updating component state when the user types into the input field
   function handleInputChange(event, key) {
     event.preventDefault();
@@ -51,11 +56,13 @@ function FiltersOffCanvas(props) {
     if (key === "year") {
       setFilterValue({...filterValue,
         "golfClub": "",
-        "region": ""
+        "region": "",
+        "round": ""
       });
       setFilterObject({
         year: event.target.value,
         region: "",
+        round: "",
         golfClub: ""
       });
     } else {
@@ -73,11 +80,13 @@ function FiltersOffCanvas(props) {
     setFilterValue({
       year: moment().format('YYYY'),
       region: "",
+      round: "",
       golfClub: ""
     });
     setFilterObject({
       year: moment().format('YYYY'),
       region: "",
+      round: "",
       golfClub: ""
     });
     setShowFilters(false);
@@ -88,11 +97,13 @@ function FiltersOffCanvas(props) {
     setFilterValue({
       year: moment().format('YYYY'),
       region: "",
+      round: "",
       golfClub: ""
     });
     setFilterObject({
       year: moment().format('YYYY'),
       region: "",
+      round: "",
       golfClub: ""
     });
     setShowFilters(false);
@@ -153,6 +164,48 @@ function FiltersOffCanvas(props) {
                   if (filterObject.region !== region) {
                     return (
                       <option value={region}>{Lib.capitalize(region)}</option>
+                    )
+                  }
+                })}
+                </>
+              )}
+            </Form.Select>
+          </FloatingLabel>
+          <br />
+          <FloatingLabel controlId="floatingSelect" label="Filter by round">
+            <Form.Select aria-label="Filter by round" onChange={(e) => handleInputChange(e, "round")}>
+              {filterValue.year === filterObject.year ? (
+                <>
+                {!isEmpty(filterValue.round) ?
+                  <>
+                  <option>{Lib.capitalize(filterValue.round)}</option>
+                  <option>{""}</option>
+                  </>
+                  :
+                  <option>{""}</option>
+                }
+                {sortedMatchRounds.map(function(round) {
+                  if (filterValue.round !== round) {
+                    return (
+                      <option value={round}>{Lib.capitalize(round)}</option>
+                    )
+                  }
+                })}
+                </>
+              ) : (
+                <>
+                {!isEmpty(filterObject.round) ?
+                  <>
+                  <option>{Lib.capitalize(filterObject.round)}</option>
+                  <option>{""}</option>
+                  </>
+                  :
+                  <option>{""}</option>
+                }
+                {sortedMatchRounds.map(function(round) {
+                  if (filterObject.round !== round) {
+                    return (
+                      <option value={round}>{Lib.capitalize(round)}</option>
                     )
                   }
                 })}

@@ -3,7 +3,7 @@ import DataAreaContext from '../utils/DataAreaContext';
 import API from '../utils/API';
 import Lib from '../utils/Lib';
 import { IsEmpty } from "react-lodash";
-import { orderBy } from "lodash";
+import { isEmpty, orderBy } from "lodash";
 import { useParams, useHistory } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -21,6 +21,10 @@ function Competition () {
   const competitionName = decodeURIComponent(competition);
   const [response, setResponse] = useState({});
   const [matchesObjByYearRegion, setMatchesObjByYearRegion] = useState({});
+  let regions;
+  let matchesByRegion;
+  let rounds;
+  let sortedRounds;
 
   useEffect(() => {
     setFilterValue({
@@ -75,11 +79,11 @@ function Competition () {
     return b - a;
   });
 
-  const getMatchesByRegion = (matches) => {
+  const getMatchesByRegion = (matchesObjByRegion) => {
     let matchesByRegion = [];
-    
-    for (const key in matches) {
-      matchesByRegion.push(matches[key]);
+
+    for (const key in matchesObjByRegion) {
+      matchesByRegion.push(matchesObjByRegion[key]);
     }
   
     return matchesByRegion;
@@ -105,7 +109,109 @@ function Competition () {
     return Lib.eliminateDuplicates(roundArray);
   }
 
-  const getTable = (round, matches) => {
+  const renderRegionHeading = (matchesObjByRegions, region) => {
+    matchesByRegion = getMatchesByRegion(matchesObjByRegions[region]);
+    let filteredMatchesByRegion;
+
+    if (!isEmpty(filterValue.region) && !isEmpty(filterValue.round) && !isEmpty(filterValue.golfClub)) {
+      filteredMatchesByRegion = matchesByRegion.filter(match => {
+        if (match.competitionConcatRegion === filterValue.region &&
+            match.competitionRound.round === filterValue.round &&
+           (match.teamOneName.toLowerCase() === filterValue.golfClub || match.teamTwoName.toLowerCase() === filterValue.golfClub)) return true;
+      });
+      
+       if (!isEmpty(filteredMatchesByRegion)) {
+        return (
+          renderRegionBody(region, true, filteredMatchesByRegion)
+        )
+      }
+    }
+
+    if ((!isEmpty(filterValue.region) && !isEmpty(filterValue.round) && isEmpty(filterValue.golfClub)) ||
+        (!isEmpty(filterValue.region) && isEmpty(filterValue.round) && !isEmpty(filterValue.golfClub)) ||
+        (isEmpty(filterValue.region) && !isEmpty(filterValue.round) && !isEmpty(filterValue.golfClub))) {
+      filteredMatchesByRegion = matchesByRegion.filter(match => {
+        if ((match.competitionConcatRegion === filterValue.region &&
+             match.competitionRound.round === filterValue.round) ||
+            (match.competitionConcatRegion === filterValue.region &&
+            (match.teamOneName.toLowerCase() === filterValue.golfClub || match.teamTwoName.toLowerCase() === filterValue.golfClub)) ||
+            (match.competitionRound.round === filterValue.round &&
+            (match.teamOneName.toLowerCase() === filterValue.golfClub || match.teamTwoName.toLowerCase() === filterValue.golfClub))) return true;
+      });
+      
+       if (!isEmpty(filteredMatchesByRegion)) {
+        return (
+          renderRegionBody(region, true, filteredMatchesByRegion)
+        )
+      }
+    }
+
+    if ((!isEmpty(filterValue.region) && isEmpty(filterValue.round) && isEmpty(filterValue.golfClub)) ||
+        (isEmpty(filterValue.region) && !isEmpty(filterValue.round) && isEmpty(filterValue.golfClub)) ||
+        (isEmpty(filterValue.region) && isEmpty(filterValue.round) && !isEmpty(filterValue.golfClub))) {
+      filteredMatchesByRegion = matchesByRegion.filter(match => {
+        if ((match.competitionConcatRegion === filterValue.region) ||
+            (match.competitionRound.round === filterValue.round) ||
+            (match.teamOneName.toLowerCase() === filterValue.golfClub || match.teamTwoName.toLowerCase() === filterValue.golfClub)) return true;
+      });
+      
+       if (!isEmpty(filteredMatchesByRegion)) {
+        return (
+          renderRegionBody(region, true, filteredMatchesByRegion)
+        )
+      }
+    }
+
+    if (isEmpty(filterValue.region) && isEmpty(filterValue.round) && isEmpty(filterValue.golfClub)) {
+      
+      return (
+        renderRegionBody(region, false, matchesByRegion)
+      )
+    }
+  }
+
+  const renderRegionBody = (region, isFiltersPopulated, matchesByRegion) => {
+    if (isFiltersPopulated) {
+      rounds = getRoundsByRegion(matchesByRegion);
+      sortedRounds = getSortedRounds(rounds);
+    } else {
+      rounds = getRoundsByRegion(matchesByRegion);
+      sortedRounds = getSortedRounds(rounds);
+    }
+  
+    return (
+      <>
+      <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
+        <h4>{Lib.capitalize(region)}</h4>
+      </div>
+      <div>
+        <>
+        {
+          sortedRounds.map(function(round) {
+            return (
+              renderRoundBody(matchesByRegion, round)
+            )
+          })
+        }
+        </>
+      </div>
+      </>
+    )
+  }
+
+  const renderRoundBody = (matchesObjByRegion, round) => {
+    if (filterValue.round === "") {
+      return (
+        renderRoundHeading(round, matchesObjByRegion)
+      )
+    } else if (round === filterValue.round) {
+      return (
+        renderRoundHeading(round, matchesObjByRegion)
+      )
+    }
+  }
+
+  const renderRoundHeading = (round, matches) => {
     return (
       <>
       <Table hover size="sm" className="caption-top" style={{ tableLayout: 'fixed' }}>
@@ -122,7 +228,7 @@ function Competition () {
             matches.map(function(match) {
               if (match.competitionRound.round === round) {
                 return (
-                  getTableRows(match)
+                  renderRoundMatches(match)
                 )
               }
             })
@@ -133,7 +239,7 @@ function Competition () {
     )
   }
 
-  const getTableRows = (match) => {
+  const renderRoundMatches = (match) => {
     if (match.teamOneName.toLowerCase().includes(filterValue.golfClub.toLowerCase()) ||
         match.teamTwoName.toLowerCase().includes(filterValue.golfClub.toLowerCase())) {
       return (
@@ -219,8 +325,7 @@ function Competition () {
             {uniqueMatchYears.includes(filterValue.year) ?
               <>
               {uniqueMatchYears.map(function(matchYear) {
-                let matchesByRegions = matchesObjByYearRegion[matchYear];
-                let regions = Object.keys(matchesByRegions).sort();
+                regions = Object.keys(matchesObjByYearRegion[matchYear]).sort();
                 if (matchYear === filterValue.year) {
                   return (
                     <>
@@ -229,61 +334,9 @@ function Competition () {
                     </div>
                       <>
                       {regions.map(function(region) {
-                        let matchesByRegion = matchesByRegions[region];
-                        let matches = getMatchesByRegion(matchesByRegion);
-                        let rounds = getRoundsByRegion(matchesByRegion);
-                        let sortedRounds = getSortedRounds(rounds);
-                        if (filterValue.region === "") {
-                          return (
-                            <>
-                            <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
-                              <h4>{Lib.capitalize(region)}</h4>
-                            </div>
-                            <div>
-                              <>
-                              {
-                                sortedRounds.map(function(round) {
-                                  if (filterValue.round === "") {
-                                    return (
-                                      getTable(round, matches)
-                                    )
-                                  } else if (round === filterValue.round) {
-                                    return (
-                                      getTable(round, matches)
-                                    )
-                                  }
-                                })
-                              }
-                              </>
-                            </div>
-                            </>
-                          )
-                        } else if (region === filterValue.region) {
-                          return (
-                            <>
-                            <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
-                              <h4>{Lib.capitalize(region)}</h4>
-                            </div>
-                            <div>
-                              <>
-                              {
-                                sortedRounds.map(function(round) {
-                                  if (filterValue.round === "") {
-                                    return (
-                                      getTable(round, matches)
-                                    )
-                                  } else if (round === filterValue.round) {
-                                    return (
-                                      getTable(round, matches)
-                                    )
-                                  }
-                                })
-                              }
-                              </>
-                            </div>
-                            </>
-                          )
-                        }
+                        return (
+                          renderRegionHeading(matchesObjByYearRegion[matchYear], region)
+                        )
                       })}
                       </>
                     </>

@@ -1,15 +1,16 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './index.css';
 import DataAreaContext from '../../utils/DataAreaContext';
 import Lib from '../../utils/Lib';
-import { Offcanvas, Button, Form, FloatingLabel, Spinner } from 'react-bootstrap';
-import { IsEmpty } from "react-lodash";
+import { Offcanvas, Button, Form, FloatingLabel } from 'react-bootstrap';
 import { orderBy } from "lodash";
+import { useLocation } from "react-router-dom";
 import moment from 'moment';
 let isEmpty = require('lodash.isempty');
 
 function FiltersOffCanvas(props) {
   const { showFilters, setShowFilters, setFilterValue, filterValue } = useContext(DataAreaContext);
+  let location = useLocation();
   let matchYears;
   let matchListByYear;
   let sortedMatchRegions;
@@ -281,12 +282,22 @@ function FiltersOffCanvas(props) {
 
   function handleClearFiltersSubmit(event) {
     event.preventDefault();
-    setFilterValue({
-      year: moment().format('YYYY'),
-      region: "",
-      round: "",
-      golfClub: ""
-    });
+
+    if (location.pathname.startsWith("/competition")) {
+      setFilterValue({
+        year: moment().format('YYYY'),
+        region: "",
+        round: "",
+        golfClub: ""
+      });
+    } else {
+      setFilterValue({
+        year: "",
+        region: "",
+        round: "",
+        golfClub: ""
+      });
+    }
     setShowFilters(false);
   };
   

@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Carousel from '../components/Carousel';
 import ComboBox from '../components/ComboBox';
+import Slider from '../components/Slider';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { IsEmpty } from "react-lodash";
 import AdSense from 'react-adsense';
@@ -61,7 +62,9 @@ function Home() {
         </>
       }
       no={() => (
-        <Carousel className='mt-3 pb-4'/>
+        <>
+        <Slider />
+        </>
       )}
     />
     <Footer />

@@ -76,7 +76,7 @@ function Cards(props) {
   }
 
   return (
-    <Card key={ props.match.matchId } style={{ boxShadow: '0 0 4px rgba(0,0,0,.1)' }} className='mx-3 ms-sm-0'>
+    <Card key={ props.match.matchId } style={{ boxShadow: '0 0 4px rgba(0,0,0,.1)' }} className='ms-sm-0'>
       <Card.Body className="p-0" style={{ borderRadius: '.25rem .25rem 0 0' }}>
         <Card.Header style={{ backgroundColor: "#0a66c2", color: "#ffffff", fontWeight: "600" }}>
           {props.match.matchStatus === "not started" ? (

@@ -231,7 +231,9 @@ function FiltersOffCanvas(props) {
         if (!isEmpty(filterValue.region) && !isEmpty(filterValue.round) && !isEmpty(filterValue.golfClub)) {
           if (!isFilterRoundInNewFilterRegion(eventValue)) filterValue.round = "";
           if (!isFilterGolfClubInNewFilterRegion(eventValue)) filterValue.golfClub = "";
-          if (!isFilterGolfClubInNewFilterRegionRound(eventValue, key)) filterValue.golfClub = "";
+          if (!isEmpty(filterValue.round) && !isEmpty(filterValue.golfClub)) {
+            if (!isFilterGolfClubInNewFilterRegionRound(eventValue, key)) filterValue.golfClub = "";
+          }
         }
 
         // On change of region where region and round are selected, and the round is not in that region, we need to clear the round filter value

@@ -49,13 +49,17 @@ function Match() {
     if (match.teamOneScore > match.teamTwoScore) {
       return (
         <div style={{ color: '#ffffff', fontWeight: '900' }}>
-          <span style={{ float: 'left' }}><FontAwesomeIcon icon={ faArrowLeft } className='fa-sm' /></span>{match.teamOneScore} - {match.teamTwoScore}
+          <span style={{ float: 'left' }}><FontAwesomeIcon icon={ faArrowLeft } className='fa-sm' /></span>
+          {match.teamOneScore} - {match.teamTwoScore}
+          <span style={{ float: 'right', color: '#0a66c2' }}><FontAwesomeIcon icon={ faArrowRight } className='fa-sm' /></span>
         </div>
       )
     } else if (match.teamOneScore < match.teamTwoScore) {
       return (
         <div style={{ color: '#ffffff', fontWeight: '900' }}>
-          {match.teamOneScore} - {match.teamTwoScore}<span style={{ float: 'right' }}><FontAwesomeIcon icon={ faArrowRight } className='fa-sm' /></span>
+          <span style={{ float: 'left', color: '#0a66c2' }}><FontAwesomeIcon icon={ faArrowLeft } className='fa-sm' /></span>
+          {match.teamOneScore} - {match.teamTwoScore}
+          <span style={{ float: 'right' }}><FontAwesomeIcon icon={ faArrowRight } className='fa-sm' /></span>
         </div>
       )
     } else {
@@ -71,13 +75,17 @@ function Match() {
     if (match.homeMatchScore > match.awayMatchScore) {
       return (
         <div style={{ color: '#ffffff', fontWeight: '900' }}>
-          <span style={{ float: 'left' }}><FontAwesomeIcon icon={ faArrowLeft } className='fa-sm' /></span>{match.homeMatchScore} up
+          <span style={{ float: 'left' }}><FontAwesomeIcon icon={ faArrowLeft } className='fa-sm' /></span>
+          {match.homeMatchScore} up
+          <span style={{ float: 'right', color: '#0a66c2' }}><FontAwesomeIcon icon={ faArrowRight } className='fa-sm' /></span>
         </div>
       )
     } else if (match.homeMatchScore < match.awayMatchScore) {
       return (
         <div style={{ color: '#ffffff', fontWeight: '900' }}>
-          {match.awayMatchScore} up<span style={{ float: 'right' }}><FontAwesomeIcon icon={ faArrowRight } className='fa-sm' /></span>
+          <span style={{ float: 'left', color: '#0a66c2' }}><FontAwesomeIcon icon={ faArrowLeft } className='fa-sm' /></span>
+          {match.awayMatchScore} up<span style={{ float: 'right' }}>
+          <FontAwesomeIcon icon={ faArrowRight } className='fa-sm' /></span>
         </div>
       )
     } else {

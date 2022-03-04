@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import DataAreaContext from '../utils/DataAreaContext';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Carousel from '../components/Carousel';
 import ComboBox from '../components/ComboBox';
 import Slider from '../components/Slider';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { IsEmpty } from "react-lodash";
 import AdSense from 'react-adsense';
+import { isEmpty } from 'lodash';
 
 function Home() {
   const { appMatchesOnLoad } = useContext(DataAreaContext);
@@ -15,6 +15,25 @@ function Home() {
       // height: "100vh",
       margin: 0
   };
+  let completedMatches = [];
+  let inProgressMatches = [];
+  let notStartedMatches = [];
+
+  if (appMatchesOnLoad.length > 0) {
+    appMatchesOnLoad.map((match) => {
+      if (match.matchStatus === 'complete') {
+        completedMatches.push(match)
+      }
+
+      if (match.matchStatus === 'in progress') {
+        inProgressMatches.push(match)
+      }
+
+      if (match.matchStatus === 'not started') {
+        notStartedMatches.push(match)
+      }
+    })
+  }
 
   return (
     <>
@@ -63,7 +82,45 @@ function Home() {
       }
       no={() => (
         <>
-        <Slider />
+        <div className="container px-4 py-5">
+          <h3>Completed</h3>
+          {
+            !isEmpty(completedMatches) ?
+              <Slider matches={ completedMatches } />
+            :
+              <div style={{ textAlign: "left" }}>
+                <br />
+                <br />
+                <h5>There are no finalized matches</h5>
+              </div>
+          }
+        </div>
+        <div className="container px-4 py-5">
+          <h3>In Progress</h3>
+          {
+            !isEmpty(inProgressMatches) ?
+              <Slider matches={ inProgressMatches } />
+            :
+              <div style={{ textAlign: "left" }}>
+                <br />
+                <br />
+                <h5>There are currently no matches in progress</h5>
+              </div>
+          }
+        </div>
+        <div className="container px-4 py-5">
+          <h3>Upcoming Matches</h3>
+          {
+            !isEmpty(notStartedMatches) ?
+              <Slider matches={ notStartedMatches } />
+            :
+              <div style={{ textAlign: "left" }}>
+                <br />
+                <br />
+                <h5>There are currently no upcoming matches</h5>
+              </div>
+          }
+        </div>
         </>
       )}
     />

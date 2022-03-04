@@ -1,17 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import './index.css';
-import DataAreaContext from '../../utils/DataAreaContext';
 import Cards from '../Cards';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 
-function CardSlider() {
-  const { appMatchesOnLoad } = useContext(DataAreaContext);
+function CardSlider(props) {
+  let sortedMatchesByMatchDateTime;
   let matchCards;
   let settings = {
     dots: false,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
@@ -44,8 +43,12 @@ function CardSlider() {
     ]
   };
 
-  if (appMatchesOnLoad.length > 0) {
-    matchCards = appMatchesOnLoad.map((match, index) => {
+  if (props.matches.length > 0) {
+    sortedMatchesByMatchDateTime = props.matches.sort(function(a, b) {
+      return new Date(b.matchDateTime) - new Date(a.matchDateTime);
+    });
+
+    matchCards = sortedMatchesByMatchDateTime.map((match, index) => {
       return (
         <div className="" key={index}>
           <Cards match={ match } />
@@ -55,10 +58,9 @@ function CardSlider() {
   }
 
   return (
-    <div className="container px-4 py-5">
-      <h3>Completed, In Progress, Upcoming Matches</h3>
-      <Slider {...settings}>{matchCards}</Slider>
-    </div>
+    <>
+    <Slider {...settings}>{matchCards}</Slider>
+    </>
   )
 }
 

@@ -22,6 +22,7 @@ function Match() {
   let { id } = useParams();
   let individualMatches;
   let sortedIndividualMatches;
+  console.log(match);
 
   useEffect(() => {
     setUpdateMatchObj({...match});

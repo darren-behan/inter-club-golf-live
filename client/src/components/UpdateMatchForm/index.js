@@ -160,11 +160,10 @@ function UpdateMatch() {
 			fullWidth: true,
 			autoComplete: "autoComplete",
 			autoFocus: false,
-			disabled: true,
-			type: "",
+			type: "date",
 			select: false,
-			helperText: "If you've entered the match date incorrectly, please delete this match & create a new match",
-			value: moment(updateMatchObj.matchDateTime).format('dddd, MMMM Do YYYY')
+			helperText: "Update the match date",
+			value: moment(updateMatchObj.matchDateTime).format('yyyy-MM-DD')
 		},
 		{
 			name: "matchTime",
@@ -174,11 +173,10 @@ function UpdateMatch() {
 			fullWidth: true,
 			autoComplete: "autoComplete",
 			autoFocus: false,
-			disabled: true,
-			type: "",
+			type: "time",
 			select: false,
-			helperText: "If you've entered the match time incorrectly, please delete this match & create a new match",
-			value: moment(updateMatchObj.matchDateTime).tz(timeZone).format('HH:mm z')
+			helperText: "Update the match time",
+			value: moment(updateMatchObj.matchDateTime).tz(timeZone).format('HH:mm')
 		},
 		{
 			name: "competitionName",
@@ -298,9 +296,29 @@ function UpdateMatch() {
   const handleInputChange = (event) => {
 		event.preventDefault();
     const { name, value } = event.target;
+
 		if (name === "neutralVenueName" || name === "teamOneName" || name === "teamTwoName") {
 			updateIndividualMatchDestination(name, value);
 		}
+
+		if (name === "matchDate" || name === "matchTime") {
+			let key = "matchDateTime";
+			let valueDateTime;
+
+			if (name === "matchDate") {
+				let matchTime = moment(updateMatchObj.matchDateTime).format('HH:mm');
+				valueDateTime = moment(`${value} ${matchTime}`).format();
+			}
+
+			if (name === "matchTime") {
+				let matchDate = moment(updateMatchObj.matchDateTime).format('yyyy-MM-DD');
+				valueDateTime = moment(`${matchDate} ${value}`).format();
+			}
+
+			setUpdateMatchObj({...updateMatchObj, [key]: valueDateTime});
+			return;
+		}
+
 		setUpdateMatchObj({...updateMatchObj, [name]: value});
   };
 

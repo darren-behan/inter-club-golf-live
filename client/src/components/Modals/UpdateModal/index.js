@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import DataAreaContext from '../../../utils/DataAreaContext';
 import API from '../../../utils/API';
 import UpdateMatchForm from '../../UpdateMatchForm/index.js';
-import { Button, Modal, Spinner } from 'react-bootstrap';
+import { Button, Modal, Spinner, CloseButton } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import 'moment-timezone';
@@ -38,6 +38,11 @@ function UpdateModal(props) {
     }
   }
 
+  const handleClose = () => {
+    setUpdateModalShow(false);
+    setUpdateMatchObj({...match});
+  }
+
   const handleUpdateClick = (event) => {
     event.preventDefault();
     setLoading(true);
@@ -46,6 +51,8 @@ function UpdateModal(props) {
     updateMatchObj.teamTwoScore = updatedOverallMatchScore.teamTwoScore;
     API.updateMatch({
       matchId: updateMatchObj.matchId,
+      matchDateTime: updateMatchObj.matchDateTime,
+      competitionName: updateMatchObj.competitionName,
       matchStatus: updateMatchObj.matchStatus,
 			competitionConcatRegion: !isEmpty(updateMatchObj.competitionRegionArea) ? updateMatchObj.competitionRegion + " " + updateMatchObj.competitionRegionArea : updateMatchObj.competitionRegion,
       competitionRegion: updateMatchObj.competitionRegion,
@@ -80,7 +87,7 @@ function UpdateModal(props) {
     });
   };
 
-  function handleCloseClick(matchId) {
+  const handleCloseClick = (matchId) => {
     setUpdateModalShow(false);
     setUpdateResponse({});
     history.push(`/match/${matchId}`);
@@ -94,11 +101,13 @@ function UpdateModal(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
       backdrop="true"
+      onHide={handleClose}
     >
-      <Modal.Header closeButton>
+      <Modal.Header>
         <Modal.Title id="contained-modal-title-vcenter">
           Update match
         </Modal.Title>
+        <CloseButton onClick={handleClose} />
       </Modal.Header>
       <Modal.Body>
         {updateResponse.status === 200 || updateResponse.status === 400 ? (

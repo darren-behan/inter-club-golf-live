@@ -70,6 +70,8 @@ function App() {
 	const [form, setForm] = useState(true);
   // This is used to store the matches returned based on the competition searched by the user
 	const [matchesByCompetition, setMatchesByCompetition] = useState([]);
+  // This is used to dispaly the add collaborators modal
+	const [addCollaborators, setAddCollaborators] = useState(true);
 
   useEffect(() => {
     authenticateUser();
@@ -103,7 +105,7 @@ function App() {
   return (
     <>
       <DataAreaContext.Provider
-      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, showFilters, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, updateModalShow, updateResponse, updateMatchObj, signUpObj, userAuthResponse, userAuthModalShow, createMatchResponse, createMathModalShow, sidebarOpen, form, matchesByCompetition, oldUpdateMatchObj, oldPostMatchObj, setOldPostMatchObj, setOldUpdateMatchObj, setMatchesByCompetition, setForm, setSidebarOpen, setCreateMatchModalShow, setCreateMatchResponse, setUserAuthModalShow, setUserAuthResponse, setSignUpObj, setUpdateMatchObj, setUpdateResponse, setUpdateModalShow, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShowFilters, setFilterValue, setUserDataObj }}
+      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, showFilters, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, updateModalShow, updateResponse, updateMatchObj, signUpObj, userAuthResponse, userAuthModalShow, createMatchResponse, createMathModalShow, sidebarOpen, form, matchesByCompetition, oldUpdateMatchObj, oldPostMatchObj, addCollaborators, setAddCollaborators, setOldPostMatchObj, setOldUpdateMatchObj, setMatchesByCompetition, setForm, setSidebarOpen, setCreateMatchModalShow, setCreateMatchResponse, setUserAuthModalShow, setUserAuthResponse, setSignUpObj, setUpdateMatchObj, setUpdateResponse, setUpdateModalShow, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShowFilters, setFilterValue, setUserDataObj }}
       >
         <Router>
           <Wrapper>

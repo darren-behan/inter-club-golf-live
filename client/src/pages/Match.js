@@ -18,7 +18,7 @@ import 'moment-timezone';
 let isEmpty = require('lodash.isempty');
 
 function Match() {
-  const { match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, timeZone, updateModalShow, setUpdateModalShow, setUpdateMatchObj } = useContext(DataAreaContext);
+  const { match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, timeZone, updateModalShow, setUpdateModalShow, setUpdateMatchObj, addCollaborators, setAddCollaborators } = useContext(DataAreaContext);
   let { id } = useParams();
   let individualMatches;
   let sortedIndividualMatches;
@@ -276,9 +276,9 @@ function Match() {
             <>
               <Row className="d-grid gap-2">
                 <Button
-                  variant="outline-success"
+                  variant="success"
                   size="sm"
-                  className="float-left"
+                  className="update-match"
                   onClick={() =>
                     setUpdateModalShow(true)
                   }
@@ -286,9 +286,19 @@ function Match() {
                   Update
                 </Button>
                 <Button
+                  variant="primary"
+                  size="sm"
+                  className="add-match-collaborators"
+                  onClick={() =>
+                    setAddCollaborators(true)
+                  }
+                >
+                  Add Collaborators
+                </Button>
+                <Button
                   variant="danger"
                   size="sm"
-                  className="float-right"
+                  className="delete-match"
                   onClick={() =>
                     setDeleteModalShow(true)
                   }

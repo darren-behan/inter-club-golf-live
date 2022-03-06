@@ -31,7 +31,8 @@ module.exports = {
             createdAt: doc.data().createdAt,
             updatedAt: doc.data().updatedAt,
             matchStatus: doc.data().matchStatus,
-            singlePlayer: doc.data().singlePlayer
+            singlePlayer: doc.data().singlePlayer,
+            collaborators: data.data().collaborators
             });
           });
         return response.status(200).json(matches);
@@ -67,7 +68,8 @@ module.exports = {
         createdAt: data.data().createdAt,
         updatedAt: data.data().updatedAt,
         matchStatus: data.data().matchStatus,
-        singlePlayer: data.data().singlePlayer
+        singlePlayer: data.data().singlePlayer,
+        collaborators: data.data().collaborators
       };
       return response.status(200).json(match);
     })

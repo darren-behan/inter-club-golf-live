@@ -22,7 +22,6 @@ function Match() {
   let { id } = useParams();
   let individualMatches;
   let sortedIndividualMatches;
-  console.log(match);
 
   useEffect(() => {
     setUpdateMatchObj({...match});
@@ -272,46 +271,73 @@ function Match() {
               </tbody>
             </Table>
           </Row>
-          {(isAuthenticated) && (match.createdByUid === userDataObj.uid) ? (
+          {isAuthenticated ? (
             <>
-              <Row className="d-grid gap-2">
-                <Button
-                  variant="success"
-                  size="sm"
-                  className="update-match"
-                  onClick={() =>
-                    setUpdateModalShow(true)
-                  }
-                >
-                  Update
-                </Button>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  className="add-match-collaborators"
-                  onClick={() =>
-                    setAddCollaborators(true)
-                  }
-                >
-                  Add Collaborators
-                </Button>
-                <Button
-                  variant="danger"
-                  size="sm"
-                  className="delete-match"
-                  onClick={() =>
-                    setDeleteModalShow(true)
-                  }
-                >
-                  Delete
-                </Button>
-              </Row>
-              <br />
+              {(match.createdByUid === userDataObj.uid) ?
+                <>
+                <Row className="d-grid gap-2">
+                  <Button
+                    variant="success"
+                    size="sm"
+                    className="update-match"
+                    onClick={() =>
+                      setUpdateModalShow(true)
+                    }
+                  >
+                    Update
+                  </Button>
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    className="add-match-collaborators"
+                    onClick={() =>
+                      setAddCollaborators(true)
+                    }
+                  >
+                    Add Collaborators
+                  </Button>
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    className="delete-match"
+                    onClick={() =>
+                      setDeleteModalShow(true)
+                    }
+                  >
+                    Delete
+                  </Button>
+                </Row>
+                <br />
+                </>
+                : (match.hasOwnProperty("collaborators") && !isEmpty(match.collaborators)) ?
+                  match.collaborators.map(collaborator => {
+                    if (collaborator.userId === userDataObj.uid) {
+                      return (
+                        <>
+                        <Row className="d-grid gap-2">
+                          <Button
+                            variant="success"
+                            size="sm"
+                            className="update-match"
+                            onClick={() =>
+                              setUpdateModalShow(true)
+                            }
+                          >
+                            Update
+                          </Button>
+                        </Row>
+                        <br />
+                        </>
+                      )
+                    }
+                  })
+                :
+                null
+              }
             </>
           ) : (
             null
-          )
-          }
+          )}
           <Row>
             <h6>
               Last updated on&nbsp;

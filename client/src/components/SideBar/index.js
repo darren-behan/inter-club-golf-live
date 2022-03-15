@@ -7,8 +7,8 @@ import { useLocation, Link } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faGolfBall, faSignInAlt, faUserPlus, faPlus } from '@fortawesome/free-solid-svg-icons';
-import firebase from "firebase/app";
-import "firebase/auth";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
 
 const StyledMenu = styled.nav`
   width: 100%;

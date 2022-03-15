@@ -9,6 +9,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import DeleteModal from "../components/Modals/DeleteModal";
 import UpdateModal from "../components/Modals/UpdateModal";
+import AddCollaboratorsModal from "../components/Modals/AddCollaboratorsModal";
 import { Container, Row, Table, Button, Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
@@ -18,7 +19,7 @@ import 'moment-timezone';
 let isEmpty = require('lodash.isempty');
 
 function Match() {
-  const { match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, timeZone, updateModalShow, setUpdateModalShow, setUpdateMatchObj, addCollaborators, setAddCollaborators } = useContext(DataAreaContext);
+  const { match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, timeZone, updateModalShow, setUpdateModalShow, setUpdateMatchObj, addCollaboratorsModalShow, setAddCollaboratorsModalShow } = useContext(DataAreaContext);
   let { id } = useParams();
   let individualMatches;
   let sortedIndividualMatches;
@@ -184,6 +185,10 @@ function Match() {
           show={updateModalShow}
           onHide={() => setUpdateModalShow(false)} 
         />
+        <AddCollaboratorsModal
+          show={addCollaboratorsModalShow}
+          onHide={() => setAddCollaboratorsModalShow(false)} 
+        />
         <Header />
         <Container>
           <Row style={{ marginTop: '10px'}}>
@@ -291,7 +296,7 @@ function Match() {
                     size="sm"
                     className="add-match-collaborators"
                     onClick={() =>
-                      setAddCollaborators(true)
+                      setAddCollaboratorsModalShow(true)
                     }
                   >
                     Add Collaborators

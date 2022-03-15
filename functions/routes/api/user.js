@@ -9,4 +9,9 @@ router.route('/update')
   // POST request to signup a USER
   .post(userController.updateUser);
 
+// Matches with "/api/user/getusers/"
+router.route('/getusers')
+  // POST request to signup a USER
+  .get(userController.getUsers);
+
 module.exports = router;

@@ -31,7 +31,8 @@ module.exports = {
           createdByUid: doc.data().createdByUid,
           createdAt: doc.data().createdAt,
           updatedAt: doc.data().updatedAt,
-          matchStatus: doc.data().matchStatus
+          matchStatus: doc.data().matchStatus,
+          collaborators: doc.data().collaborators
         });
       });
       return response.status(200).json(competitionMatches);

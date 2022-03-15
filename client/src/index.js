@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';  
-import firebase from "firebase/app";
+import firebase from "firebase/compat/app";
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TagManager from 'react-gtm-module';

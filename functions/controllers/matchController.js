@@ -32,7 +32,7 @@ module.exports = {
             updatedAt: doc.data().updatedAt,
             matchStatus: doc.data().matchStatus,
             singlePlayer: doc.data().singlePlayer,
-            collaborators: data.data().collaborators
+            collaborators: doc.data().collaborators
             });
           });
         return response.status(200).json(matches);
@@ -98,7 +98,8 @@ module.exports = {
       updatedAt: request.body.updatedAt,
       timeZone: request.body.timeZone,
       matchStatus: calculateMatchStatus(request.body.matchDateTime, request.body.createdAt, request.body.timeZone),
-      singlePlayer: request.body.singlePlayer
+      singlePlayer: request.body.singlePlayer,
+      collaborators: []
     };
 
     let document = addMatch(newMatch);
@@ -123,7 +124,8 @@ module.exports = {
         createdAt: doc.data().createdAt,
         updatedAt: doc.data().updatedAt,
         matchStatus: doc.data().matchStatus,
-        singlePlayer: doc.data().singlePlayer
+        singlePlayer: doc.data().singlePlayer,
+        collaborators: doc.data().collaborators
       };
       return response.status(200).json(matches);
     })

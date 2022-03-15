@@ -11,8 +11,8 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import firebase from "firebase/app";
-import "firebase/auth";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
 
 const styles = makeStyles({
 	paper: {

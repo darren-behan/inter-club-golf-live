@@ -13,8 +13,8 @@ import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import firebase from "firebase/app";
-import "firebase/auth";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
 
 const styles = makeStyles({
 	paper: {
@@ -82,7 +82,7 @@ function Login() {
       if (response.user.emailVerified) {
 				setIsAuthenticated(true);
 				setUserDataObj(response.user);
-				LocalStorage.set('AuthToken', `Bearer ${response.user.Aa}`);
+				LocalStorage.set('AuthToken', `Bearer ${response.user.multiFactor.user.accessToken}`);
 				setLoading(false);
 			} else {
 				response.user.sendEmailVerification(actionCodeSettings);

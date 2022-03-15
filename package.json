@@ -26,6 +26,8 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "firebase": "^8.1.2",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.1",
     "material-ui-icons": "^1.0.0-beta.36",
     "moment-timezone": "^0.5.33"
   },

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import LocalStorage from '../services/LocalStorage/LocalStorage.service';
-axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL_DEV;
 
 // In each function, we use axios to send our api route request to the server
 
@@ -8,6 +8,12 @@ const requests = {
   // Update user
   updateUser: function(userData) {
     return axios.post('/user/update', userData);
+  },
+  // Get users
+  getUsers: function(userData) {
+    return axios.get('/user/getusers', {
+      params: userData
+    });
   },
   // Returns all matches on app load
   getMatchesOnLoad: function() {

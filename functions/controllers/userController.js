@@ -24,5 +24,25 @@ module.exports = {
     .catch((err) => {
       return response.status(400).json({ error: err.code });
 		});
+  },
+  getUsers(request, response) {
+    let requestArray = [];
+    request.query.email.map(email => {
+      if (email !== "") {
+        requestArray.push({
+            email: email
+        })
+      }
+    });
+
+    admin
+    .auth()
+    .getUsers(requestArray)
+    .then((getUsersResult) => {
+      return response.status(200).json(getUsersResult);
+    })
+    .catch((err) => {
+      return response.status(400).json({ error: err.code });
+		});
   }
 }

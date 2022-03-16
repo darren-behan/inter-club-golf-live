@@ -9,6 +9,12 @@ const requests = {
   updateUser: function(userData) {
     return axios.post('/user/update', userData);
   },
+  // Get users
+  getUsers: function(userData) {
+    return axios.get('/user/getusers', {
+      params: userData
+    });
+  },
   // Returns all matches on app load
   getMatchesOnLoad: function() {
     return axios.get('/match');

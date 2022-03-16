@@ -9,6 +9,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import DeleteModal from "../components/Modals/DeleteModal";
 import UpdateModal from "../components/Modals/UpdateModal";
+import AddCollaboratorsModal from "../components/Modals/AddCollaboratorsModal";
 import { Container, Row, Table, Button, Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
@@ -18,11 +19,10 @@ import 'moment-timezone';
 let isEmpty = require('lodash.isempty');
 
 function Match() {
-  const { match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, timeZone, updateModalShow, setUpdateModalShow, setUpdateMatchObj } = useContext(DataAreaContext);
+  const { match, setMatchObj, userDataObj, isAuthenticated, deleteModalShow, setDeleteModalShow, timeZone, updateModalShow, setUpdateModalShow, setUpdateMatchObj, addCollaboratorsModalShow, setAddCollaboratorsModalShow } = useContext(DataAreaContext);
   let { id } = useParams();
   let individualMatches;
   let sortedIndividualMatches;
-  console.log(match);
 
   useEffect(() => {
     setUpdateMatchObj({...match});
@@ -185,6 +185,10 @@ function Match() {
           show={updateModalShow}
           onHide={() => setUpdateModalShow(false)} 
         />
+        <AddCollaboratorsModal
+          show={addCollaboratorsModalShow}
+          onHide={() => setAddCollaboratorsModalShow(false)} 
+        />
         <Header />
         <Container>
           <Row style={{ marginTop: '10px'}}>
@@ -272,36 +276,73 @@ function Match() {
               </tbody>
             </Table>
           </Row>
-          {(isAuthenticated) && (match.createdByUid === userDataObj.uid) ? (
+          {isAuthenticated ? (
             <>
-              <Row className="d-grid gap-2">
-                <Button
-                  variant="outline-success"
-                  size="sm"
-                  className="float-left"
-                  onClick={() =>
-                    setUpdateModalShow(true)
-                  }
-                >
-                  Update
-                </Button>
-                <Button
-                  variant="danger"
-                  size="sm"
-                  className="float-right"
-                  onClick={() =>
-                    setDeleteModalShow(true)
-                  }
-                >
-                  Delete
-                </Button>
-              </Row>
-              <br />
+              {(match.createdByUid === userDataObj.uid) ?
+                <>
+                <Row className="d-grid gap-2">
+                  <Button
+                    variant="success"
+                    size="sm"
+                    className="update-match"
+                    onClick={() =>
+                      setUpdateModalShow(true)
+                    }
+                  >
+                    Update
+                  </Button>
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    className="add-match-collaborators"
+                    onClick={() =>
+                      setAddCollaboratorsModalShow(true)
+                    }
+                  >
+                    Add Collaborators
+                  </Button>
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    className="delete-match"
+                    onClick={() =>
+                      setDeleteModalShow(true)
+                    }
+                  >
+                    Delete
+                  </Button>
+                </Row>
+                <br />
+                </>
+                : (match.hasOwnProperty("collaborators") && !isEmpty(match.collaborators)) ?
+                  match.collaborators.map(collaborator => {
+                    if (collaborator.userId === userDataObj.uid) {
+                      return (
+                        <>
+                        <Row className="d-grid gap-2">
+                          <Button
+                            variant="success"
+                            size="sm"
+                            className="update-match"
+                            onClick={() =>
+                              setUpdateModalShow(true)
+                            }
+                          >
+                            Update
+                          </Button>
+                        </Row>
+                        <br />
+                        </>
+                      )
+                    }
+                  })
+                :
+                null
+              }
             </>
           ) : (
             null
-          )
-          }
+          )}
           <Row>
             <h6>
               Last updated on&nbsp;

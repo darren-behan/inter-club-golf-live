@@ -20,8 +20,8 @@ import Profile from './pages/Profile';
 import About from './pages/About';
 import PageNotFound from './pages/PageNotFound';
 import Wrapper from './components/Wrapper/index.js';
-import firebase from "firebase/app";
-import "firebase/auth";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
 
 function App() {
   // This is used to confirm the user is logged in and redirect them to the home page
@@ -56,6 +56,8 @@ function App() {
   const [updateModalShow, setUpdateModalShow] = useState(false);
   // This stores the server response on updating a match which is used to be shown to the user
   const [updateResponse, setUpdateResponse] = useState({});
+  // This stores the server response on updating a matches collaborators which is used to be shown to the user
+  const [collaboratorsUpdateResponse, setCollaboratorsUpdateResponse] = useState({});
   // This stores the request response when attempting to sign up and login
   const [userAuthResponse, setUserAuthResponse] = useState({});
   // This stores the boolean value to show & close the user auth modal for login & sign up purposes
@@ -70,6 +72,10 @@ function App() {
 	const [form, setForm] = useState(true);
   // This is used to store the matches returned based on the competition searched by the user
 	const [matchesByCompetition, setMatchesByCompetition] = useState([]);
+  // This is used to dispaly the add collaborators modal
+	const [addCollaboratorsModalShow, setAddCollaboratorsModalShow] = useState(false);
+  // This is used to store the collaborators that are being added by the match owner
+  const [collaborators, setCollaborators] = useState([]);
 
   useEffect(() => {
     authenticateUser();
@@ -92,7 +98,7 @@ function App() {
         // https://firebase.google.com/docs/reference/js/firebase.User
         setIsAuthenticated(true);
         setUserDataObj(response);
-        LocalStorage.set('AuthToken', `Bearer ${response.Aa}`);
+        LocalStorage.set('AuthToken', `Bearer ${response.multiFactor.user.accessToken}`);
       } else {
         // User is signed out
         firebase.auth().signOut();
@@ -103,7 +109,7 @@ function App() {
   return (
     <>
       <DataAreaContext.Provider
-      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, showFilters, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, updateModalShow, updateResponse, updateMatchObj, signUpObj, userAuthResponse, userAuthModalShow, createMatchResponse, createMathModalShow, sidebarOpen, form, matchesByCompetition, oldUpdateMatchObj, oldPostMatchObj, setOldPostMatchObj, setOldUpdateMatchObj, setMatchesByCompetition, setForm, setSidebarOpen, setCreateMatchModalShow, setCreateMatchResponse, setUserAuthModalShow, setUserAuthResponse, setSignUpObj, setUpdateMatchObj, setUpdateResponse, setUpdateModalShow, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShowFilters, setFilterValue, setUserDataObj }}
+      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, showFilters, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, updateModalShow, updateResponse, updateMatchObj, signUpObj, userAuthResponse, userAuthModalShow, createMatchResponse, createMathModalShow, sidebarOpen, form, matchesByCompetition, oldUpdateMatchObj, oldPostMatchObj, addCollaboratorsModalShow, collaborators, collaboratorsUpdateResponse, setCollaboratorsUpdateResponse, setCollaborators, setAddCollaboratorsModalShow, setOldPostMatchObj, setOldUpdateMatchObj, setMatchesByCompetition, setForm, setSidebarOpen, setCreateMatchModalShow, setCreateMatchResponse, setUserAuthModalShow, setUserAuthResponse, setSignUpObj, setUpdateMatchObj, setUpdateResponse, setUpdateModalShow, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShowFilters, setFilterValue, setUserDataObj }}
       >
         <Router>
           <Wrapper>

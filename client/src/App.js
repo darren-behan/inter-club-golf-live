@@ -74,7 +74,7 @@ function App() {
 	const [matchesByCompetition, setMatchesByCompetition] = useState([]);
   // This is used to dispaly the add collaborators modal
 	const [addCollaboratorsModalShow, setAddCollaboratorsModalShow] = useState(false);
-  //
+  // This is used to store the collaborators that are being added by the match owner
   const [collaborators, setCollaborators] = useState([]);
 
   useEffect(() => {

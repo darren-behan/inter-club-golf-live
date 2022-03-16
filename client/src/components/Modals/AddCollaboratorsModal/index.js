@@ -12,6 +12,7 @@ function AddCollaboratorsModal(props) {
   const { appMatchesOnLoad, match, setMatchObj, collaboratorsUpdateResponse, setCollaboratorsUpdateResponse, setAddCollaboratorsModalShow, collaborators, setCollaborators } = useContext(DataAreaContext);
 	let history = useHistory();
   const [isLoading, setLoading] = useState(false);
+  const [collaboratorsNotFound, setCollaboratorsNotFound] = useState("");
 
   useEffect(() => {
     setCollaborators([...match.collaborators]);
@@ -19,6 +20,8 @@ function AddCollaboratorsModal(props) {
 
   const handleClose = () => {
     setAddCollaboratorsModalShow(false);
+    setCollaboratorsUpdateResponse({});
+    setCollaboratorsNotFound("");
     setCollaborators([...match.collaborators]);
   }
 
@@ -44,6 +47,8 @@ function AddCollaboratorsModal(props) {
 
     API.getUsers({email: requestArr})
     .then((getUsersResult) => {
+      let collabsNotFound = "";
+
       collaboratorsFiltered.filter((collab, i) => {
         let emailKey = "email" + (i+1);
         getUsersResult.data.users.filter(users => {
@@ -53,14 +58,16 @@ function AddCollaboratorsModal(props) {
           }
         });
 
-
         getUsersResult.data.notFound.filter(users => {
           if (collab[emailKey] === users.email) {
+            collabsNotFound += users.email + ", ";
             collaboratorsFiltered.splice(i, 1);
           }
         });
       })
+
       setCollaborators([...collaboratorsFiltered]);
+      setCollaboratorsNotFound(collabsNotFound);
     })
     .then(() => {
       API.updateMatch({
@@ -100,6 +107,7 @@ function AddCollaboratorsModal(props) {
   const handleCloseClick = (matchId) => {
     setAddCollaboratorsModalShow(false);
     setCollaboratorsUpdateResponse({});
+    setCollaboratorsNotFound("");
     history.push(`/match/${matchId}`);
   }
 
@@ -125,7 +133,17 @@ function AddCollaboratorsModal(props) {
       </Modal.Header>
       <Modal.Body>
         {collaboratorsUpdateResponse.status === 200 || collaboratorsUpdateResponse.status === 400 ? (
-          `${ collaboratorsUpdateResponse.message }`
+          <>
+          {
+            isEmpty(collaboratorsNotFound) ? (
+              `${ collaboratorsUpdateResponse.message }.`
+            ) : (
+              `${ collaboratorsUpdateResponse.message }.\n
+              The following email/s ${ collaboratorsNotFound }are not registered user/s & are unable to be added as collaborators at this stage.\n
+              To be eligible to be added as a collaborator, the email is required to be a registered user.`
+            )
+          }
+          </>
         ) : (
           <AddCollaboratorsForm 
             matchCollaborators={collaborators}

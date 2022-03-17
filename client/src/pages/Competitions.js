@@ -8,7 +8,7 @@ import { useParams, useHistory } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import FiltersOffCanvas from '../components/FiltersOffCanvas';
-import { Container, Table, Spinner } from 'react-bootstrap';
+import { Container, Row, Table, Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -214,27 +214,29 @@ function Competition () {
   const renderRoundHeading = (round, matches) => {
     return (
       <>
-      <Table hover size="sm" className="caption-top" style={{ tableLayout: 'fixed' }}>
-        <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>{Lib.capitalize(round)}</caption>
-        <thead>
-          <tr>
-            <th>Home Team</th>
-            <th>Score</th>
-            <th>Away Team</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            matches.map(function(match) {
-              if (match.competitionRound.round === round) {
-                return (
-                  renderRoundMatches(match)
-                )
-              }
-            })
-          }
-        </tbody>
-      </Table>
+      <Row>
+        <Table hover size="sm" className="caption-top" style={{ tableLayout: 'fixed' }}>
+          <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>{Lib.capitalize(round)}</caption>
+          <thead>
+            <tr>
+              <th>Home Team</th>
+              <th>Score</th>
+              <th>Away Team</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              matches.map(function(match) {
+                if (match.competitionRound.round === round) {
+                  return (
+                    renderRoundMatches(match)
+                  )
+                }
+              })
+            }
+          </tbody>
+        </Table>
+      </Row>
       </>
     )
   }
@@ -295,11 +297,11 @@ function Competition () {
   
   return (
     <>
-    <Container fluid={ true } className="p-0">
-      <FiltersOffCanvas
-        matches={matchesByCompetition}
-      />
-      <Header />
+    <FiltersOffCanvas
+      matches={matchesByCompetition}
+    />
+    <Header />
+    <Container>
       <div>
         <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
           <h4>{competitionName}</h4>
@@ -360,8 +362,8 @@ function Competition () {
           )}
         />
       </div>
-      <Footer />
     </Container>
+    <Footer />
     </>
   );
 }

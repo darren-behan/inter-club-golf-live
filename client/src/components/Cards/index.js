@@ -70,7 +70,12 @@ function Cards(props) {
   }
 
   function handleClick(matchId) {
-    setMatchObj(props.match);
+    setMatchObj({
+      ...props.match,
+      "competitionRound": {...props.match.competitionRound},
+      "individualMatch": [...props.match.individualMatch],
+      "collaborators": [...props.match.collaborators]
+    });
     const path = "/match/" + matchId;
     history.push(path);
   }

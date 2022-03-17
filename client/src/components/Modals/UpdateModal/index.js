@@ -14,8 +14,8 @@ function UpdateModal(props) {
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    setUpdateMatchObj({...match});
-    setOldUpdateMatchObj({...match});
+    setUpdateMatchObj(JSON.parse(JSON.stringify({...match})));
+    setOldUpdateMatchObj(JSON.parse(JSON.stringify({...match})));
   }, []);
 
   const updateOverallMatchScore = (object) => {
@@ -40,7 +40,7 @@ function UpdateModal(props) {
 
   const handleClose = () => {
     setUpdateModalShow(false);
-    setUpdateMatchObj({...match});
+    setUpdateMatchObj(JSON.parse(JSON.stringify({...match})));
   }
 
   const handleUpdateClick = (event) => {
@@ -71,7 +71,12 @@ function UpdateModal(props) {
         message: response.data.message,
         status: response.status
       });
-      setMatchObj({...updateMatchObj});
+      setMatchObj({
+        ...updateMatchObj,
+        "competitionRound": {...updateMatchObj.competitionRound},
+        "individualMatch": [...updateMatchObj.individualMatch],
+        "collaborators": [...updateMatchObj.collaborators]
+      });
       for (let i = 0; i < appMatchesOnLoad.length; i++) {
         if(appMatchesOnLoad[i].matchId === updateMatchObj.matchId) {
           appMatchesOnLoad[i] = updateMatchObj;
@@ -90,6 +95,8 @@ function UpdateModal(props) {
   const handleCloseClick = (matchId) => {
     setUpdateModalShow(false);
     setUpdateResponse({});
+    setUpdateMatchObj(JSON.parse(JSON.stringify({...match})));
+    setOldUpdateMatchObj(JSON.parse(JSON.stringify({...match})));
     history.push(`/match/${matchId}`);
   }
 

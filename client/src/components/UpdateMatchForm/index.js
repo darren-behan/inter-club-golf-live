@@ -11,6 +11,7 @@ import Divider from '@material-ui/core/Divider';
 import moment from 'moment';
 import 'moment-timezone';
 import competition from '../../assets/data/competitions.json';
+import rounds from '../../assets/data/competitionRounds.json';
 let isEmpty = require('lodash.isempty');
 
 const styles = makeStyles((theme) => ({
@@ -64,44 +65,8 @@ function UpdateMatch() {
 	const classes = styles();
 
   useEffect(() => {
-    setOldUpdateMatchObj({...updateMatchObj});
+    setOldUpdateMatchObj(JSON.parse(JSON.stringify({...updateMatchObj})));
   }, [updateMatchObj]);
-
-	const rounds = [
-		{
-			round: '1'
-		},
-		{
-			round: '2'
-		},
-		{
-			round: '3'
-		},
-		{
-			round: '4'
-		},
-		{
-			round: '5'
-		},
-		{
-			round: '6'
-		},
-		{
-			round: 'last 32'
-		},
-		{
-			round: 'last 16'
-		},
-		{
-			round: 'quarter finals'
-		},
-		{
-			round: 'semi finals'
-		},
-		{
-			round: 'final'
-		},
-	];
 	
 	const regions = [
 		{
@@ -297,6 +262,15 @@ function UpdateMatch() {
 		event.preventDefault();
     const { name, value } = event.target;
 
+		if (name === "competitionRound") {
+			rounds.map(function(round) {
+				if (value === round.round) {
+					setUpdateMatchObj({...updateMatchObj, [name]: {...round}});
+				}
+			});
+			return;
+		}
+
 		if (name === "neutralVenueName" || name === "teamOneName" || name === "teamTwoName") {
 			updateIndividualMatchDestination(name, value);
 		}
@@ -318,7 +292,7 @@ function UpdateMatch() {
 			setUpdateMatchObj({...updateMatchObj, [key]: valueDateTime});
 			return;
 		}
-
+		
 		setUpdateMatchObj({...updateMatchObj, [name]: value});
   };
 
@@ -329,7 +303,7 @@ function UpdateMatch() {
 			let individualMatch = updateMatchObj.individualMatch[i];
 			if (individualMatch.matchDestination === oldValue) {
 				individualMatch.matchDestination = value;
-				setUpdateMatchObj({...updateMatchObj, "individualMatch": updateMatchObj.individualMatch});
+				setUpdateMatchObj(JSON.parse(JSON.stringify({...updateMatchObj})));
 			}
 		}
 	}
@@ -340,22 +314,18 @@ function UpdateMatch() {
     const { name, value } = event.target;
 		const id = isEmpty(event.target.id) ? child.props.id : event.target.id;
 
-    for (let i = 0; i < updateMatchObj.individualMatch.length; i++) {
-      if (parseInt(id) === i) {
-				let object = updateMatchObj.individualMatch[i];
-        for (const key in object) {
-          if (key === name) {
-						if (value != "" && (name === "awayMatchScore" || name === "homeMatchScore")) {
-							object[key] = parseInt(value);
-						} else {
-							object[key] = value;
-						}
-						setUpdateMatchObj({...updateMatchObj, "individualMatch": updateMatchObj.individualMatch});
-          }
-        }
-        return;
-      }
-    }
+		updateMatchObj.individualMatch.map((object, i) => {
+			if (parseInt(id) === i) {
+				if (value != "" && (name === "awayMatchScore" || name === "homeMatchScore")) {
+					object[name] = parseInt(value);
+					return object;
+				}
+				
+				object[name] = value
+				return object;
+			}
+		});
+		setUpdateMatchObj(JSON.parse(JSON.stringify({...updateMatchObj})));
   };
 
 	let homeTeamName = updateMatchObj['teamOneName'];

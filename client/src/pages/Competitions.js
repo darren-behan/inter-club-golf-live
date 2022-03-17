@@ -261,7 +261,12 @@ function Competition () {
 
   const onClickRow = (e, match) => {
     e.preventDefault();
-    setMatchObj(match);
+    setMatchObj({
+      ...match,
+      "competitionRound": {...match.competitionRound},
+      "individualMatch": [...match.individualMatch],
+      "collaborators": [...match.collaborators]
+    });
     const path = "/match/" + match.matchId;
     history.push(path);
   }

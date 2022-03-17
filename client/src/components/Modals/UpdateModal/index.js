@@ -9,7 +9,7 @@ import 'moment-timezone';
 let isEmpty = require('lodash.isempty');
 
 function UpdateModal(props) {
-  const { setUpdateModalShow, setMatchObj, match, setUpdateResponse, updateResponse, updateMatchObj, setUpdateMatchObj, setOldUpdateMatchObj, appMatchesOnLoad } = useContext(DataAreaContext);
+  const { setUpdateModalShow, setMatchObj, match, setUpdateResponse, updateResponse, updateMatchObj, setUpdateMatchObj, setOldUpdateMatchObj, appMatchesOnLoad, isMatchEdited, setIsMatchEdited } = useContext(DataAreaContext);
 	let history = useHistory();
   const [isLoading, setLoading] = useState(false);
 
@@ -41,6 +41,7 @@ function UpdateModal(props) {
   const handleClose = () => {
     setUpdateModalShow(false);
     setUpdateMatchObj(JSON.parse(JSON.stringify({...match})));
+    setIsMatchEdited(true);
   }
 
   const handleUpdateClick = (event) => {
@@ -97,6 +98,7 @@ function UpdateModal(props) {
     setUpdateResponse({});
     setUpdateMatchObj(JSON.parse(JSON.stringify({...match})));
     setOldUpdateMatchObj(JSON.parse(JSON.stringify({...match})));
+    setIsMatchEdited(true);
     history.push(`/match/${matchId}`);
   }
 
@@ -135,6 +137,7 @@ function UpdateModal(props) {
           <Button
           onClick={ (e) => handleUpdateClick(e) }
           variant="outline-success"
+          disabled={isMatchEdited}
           >
           {isLoading ?
             <Spinner animation="border" style={{ color: "#0a66c2" }} /> 

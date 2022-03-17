@@ -60,7 +60,7 @@ const styles = makeStyles((theme) => ({
 }));
 
 function UpdateMatch() {
-	const { updateMatchObj, setUpdateMatchObj, timeZone, oldUpdateMatchObj, setOldUpdateMatchObj } = useContext(DataAreaContext);
+	const { updateMatchObj, setUpdateMatchObj, timeZone, oldUpdateMatchObj, setOldUpdateMatchObj, setIsMatchEdited } = useContext(DataAreaContext);
   const [errors, setErrors] = useState({});
 	const classes = styles();
 
@@ -266,6 +266,7 @@ function UpdateMatch() {
 			rounds.map(function(round) {
 				if (value === round.round) {
 					setUpdateMatchObj({...updateMatchObj, [name]: {...round}});
+					setIsMatchEdited(false);
 				}
 			});
 			return;
@@ -290,10 +291,12 @@ function UpdateMatch() {
 			}
 
 			setUpdateMatchObj({...updateMatchObj, [key]: valueDateTime});
+			setIsMatchEdited(false);
 			return;
 		}
 		
 		setUpdateMatchObj({...updateMatchObj, [name]: value});
+		setIsMatchEdited(false);
   };
 
 	function updateIndividualMatchDestination(name, value) {
@@ -304,6 +307,7 @@ function UpdateMatch() {
 			if (individualMatch.matchDestination === oldValue) {
 				individualMatch.matchDestination = value;
 				setUpdateMatchObj(JSON.parse(JSON.stringify({...updateMatchObj})));
+				setIsMatchEdited(false);
 			}
 		}
 	}
@@ -326,6 +330,7 @@ function UpdateMatch() {
 			}
 		});
 		setUpdateMatchObj(JSON.parse(JSON.stringify({...updateMatchObj})));
+		setIsMatchEdited(false);
   };
 
 	let homeTeamName = updateMatchObj['teamOneName'];

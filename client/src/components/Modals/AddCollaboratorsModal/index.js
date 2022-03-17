@@ -9,7 +9,7 @@ import 'moment-timezone';
 let isEmpty = require('lodash.isempty');
 
 function AddCollaboratorsModal(props) {
-  const { appMatchesOnLoad, match, setMatchObj, collaboratorsUpdateResponse, setCollaboratorsUpdateResponse, setAddCollaboratorsModalShow, collaborators, setCollaborators } = useContext(DataAreaContext);
+  const { appMatchesOnLoad, match, setMatchObj, collaboratorsUpdateResponse, setCollaboratorsUpdateResponse, setAddCollaboratorsModalShow, collaborators, setCollaborators, isCollaboratorsEdited, setIsCollaboratorsEdited } = useContext(DataAreaContext);
 	let history = useHistory();
   const [isLoading, setLoading] = useState(false);
   const [collaboratorsNotFound, setCollaboratorsNotFound] = useState("");
@@ -22,6 +22,7 @@ function AddCollaboratorsModal(props) {
     setAddCollaboratorsModalShow(false);
     setCollaboratorsUpdateResponse({});
     setCollaboratorsNotFound("");
+    setIsCollaboratorsEdited(true);
     setCollaborators([...match.collaborators]);
   }
 
@@ -137,6 +138,7 @@ function AddCollaboratorsModal(props) {
     setAddCollaboratorsModalShow(false);
     setCollaboratorsUpdateResponse({});
     setCollaboratorsNotFound("");
+    setIsCollaboratorsEdited(true);
     history.push(`/match/${matchId}`);
   }
 
@@ -191,6 +193,7 @@ function AddCollaboratorsModal(props) {
           <Button
           onClick={ (e) => handleAddCollaboratorsClick(e) }
           variant="outline-success"
+          disabled={isCollaboratorsEdited}
           >
           {isLoading ?
             <Spinner animation="border" style={{ color: "#0a66c2" }} /> 

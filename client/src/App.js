@@ -76,6 +76,8 @@ function App() {
 	const [addCollaboratorsModalShow, setAddCollaboratorsModalShow] = useState(false);
   // This is used to store the collaborators that are being added by the match owner
   const [collaborators, setCollaborators] = useState([]);
+  // This is used to store if the collaborators have been amended and will enable to Add Collaborators submit button
+  const [isCollaboratorsEdited, setIsCollaboratorsEdited] = useState(true);
 
   useEffect(() => {
     authenticateUser();
@@ -109,7 +111,7 @@ function App() {
   return (
     <>
       <DataAreaContext.Provider
-      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, showFilters, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, updateModalShow, updateResponse, updateMatchObj, signUpObj, userAuthResponse, userAuthModalShow, createMatchResponse, createMathModalShow, sidebarOpen, form, matchesByCompetition, oldUpdateMatchObj, oldPostMatchObj, addCollaboratorsModalShow, collaborators, collaboratorsUpdateResponse, setCollaboratorsUpdateResponse, setCollaborators, setAddCollaboratorsModalShow, setOldPostMatchObj, setOldUpdateMatchObj, setMatchesByCompetition, setForm, setSidebarOpen, setCreateMatchModalShow, setCreateMatchResponse, setUserAuthModalShow, setUserAuthResponse, setSignUpObj, setUpdateMatchObj, setUpdateResponse, setUpdateModalShow, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShowFilters, setFilterValue, setUserDataObj }}
+      value={{ isAuthenticated, appMatchesOnLoad, loginDataObj, postMatchObj, showFilters, filterValue, userDataObj, match, deleteModalShow, deleteResponse, timeZone, updateModalShow, updateResponse, updateMatchObj, signUpObj, userAuthResponse, userAuthModalShow, createMatchResponse, createMathModalShow, sidebarOpen, form, matchesByCompetition, oldUpdateMatchObj, oldPostMatchObj, addCollaboratorsModalShow, collaborators, collaboratorsUpdateResponse, isCollaboratorsEdited, setIsCollaboratorsEdited, setCollaboratorsUpdateResponse, setCollaborators, setAddCollaboratorsModalShow, setOldPostMatchObj, setOldUpdateMatchObj, setMatchesByCompetition, setForm, setSidebarOpen, setCreateMatchModalShow, setCreateMatchResponse, setUserAuthModalShow, setUserAuthResponse, setSignUpObj, setUpdateMatchObj, setUpdateResponse, setUpdateModalShow, setDeleteResponse, setDeleteModalShow, setMatchObj, setIsAuthenticated, setAppMatchesOnLoad, setLoginDataObj, setPostMatchObj, setShowFilters, setFilterValue, setUserDataObj }}
       >
         <Router>
           <Wrapper>

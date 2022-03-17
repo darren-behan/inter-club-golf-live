@@ -54,7 +54,7 @@ const styles = makeStyles((theme) => ({
 }));
 
 function AddCollaborators() {
-	const { collaborators, setCollaborators } = useContext(DataAreaContext);
+	const { collaborators, setCollaborators, setIsCollaboratorsEdited } = useContext(DataAreaContext);
   const [errors, setErrors] = useState({});
 	const classes = styles();
 	
@@ -145,6 +145,7 @@ function AddCollaborators() {
 		}
 
     setCollaborators([...collaborators]);
+		setIsCollaboratorsEdited(false);
   };
 
 	return (

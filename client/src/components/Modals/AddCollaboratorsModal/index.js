@@ -45,34 +45,68 @@ function AddCollaboratorsModal(props) {
       };
     });
 
-    API.getUsers({email: requestArr})
-    .then((getUsersResult) => {
-      let collabsNotFound = "";
-
-      collaboratorsFiltered.filter((collab, i) => {
-        let emailKey = "email" + (i+1);
-        getUsersResult.data.users.filter(users => {
-          if (collab[emailKey] === users.email) {
-            collab.userId = users.uid;
-				    collab["dateUpdated"] = moment().format();
+    if (!isEmpty(requestArr)) {
+      API.getUsers({email: requestArr})
+      .then((getUsersResult) => {
+        let collabsNotFound = "";
+  
+        collaboratorsFiltered.filter((collab, i) => {
+          let emailKey = "email" + (i+1);
+          getUsersResult.data.users.filter(users => {
+            if (collab[emailKey] === users.email) {
+              collab.userId = users.uid;
+              collab["dateUpdated"] = moment().format();
+            }
+          });
+  
+          getUsersResult.data.notFound.filter(users => {
+            if (collab[emailKey] === users.email) {
+              collabsNotFound += users.email + ", ";
+              collaboratorsFiltered.splice(i, 1);
+            }
+          });
+        })
+  
+        setCollaborators([...collaboratorsFiltered]);
+        setCollaboratorsNotFound(collabsNotFound);
+      })
+      .then(() => {
+        API.updateMatch({
+          matchId: match.matchId,
+          collaborators: collaboratorsFiltered,
+          updatedAt: moment().format()
+        })
+        .then((response) => {
+          setCollaboratorsUpdateResponse({
+            message: response.data.message,
+            status: response.status
+          });
+          setMatchObj({...match, "collaborators": collaboratorsFiltered, "updatedAt": moment().format()});
+          for (let i = 0; i < appMatchesOnLoad.length; i++) {
+            if(appMatchesOnLoad[i].matchId === match.matchId) {
+              appMatchesOnLoad[i].collaborators = collaboratorsFiltered;
+              appMatchesOnLoad[i].updatedAt = moment().format();
+            }
           }
-        });
-
-        getUsersResult.data.notFound.filter(users => {
-          if (collab[emailKey] === users.email) {
-            collabsNotFound += users.email + ", ";
-            collaboratorsFiltered.splice(i, 1);
-          }
+          setLoading(false);
+        })
+        .catch((error) => {
+          setCollaboratorsUpdateResponse({
+            message: error.message,
+            status: 400
+          });
         });
       })
-
-      setCollaborators([...collaboratorsFiltered]);
-      setCollaboratorsNotFound(collabsNotFound);
-    })
-    .then(() => {
+      .catch((error) => {
+        setCollaboratorsUpdateResponse({
+          message: error.message,
+          status: 400
+        });
+      });
+    } else {
       API.updateMatch({
         matchId: match.matchId,
-        collaborators: collaboratorsFiltered,
+        collaborators: [],
         updatedAt: moment().format()
       })
       .then((response) => {
@@ -80,13 +114,14 @@ function AddCollaboratorsModal(props) {
           message: response.data.message,
           status: response.status
         });
-        setMatchObj({...match, "collaborators": collaboratorsFiltered, "updatedAt": moment().format()});
+        setMatchObj({...match, "collaborators": collaborators, "updatedAt": moment().format()});
         for (let i = 0; i < appMatchesOnLoad.length; i++) {
           if(appMatchesOnLoad[i].matchId === match.matchId) {
-            appMatchesOnLoad[i].collaborators = collaboratorsFiltered;
+            appMatchesOnLoad[i].collaborators = collaborators;
             appMatchesOnLoad[i].updatedAt = moment().format();
           }
         }
+        setCollaborators([]);
         setLoading(false);
       })
       .catch((error) => {
@@ -95,13 +130,7 @@ function AddCollaboratorsModal(props) {
           status: 400
         });
       });
-    })
-    .catch((error) => {
-      setCollaboratorsUpdateResponse({
-        message: error.message,
-        status: 400
-      });
-    });
+    }
   };
 
   const handleCloseClick = (matchId) => {

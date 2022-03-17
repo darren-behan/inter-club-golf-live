@@ -15,7 +15,7 @@ function AddCollaboratorsModal(props) {
   const [collaboratorsNotFound, setCollaboratorsNotFound] = useState("");
 
   useEffect(() => {
-    setCollaborators([...match.collaborators]);
+    setCollaborators(JSON.parse(JSON.stringify({...match})));
   }, []);
 
   const handleClose = () => {
@@ -23,7 +23,7 @@ function AddCollaboratorsModal(props) {
     setCollaboratorsUpdateResponse({});
     setCollaboratorsNotFound("");
     setIsCollaboratorsEdited(true);
-    setCollaborators([...match.collaborators]);
+    setCollaborators(JSON.parse(JSON.stringify({...match})));
   }
 
   const isEmail = (email) => {
@@ -38,7 +38,7 @@ function AddCollaboratorsModal(props) {
     setLoading(true);
     
     let requestArr = [];
-    let collaboratorsFiltered = collaborators.filter((collab, i) => {
+    let collaboratorsFiltered = collaborators.collaborators.filter((collab, i) => {
       let emailKey = "email" + (i+1);
       if (collab[emailKey] !== "" && isEmail(collab[emailKey])) {
         requestArr.push(collab[emailKey]);
@@ -68,7 +68,7 @@ function AddCollaboratorsModal(props) {
           });
         })
   
-        setCollaborators([...collaboratorsFiltered]);
+        setCollaborators(JSON.parse(JSON.stringify({...collaborators})));
         setCollaboratorsNotFound(collabsNotFound);
       })
       .then(() => {
@@ -115,14 +115,14 @@ function AddCollaboratorsModal(props) {
           message: response.data.message,
           status: response.status
         });
-        setMatchObj({...match, "collaborators": collaborators, "updatedAt": moment().format()});
+        setMatchObj({...match, "collaborators": [], "updatedAt": moment().format()});
         for (let i = 0; i < appMatchesOnLoad.length; i++) {
           if(appMatchesOnLoad[i].matchId === match.matchId) {
             appMatchesOnLoad[i].collaborators = collaborators;
             appMatchesOnLoad[i].updatedAt = moment().format();
           }
         }
-        setCollaborators([]);
+        setCollaborators({...collaborators, "collaborators": [], "updatedAt": moment().format()});
         setLoading(false);
       })
       .catch((error) => {

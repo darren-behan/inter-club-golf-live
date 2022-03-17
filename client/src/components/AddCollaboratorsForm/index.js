@@ -127,7 +127,7 @@ function AddCollaborators() {
     const { name, value } = event.target;
 		let isUpdated;
 
-		isUpdated = collaborators.filter((object) => {
+		isUpdated = collaborators.collaborators.filter((object) => {
 			if (object.hasOwnProperty(name)) {
 				object[name] = value;
 				object["dateUpdated"] = moment().format();
@@ -136,7 +136,7 @@ function AddCollaborators() {
 		})
 
 		if (isEmpty(isUpdated)) {
-			collaborators.push({
+			collaborators.collaborators.push({
 				"dateAdded": moment().format(),
 				"dateUpdated": moment().format(),
 				[name]: value,
@@ -144,7 +144,7 @@ function AddCollaborators() {
 			})
 		}
 
-    setCollaborators([...collaborators]);
+    setCollaborators(JSON.parse(JSON.stringify({...collaborators})));
 		setIsCollaboratorsEdited(false);
   };
 
@@ -163,7 +163,7 @@ function AddCollaborators() {
 								variant="outlined"
 								margin="normal"
 								required={inputFieldValue.required}
-								value={collaborators[i] !== undefined ? collaborators[i][emailKey] : ""}
+								value={collaborators.collaborators[i] !== undefined ? collaborators.collaborators[i][emailKey] : ""}
 								fullWidth={inputFieldValue.fullWidth}
 								id={inputFieldValue.id}
 								label={inputFieldValue.label}

@@ -75,7 +75,7 @@ function App() {
   // This is used to dispaly the add collaborators modal
 	const [addCollaboratorsModalShow, setAddCollaboratorsModalShow] = useState(false);
   // This is used to store the collaborators that are being added by the match owner
-  const [collaborators, setCollaborators] = useState([]);
+  const [collaborators, setCollaborators] = useState({});
   // This is used to store if the collaborators have been amended and will enable to Add Collaborators submit button
   const [isCollaboratorsEdited, setIsCollaboratorsEdited] = useState(true);
   // This is used to store if a match has been amended and will enable to Update Match submit button

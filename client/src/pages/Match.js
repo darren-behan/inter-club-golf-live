@@ -25,10 +25,11 @@ function Match() {
   let sortedIndividualMatches;
 
   useEffect(() => {
-    setUpdateMatchObj({...match});
-    if (!isEmpty(match)) return;
-    getMatchOnLoad();
-    setUpdateMatchObj({...match});
+    if (!isEmpty(match)) {
+      setUpdateMatchObj(JSON.parse(JSON.stringify({...match})));
+    } else {
+      getMatchOnLoad();
+    }
   }, []);
 
   async function getMatchOnLoad() {

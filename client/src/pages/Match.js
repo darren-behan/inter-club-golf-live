@@ -10,10 +10,11 @@ import Footer from "../components/Footer";
 import DeleteModal from "../components/Modals/DeleteModal";
 import UpdateModal from "../components/Modals/UpdateModal";
 import AddCollaboratorsModal from "../components/Modals/AddCollaboratorsModal";
-import { Container, Row, Table, Button, Spinner } from 'react-bootstrap';
+import { Container, Row, Table, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { ShinyBlock, Space } from '../components/SkeletonBuildingBlocks/SkeletonBuildingBlocks';
 import Moment from 'react-moment';
 import 'moment-timezone';
 let isEmpty = require('lodash.isempty');
@@ -167,10 +168,15 @@ function Match() {
           <Header />
           <Container>
             <Row>
-              <div style={{ textAlign: "center" }}>
+              <div>
                 <br />
                 <br />
-                <Spinner animation="grow" style={{ color: "#0a66c2" }} />
+                <ShinyBlock height="1.5rem" />
+                <Space height="1rem" />
+                <ShinyBlock height="12rem" />
+                <Space height="1rem" />
+                <ShinyBlock height="12rem" />
+                <Space height="1rem" />
               </div>
             </Row>
           </Container>

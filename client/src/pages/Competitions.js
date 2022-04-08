@@ -8,10 +8,11 @@ import { useParams, useHistory } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import FiltersOffCanvas from '../components/FiltersOffCanvas';
-import { Container, Row, Table, Spinner } from 'react-bootstrap';
+import { Container, Row, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { ShinyBlock, Space } from '../components/SkeletonBuildingBlocks/SkeletonBuildingBlocks';
 import moment from 'moment';
 
 function Competition () {
@@ -322,11 +323,16 @@ function Competition () {
               </div>
               :
               <>
-              <br />
-              <div style={{ textAlign: "center" }}>
-                <Spinner animation="grow" style={{ color: "#0a66c2" }} />
+              <div className="py-5">
+                <br />
+                <ShinyBlock height="1.5rem" />
+                <Space height="1rem" />
+                <ShinyBlock height="12rem" />
+                <Space height="1rem" />
+                <ShinyBlock height="12rem" />
+                <Space height="1rem" />
+                <br />
               </div>
-              <br />
               </>
             }
             </>

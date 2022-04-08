@@ -4,7 +4,8 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ComboBox from '../components/ComboBox';
 import Slider from '../components/Slider';
-import { Container, Row, Col, Spinner } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
+import { ShinyBlock, Space } from '../components/SkeletonBuildingBlocks/SkeletonBuildingBlocks';
 import { IsEmpty } from "react-lodash";
 import AdSense from 'react-adsense';
 import { isEmpty } from 'lodash';
@@ -74,9 +75,16 @@ function Home() {
       value={appMatchesOnLoad}
       yes={() =>
         <>
-        <Row style={{ justifyContent: "center" }}>
-          <Spinner animation="grow" style={{ color: "#0a66c2" }} />
-        </Row>
+        <div className="container px-3 py-5">
+          <br />
+          <br />
+          <ShinyBlock height="1.5rem" />
+          <Space height="1rem" />
+          <ShinyBlock height="12rem" />
+          <Space height="1rem" />
+          <ShinyBlock height="12rem" />
+          <Space height="1rem" />
+        </div>
         <br />
         </>
       }

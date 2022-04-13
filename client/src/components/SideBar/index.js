@@ -6,7 +6,7 @@ import LocalStorage from '../../services/LocalStorage/LocalStorage.service';
 import { useLocation, Link } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faGolfBall, faSignInAlt, faUserPlus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faGolfBall, faSignInAlt, faUserPlus, faUser, faPlus } from '@fortawesome/free-solid-svg-icons';
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 
@@ -94,6 +94,12 @@ function SideBar() {
           </>
         ) : (
           <>
+          <Nav.Item className="mx-0">
+            <Nav.Link className='px-0 py-4 pr-md-0' as={ Link } to={ "/profile" } eventKey={ "/profile" } id="profile" onClick={() => onClick()}>
+              <FontAwesomeIcon icon={ faUser } className='fa-lg'/>
+              <span className='mb-0'> Profile</span>
+            </Nav.Link>
+          </Nav.Item>
           <Nav.Item className="mx-0">
             <Nav.Link className='px-0 py-4 pr-md-0' as={ Link } to={ "/usermatches/" + userDataObj.uid } eventKey={ "/usermatches/" + userDataObj.uid } id="usermatches" onClick={() => onClick()}>
               <FontAwesomeIcon icon={ faGolfBall } className='fa-lg'/>

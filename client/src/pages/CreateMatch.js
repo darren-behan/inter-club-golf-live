@@ -9,7 +9,7 @@ function Home() {
   return (
     <>
     <Header />
-    <Container>
+    <Container style={{ marginBottom: "350px" }}>
       <PostMatchForm />
     </Container>
     <Footer />

@@ -134,7 +134,7 @@ function App() {
               <Route exact path={'/creatematch'}>
                 {!isAuthenticated ? <Redirect to="/login" /> : <CreateMatch />}
               </Route>
-              <Route exact path={'/profile'}>
+              <Route exact path={'/profile/:id'}>
                 {!isAuthenticated ? <Redirect to="/login" /> : <Profile />}
               </Route>
               <Route exact path='*' component={PageNotFound} />

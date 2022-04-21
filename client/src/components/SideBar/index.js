@@ -95,7 +95,7 @@ function SideBar() {
         ) : (
           <>
           <Nav.Item className="mx-0">
-            <Nav.Link className='px-0 py-4 pr-md-0' as={ Link } to={ "/profile" } eventKey={ "/profile" } id="profile" onClick={() => onClick()}>
+            <Nav.Link className='px-0 py-4 pr-md-0' as={ Link } to={ "/profile/" + userDataObj.uid } eventKey={ "/profile/" + userDataObj.uid } id="profile" onClick={() => onClick()}>
               <FontAwesomeIcon icon={ faUser } className='fa-lg'/>
               <span className='mb-0'> Profile</span>
             </Nav.Link>

@@ -8,7 +8,7 @@ import { Container, Navbar, Button, NavLink } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
-function Header() {
+function Header(props) {
   const { setShowFilters, sidebarOpen, setSidebarOpen, userDataObj } = useContext(DataAreaContext);
   const location = useLocation();
   const node = useRef();
@@ -26,7 +26,7 @@ function Header() {
             Inter Club Golf Ireland
           </NavLink>
         </Navbar.Brand>
-        {(location.pathname === `/competition/${competition}` || location.pathname === `/usermatches/${userDataObj.uid}`) ? (
+        {(location.pathname === `/competition/${competition}` || location.pathname === `/usermatches/${userDataObj.uid}`  || (location.pathname === `/profile/${userDataObj.uid}` && (props.activeRender === "userMatches" || props.activeRender === "collaboratingMatches"))) ? (
           <Button
             onClick={() => setShowFilters(true)}
             variant="outline-light"

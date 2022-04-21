@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import DataAreaContext from '../utils/DataAreaContext';
 import Lib from '../utils/Lib';
 import { Navbar, Nav } from 'react-bootstrap';
@@ -6,16 +6,54 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGolfBall, faUser } from '@fortawesome/free-solid-svg-icons';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import FiltersOffCanvas from '../components/FiltersOffCanvas';
 import { Container, Row, Col } from 'react-bootstrap';
 
 function Profile() {
-  const { userDataObj } = useContext(DataAreaContext);
+  const { appMatchesOnLoad, filterValue, setFilterValue, show, userDataObj } = useContext(DataAreaContext);
   const [componentToRender, setComponentToRender] = useState("userMatches");
+  let filterMatchesByUid;
+  let matchYears = [];
+
+  useEffect(() => {
+    setFilterValue({
+      year: "",
+      region: "",
+      round: "",
+      golfClub: ""
+    });
+  }, []);
+
+  useEffect(() => {
+    setFilterValue({
+      year: "",
+      region: "",
+      round: "",
+      golfClub: ""
+    });
+  }, [componentToRender]);
+
+  if (Object.keys(userDataObj).length > 0) {
+    filterMatchesByUid = appMatchesOnLoad.filter(match => match.createdByUid === userDataObj.uid)
+  } else {
+    filterMatchesByUid = []
+  }
+
+  const sortedMatchesByMatchDateTime = filterMatchesByUid.sort(function(a, b) {
+    return new Date(b.matchDateTime) - new Date(a.matchDateTime);
+  });
 
   return (
     <>
-    <Header />
-    <Container fluid className="profile-container d-flex flex-column px-0" style={{ boxShadow: "0 0 4px rgba(0,0,0,.1)" }}>  
+    <Header activeRender={ componentToRender } />
+    <Container fluid className="profile-container d-flex flex-column px-0" style={{ boxShadow: "0 0 4px rgba(0,0,0,.1)" }}>
+      <Row 
+        className={(show) ? 'mt-3 mx-0' : ''}
+        style={{ backgroundColor: '#ffffff', boxShadow: '0 0 4px rgba(0,0,0,.1)', borderRadius: '.25rem' }}>
+        <FiltersOffCanvas 
+          matches={sortedMatchesByMatchDateTime}
+        />
+      </Row>  
       <Row className="flex-fill mx-0">
         <Col sm="12" md="3" lg="2" className="px-3" style={{ backgroundColor: "rgb(255, 255, 255)", boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 4px" }}>
           <Row>

@@ -42,6 +42,89 @@ module.exports = {
         return response.status(500).json({ error: err.code});
       });
   },
+  getUserMatches(request, response) {
+    const userId = request.params.userid;
+    const isUserMatches = request.query.matchtype === 'userMatches' ? true : false;
+    let matches = [];
+
+    if (isUserMatches) {
+      db
+      .collection('matches')
+      .where('createdByUid', '==', userId)
+      .get()
+      .then((data) => {
+        data.forEach((doc) => {
+          matches.push({
+            matchId: doc.id,
+            competitionName: doc.data().competitionName,
+            competitionConcatRegion: doc.data().competitionConcatRegion,
+            competitionRegion: doc.data().competitionRegion,
+            competitionRegionArea: doc.data().competitionRegionArea,
+            competitionRound: doc.data().competitionRound,
+            matchDateTime: doc.data().matchDateTime,
+            numIndividualMatches: doc.data().numIndividualMatches,
+            teamOneName: doc.data().teamOneName,
+            teamTwoName: doc.data().teamTwoName,
+            teamOneScore: doc.data().teamOneScore,
+            teamTwoScore: doc.data().teamTwoScore,
+            neutralVenueName: doc.data().neutralVenueName,
+            individualMatch: doc.data().individualMatch,
+            createdByUid: doc.data().createdByUid,
+            createdAt: doc.data().createdAt,
+            updatedAt: doc.data().updatedAt,
+            matchStatus: doc.data().matchStatus,
+            singlePlayer: doc.data().singlePlayer,
+            collaborators: doc.data().collaborators
+          });
+        });
+        return response.status(200).json(matches);
+      })
+      .catch((err) => {
+        console.error(err);
+        return response.status(500).json({ error: err.code});
+      });
+    } else {
+      db
+      .collection('matches')
+      .orderBy('createdAt', 'asc')
+      .get()
+      .then((data) => {
+        data.forEach((doc) => {
+          doc.data().collaborators.map(collaborator => {
+            if (collaborator.userId === userId) {
+              matches.push({
+                matchId: doc.id,
+                competitionName: doc.data().competitionName,
+                competitionConcatRegion: doc.data().competitionConcatRegion,
+                competitionRegion: doc.data().competitionRegion,
+                competitionRegionArea: doc.data().competitionRegionArea,
+                competitionRound: doc.data().competitionRound,
+                matchDateTime: doc.data().matchDateTime,
+                numIndividualMatches: doc.data().numIndividualMatches,
+                teamOneName: doc.data().teamOneName,
+                teamTwoName: doc.data().teamTwoName,
+                teamOneScore: doc.data().teamOneScore,
+                teamTwoScore: doc.data().teamTwoScore,
+                neutralVenueName: doc.data().neutralVenueName,
+                individualMatch: doc.data().individualMatch,
+                createdByUid: doc.data().createdByUid,
+                createdAt: doc.data().createdAt,
+                updatedAt: doc.data().updatedAt,
+                matchStatus: doc.data().matchStatus,
+                singlePlayer: doc.data().singlePlayer,
+                collaborators: doc.data().collaborators
+              });
+            }
+          })
+        });
+        return response.status(200).json(matches);
+      })
+      .catch((err) => {
+        console.error(err);
+        return response.status(500).json({ error: err.code});
+      });
+    }
+  },
   getMatch(request, response) {
     const matchId = request.params.matchId;
     db

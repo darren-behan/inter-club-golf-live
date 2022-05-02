@@ -1,6 +1,6 @@
 import axios from 'axios';
 import LocalStorage from '../services/LocalStorage/LocalStorage.service';
-axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL_DEV;
 
 // In each function, we use axios to send our api route request to the server
 
@@ -45,6 +45,12 @@ const requests = {
 		axios.defaults.headers.common = { Authorization: `${authToken}` };
     return axios.put('/match/' + matchData.matchId, matchData);
   },
+  // Get user matches
+  getUserMatches: function(userId, matchType) {
+    const authToken = LocalStorage.get('AuthToken');
+		axios.defaults.headers.common = { Authorization: `${authToken}` };
+    return axios.get('/match/user/' + userId + '?matchtype=' + matchType);
+  }
 };
 
 export default requests;

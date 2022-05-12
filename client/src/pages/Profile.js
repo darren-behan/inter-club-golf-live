@@ -3,7 +3,7 @@ import DataAreaContext from '../utils/DataAreaContext';
 import { IsEmpty } from 'react-lodash';
 import Lib from '../utils/Lib';
 import API from '../utils/API';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGolfBall, faUser } from '@fortawesome/free-solid-svg-icons';
 import Header from '../components/Header';
@@ -11,15 +11,25 @@ import Footer from '../components/Footer';
 import Cards from '../components/Cards';
 import FiltersOffCanvas from '../components/FiltersOffCanvas';
 import { ShinyBlock, Space } from '../components/SkeletonBuildingBlocks/SkeletonBuildingBlocks';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Spinner, FloatingLabel } from 'react-bootstrap';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
+import { getAuth, updatePassword } from 'firebase/auth';
+import ReauthenticateUserModal from '../components/Modals/ReauthenticateUserModal';
 
 function Profile() {
   const { filterValue, setFilterValue, show, userDataObj } = useContext(DataAreaContext);
   const [userMatches, setUserMatches] = useState([]);
   const [componentToRender, setComponentToRender] = useState('userMatches');
   const [isLoading, setIsLoading] = useState(true);
+  const [newPassword, setNewPassword] = useState('');
+  const [setIsChangePasswordLoading, setChangePasswordLoading] = useState(false);
+  const [changePasswordResponse, setChangePasswordResponse] = useState({});
+  const [reauthenticateUserModalShow, setReauthenticateUserModalShow] = useState(false);
+
+  const auth = getAuth();
+  const user = auth.currentUser;
+
   let sortedMatchesByMatchDateTime;
   let matchYears = [];
 
@@ -60,6 +70,8 @@ function Profile() {
     });
     setIsLoading(true);
     setUserMatches([]);
+    setNewPassword({});
+    setChangePasswordResponse({});
 
     if (Object.keys(userDataObj).length > 0) {
       if (componentToRender === 'userMatches') {
@@ -346,8 +358,49 @@ function Profile() {
     );
   };
 
+  const handleInputChange = (event) => {
+    event.preventDefault();
+    setChangePasswordResponse({});
+    const { name, value } = event.target;
+    setNewPassword({ ...newPassword, [name]: value });
+  };
+
+  const handleChangePasswordSubmit = (event) => {
+    event.preventDefault();
+    setChangePasswordLoading(true);
+    updatePassword(user, newPassword.newPassword)
+      .then((res) => {
+        setNewPassword({});
+        setChangePasswordResponse({
+          message: "You're password has been changed successfully.",
+          status: 200,
+        });
+        setChangePasswordLoading(false);
+      })
+      .catch((error) => {
+        if (error.code === 400 || error.code === 'auth/requires-recent-login') {
+          setReauthenticateUserModalShow(true);
+          setChangePasswordLoading(false);
+          setNewPassword({});
+          return;
+        }
+        setNewPassword({});
+        setChangePasswordResponse({
+          message: error.message,
+          status: 404,
+        });
+        setChangePasswordLoading(false);
+      });
+  };
+
   return (
     <>
+      <ReauthenticateUserModal
+        show={reauthenticateUserModalShow}
+        onHide={() => setReauthenticateUserModalShow(false)}
+        user={user}
+        setReauthenticateUserModalShow={setReauthenticateUserModalShow}
+      />
       <Header activeRender={componentToRender} />
       <Container
         fluid
@@ -369,8 +422,15 @@ function Profile() {
             style={{ backgroundColor: 'rgb(255, 255, 255)', boxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 4px' }}
           >
             <Row>
-              <Navbar expand="md" className="flex-md-column">
-                <Navbar.Brand>Hi, {Lib.capitalize(userDataObj.multiFactor.user.displayName)}</Navbar.Brand>
+              <Navbar collapseOnSelect expand="md" className="flex-md-column">
+                <Navbar.Brand>
+                  Hi,{' '}
+                  {Lib.capitalize(
+                    isEmpty(userDataObj.multiFactor)
+                      ? userDataObj.displayName
+                      : userDataObj.multiFactor.user.displayName,
+                  )}
+                </Navbar.Brand>
                 <Navbar.Toggle
                   aria-controls="basic-navbar-nav"
                   className="px-0"
@@ -423,7 +483,60 @@ function Profile() {
               ) : componentToRender === 'collaboratingMatches' ? (
                 <RenderMatchCards />
               ) : componentToRender === 'myAccount' ? (
-                <>My Account</>
+                <>
+                  <Row>
+                    <Col style={{ paddingTop: '10px' }}>
+                      <>
+                        <Form>
+                          <div>
+                            <Form.Group
+                              className="mb-2"
+                              controlId="formBasicPassword"
+                              style={{ marginBottom: '0px!important' }}
+                            >
+                              <FloatingLabel controlId="floatingPassword" label="Enter new password">
+                                <Form.Control
+                                  type="password"
+                                  name="newPassword"
+                                  placeholder="Change password"
+                                  onChange={handleInputChange}
+                                />
+                              </FloatingLabel>
+                            </Form.Group>
+                            {changePasswordResponse.status === 200 ? (
+                              <div className="mb-2">
+                                <Form.Text id="passwordHelpBlock" style={{ color: '#50C878' }}>
+                                  {changePasswordResponse.message}
+                                </Form.Text>
+                              </div>
+                            ) : changePasswordResponse.status === 404 ? (
+                              <div className="mb-2">
+                                <Form.Text id="passwordHelpBlock" className="mb-2" style={{ color: '#EE4B2B' }}>
+                                  {changePasswordResponse.message}
+                                </Form.Text>
+                              </div>
+                            ) : null}
+                          </div>
+                          <div className="">
+                            <Button
+                              variant="primary"
+                              type="submit"
+                              className="mb-2"
+                              onClick={(e) => handleChangePasswordSubmit(e)}
+                            >
+                              {setIsChangePasswordLoading ? (
+                                <Spinner animation="border" style={{ color: '#0a66c2' }} />
+                              ) : (
+                                'Change password'
+                              )}
+                            </Button>
+                          </div>
+                          <span class="border-bottom"></span>
+                        </Form>
+                      </>
+                    </Col>
+                  </Row>
+                </>
               ) : (
                 setComponentToRender('userMatches')
               )}

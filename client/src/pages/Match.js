@@ -4,7 +4,7 @@ import DataAreaContext from '../utils/DataAreaContext';
 import LocalStorage from '../services/LocalStorage/LocalStorage.service';
 import Lib from '../utils/Lib';
 import { Map } from 'react-lodash';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { IsEmpty } from 'react-lodash';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -43,6 +43,7 @@ function Match() {
   let { id } = useParams();
   let individualMatches;
   let sortedIndividualMatches;
+  const encodedURI = encodeURIComponent(match.competitionName);
 
   const auth = getAuth();
 
@@ -236,7 +237,9 @@ function Match() {
                 <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>Match Score</caption>
                 <tbody>
                   <tr key={match.matchId}>
-                    <td style={{ background: '#ffffff' }}>{Lib.capitalize(match.teamOneName)}</td>
+                    <td style={{ background: '#ffffff' }}>
+                      <Link to="/about">{Lib.capitalize(match.teamOneName)}</Link>
+                    </td>
                     <td style={{ background: '#0a66c2' }}>{getScore()}</td>
                     <td style={{ background: '#ffffff' }}>{Lib.capitalize(match.teamTwoName)}</td>
                   </tr>
@@ -246,7 +249,10 @@ function Match() {
             <Row>
               <div style={{ textAlign: 'left' }}>
                 <h6>
-                  Competition:&nbsp;<span style={{ color: '#0a66c2' }}>{Lib.capitalize(match.competitionName)}</span>
+                  Competition:&nbsp;
+                  <span style={{ color: '#0a66c2' }}>
+                    <Link to={'/competition/' + encodedURI}>{Lib.capitalize(match.competitionName)}</Link>
+                  </span>
                 </h6>
                 <h6>
                   Competition Round:&nbsp;

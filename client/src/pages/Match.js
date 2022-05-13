@@ -237,9 +237,7 @@ function Match() {
                 <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>Match Score</caption>
                 <tbody>
                   <tr key={match.matchId}>
-                    <td style={{ background: '#ffffff' }}>
-                      <Link to="/about">{Lib.capitalize(match.teamOneName)}</Link>
-                    </td>
+                    <td style={{ background: '#ffffff' }}>{Lib.capitalize(match.teamOneName)}</td>
                     <td style={{ background: '#0a66c2' }}>{getScore()}</td>
                     <td style={{ background: '#ffffff' }}>{Lib.capitalize(match.teamTwoName)}</td>
                   </tr>
@@ -250,9 +248,9 @@ function Match() {
               <div style={{ textAlign: 'left' }}>
                 <h6>
                   Competition:&nbsp;
-                  <span style={{ color: '#0a66c2' }}>
-                    <Link to={'/competition/' + encodedURI}>{Lib.capitalize(match.competitionName)}</Link>
-                  </span>
+                  <Link to={'/competition/' + encodedURI}>
+                    <span style={{ color: '#0a66c2' }}>{Lib.capitalize(match.competitionName)}</span>
+                  </Link>
                 </h6>
                 <h6>
                   Competition Round:&nbsp;

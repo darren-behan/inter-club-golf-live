@@ -1,4 +1,11 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
+  min-height: 100%;
+  margin-bottom: 350px; /* Margin bottom by footer height */
   background-color: #f3f2ef!important;
 }
 
@@ -44,4 +51,23 @@ iframe {
 .user-match-col .card {
   margin-left: 0!important;
   margin-right: 0!important;
+}
+
+/* Profile Page Burger Icon */
+.navbar-light .navbar-toggler {
+  border-color: rgba(0,0,0,0)!important;
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0!important;
+}
+
+.navbar-light .navbar-nav .nav-link.active {
+  color: rgb(10, 102, 194);
+}
+
+@media screen and (min-width: 992px) {
+  .profile-container {
+    min-height: calc(100vh - 410px);
+  }
 }

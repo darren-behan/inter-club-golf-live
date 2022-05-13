@@ -7,7 +7,7 @@ function Footer() {
 
   return (
     <>
-    <footer style={{ boxShadow: '0 0 4px rgba(0,0,0,.1)' }}>
+    <footer style={{ boxShadow: '0 0 4px rgba(0,0,0,.1)' }} className="footer">
       <Container className="pt-5">
         <Row>
           <Col className="col-6 px-3 px-md-0 mx-0 text-center">
@@ -57,7 +57,7 @@ function Footer() {
             </ListGroup>
           </Col>
           <Col className="col-12 px-0">
-            <div className="py-4 d-flex justify-content-center align-items-center">
+            <div className="pt-4 d-flex justify-content-center align-items-center">
               <a href="https://www.thecreativedream.ie" target="_blank" rel="noreferrer" style={{ textDecoration: "none", color: "#000000" }}>
                 &copy; The Creative Dream
               </a>

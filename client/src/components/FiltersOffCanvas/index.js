@@ -29,6 +29,7 @@ function FiltersOffCanvas(props) {
   // building data points for each filter when only year is set
   // populate the year filter with current year (even if there are no matches for that year) and years where matches exist
   
+  if (isEmpty(props.matches)) props.matches = [];
   // populate the regions where matches were played in the selected year
   matchYears = Lib.eliminateDuplicates(orderBy(props.matches, "matchDateTime", "asc").map(({ matchDateTime }) => moment(matchDateTime).format('YYYY'))).sort(function(a, b) {
     return b - a;

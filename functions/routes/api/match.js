@@ -27,4 +27,8 @@ router.route('/:matchId')
   // UPDATE request to update a match
   .put(auth, matchesController.updateMatch);
 
+router.route('/user/:userid')
+  // GET request to get user matches
+  .get(auth, matchesController.getUserMatches);
+
 module.exports = router;

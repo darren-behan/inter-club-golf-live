@@ -81,15 +81,15 @@ function App() {
     setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
   }, []);
 
-  async function getAppMatchesOnLoad() {
+  const getAppMatchesOnLoad = async () => {
     await API.getMatchesOnLoad()
       .then((res) => {
         setAppMatchesOnLoad(res.data);
       })
       .catch((err) => console.log(err));
-  }
+  };
 
-  function authenticateUser() {
+  const authenticateUser = () => {
     firebase.auth().onAuthStateChanged((response) => {
       if (response.emailVerified) {
         // User is signed in, see docs for a list of available properties
@@ -102,7 +102,7 @@ function App() {
         firebase.auth().signOut();
       }
     });
-  }
+  };
 
   return (
     <>
@@ -174,6 +174,7 @@ function App() {
               <Route exact path={'/about'} component={About} />
               <Route exact path={'/competition/:competition'} component={Competition} />
               <Route exact path={'/match/:id'} component={Match} />
+              <Route exact path={'/profile/:id'} component={Profile} />
               <Route exact path="/login" component={Login}>
                 {isAuthenticated ? <Redirect to="/" /> : <Login />}
               </Route>
@@ -182,9 +183,6 @@ function App() {
               </Route>
               <Route exact path={'/creatematch'}>
                 {!isAuthenticated ? <Redirect to="/login" /> : <CreateMatch />}
-              </Route>
-              <Route exact path={'/profile/:id'}>
-                {!isAuthenticated ? <Redirect to="/login" /> : <Profile />}
               </Route>
               <Route exact path="*" component={PageNotFound} />
             </Switch>

@@ -20,7 +20,7 @@ import ReauthenticateUserModal from '../components/Modals/ReauthenticateUserModa
 function Profile() {
   const { filterValue, setFilterValue, show, userDataObj } = useContext(DataAreaContext);
   const [userMatches, setUserMatches] = useState([]);
-  const [componentToRender, setComponentToRender] = useState('userMatches');
+  const [componentToRender, setComponentToRender] = useState('myAccount');
   const [isLoading, setIsLoading] = useState(true);
   const [newPassword, setNewPassword] = useState('');
   const [setIsChangePasswordLoading, setChangePasswordLoading] = useState(false);
@@ -43,14 +43,14 @@ function Profile() {
     });
   }, []);
 
-  async function getUserMatches(userId, matchType) {
+  const getUserMatches = async (userId, matchType) => {
     await API.getUserMatches(userId, matchType)
       .then((res) => {
         setUserMatches(res.data);
         setIsLoading(false);
       })
       .catch((err) => console.log(err));
-  }
+  };
 
   useEffect(() => {
     if (isEmpty(userMatches)) {
@@ -370,7 +370,7 @@ function Profile() {
     setChangePasswordLoading(true);
     updatePassword(user, newPassword.newPassword)
       .then((res) => {
-        setNewPassword({});
+        setNewPassword({ newPassword: '' });
         setChangePasswordResponse({
           message: "You're password has been changed successfully.",
           status: 200,
@@ -424,12 +424,14 @@ function Profile() {
             <Row>
               <Navbar collapseOnSelect expand="md" className="flex-md-column">
                 <Navbar.Brand>
-                  Hi,{' '}
-                  {Lib.capitalize(
-                    isEmpty(userDataObj.multiFactor)
-                      ? userDataObj.displayName
-                      : userDataObj.multiFactor.user.displayName,
-                  )}
+                  {!isEmpty(userDataObj)
+                    ? `Hi,${' '}
+                      ${Lib.capitalize(
+                        isEmpty(userDataObj.multiFactor)
+                          ? userDataObj.displayName
+                          : userDataObj.multiFactor.user.displayName,
+                      )}`
+                    : null}
                 </Navbar.Brand>
                 <Navbar.Toggle
                   aria-controls="basic-navbar-nav"
@@ -437,7 +439,7 @@ function Profile() {
                   style={{ fontSize: '1.4rem', padding: '0px!important' }}
                 />
                 <Navbar.Collapse id="basic-navbar-nav">
-                  <Nav className="mb-0 flex-column" defaultActiveKey="userMatches">
+                  <Nav className="mb-0 flex-column" defaultActiveKey="myAccount">
                     <Nav.Item className="mx-0">
                       <Nav.Link
                         className="px-0 py-2 pr-md-0"
@@ -499,6 +501,7 @@ function Profile() {
                                   type="password"
                                   name="newPassword"
                                   placeholder="Change password"
+                                  value={newPassword.newPassword}
                                   onChange={handleInputChange}
                                 />
                               </FloatingLabel>
@@ -538,7 +541,7 @@ function Profile() {
                   </Row>
                 </>
               ) : (
-                setComponentToRender('userMatches')
+                setComponentToRender('myAccount')
               )}
             </>
           </Col>

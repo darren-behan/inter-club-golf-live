@@ -1,8 +1,10 @@
 import React, { useEffect, useContext, useState } from 'react';
 import DataAreaContext from '../utils/DataAreaContext';
+import LocalStorage from '../services/LocalStorage/LocalStorage.service';
 import { IsEmpty } from 'react-lodash';
 import Lib from '../utils/Lib';
 import API from '../utils/API';
+import { useHistory } from 'react-router-dom';
 import { Navbar, Nav, Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGolfBall, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -14,11 +16,21 @@ import { ShinyBlock, Space } from '../components/SkeletonBuildingBlocks/Skeleton
 import { Container, Row, Col, Spinner, FloatingLabel } from 'react-bootstrap';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
-import { getAuth, updatePassword } from 'firebase/auth';
+import { getAuth, updatePassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import ReauthenticateUserModal from '../components/Modals/ReauthenticateUserModal';
 
 function Profile() {
-  const { filterValue, setFilterValue, show, userDataObj } = useContext(DataAreaContext);
+  const {
+    filterValue,
+    setFilterValue,
+    show,
+    setUserDataObj,
+    userDataObj,
+    setIsAuthenticated,
+    isAuthenticated,
+    setIsAuthenticating,
+    isAuthenticating,
+  } = useContext(DataAreaContext);
   const [userMatches, setUserMatches] = useState([]);
   const [componentToRender, setComponentToRender] = useState('myAccount');
   const [isLoading, setIsLoading] = useState(true);
@@ -26,6 +38,7 @@ function Profile() {
   const [setIsChangePasswordLoading, setChangePasswordLoading] = useState(false);
   const [changePasswordResponse, setChangePasswordResponse] = useState({});
   const [reauthenticateUserModalShow, setReauthenticateUserModalShow] = useState(false);
+  let history = useHistory();
 
   const auth = getAuth();
   const user = auth.currentUser;
@@ -34,6 +47,7 @@ function Profile() {
   let matchYears = [];
 
   useEffect(() => {
+    authenticateUser();
     getUserMatches(userDataObj.uid, 'userMatches');
     setFilterValue({
       year: '',
@@ -43,6 +57,12 @@ function Profile() {
     });
   }, []);
 
+  useEffect(() => {
+    if (isAuthenticating.authenticatingComplete && isAuthenticating.status === 400) {
+      history.push('/login');
+    }
+  }, [isAuthenticating]);
+
   const getUserMatches = async (userId, matchType) => {
     await API.getUserMatches(userId, matchType)
       .then((res) => {
@@ -50,6 +70,34 @@ function Profile() {
         setIsLoading(false);
       })
       .catch((err) => console.log(err));
+  };
+
+  const authenticateUser = () => {
+    setIsAuthenticating({ ...isAuthenticating, authenticatingInProgress: true });
+    onAuthStateChanged(auth, (user) => {
+      if (!isEmpty(user) && user.emailVerified) {
+        setIsAuthenticating({
+          ...isAuthenticating,
+          authenticatingInProgress: false,
+          authenticatingComplete: true,
+          status: 200,
+          message: 'completed authenticating',
+        });
+        setIsAuthenticated(true);
+        setUserDataObj(user);
+        LocalStorage.set('AuthToken', `Bearer ${user.stsTokenManager.accessToken}`);
+      } else {
+        setIsAuthenticating({
+          ...isAuthenticating,
+          authenticatingInProgress: false,
+          authenticatingComplete: true,
+          status: 400,
+          message: 'Ooops, something went wrong.',
+        });
+        setIsAuthenticated(false);
+        signOut();
+      }
+    });
   };
 
   useEffect(() => {
@@ -402,151 +450,165 @@ function Profile() {
         setReauthenticateUserModalShow={setReauthenticateUserModalShow}
       />
       <Header activeRender={componentToRender} />
-      <Container
-        fluid
-        className="profile-container d-flex flex-column px-0"
-        style={{ boxShadow: '0 0 4px rgba(0,0,0,.1)' }}
-      >
-        <Row
-          className={show ? 'mt-3 mx-0' : ''}
-          style={{ backgroundColor: '#ffffff', boxShadow: '0 0 4px rgba(0,0,0,.1)', borderRadius: '.25rem' }}
-        >
-          <FiltersOffCanvas matches={sortedMatchesByMatchDateTime} />
-        </Row>
-        <Row className="flex-fill mx-0">
-          <Col
-            sm="12"
-            md="3"
-            lg="2"
-            className="px-3"
-            style={{ backgroundColor: 'rgb(255, 255, 255)', boxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 4px' }}
+      {isAuthenticated ? (
+        <>
+          <Container
+            fluid
+            className="profile-container d-flex flex-column px-0"
+            style={{ boxShadow: '0 0 4px rgba(0,0,0,.1)' }}
           >
-            <Row>
-              <Navbar collapseOnSelect expand="md" className="flex-md-column">
-                <Navbar.Brand>
-                  {!isEmpty(userDataObj)
-                    ? `Hi,${' '}
-                      ${Lib.capitalize(
-                        isEmpty(userDataObj.multiFactor)
-                          ? userDataObj.displayName
-                          : userDataObj.multiFactor.user.displayName,
-                      )}`
-                    : null}
-                </Navbar.Brand>
-                <Navbar.Toggle
-                  aria-controls="basic-navbar-nav"
-                  className="px-0"
-                  style={{ fontSize: '1.4rem', padding: '0px!important' }}
-                />
-                <Navbar.Collapse id="basic-navbar-nav">
-                  <Nav className="mb-0 flex-column" defaultActiveKey="myAccount">
-                    <Nav.Item className="mx-0">
-                      <Nav.Link
-                        className="px-0 py-2 pr-md-0"
-                        id="userMatches"
-                        eventKey="userMatches"
-                        onClick={() => setComponentToRender('userMatches')}
-                      >
-                        <FontAwesomeIcon icon={faGolfBall} className="fa-lg" />
-                        <span className="mb-0"> My matches</span>
-                      </Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item className="mx-0">
-                      <Nav.Link
-                        className="px-0 py-2 pr-md-0"
-                        id="collaboratingMatches"
-                        eventKey="collaboratingMatches"
-                        onClick={() => setComponentToRender('collaboratingMatches')}
-                      >
-                        <FontAwesomeIcon icon={faGolfBall} className="fa-lg" />
-                        <span className="mb-0"> Collaborating matches</span>
-                      </Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item className="mx-0">
-                      <Nav.Link
-                        className="px-0 py-2 pr-md-0"
-                        id="myAccount"
-                        eventKey="myAccount"
-                        onClick={() => setComponentToRender('myAccount')}
-                      >
-                        <FontAwesomeIcon icon={faUser} className="fa-lg" />
-                        <span className="mb-0"> My account</span>
-                      </Nav.Link>
-                    </Nav.Item>
-                  </Nav>
-                </Navbar.Collapse>
-              </Navbar>
+            <Row
+              className={show ? 'mt-3 mx-0' : ''}
+              style={{ backgroundColor: '#ffffff', boxShadow: '0 0 4px rgba(0,0,0,.1)', borderRadius: '.25rem' }}
+            >
+              <FiltersOffCanvas matches={sortedMatchesByMatchDateTime} />
             </Row>
-          </Col>
-          <Col sm="12" md="9" lg="10" className="">
-            <>
-              {componentToRender === 'userMatches' ? (
-                <RenderMatchCards />
-              ) : componentToRender === 'collaboratingMatches' ? (
-                <RenderMatchCards />
-              ) : componentToRender === 'myAccount' ? (
+            <Row className="flex-fill mx-0">
+              <Col
+                sm="12"
+                md="3"
+                lg="2"
+                className="px-3"
+                style={{ backgroundColor: 'rgb(255, 255, 255)', boxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 4px' }}
+              >
+                <Row>
+                  <Navbar collapseOnSelect expand="md" className="flex-md-column">
+                    <Navbar.Brand>
+                      {!isEmpty(userDataObj)
+                        ? `Hi,${' '}
+                        ${Lib.capitalize(
+                          isEmpty(userDataObj.multiFactor)
+                            ? userDataObj.displayName
+                            : userDataObj.multiFactor.user.displayName,
+                        )}`
+                        : null}
+                    </Navbar.Brand>
+                    <Navbar.Toggle
+                      aria-controls="basic-navbar-nav"
+                      className="px-0"
+                      style={{ fontSize: '1.4rem', padding: '0px!important' }}
+                    />
+                    <Navbar.Collapse id="basic-navbar-nav">
+                      <Nav className="mb-0 flex-column" defaultActiveKey="myAccount">
+                        <Nav.Item className="mx-0">
+                          <Nav.Link
+                            className="px-0 py-2 pr-md-0"
+                            id="userMatches"
+                            eventKey="userMatches"
+                            onClick={() => setComponentToRender('userMatches')}
+                          >
+                            <FontAwesomeIcon icon={faGolfBall} className="fa-lg" />
+                            <span className="mb-0"> My matches</span>
+                          </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item className="mx-0">
+                          <Nav.Link
+                            className="px-0 py-2 pr-md-0"
+                            id="collaboratingMatches"
+                            eventKey="collaboratingMatches"
+                            onClick={() => setComponentToRender('collaboratingMatches')}
+                          >
+                            <FontAwesomeIcon icon={faGolfBall} className="fa-lg" />
+                            <span className="mb-0"> Collaborating matches</span>
+                          </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item className="mx-0">
+                          <Nav.Link
+                            className="px-0 py-2 pr-md-0"
+                            id="myAccount"
+                            eventKey="myAccount"
+                            onClick={() => setComponentToRender('myAccount')}
+                          >
+                            <FontAwesomeIcon icon={faUser} className="fa-lg" />
+                            <span className="mb-0"> My account</span>
+                          </Nav.Link>
+                        </Nav.Item>
+                      </Nav>
+                    </Navbar.Collapse>
+                  </Navbar>
+                </Row>
+              </Col>
+              <Col sm="12" md="9" lg="10" className="">
                 <>
-                  <Row>
-                    <Col style={{ paddingTop: '10px' }}>
-                      <>
-                        <Form>
-                          <div>
-                            <Form.Group
-                              className="mb-2"
-                              controlId="formBasicPassword"
-                              style={{ marginBottom: '0px!important' }}
-                            >
-                              <FloatingLabel controlId="floatingPassword" label="Enter new password">
-                                <Form.Control
-                                  type="password"
-                                  name="newPassword"
-                                  placeholder="Change password"
-                                  value={newPassword.newPassword}
-                                  onChange={handleInputChange}
-                                />
-                              </FloatingLabel>
-                            </Form.Group>
-                            {changePasswordResponse.status === 200 ? (
-                              <div className="mb-2">
-                                <Form.Text id="passwordHelpBlock" style={{ color: '#50C878' }}>
-                                  {changePasswordResponse.message}
-                                </Form.Text>
+                  {componentToRender === 'userMatches' ? (
+                    <RenderMatchCards />
+                  ) : componentToRender === 'collaboratingMatches' ? (
+                    <RenderMatchCards />
+                  ) : componentToRender === 'myAccount' ? (
+                    <>
+                      <Row>
+                        <Col style={{ paddingTop: '10px' }}>
+                          <>
+                            <Form>
+                              <div>
+                                <Form.Group
+                                  className="mb-2"
+                                  controlId="formBasicPassword"
+                                  style={{ marginBottom: '0px!important' }}
+                                >
+                                  <FloatingLabel controlId="floatingPassword" label="Enter new password">
+                                    <Form.Control
+                                      type="password"
+                                      name="newPassword"
+                                      placeholder="Change password"
+                                      value={newPassword.newPassword}
+                                      onChange={handleInputChange}
+                                    />
+                                  </FloatingLabel>
+                                </Form.Group>
+                                {changePasswordResponse.status === 200 ? (
+                                  <div className="mb-2">
+                                    <Form.Text id="passwordHelpBlock" style={{ color: '#50C878' }}>
+                                      {changePasswordResponse.message}
+                                    </Form.Text>
+                                  </div>
+                                ) : changePasswordResponse.status === 404 ? (
+                                  <div className="mb-2">
+                                    <Form.Text id="passwordHelpBlock" className="mb-2" style={{ color: '#EE4B2B' }}>
+                                      {changePasswordResponse.message}
+                                    </Form.Text>
+                                  </div>
+                                ) : null}
                               </div>
-                            ) : changePasswordResponse.status === 404 ? (
-                              <div className="mb-2">
-                                <Form.Text id="passwordHelpBlock" className="mb-2" style={{ color: '#EE4B2B' }}>
-                                  {changePasswordResponse.message}
-                                </Form.Text>
+                              <div className="">
+                                <Button
+                                  variant="primary"
+                                  type="submit"
+                                  className="mb-2"
+                                  onClick={(e) => handleChangePasswordSubmit(e)}
+                                >
+                                  {setIsChangePasswordLoading ? (
+                                    <Spinner animation="border" style={{ color: '#0a66c2' }} />
+                                  ) : (
+                                    'Change password'
+                                  )}
+                                </Button>
                               </div>
-                            ) : null}
-                          </div>
-                          <div className="">
-                            <Button
-                              variant="primary"
-                              type="submit"
-                              className="mb-2"
-                              onClick={(e) => handleChangePasswordSubmit(e)}
-                            >
-                              {setIsChangePasswordLoading ? (
-                                <Spinner animation="border" style={{ color: '#0a66c2' }} />
-                              ) : (
-                                'Change password'
-                              )}
-                            </Button>
-                          </div>
-                          <span class="border-bottom"></span>
-                        </Form>
-                      </>
-                    </Col>
-                  </Row>
+                              <span class="border-bottom"></span>
+                            </Form>
+                          </>
+                        </Col>
+                      </Row>
+                    </>
+                  ) : (
+                    setComponentToRender('myAccount')
+                  )}
                 </>
-              ) : (
-                setComponentToRender('myAccount')
-              )}
-            </>
-          </Col>
-        </Row>
-      </Container>
+              </Col>
+            </Row>
+          </Container>
+        </>
+      ) : !isAuthenticating.authenticatingComplete ? (
+        <>
+          <LoadingDiv />
+        </>
+      ) : isAuthenticating.authenticatingComplete && isAuthenticating.status === 400 ? (
+        <>
+          <div>
+            <h2>{isAuthenticating.message}</h2>
+          </div>
+        </>
+      ) : null}
       <Footer />
     </>
   );

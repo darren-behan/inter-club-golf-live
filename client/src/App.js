@@ -20,6 +20,12 @@ import 'firebase/compat/auth';
 function App() {
   // This is used to confirm the user is logged in and redirect them to the home page
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticating, setIsAuthenticating] = useState({
+    authenticatingInProgress: false,
+    authenticatingComplete: false,
+    status: 400,
+    message: '',
+  });
   // This is used to create an object to capture the login details so we can send the data to the server, confirm the user and proceed to log them in
   const [loginDataObj, setLoginDataObj] = useState({});
   // This is used to create an object to capture the user sign up details so we can send the data to the server, create the user, proceed to create their account
@@ -76,7 +82,7 @@ function App() {
   const [isMatchEdited, setIsMatchEdited] = useState(true);
 
   useEffect(() => {
-    authenticateUser();
+    // authenticateUser();
     getAppMatchesOnLoad();
     setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
   }, []);
@@ -90,18 +96,38 @@ function App() {
   };
 
   const authenticateUser = () => {
-    firebase.auth().onAuthStateChanged((response) => {
-      if (response.emailVerified) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        setIsAuthenticated(true);
-        setUserDataObj(response);
-        LocalStorage.set('AuthToken', `Bearer ${response.multiFactor.user.accessToken}`);
-      } else {
-        // User is signed out
+    setIsAuthenticating({ ...isAuthenticating, authenticatingInProgress: true });
+    firebase
+      .auth()
+      .onAuthStateChanged.then((response) => {
+        if (response.emailVerified) {
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/firebase.User
+          setIsAuthenticating({
+            ...isAuthenticating,
+            authenticatingInProgress: false,
+            authenticatingComplete: true,
+            status: 200,
+            message: 'completed authenticating',
+          });
+          setIsAuthenticated(true);
+          setUserDataObj(response);
+          LocalStorage.set('AuthToken', `Bearer ${response.multiFactor.user.accessToken}`);
+        } else {
+          // User is signed out
+          firebase.auth().signOut();
+        }
+      })
+      .catch((error) => {
+        setIsAuthenticating({
+          ...isAuthenticating,
+          authenticatingInProgress: false,
+          authenticatingComplete: true,
+          status: 400,
+          message: error.message,
+        });
         firebase.auth().signOut();
-      }
-    });
+      });
   };
 
   return (
@@ -137,6 +163,8 @@ function App() {
           collaboratorsUpdateResponse,
           isCollaboratorsEdited,
           isMatchEdited,
+          isAuthenticating,
+          setIsAuthenticating,
           setIsMatchEdited,
           setIsCollaboratorsEdited,
           setCollaboratorsUpdateResponse,
@@ -175,15 +203,9 @@ function App() {
               <Route exact path={'/competition/:competition'} component={Competition} />
               <Route exact path={'/match/:id'} component={Match} />
               <Route exact path={'/profile/:id'} component={Profile} />
-              <Route exact path="/login" component={Login}>
-                {isAuthenticated ? <Redirect to="/" /> : <Login />}
-              </Route>
-              <Route exact path="/signup" component={Signup}>
-                {isAuthenticated ? <Redirect to="/" /> : <Signup />}
-              </Route>
-              <Route exact path={'/creatematch'}>
-                {!isAuthenticated ? <Redirect to="/login" /> : <CreateMatch />}
-              </Route>
+              <Route exact path={'/creatematch'} component={CreateMatch} />
+              <Route exact path={'/login'} component={Login} />
+              <Route exact path={'/signup'} component={Signup} />
               <Route exact path="*" component={PageNotFound} />
             </Switch>
           </Wrapper>

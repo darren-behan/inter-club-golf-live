@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import LocalStorage from './services/LocalStorage/LocalStorage.service';
 import DataAreaContext from './utils/DataAreaContext';
 import API from './utils/API';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import Competition from './pages/Competitions';
 import Match from './pages/Match';
@@ -14,8 +13,6 @@ import Profile from './pages/Profile';
 import About from './pages/About';
 import PageNotFound from './pages/PageNotFound';
 import Wrapper from './components/Wrapper/index.js';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
 
 function App() {
   // This is used to confirm the user is logged in and redirect them to the home page
@@ -82,7 +79,6 @@ function App() {
   const [isMatchEdited, setIsMatchEdited] = useState(true);
 
   useEffect(() => {
-    // authenticateUser();
     getAppMatchesOnLoad();
     setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
   }, []);
@@ -95,39 +91,14 @@ function App() {
       .catch((err) => console.log(err));
   };
 
-  const authenticateUser = () => {
-    setIsAuthenticating({ ...isAuthenticating, authenticatingInProgress: true });
-    firebase
-      .auth()
-      .onAuthStateChanged.then((response) => {
-        if (response.emailVerified) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/firebase.User
-          setIsAuthenticating({
-            ...isAuthenticating,
-            authenticatingInProgress: false,
-            authenticatingComplete: true,
-            status: 200,
-            message: 'completed authenticating',
-          });
-          setIsAuthenticated(true);
-          setUserDataObj(response);
-          LocalStorage.set('AuthToken', `Bearer ${response.multiFactor.user.accessToken}`);
-        } else {
-          // User is signed out
-          firebase.auth().signOut();
-        }
-      })
-      .catch((error) => {
-        setIsAuthenticating({
-          ...isAuthenticating,
-          authenticatingInProgress: false,
-          authenticatingComplete: true,
-          status: 400,
-          message: error.message,
-        });
-        firebase.auth().signOut();
-      });
+  const ScrollToTop = () => {
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
+
+    return null;
   };
 
   return (
@@ -196,6 +167,7 @@ function App() {
         }}
       >
         <Router>
+          <ScrollToTop />
           <Wrapper>
             <Switch>
               <Route exact path={'/'} component={Home} />

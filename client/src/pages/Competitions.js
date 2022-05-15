@@ -9,7 +9,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FiltersOffCanvas from '../components/FiltersOffCanvas';
-import { Container, Row, Table } from 'react-bootstrap';
+import { Container, Row, Table, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -34,6 +34,7 @@ function Competition() {
   const competitionName = decodeURIComponent(competition);
   const [response, setResponse] = useState({});
   const [matchesObjByYearRegion, setMatchesObjByYearRegion] = useState({});
+  const [isShowTooltip, setIsShowTooltip] = useState(true);
   let regions;
   let matchesByRegion;
   let rounds;
@@ -51,6 +52,9 @@ function Competition() {
     });
     setMatchesByCompetition([]);
     getMatchesByCompetition();
+    setTimeout(() => {
+      setIsShowTooltip(false);
+    }, 7000);
   }, []);
 
   const authenticateUser = () => {
@@ -242,8 +246,8 @@ function Competition() {
         </div>
         <div>
           <>
-            {sortedRounds.map(function (round) {
-              return renderRoundBody(matchesByRegion, round);
+            {sortedRounds.map(function (round, i) {
+              return renderRoundBody(matchesByRegion, round, i);
             })}
           </>
         </div>
@@ -251,15 +255,15 @@ function Competition() {
     );
   };
 
-  const renderRoundBody = (matchesObjByRegion, round) => {
+  const renderRoundBody = (matchesObjByRegion, round, i) => {
     if (filterValue.round === '') {
-      return renderRoundHeading(round, matchesObjByRegion);
+      return renderRoundHeading(round, matchesObjByRegion, i);
     } else if (round === filterValue.round) {
-      return renderRoundHeading(round, matchesObjByRegion);
+      return renderRoundHeading(round, matchesObjByRegion, i);
     }
   };
 
-  const renderRoundHeading = (round, matches) => {
+  const renderRoundHeading = (round, matches, i) => {
     return (
       <>
         <Row>
@@ -268,11 +272,27 @@ function Competition() {
               {Lib.capitalize(round)}
             </caption>
             <thead>
-              <tr>
-                <th>Home Team</th>
-                <th>Score</th>
-                <th>Away Team</th>
-              </tr>
+              {i === 0 ? (
+                <OverlayTrigger
+                  placement="top"
+                  show={isShowTooltip}
+                  overlay={
+                    <Tooltip id="button-tooltip-2">Click on a match to view the individual match scores</Tooltip>
+                  }
+                >
+                  <tr>
+                    <th>Home Team</th>
+                    <th>Score</th>
+                    <th>Away Team</th>
+                  </tr>
+                </OverlayTrigger>
+              ) : (
+                <tr>
+                  <th>Home Team</th>
+                  <th>Score</th>
+                  <th>Away Team</th>
+                </tr>
+              )}
             </thead>
             <tbody>
               {matches.map(function (match) {

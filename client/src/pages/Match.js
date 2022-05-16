@@ -227,7 +227,7 @@ function Match() {
       )}
       no={() => (
         <>
-          <DeleteModal show={deleteModalShow} onHide={() => setDeleteModalShow(false)} />
+          <DeleteModal show={deleteModalShow} onHide={() => setDeleteModalShow(false)} isMatch={true} />
           <UpdateModal show={updateModalShow} onHide={() => setUpdateModalShow(false)} />
           <AddCollaboratorsModal show={addCollaboratorsModalShow} onHide={() => setAddCollaboratorsModalShow(false)} />
           <Header />

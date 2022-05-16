@@ -11,6 +11,7 @@ import { faGolfBall, faUser } from '@fortawesome/free-solid-svg-icons';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Cards from '../components/Cards';
+import DeleteModal from '../components/Modals/DeleteModal';
 import FiltersOffCanvas from '../components/FiltersOffCanvas';
 import { ShinyBlock, Space } from '../components/SkeletonBuildingBlocks/SkeletonBuildingBlocks';
 import { Container, Row, Col, Spinner, FloatingLabel } from 'react-bootstrap';
@@ -30,6 +31,8 @@ function Profile() {
     isAuthenticated,
     setIsAuthenticating,
     isAuthenticating,
+    setDeleteModalShow,
+    deleteModalShow,
   } = useContext(DataAreaContext);
   const [userMatches, setUserMatches] = useState([]);
   const [componentToRender, setComponentToRender] = useState('myAccount');
@@ -38,6 +41,7 @@ function Profile() {
   const [setIsChangePasswordLoading, setChangePasswordLoading] = useState(false);
   const [changePasswordResponse, setChangePasswordResponse] = useState({});
   const [reauthenticateUserModalShow, setReauthenticateUserModalShow] = useState(false);
+  const [isPasswordReset, setIsPasswordReset] = useState(true);
   let history = useHistory();
 
   const auth = getAuth();
@@ -448,6 +452,15 @@ function Profile() {
         onHide={() => setReauthenticateUserModalShow(false)}
         user={user}
         setReauthenticateUserModalShow={setReauthenticateUserModalShow}
+        isPasswordReset={isPasswordReset}
+      />
+      <DeleteModal
+        show={deleteModalShow}
+        onHide={() => setDeleteModalShow(false)}
+        isMatch={false}
+        user={user}
+        setReauthenticateUserModalShow={setReauthenticateUserModalShow}
+        setIsPasswordReset={setIsPasswordReset}
       />
       <Header activeRender={componentToRender} />
       {isAuthenticated ? (
@@ -493,6 +506,17 @@ function Profile() {
                         <Nav.Item className="mx-0">
                           <Nav.Link
                             className="px-0 py-2 pr-md-0"
+                            id="myAccount"
+                            eventKey="myAccount"
+                            onClick={() => setComponentToRender('myAccount')}
+                          >
+                            <FontAwesomeIcon icon={faUser} className="fa-lg" />
+                            <span className="mb-0"> My account</span>
+                          </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item className="mx-0">
+                          <Nav.Link
+                            className="px-0 py-2 pr-md-0"
                             id="userMatches"
                             eventKey="userMatches"
                             onClick={() => setComponentToRender('userMatches')}
@@ -512,17 +536,6 @@ function Profile() {
                             <span className="mb-0"> Collaborating matches</span>
                           </Nav.Link>
                         </Nav.Item>
-                        <Nav.Item className="mx-0">
-                          <Nav.Link
-                            className="px-0 py-2 pr-md-0"
-                            id="myAccount"
-                            eventKey="myAccount"
-                            onClick={() => setComponentToRender('myAccount')}
-                          >
-                            <FontAwesomeIcon icon={faUser} className="fa-lg" />
-                            <span className="mb-0"> My account</span>
-                          </Nav.Link>
-                        </Nav.Item>
                       </Nav>
                     </Navbar.Collapse>
                   </Navbar>
@@ -530,15 +543,12 @@ function Profile() {
               </Col>
               <Col sm="12" md="9" lg="10" className="">
                 <>
-                  {componentToRender === 'userMatches' ? (
-                    <RenderMatchCards />
-                  ) : componentToRender === 'collaboratingMatches' ? (
-                    <RenderMatchCards />
-                  ) : componentToRender === 'myAccount' ? (
+                  {componentToRender === 'myAccount' ? (
                     <>
                       <Row>
                         <Col style={{ paddingTop: '10px' }}>
                           <>
+                            <h6>Reset your password</h6>
                             <Form>
                               <div>
                                 <Form.Group
@@ -570,9 +580,10 @@ function Profile() {
                                   </div>
                                 ) : null}
                               </div>
-                              <div className="">
+                              <div>
                                 <Button
                                   variant="primary"
+                                  size="sm"
                                   type="submit"
                                   className="mb-2"
                                   onClick={(e) => handleChangePasswordSubmit(e)}
@@ -589,7 +600,28 @@ function Profile() {
                           </>
                         </Col>
                       </Row>
+                      <Row>
+                        <Col style={{ paddingTop: '10px' }}>
+                          <>
+                            <h6>Delete your account</h6>
+                            <div>
+                              <Button
+                                variant="danger"
+                                size="sm"
+                                className="mb-2"
+                                onClick={() => setDeleteModalShow(true)}
+                              >
+                                Delete account
+                              </Button>
+                            </div>
+                          </>
+                        </Col>
+                      </Row>
                     </>
+                  ) : componentToRender === 'userMatches' ? (
+                    <RenderMatchCards />
+                  ) : componentToRender === 'collaboratingMatches' ? (
+                    <RenderMatchCards />
                   ) : (
                     setComponentToRender('myAccount')
                   )}

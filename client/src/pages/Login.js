@@ -65,10 +65,16 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const classes = styles();
 
+  useEffect(() => {
+    if (isAuthenticating.status === 400 && isAuthenticating.authenticatingComplete === true) {
+    } else {
+      authenticateUser();
+    }
+  }, []);
+
   // useEffect is listening on load of page
   // If isAuthenticated changes to true, the user is navigated to the home page
   useEffect(() => {
-    authenticateUser();
     if (isAuthenticated) {
       history.push('/');
     }
@@ -80,6 +86,9 @@ function Login() {
     setIsAuthenticating({ ...isAuthenticating, authenticatingInProgress: true });
     onAuthStateChanged(auth, (user) => {
       if (!isEmpty(user) && user.emailVerified) {
+        console.log(user);
+        console.log('isAuthenticated');
+        console.log(isAuthenticated);
         setIsAuthenticating({
           ...isAuthenticating,
           authenticatingInProgress: false,

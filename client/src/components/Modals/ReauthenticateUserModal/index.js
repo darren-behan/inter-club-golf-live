@@ -13,6 +13,7 @@ function ReauthenticateUserModal(props) {
     setIsAuthenticated,
     setUserDataObj,
     setUserAuthResponse,
+    setIsAuthenticating,
   } = useContext(DataAreaContext);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -21,6 +22,12 @@ function ReauthenticateUserModal(props) {
     setUserAuthResponse({});
     setUserDataObj({});
     setIsAuthenticated(false);
+    setIsAuthenticating({
+      authenticatingInProgress: false,
+      authenticatingComplete: true,
+      status: 400,
+      message: '',
+    });
     props.setReauthenticateUserModalShow(false);
   };
 
@@ -42,7 +49,9 @@ function ReauthenticateUserModal(props) {
         setIsLoading(false);
         setLoginDataObj({});
         setUserAuthResponse({
-          message: 'You have successfully logged in. Click the close button so you can reset your password.',
+          message: `You have successfully logged in. Click the close button so you can ${
+            props.isPasswordReset ? 'reset your password.' : 'delete your account.'
+          }`,
           status: 200,
         });
       })
@@ -65,11 +74,12 @@ function ReauthenticateUserModal(props) {
           ) : (
             <>
               <Modal.Title id="contained-modal-title-vcenter">
-                We need you to reauthenticate by logging in again in order to update your password
+                We need you to reauthenticate by logging in again in order to
+                {props.isPasswordReset ? ' reset your password.' : ' delete you account.'}
               </Modal.Title>
+              <CloseButton onClick={handleClose} />
             </>
           )}
-          <CloseButton onClick={handleClose} />
         </Modal.Header>
         <Modal.Body>
           <Form>

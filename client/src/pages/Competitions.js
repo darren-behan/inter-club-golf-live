@@ -28,6 +28,8 @@ function Competition() {
     isAuthenticating,
     setIsAuthenticated,
     setUserDataObj,
+    showFilters,
+    sidebarOpen,
   } = useContext(DataAreaContext);
   let { competition } = useParams();
   const history = useHistory();
@@ -54,8 +56,13 @@ function Competition() {
     getMatchesByCompetition();
     setTimeout(() => {
       setIsShowTooltip(false);
-    }, 7000);
+    }, 4000);
   }, []);
+
+  useEffect(() => {
+    if (showFilters) setIsShowTooltip(false);
+    if (sidebarOpen) setIsShowTooltip(false);
+  }, [showFilters, sidebarOpen]);
 
   const authenticateUser = () => {
     setIsAuthenticating({ ...isAuthenticating, authenticatingInProgress: true });

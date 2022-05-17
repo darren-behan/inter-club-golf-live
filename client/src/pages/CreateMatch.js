@@ -19,7 +19,7 @@ function CreateMatch() {
   const auth = getAuth();
 
   useEffect(() => {
-    authenticateUser();
+    if (isAuthenticating.status !== 400 && isAuthenticating.authenticatingComplete !== true) authenticateUser();
   }, []);
 
   useEffect(() => {
@@ -51,7 +51,7 @@ function CreateMatch() {
           message: 'Ooops, something went wrong.',
         });
         setIsAuthenticated(false);
-        signOut();
+        signOut(auth);
       }
     });
   };

@@ -51,7 +51,7 @@ function Profile() {
   let matchYears = [];
 
   useEffect(() => {
-    authenticateUser();
+    if (isAuthenticating.status !== 400 && isAuthenticating.authenticatingComplete !== true) authenticateUser();
     getUserMatches(userDataObj.uid, 'userMatches');
     setFilterValue({
       year: '',
@@ -99,7 +99,7 @@ function Profile() {
           message: 'Ooops, something went wrong.',
         });
         setIsAuthenticated(false);
-        signOut();
+        signOut(auth);
       }
     });
   };
@@ -450,6 +450,7 @@ function Profile() {
       <ReauthenticateUserModal
         show={reauthenticateUserModalShow}
         onHide={() => setReauthenticateUserModalShow(false)}
+        auth={auth}
         user={user}
         setReauthenticateUserModalShow={setReauthenticateUserModalShow}
         isPasswordReset={isPasswordReset}

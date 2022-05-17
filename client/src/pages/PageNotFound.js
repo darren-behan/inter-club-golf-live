@@ -12,7 +12,7 @@ function PageNotFound() {
   const auth = getAuth();
 
   useEffect(() => {
-    authenticateUser();
+    if (isAuthenticating.status !== 400 && isAuthenticating.authenticatingComplete !== true) authenticateUser();
   }, []);
 
   const authenticateUser = () => {
@@ -38,7 +38,7 @@ function PageNotFound() {
           message: 'Ooops, something went wrong.',
         });
         setIsAuthenticated(false);
-        signOut();
+        signOut(auth);
       }
     });
   };

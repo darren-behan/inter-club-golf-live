@@ -48,7 +48,7 @@ function Match() {
   const auth = getAuth();
 
   useEffect(() => {
-    authenticateUser();
+    if (isAuthenticating.status !== 400 && isAuthenticating.authenticatingComplete !== true) authenticateUser();
     if (!isEmpty(match)) {
       setUpdateMatchObj(JSON.parse(JSON.stringify({ ...match })));
     } else {
@@ -79,7 +79,7 @@ function Match() {
           message: 'Ooops, something went wrong.',
         });
         setIsAuthenticated(false);
-        signOut();
+        signOut(auth);
       }
     });
   };

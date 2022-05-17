@@ -45,7 +45,7 @@ function Competition() {
   const auth = getAuth();
 
   useEffect(() => {
-    authenticateUser();
+    if (isAuthenticating.status !== 400 && isAuthenticating.authenticatingComplete !== true) authenticateUser();
     setFilterValue({
       year: moment().format('YYYY'),
       region: '',
@@ -87,7 +87,7 @@ function Competition() {
           message: 'Ooops, something went wrong.',
         });
         setIsAuthenticated(false);
-        signOut();
+        signOut(auth);
       }
     });
   };

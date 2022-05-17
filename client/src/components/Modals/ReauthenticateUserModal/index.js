@@ -3,7 +3,7 @@ import DataAreaContext from '../../../utils/DataAreaContext';
 import LocalStorage from '../../../services/LocalStorage/LocalStorage.service';
 import { Button, Modal, Form, Spinner, CloseButton } from 'react-bootstrap';
 import 'moment-timezone';
-import { EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
+import { EmailAuthProvider, reauthenticateWithCredential, signOut } from 'firebase/auth';
 
 function ReauthenticateUserModal(props) {
   const {
@@ -28,6 +28,7 @@ function ReauthenticateUserModal(props) {
       status: 400,
       message: '',
     });
+    signOut(props.auth);
     props.setReauthenticateUserModalShow(false);
   };
 

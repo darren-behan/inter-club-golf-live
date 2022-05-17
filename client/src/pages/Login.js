@@ -3,7 +3,7 @@ import DataAreaContext from '../utils/DataAreaContext';
 import LocalStorage from '../services/LocalStorage/LocalStorage.service';
 import UserAuthModal from '../components/Modals/UserAuthModal';
 import Header from '../components/Header';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
@@ -66,10 +66,7 @@ function Login() {
   const classes = styles();
 
   useEffect(() => {
-    if (isAuthenticating.status === 400 && isAuthenticating.authenticatingComplete === true) {
-    } else {
-      authenticateUser();
-    }
+    if (isAuthenticating.status !== 400 && isAuthenticating.authenticatingComplete !== true) authenticateUser();
   }, []);
 
   // useEffect is listening on load of page
@@ -86,9 +83,6 @@ function Login() {
     setIsAuthenticating({ ...isAuthenticating, authenticatingInProgress: true });
     onAuthStateChanged(auth, (user) => {
       if (!isEmpty(user) && user.emailVerified) {
-        console.log(user);
-        console.log('isAuthenticated');
-        console.log(isAuthenticated);
         setIsAuthenticating({
           ...isAuthenticating,
           authenticatingInProgress: false,
@@ -108,7 +102,7 @@ function Login() {
           message: 'Ooops, something went wrong.',
         });
         setIsAuthenticated(false);
-        signOut();
+        signOut(auth);
       }
     });
   };
@@ -259,7 +253,7 @@ function Login() {
                     </Button>
                     <Grid container>
                       <Grid item>
-                        <Link href="signup" variant="body2">
+                        <Link component={RouterLink} to="/signup" variant="body2">
                           {"Don't have an account? Sign Up"}
                         </Link>
                       </Grid>

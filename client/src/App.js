@@ -20,7 +20,7 @@ function App() {
   const [isAuthenticating, setIsAuthenticating] = useState({
     authenticatingInProgress: false,
     authenticatingComplete: false,
-    status: 400,
+    status: 0,
     message: '',
   });
   // This is used to create an object to capture the login details so we can send the data to the server, confirm the user and proceed to log them in

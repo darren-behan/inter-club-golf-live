@@ -13,7 +13,7 @@ function About() {
   const auth = getAuth();
 
   useEffect(() => {
-    authenticateUser();
+    if (isAuthenticating.status !== 400 && isAuthenticating.authenticatingComplete !== true) authenticateUser();
   }, []);
 
   const authenticateUser = () => {
@@ -39,7 +39,7 @@ function About() {
           message: 'Ooops, something went wrong.',
         });
         setIsAuthenticated(false);
-        signOut();
+        signOut(auth);
       }
     });
   };

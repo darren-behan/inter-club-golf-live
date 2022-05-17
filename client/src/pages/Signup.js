@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import DataAreaContext from '../utils/DataAreaContext';
 import LocalStorage from '../services/LocalStorage/LocalStorage.service';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link as RouterLink } from 'react-router-dom';
 import UserAuthModal from '../components/Modals/UserAuthModal';
 import Header from '../components/Header';
 import { makeStyles } from '@material-ui/core/styles';
@@ -120,7 +120,10 @@ function Signup() {
   const auth = getAuth();
 
   useEffect(() => {
-    authenticateUser();
+    if (isAuthenticating.status !== 400 && isAuthenticating.authenticatingComplete !== true) authenticateUser();
+  }, []);
+
+  useEffect(() => {
     if (isAuthenticated) {
       history.push('/');
     }
@@ -149,7 +152,7 @@ function Signup() {
           message: 'Ooops, something went wrong.',
         });
         setIsAuthenticated(false);
-        signOut();
+        signOut(auth);
       }
     });
   };
@@ -312,7 +315,7 @@ function Signup() {
                 </Button>
                 <Grid container>
                   <Grid item>
-                    <Link href="login" variant="body2">
+                    <Link component={RouterLink} to="/login" variant="body2">
                       {'Already have an account? Sign in'}
                     </Link>
                   </Grid>

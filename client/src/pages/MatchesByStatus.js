@@ -337,7 +337,7 @@ function MatchesByStatus() {
             <>
               {matchesStatus === 'complete' ? (
                 <>
-                  <h4>{Lib.capitalize(matchesStatus)}d Matches within the last 30 days</h4>
+                  <h4>{Lib.capitalize(matchesStatus)}d matches to date</h4>
                 </>
               ) : matchesStatus === 'in progress' ? (
                 <>
@@ -345,7 +345,7 @@ function MatchesByStatus() {
                 </>
               ) : matchesStatus === 'not started' ? (
                 <>
-                  <h4>Upcoming Matches in the next 30 days</h4>
+                  <h4>Upcoming Matches</h4>
                 </>
               ) : (
                 <NoMatches />

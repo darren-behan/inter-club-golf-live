@@ -159,15 +159,13 @@ module.exports = {
   },
   getMatchesByStatus(request, response) {
     const status = request.params.status;
-    const dateFrom = moment().subtract(30, 'days');
-    const dateTo = moment().add(30, 'days');
     const todayStart = moment().startOf('day');
     const todayEnd = moment().endOf('day');
     let matches = [];
     if (status === 'complete') {
       db.collection('matches')
         .where('matchStatus', '==', status)
-        .where('matchDateTime', '>=', dateFrom.toJSON())
+        .where('matchDateTime', '<=', todayEnd.toJSON())
         .get()
         .then((data) => {
           data.forEach((doc) => {
@@ -203,7 +201,7 @@ module.exports = {
     } else if (status === 'not started') {
       db.collection('matches')
         .where('matchStatus', '==', status)
-        .where('matchDateTime', '<=', dateTo.toJSON())
+        .where('matchDateTime', '>=', todayStart.toJSON())
         .get()
         .then((data) => {
           data.forEach((doc) => {

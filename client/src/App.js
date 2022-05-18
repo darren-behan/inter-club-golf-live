@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import DataAreaContext from './utils/DataAreaContext';
-import API from './utils/API';
 import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
-import Competition from './pages/Competitions';
+import MatchesByCompetition from './pages/MatchesByCompetition';
+import MatchesByStatus from './pages/MatchesByStatus';
 import Match from './pages/Match';
 import CreateMatch from './pages/CreateMatch';
 import Login from './pages/Login';
@@ -79,17 +79,8 @@ function App() {
   const [isMatchEdited, setIsMatchEdited] = useState(true);
 
   useEffect(() => {
-    getAppMatchesOnLoad();
     setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
   }, []);
-
-  const getAppMatchesOnLoad = async () => {
-    await API.getMatchesOnLoad()
-      .then((res) => {
-        setAppMatchesOnLoad(res.data);
-      })
-      .catch((err) => console.log(err));
-  };
 
   const ScrollToTop = () => {
     const { pathname } = useLocation();
@@ -172,7 +163,8 @@ function App() {
             <Switch>
               <Route exact path={'/'} component={Home} />
               <Route exact path={'/about'} component={About} />
-              <Route exact path={'/competition/:competition'} component={Competition} />
+              <Route exact path={'/competition/:competition'} component={MatchesByCompetition} />
+              <Route exact path={'/matches/status/:status'} component={MatchesByStatus} />
               <Route exact path={'/match/:id'} component={Match} />
               <Route exact path={'/profile/:id'} component={Profile} />
               <Route exact path={'/creatematch'} component={CreateMatch} />

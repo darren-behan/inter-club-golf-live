@@ -17,7 +17,7 @@ import { ShinyBlock, Space } from '../components/SkeletonBuildingBlocks/Skeleton
 import moment from 'moment';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 
-function Competition() {
+function MatchesByCompetition() {
   const {
     filterValue,
     setFilterValue,
@@ -452,4 +452,4 @@ function Competition() {
   );
 }
 
-export default Competition;
+export default MatchesByCompetition;

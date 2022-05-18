@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import API from '../utils/API';
 import DataAreaContext from '../utils/DataAreaContext';
 import LocalStorage from '../services/LocalStorage/LocalStorage.service';
 import Header from '../components/Header';
@@ -8,14 +9,20 @@ import Slider from '../components/Slider';
 import { Container, Row, Col } from 'react-bootstrap';
 import { ShinyBlock, Space } from '../components/SkeletonBuildingBlocks/SkeletonBuildingBlocks';
 import { IsEmpty } from 'react-lodash';
+import { Link } from 'react-router-dom';
 import AdSense from 'react-adsense';
 import { isEmpty } from 'lodash';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 
 function Home() {
-  const { appMatchesOnLoad, setIsAuthenticating, isAuthenticating, setIsAuthenticated, setUserDataObj } = useContext(
-    DataAreaContext,
-  );
+  const {
+    appMatchesOnLoad,
+    setAppMatchesOnLoad,
+    setIsAuthenticating,
+    isAuthenticating,
+    setIsAuthenticated,
+    setUserDataObj,
+  } = useContext(DataAreaContext);
   const RowStyles = {
     // height: "100vh",
     margin: 0,
@@ -43,6 +50,7 @@ function Home() {
   const auth = getAuth();
 
   useEffect(() => {
+    getAppMatchesOnLoad();
     if (isAuthenticating.status !== 400 && isAuthenticating.authenticatingComplete !== true) authenticateUser();
   }, []);
 
@@ -72,6 +80,14 @@ function Home() {
         signOut(auth);
       }
     });
+  };
+
+  const getAppMatchesOnLoad = async () => {
+    await API.getMatchesOnLoad()
+      .then((res) => {
+        setAppMatchesOnLoad(res.data);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -131,7 +147,14 @@ function Home() {
             <div className="container px-4 py-5">
               <h3>Completed</h3>
               {!isEmpty(completedMatches) ? (
-                <Slider matches={completedMatches} />
+                <>
+                  <h6 style={{ color: '#0a66c2', fontWeight: '500' }}>
+                    <Link to={'/matches/status/complete'} style={{ textDecoration: 'none' }}>
+                      View more
+                    </Link>
+                  </h6>
+                  <Slider matches={completedMatches} />
+                </>
               ) : (
                 <div style={{ textAlign: 'left' }}>
                   <br />
@@ -143,7 +166,17 @@ function Home() {
             <div className="container px-4 py-5">
               <h3>In Progress</h3>
               {!isEmpty(inProgressMatches) ? (
-                <Slider matches={inProgressMatches} />
+                <>
+                  <h6 style={{ color: '#0a66c2', fontWeight: '500' }}>
+                    <Link
+                      to={'/matches/status/' + encodeURIComponent('in progress')}
+                      style={{ textDecoration: 'none' }}
+                    >
+                      View more
+                    </Link>
+                  </h6>
+                  <Slider matches={inProgressMatches} />
+                </>
               ) : (
                 <div style={{ textAlign: 'left' }}>
                   <br />
@@ -155,7 +188,17 @@ function Home() {
             <div className="container px-4 py-5">
               <h3>Upcoming Matches</h3>
               {!isEmpty(notStartedMatches) ? (
-                <Slider matches={notStartedMatches} />
+                <>
+                  <h6 style={{ color: '#0a66c2', fontWeight: '500' }}>
+                    <Link
+                      to={'/matches/status/' + encodeURIComponent('not started')}
+                      style={{ textDecoration: 'none' }}
+                    >
+                      View more
+                    </Link>
+                  </h6>
+                  <Slider matches={notStartedMatches} />
+                </>
               ) : (
                 <div style={{ textAlign: 'left' }}>
                   <br />

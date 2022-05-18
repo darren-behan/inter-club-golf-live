@@ -53,12 +53,6 @@ function Profile() {
   useEffect(() => {
     if (isAuthenticating.status !== 400 && isAuthenticating.authenticatingComplete !== true) authenticateUser();
     getUserMatches(userDataObj.uid, 'userMatches');
-    setFilterValue({
-      year: '',
-      region: '',
-      round: '',
-      golfClub: '',
-    });
   }, []);
 
   useEffect(() => {
@@ -115,7 +109,7 @@ function Profile() {
 
   useEffect(() => {
     setFilterValue({
-      year: '',
+      year: moment().format('YYYY'),
       region: '',
       round: '',
       golfClub: '',
@@ -196,7 +190,7 @@ function Profile() {
         <div style={{ textAlign: 'center' }}>
           <br />
           <br />
-          <h5>There are no matches 🙁</h5>
+          <h5>Oops, something went wrong 🙁</h5>
         </div>
       </>
     );
@@ -386,13 +380,32 @@ function Profile() {
 
                       if (i + 1 === sortedMatchesByMatchDateTime.length) {
                         if (!matchYears.includes(filterValue.year)) {
-                          return (
-                            <div style={{ textAlign: 'center' }}>
-                              <br />
-                              <br />
-                              <h5>You haven't created any matches for {filterValue.year} 🙁</h5>
-                            </div>
-                          );
+                          if (componentToRender === 'collaboratingMatches') {
+                            return (
+                              <div style={{ textAlign: 'center' }}>
+                                <br />
+                                <br />
+                                <h5>You aren't a collaborator for any matches created for {filterValue.year} 🙁</h5>
+                                <br />
+                                <br />
+                                <h6>
+                                  Change the filter year to view matches where you could be a collaborator on in
+                                  previous years
+                                </h6>
+                              </div>
+                            );
+                          } else {
+                            return (
+                              <div style={{ textAlign: 'center' }}>
+                                <br />
+                                <br />
+                                <h5>You haven't created any matches for {filterValue.year} 🙁</h5>
+                                <br />
+                                <br />
+                                <h6>Change the filter year to view matches you've created in previous years</h6>
+                              </div>
+                            );
+                          }
                         }
                       }
                     })}

@@ -23,6 +23,10 @@ const requests = {
   getMatchesByCompetitionOnLoad: function (competition) {
     return axios.get('/competition/' + competition);
   },
+  // Returns all matches for status searched
+  getMatchesByStatus: function (status) {
+    return axios.get('/match/status/' + status);
+  },
   // Returns match when loading a single match
   getMatch: function (matchId) {
     return axios.get('/match/' + matchId);

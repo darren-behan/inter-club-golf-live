@@ -68,6 +68,7 @@ function Login() {
 
   useEffect(() => {
     if (isAuthenticating.status !== 400 && isAuthenticating.authenticatingComplete !== true) authenticateUser();
+    setForm(true);
   }, []);
 
   // useEffect is listening on load of page
@@ -132,7 +133,7 @@ function Login() {
         <div style={{ marginTop: '10px', marginBottom: '10px' }}>
           <Breadcrumb>
             <Breadcrumb.Item>
-              <Link to={'/'} className="breadcrumbItemLink" style={{ color: '#0a66c2' }}>
+              <Link component={RouterLink} to={'/'} style={{ color: '#0a66c2' }}>
                 Home
               </Link>
             </Breadcrumb.Item>

@@ -1,9 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import DataAreaContext from '../utils/DataAreaContext';
 import LocalStorage from '../services/LocalStorage/LocalStorage.service';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Breadcrumb } from 'react-bootstrap';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 let isEmpty = require('lodash.isempty');
 
@@ -55,6 +56,16 @@ function About() {
         </Row>
         <Row className="mb-3" style={{ backgroundColor: '#ffffff' }}>
           <Col className="my-3" xs={{ span: 12 }}>
+            <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+              <Breadcrumb>
+                <Breadcrumb.Item>
+                  <Link to={'/'} className="breadcrumbItemLink" style={{ color: '#0a66c2' }}>
+                    Home
+                  </Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item active>About</Breadcrumb.Item>
+              </Breadcrumb>
+            </div>
             <p style={{ fontSize: '1rem', fontWeight: '500' }}>About interclubgolfireland.ie</p>
           </Col>
           <Col xs={{ span: 12 }}>

@@ -3,13 +3,14 @@ import DataAreaContext from '../utils/DataAreaContext';
 import LocalStorage from '../services/LocalStorage/LocalStorage.service';
 import API from '../utils/API';
 import Lib from '../utils/Lib';
+import CompetitionData from '../assets/data/competitions.json';
 import { IsEmpty } from 'react-lodash';
 import { isEmpty, orderBy } from 'lodash';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FiltersOffCanvas from '../components/FiltersOffCanvas';
-import { Container, Row, Table, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Container, Row, Table, OverlayTrigger, Tooltip, Breadcrumb } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -38,6 +39,7 @@ function MatchesByCompetition() {
   const competitionName = decodeURIComponent(competition);
   const [response, setResponse] = useState({});
   const [matchesObjByYearRegion, setMatchesObjByYearRegion] = useState({});
+  const [isCommpetitionNameParamInvalid, setIsCommpetitionNameParamInvalid] = useState(false);
   let regions;
   let matchesByRegion;
   let rounds;
@@ -47,6 +49,7 @@ function MatchesByCompetition() {
 
   useEffect(() => {
     if (isAuthenticating.status !== 400 && isAuthenticating.authenticatingComplete !== true) authenticateUser();
+    if (!isCommpetitionNameParamValid()) return;
     setFilterValue({
       year: moment().format('YYYY'),
       region: '',
@@ -61,6 +64,18 @@ function MatchesByCompetition() {
     if (showFilters) setIsShowTooltip(false);
     if (sidebarOpen) setIsShowTooltip(false);
   }, [showFilters, sidebarOpen]);
+
+  const isCommpetitionNameParamValid = () => {
+    const competitionNames = CompetitionData.map((competition) => {
+      return competition.name;
+    });
+    if (competitionNames.includes(competitionName)) {
+      return true;
+    } else {
+      setIsCommpetitionNameParamInvalid(true);
+      return false;
+    }
+  };
 
   const authenticateUser = () => {
     setIsAuthenticating({ ...isAuthenticating, authenticatingInProgress: true });
@@ -385,75 +400,105 @@ function MatchesByCompetition() {
     }
   };
 
+  const BreadCrumb = () => {
+    return (
+      <>
+        <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+          <Breadcrumb>
+            <Breadcrumb.Item>
+              <Link to={'/'} className="breadcrumbItemLink" style={{ color: '#0a66c2' }}>
+                Home
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item active>{competitionName}</Breadcrumb.Item>
+          </Breadcrumb>
+        </div>
+      </>
+    );
+  };
+
   return (
     <>
       <FiltersOffCanvas matches={matchesByCompetition} />
       <Header />
       <Container>
         <div>
-          <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
-            <h4>{competitionName}</h4>
-          </div>
-          <IsEmpty
-            value={matchesObjByYearRegion}
-            yes={() => (
+          <BreadCrumb />
+          <>
+            {isCommpetitionNameParamInvalid ? (
               <>
-                {response.code === 200 ? (
-                  <div style={{ textAlign: 'center' }}>
-                    <br />
-                    <br />
-                    <h5>There's been no matches created for the {competitionName} to date 🙁</h5>
-                  </div>
-                ) : (
-                  <>
-                    <div className="py-5">
-                      <br />
-                      <ShinyBlock height="1.5rem" />
-                      <Space height="1rem" />
-                      <ShinyBlock height="12rem" />
-                      <Space height="1rem" />
-                      <ShinyBlock height="12rem" />
-                      <Space height="1rem" />
-                      <br />
-                    </div>
-                  </>
-                )}
+                <div>
+                  <h2>Page not found</h2>
+                </div>
+              </>
+            ) : (
+              <>
+                <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
+                  <h4>{competitionName}</h4>
+                </div>
+                <IsEmpty
+                  value={matchesObjByYearRegion}
+                  yes={() => (
+                    <>
+                      {response.code === 200 ? (
+                        <div style={{ textAlign: 'center' }}>
+                          <br />
+                          <br />
+                          <h5>There's been no matches created for the {competitionName} to date 🙁</h5>
+                        </div>
+                      ) : (
+                        <>
+                          <div className="py-5">
+                            <br />
+                            <ShinyBlock height="1.5rem" />
+                            <Space height="1rem" />
+                            <ShinyBlock height="12rem" />
+                            <Space height="1rem" />
+                            <ShinyBlock height="12rem" />
+                            <Space height="1rem" />
+                            <br />
+                          </div>
+                        </>
+                      )}
+                    </>
+                  )}
+                  no={() => (
+                    <>
+                      {uniqueMatchYears.includes(filterValue.year) ? (
+                        <>
+                          {uniqueMatchYears.map(function (matchYear) {
+                            regions = Object.keys(matchesObjByYearRegion[matchYear]).sort();
+                            if (matchYear === filterValue.year) {
+                              return (
+                                <>
+                                  <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
+                                    <h4>{Lib.capitalize(matchYear)}</h4>
+                                  </div>
+                                  <>
+                                    {regions.map(function (region) {
+                                      return renderRegionHeading(matchesObjByYearRegion[matchYear], region);
+                                    })}
+                                  </>
+                                </>
+                              );
+                            }
+                          })}
+                        </>
+                      ) : (
+                        <div style={{ textAlign: 'center' }}>
+                          <br />
+                          <br />
+                          <h5>
+                            There are no matches created for the {competitionName} for {filterValue.year} 🙁
+                          </h5>
+                        </div>
+                      )}
+                    </>
+                  )}
+                />
               </>
             )}
-            no={() => (
-              <>
-                {uniqueMatchYears.includes(filterValue.year) ? (
-                  <>
-                    {uniqueMatchYears.map(function (matchYear) {
-                      regions = Object.keys(matchesObjByYearRegion[matchYear]).sort();
-                      if (matchYear === filterValue.year) {
-                        return (
-                          <>
-                            <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
-                              <h4>{Lib.capitalize(matchYear)}</h4>
-                            </div>
-                            <>
-                              {regions.map(function (region) {
-                                return renderRegionHeading(matchesObjByYearRegion[matchYear], region);
-                              })}
-                            </>
-                          </>
-                        );
-                      }
-                    })}
-                  </>
-                ) : (
-                  <div style={{ textAlign: 'center' }}>
-                    <br />
-                    <br />
-                    <h5>
-                      There are no matches created for the {competitionName} for {filterValue.year} 🙁
-                    </h5>
-                  </div>
-                )}
-              </>
-            )}
-          />
+          </>
         </div>
       </Container>
       <Footer />

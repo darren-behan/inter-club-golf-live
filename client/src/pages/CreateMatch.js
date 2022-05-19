@@ -1,11 +1,11 @@
 import React, { useEffect, useContext } from 'react';
 import DataAreaContext from '../utils/DataAreaContext';
 import LocalStorage from '../services/LocalStorage/LocalStorage.service';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import PostMatchForm from '../components/PostMatchForm';
-import { Container } from 'react-bootstrap';
+import { Container, Breadcrumb } from 'react-bootstrap';
 import { ShinyBlock, Space } from '../components/SkeletonBuildingBlocks/SkeletonBuildingBlocks';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { isEmpty } from 'lodash';
@@ -78,6 +78,16 @@ function CreateMatch() {
     <>
       <Header />
       <Container style={{ marginBottom: '350px' }}>
+        <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+          <Breadcrumb>
+            <Breadcrumb.Item>
+              <Link to={'/'} className="breadcrumbItemLink" style={{ color: '#0a66c2' }}>
+                Home
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item active>Create a match</Breadcrumb.Item>
+          </Breadcrumb>
+        </div>
         {isAuthenticated ? (
           <>
             <PostMatchForm />

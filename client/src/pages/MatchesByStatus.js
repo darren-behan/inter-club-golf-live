@@ -4,13 +4,13 @@ import Lib from '../utils/Lib';
 import LocalStorage from '../services/LocalStorage/LocalStorage.service';
 import { IsEmpty } from 'react-lodash';
 import API from '../utils/API';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Cards from '../components/Cards';
 import FiltersOffCanvas from '../components/FiltersOffCanvas';
 import { ShinyBlock, Space } from '../components/SkeletonBuildingBlocks/SkeletonBuildingBlocks';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Breadcrumb } from 'react-bootstrap';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
@@ -345,7 +345,34 @@ function MatchesByStatus() {
       <FiltersOffCanvas matches={sortedMatchesByMatchDateTime} />
       <Header />
       <Container>
-        <div>
+        <div style={{ marginTop: '10px' }}>
+          <Breadcrumb>
+            <Breadcrumb.Item>
+              <Link to={'/'} className="breadcrumbItemLink" style={{ color: '#0a66c2' }}>
+                Home
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item className="breadcrumbItem">
+              <Link to={'/'} style={{ color: '#0a66c2' }}>
+                Status
+              </Link>
+            </Breadcrumb.Item>
+            <>
+              {matchesStatus === 'complete' ? (
+                <>
+                  <Breadcrumb.Item active>{Lib.capitalize(matchesStatus)}</Breadcrumb.Item>
+                </>
+              ) : matchesStatus === 'in progress' ? (
+                <>
+                  <Breadcrumb.Item active>{Lib.capitalize(matchesStatus)}</Breadcrumb.Item>
+                </>
+              ) : matchesStatus === 'not started' ? (
+                <>
+                  <Breadcrumb.Item active>Upcoming Matches</Breadcrumb.Item>
+                </>
+              ) : null}
+            </>
+          </Breadcrumb>
           <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
             <>
               {matchesStatus === 'complete' ? (
@@ -354,11 +381,11 @@ function MatchesByStatus() {
                 </>
               ) : matchesStatus === 'in progress' ? (
                 <>
-                  <h4>Matches {Lib.capitalize(matchesStatus)} today</h4>
+                  <h4>Matches {matchesStatus} today</h4>
                 </>
               ) : matchesStatus === 'not started' ? (
                 <>
-                  <h4>Upcoming Matches</h4>
+                  <h4>Upcoming matches</h4>
                 </>
               ) : (
                 <NoMatches />

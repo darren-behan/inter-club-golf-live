@@ -4,6 +4,7 @@ import LocalStorage from '../services/LocalStorage/LocalStorage.service';
 import UserAuthModal from '../components/Modals/UserAuthModal';
 import Header from '../components/Header';
 import { useHistory, Link as RouterLink } from 'react-router-dom';
+import { Breadcrumb } from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
@@ -125,6 +126,33 @@ function Login() {
     );
   };
 
+  const BreadCrumb = () => {
+    return (
+      <>
+        <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+          <Breadcrumb>
+            <Breadcrumb.Item>
+              <Link to={'/'} className="breadcrumbItemLink" style={{ color: '#0a66c2' }}>
+                Home
+              </Link>
+            </Breadcrumb.Item>
+            <>
+              {form ? (
+                <>
+                  <Breadcrumb.Item active>Login</Breadcrumb.Item>
+                </>
+              ) : (
+                <>
+                  <Breadcrumb.Item active>Reset password</Breadcrumb.Item>
+                </>
+              )}
+            </>
+          </Breadcrumb>
+        </div>
+      </>
+    );
+  };
+
   // Handles updating component state when the user types into the input field
   const handleInputChange = (event) => {
     event.preventDefault();
@@ -206,9 +234,10 @@ function Login() {
       {isAuthenticating.authenticatingComplete && !isAuthenticated ? (
         <>
           <Container component="main" maxWidth="xs">
+            <BreadCrumb />
             <CssBaseline />
             <div className={classes.paper}>
-              {form === true ? (
+              {form ? (
                 <>
                   <Typography component="h1" variant="h5">
                     Sign in

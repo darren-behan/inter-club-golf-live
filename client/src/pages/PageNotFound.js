@@ -1,7 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import DataAreaContext from '../utils/DataAreaContext';
 import LocalStorage from '../services/LocalStorage/LocalStorage.service';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
+import { Breadcrumb } from 'react-bootstrap';
 import Container from '@material-ui/core/Container';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 let isEmpty = require('lodash.isempty');
@@ -43,12 +45,30 @@ function PageNotFound() {
     });
   };
 
+  const BreadCrumb = () => {
+    return (
+      <>
+        <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+          <Breadcrumb>
+            <Breadcrumb.Item>
+              <Link to={'/'} className="breadcrumbItemLink" style={{ color: '#0a66c2' }}>
+                Home
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item active>Page not found</Breadcrumb.Item>
+          </Breadcrumb>
+        </div>
+      </>
+    );
+  };
+
   return (
     <>
       <Header />
       <Container component="main" maxWidth="xs">
+        <BreadCrumb />
         <div>
-          <h2>Page Not Found</h2>
+          <h2>Page not found</h2>
         </div>
       </Container>
     </>

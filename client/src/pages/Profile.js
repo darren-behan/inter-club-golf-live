@@ -4,8 +4,8 @@ import LocalStorage from '../services/LocalStorage/LocalStorage.service';
 import { IsEmpty } from 'react-lodash';
 import Lib from '../utils/Lib';
 import API from '../utils/API';
-import { useHistory } from 'react-router-dom';
-import { Navbar, Nav, Form, Button } from 'react-bootstrap';
+import { useHistory, Link } from 'react-router-dom';
+import { Navbar, Nav, Form, Button, Breadcrumb } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGolfBall, faUser } from '@fortawesome/free-solid-svg-icons';
 import Header from '../components/Header';
@@ -213,6 +213,9 @@ function Profile() {
   const RenderMatchCards = () => {
     return (
       <>
+        <Row>
+          <BreadCrumb />
+        </Row>
         <Row>
           <IsEmpty
             value={sortedMatchesByMatchDateTime}
@@ -437,6 +440,40 @@ function Profile() {
     );
   };
 
+  const BreadCrumb = () => {
+    return (
+      <>
+        <Breadcrumb>
+          <Breadcrumb.Item>
+            <Link to={'/'} className="breadcrumbItemLink" style={{ color: '#0a66c2' }}>
+              Home
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item className="breadcrumbItem">
+            <Link to={'/profile/' + userDataObj.uid} style={{ color: '#0a66c2' }}>
+              Profile
+            </Link>
+          </Breadcrumb.Item>
+          <>
+            {componentToRender === 'myAccount' ? (
+              <>
+                <Breadcrumb.Item active>My account</Breadcrumb.Item>
+              </>
+            ) : componentToRender === 'userMatches' ? (
+              <>
+                <Breadcrumb.Item active>My matches</Breadcrumb.Item>
+              </>
+            ) : componentToRender === 'collaboratingMatches' ? (
+              <>
+                <Breadcrumb.Item active>Collaborating matches</Breadcrumb.Item>
+              </>
+            ) : null}
+          </>
+        </Breadcrumb>
+      </>
+    );
+  };
+
   const handleInputChange = (event) => {
     event.preventDefault();
     setChangePasswordResponse({});
@@ -573,6 +610,11 @@ function Profile() {
                 <>
                   {componentToRender === 'myAccount' ? (
                     <>
+                      <Row>
+                        <Col style={{ paddingTop: '10px' }}>
+                          <BreadCrumb />
+                        </Col>
+                      </Row>
                       <Row>
                         <Col style={{ paddingTop: '10px' }}>
                           <>

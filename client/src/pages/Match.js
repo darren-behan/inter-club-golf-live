@@ -11,7 +11,7 @@ import Footer from '../components/Footer';
 import DeleteModal from '../components/Modals/DeleteModal';
 import UpdateModal from '../components/Modals/UpdateModal';
 import AddCollaboratorsModal from '../components/Modals/AddCollaboratorsModal';
-import { Container, Row, Table, Button } from 'react-bootstrap';
+import { Container, Row, Table, Button, Breadcrumb } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -98,6 +98,25 @@ function Match() {
       return a.individualMatchId - b.individualMatchId;
     });
   }
+
+  const BreadCrumb = () => {
+    return (
+      <>
+        <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+          <Breadcrumb>
+            <Breadcrumb.Item>
+              <Link to={'/'} className="breadcrumbItemLink" style={{ color: '#0a66c2' }}>
+                Home
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item active>
+              {Lib.capitalize(match.teamOneName)} v {Lib.capitalize(match.teamTwoName)}
+            </Breadcrumb.Item>
+          </Breadcrumb>
+        </div>
+      </>
+    );
+  };
 
   const getScore = () => {
     if (match.teamOneScore > match.teamTwoScore) {
@@ -232,6 +251,7 @@ function Match() {
           <AddCollaboratorsModal show={addCollaboratorsModalShow} onHide={() => setAddCollaboratorsModalShow(false)} />
           <Header />
           <Container>
+            <BreadCrumb />
             <Row style={{ marginTop: '10px' }}>
               <Table size="sm" className="caption-top" style={{ tableLayout: 'fixed' }}>
                 <caption style={{ color: '#0a66c2', fontWeight: '900', textAlign: 'center' }}>Match Score</caption>

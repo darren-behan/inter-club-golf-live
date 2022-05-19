@@ -71,3 +71,12 @@ iframe {
     min-height: calc(100vh - 410px);
   }
 }
+
+.breadcrumb-item a {
+  border-bottom: none!important;
+  text-decoration: none!important;
+}
+
+.breadcrumb-item.active {
+  border-bottom: none!important;
+}

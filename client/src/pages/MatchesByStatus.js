@@ -23,6 +23,9 @@ function MatchesByStatus() {
     setIsAuthenticated,
     setIsAuthenticating,
     isAuthenticating,
+    setIsShowTooltip,
+    showFilters,
+    sidebarOpen,
   } = useContext(DataAreaContext);
   const [matchesByStatus, setMatchesByStatus] = useState([]);
   const [response, setResponse] = useState({});
@@ -44,13 +47,23 @@ function MatchesByStatus() {
     });
   }, []);
 
+  useEffect(() => {
+    if (showFilters) setIsShowTooltip(false);
+    if (sidebarOpen) setIsShowTooltip(false);
+  }, [showFilters, sidebarOpen]);
+
   const getMatchesByStatus = async () => {
     await API.getMatchesByStatus(matchesStatus)
       .then((res) => {
-        console.log(res.data);
         setMatchesByStatus(res.data);
         setIsLoading(false);
         setResponse({ code: 200 });
+        if (!isEmpty(res.data)) {
+          setIsShowTooltip(true);
+          setTimeout(() => {
+            setIsShowTooltip(false);
+          }, 4000);
+        }
       })
       .catch((err) => console.log(err));
   };

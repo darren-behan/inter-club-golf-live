@@ -33,6 +33,9 @@ function Profile() {
     isAuthenticating,
     setDeleteModalShow,
     deleteModalShow,
+    setIsShowTooltip,
+    showFilters,
+    sidebarOpen,
   } = useContext(DataAreaContext);
   const [userMatches, setUserMatches] = useState([]);
   const [componentToRender, setComponentToRender] = useState('myAccount');
@@ -61,11 +64,22 @@ function Profile() {
     }
   }, [isAuthenticating]);
 
+  useEffect(() => {
+    if (showFilters) setIsShowTooltip(false);
+    if (sidebarOpen) setIsShowTooltip(false);
+  }, [showFilters, sidebarOpen]);
+
   const getUserMatches = async (userId, matchType) => {
     await API.getUserMatches(userId, matchType)
       .then((res) => {
         setUserMatches(res.data);
         setIsLoading(false);
+        if (!isEmpty(res.data)) {
+          setIsShowTooltip(true);
+          setTimeout(() => {
+            setIsShowTooltip(false);
+          }, 4000);
+        }
       })
       .catch((err) => console.log(err));
   };

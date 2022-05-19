@@ -30,13 +30,14 @@ function MatchesByCompetition() {
     setUserDataObj,
     showFilters,
     sidebarOpen,
+    isShowTooltip,
+    setIsShowTooltip,
   } = useContext(DataAreaContext);
   let { competition } = useParams();
   const history = useHistory();
   const competitionName = decodeURIComponent(competition);
   const [response, setResponse] = useState({});
   const [matchesObjByYearRegion, setMatchesObjByYearRegion] = useState({});
-  const [isShowTooltip, setIsShowTooltip] = useState(true);
   let regions;
   let matchesByRegion;
   let rounds;
@@ -54,9 +55,6 @@ function MatchesByCompetition() {
     });
     setMatchesByCompetition([]);
     getMatchesByCompetition();
-    setTimeout(() => {
-      setIsShowTooltip(false);
-    }, 4000);
   }, []);
 
   useEffect(() => {
@@ -98,6 +96,12 @@ function MatchesByCompetition() {
         setMatchesByCompetition(res.data);
         setMatchesObjByYearRegion(matchesByYearRegion(res.data));
         setResponse({ code: 200 });
+        if (!isEmpty(res.data)) {
+          setIsShowTooltip(true);
+          setTimeout(() => {
+            setIsShowTooltip(false);
+          }, 4000);
+        }
       })
       .catch((err) => console.log(err));
   }
@@ -279,32 +283,16 @@ function MatchesByCompetition() {
               {Lib.capitalize(round)}
             </caption>
             <thead>
-              {i === 0 ? (
-                <OverlayTrigger
-                  placement="top"
-                  show={isShowTooltip}
-                  overlay={
-                    <Tooltip id="button-tooltip-2">Click on a match to view the individual match scores</Tooltip>
-                  }
-                >
-                  <tr>
-                    <th>Home Team</th>
-                    <th>Score</th>
-                    <th>Away Team</th>
-                  </tr>
-                </OverlayTrigger>
-              ) : (
-                <tr>
-                  <th>Home Team</th>
-                  <th>Score</th>
-                  <th>Away Team</th>
-                </tr>
-              )}
+              <tr>
+                <th>Home Team</th>
+                <th>Score</th>
+                <th>Away Team</th>
+              </tr>
             </thead>
             <tbody>
-              {matches.map(function (match) {
+              {matches.map((match, index) => {
                 if (match.competitionRound.round === round) {
-                  return renderRoundMatches(match);
+                  return renderRoundMatches(match, index, i);
                 }
               })}
             </tbody>
@@ -314,21 +302,42 @@ function MatchesByCompetition() {
     );
   };
 
-  const renderRoundMatches = (match) => {
+  const renderRoundMatches = (match, index, i) => {
     if (
       match.teamOneName.toLowerCase().includes(filterValue.golfClub.toLowerCase()) ||
       match.teamTwoName.toLowerCase().includes(filterValue.golfClub.toLowerCase())
     ) {
       return (
         <>
-          <tr key={match.matchId} onClick={(e) => onClickRow(e, match)} style={{ cursor: 'pointer' }}>
-            <td>{Lib.capitalize(match.teamOneName)}</td>
-            <td style={{ background: '#0a66c2' }}>{getScore(match)}</td>
-            <td>{Lib.capitalize(match.teamTwoName)}</td>
-          </tr>
-          <tr>
-            <td colSpan="3">{Lib.capitalize(match.matchStatus)}</td>
-          </tr>
+          {index === 0 && i === 0 ? (
+            <>
+              <OverlayTrigger
+                placement="top"
+                show={isShowTooltip}
+                overlay={<Tooltip id="button-tooltip-2">Click on a match to view the individual match scores</Tooltip>}
+              >
+                <tr key={match.matchId} onClick={(e) => onClickRow(e, match)} style={{ cursor: 'pointer' }}>
+                  <td>{Lib.capitalize(match.teamOneName)}</td>
+                  <td style={{ background: '#0a66c2' }}>{getScore(match)}</td>
+                  <td>{Lib.capitalize(match.teamTwoName)}</td>
+                </tr>
+              </OverlayTrigger>
+              <tr>
+                <td colSpan="3">{Lib.capitalize(match.matchStatus)}</td>
+              </tr>
+            </>
+          ) : (
+            <>
+              <tr key={match.matchId} onClick={(e) => onClickRow(e, match)} style={{ cursor: 'pointer' }}>
+                <td>{Lib.capitalize(match.teamOneName)}</td>
+                <td style={{ background: '#0a66c2' }}>{getScore(match)}</td>
+                <td>{Lib.capitalize(match.teamTwoName)}</td>
+              </tr>
+              <tr>
+                <td colSpan="3">{Lib.capitalize(match.matchStatus)}</td>
+              </tr>
+            </>
+          )}
         </>
       );
     }

@@ -77,6 +77,8 @@ function App() {
   const [isCollaboratorsEdited, setIsCollaboratorsEdited] = useState(true);
   // This is used to store if a match has been amended and will enable to Update Match submit button
   const [isMatchEdited, setIsMatchEdited] = useState(true);
+  // This is to control the displaying of the tooltips
+  const [isShowTooltip, setIsShowTooltip] = useState(false);
 
   useEffect(() => {
     setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
@@ -126,6 +128,8 @@ function App() {
           isCollaboratorsEdited,
           isMatchEdited,
           isAuthenticating,
+          isShowTooltip,
+          setIsShowTooltip,
           setIsAuthenticating,
           setIsMatchEdited,
           setIsCollaboratorsEdited,

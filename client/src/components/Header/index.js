@@ -4,12 +4,12 @@ import { useLocation, Link, useParams } from 'react-router-dom';
 import DataAreaContext from '../../utils/DataAreaContext';
 import Burger from '../BurgerMenuIcon';
 import SideBar from '../SideBar';
-import { Container, Navbar, Button, NavLink } from 'react-bootstrap';
+import { Container, Navbar, Button, NavLink, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 function Header(props) {
-  const { setShowFilters, sidebarOpen, setSidebarOpen, userDataObj } = useContext(DataAreaContext);
+  const { setShowFilters, sidebarOpen, setSidebarOpen, userDataObj, isShowTooltip } = useContext(DataAreaContext);
   const location = useLocation();
   const node = useRef();
   let { competition, status } = useParams();
@@ -33,13 +33,22 @@ function Header(props) {
           </NavLink>
         </Navbar.Brand>
         {location.pathname === `/competition/${competition}` ||
-        location.pathname === `/usermatches/${userDataObj.uid}` ||
         (location.pathname === `/profile/${userDataObj.uid}` &&
           (props.activeRender === 'userMatches' || props.activeRender === 'collaboratingMatches')) ||
         location.pathname === `/matches/status/${status}` ? (
-          <Button onClick={() => setShowFilters(true)} variant="outline-light" className="ml-3 ml-sm-0">
-            <FontAwesomeIcon icon={faFilter} className="fa-lg" style={{ color: '#0a66c2' }} />
-          </Button>
+          <OverlayTrigger
+            placement="bottom"
+            show={isShowTooltip}
+            overlay={
+              <Tooltip id="button-tooltip-2">
+                Showing matches for the current year. To view matches from other years, click here
+              </Tooltip>
+            }
+          >
+            <Button onClick={() => setShowFilters(true)} variant="outline-light" className="ml-3 ml-sm-0">
+              <FontAwesomeIcon icon={faFilter} className="fa-lg" style={{ color: '#0a66c2' }} />
+            </Button>
+          </OverlayTrigger>
         ) : null}
       </Container>
     </Navbar>

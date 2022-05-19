@@ -219,7 +219,25 @@ function Profile() {
         <Row>
           <IsEmpty
             value={sortedMatchesByMatchDateTime}
-            yes={() => <>{isLoading ? <LoadingDiv /> : <NoMatches />}</>}
+            yes={() => (
+              <>
+                {isLoading ? (
+                  <LoadingDiv />
+                ) : componentToRender === 'userMatches' ? (
+                  <div style={{ textAlign: 'center' }}>
+                    <br />
+                    <br />
+                    <h5>You haven't created any matches 🙁</h5>
+                  </div>
+                ) : componentToRender === 'collaboratingMatches' ? (
+                  <div style={{ textAlign: 'center' }}>
+                    <br />
+                    <br />
+                    <h5>You aren't a collaborator for any matches 🙁</h5>
+                  </div>
+                ) : null}
+              </>
+            )}
             no={() => (
               <>
                 {!isEmpty(sortedMatchesByMatchDateTime) ? (

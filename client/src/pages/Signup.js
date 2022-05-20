@@ -218,7 +218,7 @@ function Signup() {
     setLoading(true);
 
     const actionCodeSettings = {
-      url: 'https://inter-club-golf-live.web.app/login',
+      url: 'https://interclubgolfireland.ie/login',
       handleCodeInApp: false,
     };
 

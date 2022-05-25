@@ -67,8 +67,6 @@ function MatchForm(props) {
   const handleInputChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
-    console.log(name);
-    console.log(value);
 
     if (name === 'competitionRound') {
       rounds.map((round) => {
@@ -122,35 +120,23 @@ function MatchForm(props) {
 
   function updateIndividualMatchDestination(name, value) {
     if (!props.isUpdate) {
-      console.log('postMatchObj');
-      console.log(postMatchObj);
-      console.log('oldPostMatchObj');
-      console.log(oldPostMatchObj);
       let oldValue = oldPostMatchObj[name];
-      console.log(oldValue);
 
       for (let i = 0; i < postMatchObj.individualMatchesArray.length; i++) {
         let individualMatch = postMatchObj.individualMatchesArray[i];
-        console.log(individualMatch.matchDestination);
-        console.log(individualMatch.matchDestination === oldValue);
         if (!individualMatch.hasOwnProperty('matchDestination')) continue;
         if (individualMatch.matchDestination.toLowerCase() === oldValue.toLowerCase()) {
           individualMatch.matchDestination = value.toLowerCase();
-          console.log(individualMatch.matchDestination);
           setPostMatchObj({ ...postMatchObj, individualMatchesArray: postMatchObj.individualMatch });
         }
       }
     } else {
       let oldValue = oldUpdateMatchObj[name];
-      console.log(oldValue);
 
       for (let i = 0; i < updateMatchObj.individualMatch.length; i++) {
         let individualMatch = updateMatchObj.individualMatch[i];
-        console.log(individualMatch.matchDestination);
-        console.log(individualMatch.matchDestination.toLowerCase() === oldValue.toLowerCase());
         if (individualMatch.matchDestination.toLowerCase() === oldValue.toLowerCase()) {
           individualMatch.matchDestination = value.toLowerCase();
-          console.log(individualMatch.matchDestination);
           setUpdateMatchObj(JSON.parse(JSON.stringify({ ...updateMatchObj })));
           setIsMatchEdited(false);
         }
@@ -161,8 +147,6 @@ function MatchForm(props) {
   const handleIndividualMatchFieldInputChange = (event, id) => {
     event.preventDefault();
     const { name, value } = event.target;
-    console.log(name);
-    console.log(value);
 
     if (!props.isUpdate) {
       for (let i = 0; i < filteredMatchArray.length; i++) {
@@ -193,13 +177,6 @@ function MatchForm(props) {
       setIsMatchEdited(false);
     }
   };
-  if (props.isUpdate) {
-    console.log('updateMatchObj');
-    console.log(updateMatchObj);
-  } else {
-    console.log('postMatchObj');
-    console.log(postMatchObj);
-  }
 
   let homeTeamName = props.isUpdate ? updateMatchObj['teamOneName'] : postMatchObj['teamOneName'];
   let awayTeamName = props.isUpdate ? updateMatchObj['teamTwoName'] : postMatchObj['teamTwoName'];
@@ -266,12 +243,6 @@ function MatchForm(props) {
       }
       if (props.isUpdate) {
         individualMatch = updateMatchObj.individualMatch[i];
-        console.log('individualMatch' + ' ' + i);
-        console.log(individualMatch.matchDestination);
-        competitors.map((clubName, index) => console.log(clubName));
-      } else {
-        console.log(matchDestination);
-        competitors.map((clubName, index) => console.log(clubName));
       }
       /* eslint-disable */
       {

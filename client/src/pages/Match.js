@@ -273,6 +273,10 @@ function Match() {
                   </Link>
                 </h6>
                 <h6>
+                  Competition Region:&nbsp;
+                  <span style={{ color: '#0a66c2' }}>{Lib.capitalize(match.competitionConcatRegion)}</span>
+                </h6>
+                <h6>
                   Competition Round:&nbsp;
                   <span style={{ color: '#0a66c2' }}>{Lib.capitalize(match.competitionRound.round)}</span>
                 </h6>

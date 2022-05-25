@@ -4,7 +4,6 @@ import LocalStorage from '../services/LocalStorage/LocalStorage.service';
 import { useHistory, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import PostMatchForm from '../components/PostMatchForm';
 import MatchForm from '../components/Forms/MatchForm';
 import { Container, Breadcrumb } from 'react-bootstrap';
 import { ShinyBlock, Space } from '../components/SkeletonBuildingBlocks/SkeletonBuildingBlocks';

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import DataAreaContext from '../../../utils/DataAreaContext';
 import API from '../../../utils/API';
-import UpdateMatchForm from '../../UpdateMatchForm/index.js';
 import MatchForm from '../../Forms/MatchForm';
 import { Button, Modal, Spinner, CloseButton } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';

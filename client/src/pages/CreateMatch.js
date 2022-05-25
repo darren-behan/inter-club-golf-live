@@ -5,6 +5,7 @@ import { useHistory, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import PostMatchForm from '../components/PostMatchForm';
+import MatchForm from '../components/Forms/MatchForm';
 import { Container, Breadcrumb } from 'react-bootstrap';
 import { ShinyBlock, Space } from '../components/SkeletonBuildingBlocks/SkeletonBuildingBlocks';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
@@ -77,8 +78,8 @@ function CreateMatch() {
   return (
     <>
       <Header />
-      <Container style={{ marginBottom: '350px' }}>
-        <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+      <Container className="px-0" style={{ marginBottom: '350px' }}>
+        <div className="px-3" style={{ marginTop: '10px', marginBottom: '10px' }}>
           <Breadcrumb>
             <Breadcrumb.Item>
               <Link to={'/'} style={{ color: '#0a66c2' }}>
@@ -90,7 +91,7 @@ function CreateMatch() {
         </div>
         {isAuthenticated ? (
           <>
-            <PostMatchForm />
+            <MatchForm isUpdate={false} />
           </>
         ) : !isAuthenticating.authenticatingComplete ? (
           <>

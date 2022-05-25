@@ -1,0 +1,17 @@
+[
+  {
+    "regionArea": "north"
+  },
+  {
+    "regionArea": "south"
+  },
+  {
+    "regionArea": "east"
+  },
+  {
+    "regionArea": "west"
+  },
+  {
+    "regionArea": "central"
+  }
+]

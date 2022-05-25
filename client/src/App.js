@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import DataAreaContext from './utils/DataAreaContext';
 import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom';
+import ScrollToTop from 'react-router-scroll-top';
 import Home from './pages/Home';
 import MatchesByCompetition from './pages/MatchesByCompetition';
 import MatchesByStatus from './pages/MatchesByStatus';
@@ -84,16 +85,6 @@ function App() {
     setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
   }, []);
 
-  const ScrollToTop = () => {
-    const { pathname } = useLocation();
-
-    useEffect(() => {
-      window.scrollTo(0, 0);
-    }, [pathname]);
-
-    return null;
-  };
-
   return (
     <>
       <DataAreaContext.Provider
@@ -162,21 +153,22 @@ function App() {
         }}
       >
         <Router>
-          <ScrollToTop />
-          <Wrapper>
-            <Switch>
-              <Route exact path={'/'} component={Home} />
-              <Route exact path={'/about'} component={About} />
-              <Route exact path={'/competition/:competition'} component={MatchesByCompetition} />
-              <Route exact path={'/matches/status/:status'} component={MatchesByStatus} />
-              <Route exact path={'/match/:id'} component={Match} />
-              <Route exact path={'/profile/:id'} component={Profile} />
-              <Route exact path={'/creatematch'} component={CreateMatch} />
-              <Route exact path={'/login'} component={Login} />
-              <Route exact path={'/signup'} component={Signup} />
-              <Route exact path="*" component={PageNotFound} />
-            </Switch>
-          </Wrapper>
+          <ScrollToTop>
+            <Wrapper>
+              <Switch>
+                <Route exact path={'/'} component={Home} />
+                <Route exact path={'/about'} component={About} />
+                <Route exact path={'/competition/:competition'} component={MatchesByCompetition} />
+                <Route exact path={'/matches/status/:status'} component={MatchesByStatus} />
+                <Route exact path={'/match/:id'} component={Match} />
+                <Route exact path={'/profile/:id'} component={Profile} />
+                <Route exact path={'/creatematch'} component={CreateMatch} />
+                <Route exact path={'/login'} component={Login} />
+                <Route exact path={'/signup'} component={Signup} />
+                <Route exact path="*" component={PageNotFound} />
+              </Switch>
+            </Wrapper>
+          </ScrollToTop>
         </Router>
       </DataAreaContext.Provider>
     </>

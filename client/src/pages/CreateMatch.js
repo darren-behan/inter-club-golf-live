@@ -89,7 +89,10 @@ function CreateMatch() {
             <Breadcrumb.Item active>Create a match</Breadcrumb.Item>
           </Breadcrumb>
         </div>
-        {isAuthenticated ? (
+        <>
+          <MatchForm isUpdate={false} />
+        </>
+        {/* {isAuthenticated ? (
           <>
             <MatchForm isUpdate={false} />
           </>
@@ -103,7 +106,7 @@ function CreateMatch() {
               <h2>{isAuthenticating.message}</h2>
             </div>
           </>
-        ) : null}
+        ) : null} */}
       </Container>
       <Footer />
     </>

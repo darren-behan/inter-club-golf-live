@@ -36,9 +36,11 @@ function Profile() {
     setIsShowTooltip,
     showFilters,
     sidebarOpen,
+    isMatchDelete,
+    setIsMatchDelete,
   } = useContext(DataAreaContext);
   const [userMatches, setUserMatches] = useState([]);
-  const [componentToRender, setComponentToRender] = useState('myAccount');
+  const [componentToRender, setComponentToRender] = useState(isMatchDelete ? 'userMatches' : 'myAccount');
   const [isLoading, setIsLoading] = useState(true);
   const [newPassword, setNewPassword] = useState('');
   const [setIsChangePasswordLoading, setChangePasswordLoading] = useState(false);
@@ -55,6 +57,9 @@ function Profile() {
 
   useEffect(() => {
     if (isAuthenticating.status !== 400 && isAuthenticating.authenticatingComplete !== true) authenticateUser();
+    if (isMatchDelete) {
+      setIsMatchDelete(false);
+    }
     getUserMatches(userDataObj.uid, 'userMatches');
   }, []);
 
@@ -585,7 +590,18 @@ function Profile() {
                       style={{ fontSize: '1.4rem', padding: '0px!important' }}
                     />
                     <Navbar.Collapse id="basic-navbar-nav">
-                      <Nav className="mb-0 flex-column" defaultActiveKey="myAccount">
+                      <Nav
+                        className="mb-0 flex-column"
+                        defaultActiveKey={
+                          componentToRender === 'myAccount'
+                            ? 'myAccount'
+                            : componentToRender === 'userMatches'
+                            ? 'userMatches'
+                            : componentToRender === 'collaboratingMatches'
+                            ? 'collaboratingMatches'
+                            : componentToRender
+                        }
+                      >
                         <Nav.Item className="mx-0">
                           <Nav.Link
                             className="px-0 py-2 pr-md-0"

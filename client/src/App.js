@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import DataAreaContext from './utils/DataAreaContext';
-import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ScrollToTop from 'react-router-scroll-top';
 import Home from './pages/Home';
 import MatchesByCompetition from './pages/MatchesByCompetition';
@@ -80,6 +80,8 @@ function App() {
   const [isMatchEdited, setIsMatchEdited] = useState(true);
   // This is to control the displaying of the tooltips
   const [isShowTooltip, setIsShowTooltip] = useState(false);
+  // This is to control the displaying of the tooltips
+  const [isMatchDelete, setIsMatchDelete] = useState(false);
 
   useEffect(() => {
     setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
@@ -120,6 +122,8 @@ function App() {
           isMatchEdited,
           isAuthenticating,
           isShowTooltip,
+          isMatchDelete,
+          setIsMatchDelete,
           setIsShowTooltip,
           setIsAuthenticating,
           setIsMatchEdited,

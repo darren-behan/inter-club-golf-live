@@ -7,9 +7,15 @@ import { useHistory } from 'react-router-dom';
 import { deleteUser } from 'firebase/auth';
 
 function DeleteModal(props) {
-  const { setDeleteModalShow, deleteResponse, setDeleteResponse, appMatchesOnLoad, match, userDataObj } = useContext(
-    DataAreaContext,
-  );
+  const {
+    setDeleteModalShow,
+    deleteResponse,
+    setDeleteResponse,
+    appMatchesOnLoad,
+    match,
+    userDataObj,
+    setIsMatchDelete,
+  } = useContext(DataAreaContext);
   let history = useHistory();
   const [isLoading, setLoading] = useState(false);
 
@@ -62,9 +68,9 @@ function DeleteModal(props) {
   function handleCloseClick() {
     setDeleteResponse({});
     setDeleteModalShow(false);
-    if (props.isMatch) history.push(`/usermatches/${userDataObj.uid}`);
+    setIsMatchDelete(true);
+    if (props.isMatch) history.push(`/profile/${userDataObj.uid}`);
   }
-
   return (
     <>
       <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered backdrop="true">

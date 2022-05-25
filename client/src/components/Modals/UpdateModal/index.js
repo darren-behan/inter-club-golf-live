@@ -135,7 +135,6 @@ function UpdateModal(props) {
           {updateResponse.status === 200 || updateResponse.status === 400 ? (
             `${updateResponse.message}`
           ) : (
-            // <UpdateMatchForm />
             <MatchForm isUpdate={true} />
           )}
         </Modal.Body>

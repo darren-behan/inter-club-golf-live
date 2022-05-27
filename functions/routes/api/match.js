@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const matchesController = require('../../controllers/matchController');
 const auth = require('../../util/auth');
+const appCheck = require('../../util/appCheck');
 
 // Express then matches the final portion of the route to one of the below
 
@@ -14,7 +15,7 @@ router
 router
   .route('/:matchId')
   // GET request to return a match
-  .get(matchesController.getMatch);
+  .get([appCheck], matchesController.getMatch);
 
 // Match with "/api/match/status/:status"
 router

@@ -28,8 +28,12 @@ const requests = {
     return axios.get('/match/status/' + status);
   },
   // Returns match when loading a single match
-  getMatch: function (matchId) {
-    return axios.get('/match/' + matchId);
+  getMatch: function (matchId, appCheckToken) {
+    return axios.get('/match/' + matchId, {
+      headers: {
+        'X-Firebase-AppCheck': appCheckToken,
+      },
+    });
   },
   // Posts a new match
   postMatch: function (matchData) {

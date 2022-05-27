@@ -15,7 +15,8 @@ import About from './pages/About';
 import PageNotFound from './pages/PageNotFound';
 import Wrapper from './components/Wrapper/index.js';
 
-function App() {
+function App(props) {
+  let appCheck = props.appCheck;
   // This is used to confirm the user is logged in and redirect them to the home page
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState({
@@ -91,6 +92,7 @@ function App() {
     <>
       <DataAreaContext.Provider
         value={{
+          appCheck,
           isAuthenticated,
           appMatchesOnLoad,
           loginDataObj,

@@ -19,10 +19,12 @@ import { ShinyBlock, Space } from '../components/SkeletonBuildingBlocks/Skeleton
 import Moment from 'react-moment';
 import 'moment-timezone';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+const { getToken } = require('firebase/app-check');
 let isEmpty = require('lodash.isempty');
 
 function Match() {
   const {
+    appCheck,
     match,
     setMatchObj,
     userDataObj,
@@ -85,7 +87,15 @@ function Match() {
   };
 
   async function getMatchOnLoad() {
-    await API.getMatch(id)
+    let appCheckTokenResponse;
+    try {
+      appCheckTokenResponse = await getToken(appCheck, /* forceRefresh= */ false);
+    } catch (err) {
+      // Handle any errors if the token was not retrieved.
+      console.log(JSON.stringify(err));
+      return;
+    }
+    await API.getMatch(id, appCheckTokenResponse.token)
       .then((res) => {
         setMatchObj(res.data);
       })

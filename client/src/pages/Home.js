@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 import AdSense from 'react-adsense';
 import { isEmpty } from 'lodash';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+const { getToken } = require('firebase/app-check');
 
 function Home() {
   const {
@@ -22,6 +23,7 @@ function Home() {
     isAuthenticating,
     setIsAuthenticated,
     setUserDataObj,
+    appCheck,
   } = useContext(DataAreaContext);
   const RowStyles = {
     // height: "100vh",
@@ -83,7 +85,14 @@ function Home() {
   };
 
   const getAppMatchesOnLoad = async () => {
-    await API.getMatchesOnLoad()
+    let appCheckTokenResponse;
+    try {
+      appCheckTokenResponse = await getToken(appCheck, /* forceRefresh= */ false);
+    } catch (err) {
+      console.log(JSON.stringify(err));
+      return;
+    }
+    await API.getMatchesOnLoad(appCheckTokenResponse.token)
       .then((res) => {
         setAppMatchesOnLoad(res.data);
       })

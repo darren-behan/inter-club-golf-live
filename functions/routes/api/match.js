@@ -9,7 +9,7 @@ const appCheck = require('../../util/appCheck');
 router
   .route('/')
   // GET request to return all matches
-  .get(matchesController.findAll);
+  .get([appCheck], matchesController.findAll);
 
 // Match with "/api/match/:matchId"
 router

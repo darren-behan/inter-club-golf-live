@@ -16,8 +16,12 @@ const requests = {
     });
   },
   // Returns all matches on app load
-  getMatchesOnLoad: function () {
-    return axios.get('/match');
+  getMatchesOnLoad: function (appCheckToken) {
+    return axios.get('/match', {
+      headers: {
+        'X-Firebase-AppCheck': appCheckToken,
+      },
+    });
   },
   // Returns all matches for competition searched
   getMatchesByCompetitionOnLoad: function (competition) {

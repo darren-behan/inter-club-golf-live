@@ -23,6 +23,7 @@ function UpdateModal(props) {
     isMatchEdited,
     setIsMatchEdited,
     appCheck,
+    timeZone,
   } = useContext(DataAreaContext);
   let history = useHistory();
   const [isLoading, setLoading] = useState(false);
@@ -73,6 +74,8 @@ function UpdateModal(props) {
     const updatedOverallMatchScore = updateOverallMatchScore(updateMatchObj);
     updateMatchObj.teamOneScore = updatedOverallMatchScore.teamOneScore;
     updateMatchObj.teamTwoScore = updatedOverallMatchScore.teamTwoScore;
+    const matchStatus = calculateMatchStatusOnUpdate(updateMatchObj.matchDateTime, moment().format());
+    updateMatchObj.matchStatus = matchStatus;
     API.updateMatch(
       {
         matchId: updateMatchObj.matchId,
@@ -121,6 +124,23 @@ function UpdateModal(props) {
           status: 400,
         });
       });
+  };
+
+  const calculateMatchStatusOnUpdate = (matchDateTime, updatedAt) => {
+    console.log(matchDateTime);
+    console.log(updatedAt);
+    var end_time = moment(matchDateTime).tz(timeZone).add(7, 'hours');
+
+    // if updatedAt date/time is between the match date/time & before 7 hours after the match date/time, return in progress
+    if (moment(updatedAt).isBetween(matchDateTime, end_time)) {
+      return 'in progress';
+    } else if (moment(updatedAt).isBefore(matchDateTime)) {
+      // if updatedAt date/time is before match date/time, return not started
+      return 'not started';
+    } else {
+      // if updatedAt date/time is 6 hours after date/time, return complete
+      return 'complete';
+    }
   };
 
   const handleCloseClick = (matchId) => {

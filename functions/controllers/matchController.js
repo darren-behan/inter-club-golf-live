@@ -369,7 +369,7 @@ const calculateMatchScoreOnPost = (value) => {
 };
 
 const calculateMatchStatus = (matchDateTime, createdAt, timeZone) => {
-  var end_time = moment(matchDateTime).tz(timeZone).add(6, 'hours');
+  var end_time = moment(matchDateTime).tz(timeZone).add(7, 'hours');
 
   // if createdAt date/time is between the match date/time & before 6 hours after the match date/time, return in progress
   if (moment(createdAt).isBetween(matchDateTime, end_time)) {

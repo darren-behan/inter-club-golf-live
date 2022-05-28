@@ -19,6 +19,7 @@ import { isEmpty } from 'lodash';
 import moment from 'moment';
 import { getAuth, updatePassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import ReauthenticateUserModal from '../components/Modals/ReauthenticateUserModal';
+const { getToken } = require('firebase/app-check');
 
 function Profile() {
   const {
@@ -38,6 +39,7 @@ function Profile() {
     sidebarOpen,
     isMatchDelete,
     setIsMatchDelete,
+    appCheck,
   } = useContext(DataAreaContext);
   const [userMatches, setUserMatches] = useState([]);
   const [componentToRender, setComponentToRender] = useState(isMatchDelete ? 'userMatches' : 'myAccount');
@@ -57,10 +59,8 @@ function Profile() {
 
   useEffect(() => {
     if (isAuthenticating.status !== 400 && isAuthenticating.authenticatingComplete !== true) authenticateUser();
-    if (isMatchDelete) {
-      setIsMatchDelete(false);
-    }
-    getUserMatches(userDataObj.uid, 'userMatches');
+    if (isMatchDelete) setIsMatchDelete(false);
+    if (!isMatchDelete) getUserMatches(userDataObj.uid, 'userMatches');
   }, []);
 
   useEffect(() => {
@@ -75,7 +75,15 @@ function Profile() {
   }, [showFilters, sidebarOpen]);
 
   const getUserMatches = async (userId, matchType) => {
-    await API.getUserMatches(userId, matchType)
+    let appCheckTokenResponse;
+    try {
+      appCheckTokenResponse = await getToken(appCheck, /* forceRefresh= */ false);
+    } catch (err) {
+      console.log(JSON.stringify(err));
+      return;
+    }
+
+    await API.getUserMatches(userId, matchType, appCheckTokenResponse.token)
       .then((res) => {
         setUserMatches(res.data);
         setIsLoading(false);

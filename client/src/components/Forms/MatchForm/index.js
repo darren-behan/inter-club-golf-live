@@ -15,6 +15,7 @@ import matchData from '../../../assets/data/matchdata.json';
 import rounds from '../../../assets/data/competitionRounds.json';
 import statuses from '../../../assets/data/matchStatuses.json';
 let isEmpty = require('lodash.isempty');
+const { getToken } = require('firebase/app-check');
 
 const styles = makeStyles((theme) => ({
   textField: {
@@ -46,6 +47,7 @@ function MatchForm(props) {
     oldUpdateMatchObj,
     setOldUpdateMatchObj,
     setIsMatchEdited,
+    appCheck,
   } = useContext(DataAreaContext);
   const classes = styles();
   let filteredMatchArray = [];
@@ -592,31 +594,43 @@ function MatchForm(props) {
     return individualMatchFields;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-    API.postMatch({
-      timeZone: timeZone,
-      matchDateTime: moment(`${postMatchObj.matchDate} ${postMatchObj.matchTime}`).format(),
-      createdAt: moment().format(),
-      updatedAt: moment().format(),
-      competitionName: postMatchObj.competitionName,
-      competitionConcatRegion: !isEmpty(postMatchObj.competitionRegionArea)
-        ? postMatchObj.competitionRegion + ' ' + postMatchObj.competitionRegionArea
-        : postMatchObj.competitionRegion,
-      competitionRegion: postMatchObj.competitionRegion,
-      competitionRegionArea: !isEmpty(postMatchObj.competitionRegionArea) ? postMatchObj.competitionRegionArea : '',
-      competitionRound: postMatchObj.competitionRound,
-      numIndividualMatches: competitionObject.matches,
-      individualMatch: !isEmpty(postMatchObj.individualMatchesArray)
-        ? postMatchObj.individualMatchesArray
-        : filteredMatchArray,
-      teamOneName: postMatchObj.teamOneName,
-      teamTwoName: postMatchObj.teamTwoName,
-      neutralVenueName: !isEmpty(postMatchObj.neutralVenueName) ? postMatchObj.neutralVenueName : '',
-      uid: userDataObj.uid,
-      singlePlayer: competitionObject.singlePlayer,
-    })
+
+    let appCheckTokenResponse;
+    try {
+      appCheckTokenResponse = await getToken(appCheck, /* forceRefresh= */ false);
+    } catch (err) {
+      console.log(JSON.stringify(err));
+      return;
+    }
+
+    API.postMatch(
+      {
+        timeZone: timeZone,
+        matchDateTime: moment(`${postMatchObj.matchDate} ${postMatchObj.matchTime}`).format(),
+        createdAt: moment().format(),
+        updatedAt: moment().format(),
+        competitionName: postMatchObj.competitionName,
+        competitionConcatRegion: !isEmpty(postMatchObj.competitionRegionArea)
+          ? postMatchObj.competitionRegion + ' ' + postMatchObj.competitionRegionArea
+          : postMatchObj.competitionRegion,
+        competitionRegion: postMatchObj.competitionRegion,
+        competitionRegionArea: !isEmpty(postMatchObj.competitionRegionArea) ? postMatchObj.competitionRegionArea : '',
+        competitionRound: postMatchObj.competitionRound,
+        numIndividualMatches: competitionObject.matches,
+        individualMatch: !isEmpty(postMatchObj.individualMatchesArray)
+          ? postMatchObj.individualMatchesArray
+          : filteredMatchArray,
+        teamOneName: postMatchObj.teamOneName,
+        teamTwoName: postMatchObj.teamTwoName,
+        neutralVenueName: !isEmpty(postMatchObj.neutralVenueName) ? postMatchObj.neutralVenueName : '',
+        uid: userDataObj.uid,
+        singlePlayer: competitionObject.singlePlayer,
+      },
+      appCheckTokenResponse.token,
+    )
       .then((response) => {
         setAppMatchesOnLoad([response.data, ...appMatchesOnLoad]);
         setMatchObj({ ...response.data });

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import LocalStorage from '../services/LocalStorage/LocalStorage.service';
-axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL_DEV;
 
 // In each function, we use axios to send our api route request to the server
 
@@ -10,9 +10,12 @@ const requests = {
     return axios.post('/user/update', userData);
   },
   // Get users
-  getUsers: function (userData) {
+  getUsers: function (userData, appCheckToken) {
     return axios.get('/user/getusers', {
       params: userData,
+      headers: {
+        'X-Firebase-AppCheck': appCheckToken,
+      },
     });
   },
   // Returns all matches on app load
@@ -24,12 +27,20 @@ const requests = {
     });
   },
   // Returns all matches for competition searched
-  getMatchesByCompetitionOnLoad: function (competition) {
-    return axios.get('/competition/' + competition);
+  getMatchesByCompetitionOnLoad: function (competition, appCheckToken) {
+    return axios.get('/competition/' + competition, {
+      headers: {
+        'X-Firebase-AppCheck': appCheckToken,
+      },
+    });
   },
   // Returns all matches for status searched
-  getMatchesByStatus: function (status) {
-    return axios.get('/match/status/' + status);
+  getMatchesByStatus: function (status, appCheckToken) {
+    return axios.get('/match/status/' + status, {
+      headers: {
+        'X-Firebase-AppCheck': appCheckToken,
+      },
+    });
   },
   // Returns match when loading a single match
   getMatch: function (matchId, appCheckToken) {
@@ -40,28 +51,44 @@ const requests = {
     });
   },
   // Posts a new match
-  postMatch: function (matchData) {
+  postMatch: function (matchData, appCheckToken) {
     const authToken = LocalStorage.get('AuthToken');
     axios.defaults.headers.common = { Authorization: `${authToken}` };
-    return axios.post('/match/create', matchData);
+    return axios.post('/match/create', matchData, {
+      headers: {
+        'X-Firebase-AppCheck': appCheckToken,
+      },
+    });
   },
   // Deletes a match
-  deleteMatch: function (matchId) {
+  deleteMatch: function (matchId, appCheckToken) {
     const authToken = LocalStorage.get('AuthToken');
     axios.defaults.headers.common = { Authorization: `${authToken}` };
-    return axios.delete('/match/' + matchId);
+    return axios.delete('/match/' + matchId, {
+      headers: {
+        'X-Firebase-AppCheck': appCheckToken,
+      },
+    });
   },
   // Update a match
-  updateMatch: function (matchData) {
+  updateMatch: function (matchData, appCheckToken) {
     const authToken = LocalStorage.get('AuthToken');
     axios.defaults.headers.common = { Authorization: `${authToken}` };
-    return axios.put('/match/' + matchData.matchId, matchData);
+    return axios.put('/match/' + matchData.matchId, matchData, {
+      headers: {
+        'X-Firebase-AppCheck': appCheckToken,
+      },
+    });
   },
   // Get user matches
-  getUserMatches: function (userId, matchType) {
+  getUserMatches: function (userId, matchType, appCheckToken) {
     const authToken = LocalStorage.get('AuthToken');
     axios.defaults.headers.common = { Authorization: `${authToken}` };
-    return axios.get('/match/user/' + userId + '?matchtype=' + matchType);
+    return axios.get('/match/user/' + userId + '?matchtype=' + matchType, {
+      headers: {
+        'X-Firebase-AppCheck': appCheckToken,
+      },
+    });
   },
 };
 

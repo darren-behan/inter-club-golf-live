@@ -17,6 +17,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { ShinyBlock, Space } from '../components/SkeletonBuildingBlocks/SkeletonBuildingBlocks';
 import moment from 'moment';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+const { getToken } = require('firebase/app-check');
 
 function MatchesByCompetition() {
   const {
@@ -33,6 +34,7 @@ function MatchesByCompetition() {
     sidebarOpen,
     isShowTooltip,
     setIsShowTooltip,
+    appCheck,
   } = useContext(DataAreaContext);
   let { competition } = useParams();
   const history = useHistory();
@@ -105,8 +107,15 @@ function MatchesByCompetition() {
     });
   };
 
-  async function getMatchesByCompetition() {
-    await API.getMatchesByCompetitionOnLoad(competition)
+  const getMatchesByCompetition = async () => {
+    let appCheckTokenResponse;
+    try {
+      appCheckTokenResponse = await getToken(appCheck, /* forceRefresh= */ false);
+    } catch (err) {
+      console.log(JSON.stringify(err));
+      return;
+    }
+    await API.getMatchesByCompetitionOnLoad(competition, appCheckTokenResponse.token)
       .then((res) => {
         setMatchesByCompetition(res.data);
         setMatchesObjByYearRegion(matchesByYearRegion(res.data));
@@ -119,7 +128,7 @@ function MatchesByCompetition() {
         }
       })
       .catch((err) => console.log(err));
-  }
+  };
 
   const matchesByYearRegion = (matches) => {
     let matchesByYearRegion = {};

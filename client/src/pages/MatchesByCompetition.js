@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useLayoutEffect } from 'react';
 import DataAreaContext from '../utils/DataAreaContext';
 import LocalStorage from '../services/LocalStorage/LocalStorage.service';
 import API from '../utils/API';
@@ -42,6 +42,7 @@ function MatchesByCompetition() {
   const [response, setResponse] = useState({});
   const [matchesObjByYearRegion, setMatchesObjByYearRegion] = useState({});
   const [isCommpetitionNameParamInvalid, setIsCommpetitionNameParamInvalid] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   let regions;
   let matchesByRegion;
   let rounds;
@@ -78,6 +79,19 @@ function MatchesByCompetition() {
       return false;
     }
   };
+
+  useLayoutEffect(() => {
+    const handleScroll = (e) => {
+      setScrolled(window.scrollY > 0);
+      setIsShowTooltip(false);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const authenticateUser = () => {
     setIsAuthenticating({ ...isAuthenticating, authenticatingInProgress: true });

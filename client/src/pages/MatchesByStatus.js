@@ -14,6 +14,7 @@ import { Container, Row, Col, Breadcrumb } from 'react-bootstrap';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+const { getToken } = require('firebase/app-check');
 
 function MatchesByStatus() {
   const {
@@ -26,6 +27,7 @@ function MatchesByStatus() {
     setIsShowTooltip,
     showFilters,
     sidebarOpen,
+    appCheck,
   } = useContext(DataAreaContext);
   const [matchesByStatus, setMatchesByStatus] = useState([]);
   const [response, setResponse] = useState({});
@@ -53,7 +55,14 @@ function MatchesByStatus() {
   }, [showFilters, sidebarOpen]);
 
   const getMatchesByStatus = async () => {
-    await API.getMatchesByStatus(matchesStatus)
+    let appCheckTokenResponse;
+    try {
+      appCheckTokenResponse = await getToken(appCheck, /* forceRefresh= */ false);
+    } catch (err) {
+      console.log(JSON.stringify(err));
+      return;
+    }
+    await API.getMatchesByStatus(matchesStatus, appCheckTokenResponse.token)
       .then((res) => {
         setMatchesByStatus(res.data);
         setIsLoading(false);

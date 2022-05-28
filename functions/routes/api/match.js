@@ -21,27 +21,27 @@ router
 router
   .route('/status/:status')
   // GET request to return matches by it's status in the last 30 days
-  .get(matchesController.getMatchesByStatus);
+  .get([appCheck], matchesController.getMatchesByStatus);
 
 // Matches with "/api/match/create"
 router
   .route('/create')
   // POST request to create a match
-  .post(auth, matchesController.postMatch);
+  .post(auth, [appCheck], matchesController.postMatch);
 
 router
   .route('/:matchId')
   // DELETE request to delete a match
-  .delete(auth, matchesController.deleteMatch);
+  .delete(auth, [appCheck], matchesController.deleteMatch);
 
 router
   .route('/:matchId')
   // UPDATE request to update a match
-  .put(auth, matchesController.updateMatch);
+  .put(auth, [appCheck], matchesController.updateMatch);
 
 router
   .route('/user/:userid')
   // GET request to get user matches
-  .get(auth, matchesController.getUserMatches);
+  .get(auth, [appCheck], matchesController.getUserMatches);
 
 module.exports = router;

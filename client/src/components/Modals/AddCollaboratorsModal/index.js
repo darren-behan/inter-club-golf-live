@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import 'moment-timezone';
 let isEmpty = require('lodash.isempty');
+const { getToken } = require('firebase/app-check');
 
 function AddCollaboratorsModal(props) {
   const {
@@ -20,6 +21,7 @@ function AddCollaboratorsModal(props) {
     setCollaborators,
     isCollaboratorsEdited,
     setIsCollaboratorsEdited,
+    appCheck,
   } = useContext(DataAreaContext);
   let history = useHistory();
   const [isLoading, setLoading] = useState(false);
@@ -43,9 +45,17 @@ function AddCollaboratorsModal(props) {
     else return false;
   };
 
-  const handleAddCollaboratorsClick = (event) => {
+  const handleAddCollaboratorsClick = async (event) => {
     event.preventDefault();
     setLoading(true);
+
+    let appCheckTokenResponse;
+    try {
+      appCheckTokenResponse = await getToken(appCheck, /* forceRefresh= */ false);
+    } catch (err) {
+      console.log(JSON.stringify(err));
+      return;
+    }
 
     let requestArr = [];
     let collaboratorsFiltered = collaborators.collaborators.filter((collab, i) => {
@@ -57,7 +67,7 @@ function AddCollaboratorsModal(props) {
     });
 
     if (!isEmpty(requestArr)) {
-      API.getUsers({ email: requestArr })
+      API.getUsers({ email: requestArr }, appCheckTokenResponse.token)
         .then((getUsersResult) => {
           let collabsNotFound = '';
 
@@ -82,11 +92,14 @@ function AddCollaboratorsModal(props) {
           setCollaboratorsNotFound(collabsNotFound);
         })
         .then(() => {
-          API.updateMatch({
-            matchId: match.matchId,
-            collaborators: collaboratorsFiltered,
-            updatedAt: moment().format(),
-          })
+          API.updateMatch(
+            {
+              matchId: match.matchId,
+              collaborators: collaboratorsFiltered,
+              updatedAt: moment().format(),
+            },
+            appCheckTokenResponse.token,
+          )
             .then((response) => {
               setCollaboratorsUpdateResponse({
                 message: response.data.message,
@@ -115,11 +128,14 @@ function AddCollaboratorsModal(props) {
           });
         });
     } else {
-      API.updateMatch({
-        matchId: match.matchId,
-        collaborators: [],
-        updatedAt: moment().format(),
-      })
+      API.updateMatch(
+        {
+          matchId: match.matchId,
+          collaborators: [],
+          updatedAt: moment().format(),
+        },
+        appCheckTokenResponse.token,
+      )
         .then((response) => {
           setCollaboratorsUpdateResponse({
             message: response.data.message,

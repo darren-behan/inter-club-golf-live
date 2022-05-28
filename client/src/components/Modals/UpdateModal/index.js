@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import 'moment-timezone';
 let isEmpty = require('lodash.isempty');
+const { getToken } = require('firebase/app-check');
 
 function UpdateModal(props) {
   const {
@@ -21,6 +22,7 @@ function UpdateModal(props) {
     appMatchesOnLoad,
     isMatchEdited,
     setIsMatchEdited,
+    appCheck,
   } = useContext(DataAreaContext);
   let history = useHistory();
   const [isLoading, setLoading] = useState(false);
@@ -56,31 +58,45 @@ function UpdateModal(props) {
     setIsMatchEdited(true);
   };
 
-  const handleUpdateClick = (event) => {
+  const handleUpdateClick = async (event) => {
     event.preventDefault();
     setLoading(true);
+
+    let appCheckTokenResponse;
+    try {
+      appCheckTokenResponse = await getToken(appCheck, /* forceRefresh= */ false);
+    } catch (err) {
+      console.log(JSON.stringify(err));
+      return;
+    }
+
     const updatedOverallMatchScore = updateOverallMatchScore(updateMatchObj);
     updateMatchObj.teamOneScore = updatedOverallMatchScore.teamOneScore;
     updateMatchObj.teamTwoScore = updatedOverallMatchScore.teamTwoScore;
-    API.updateMatch({
-      matchId: updateMatchObj.matchId,
-      matchDateTime: updateMatchObj.matchDateTime,
-      competitionName: updateMatchObj.competitionName,
-      matchStatus: updateMatchObj.matchStatus,
-      competitionConcatRegion: !isEmpty(updateMatchObj.competitionRegionArea)
-        ? updateMatchObj.competitionRegion + ' ' + updateMatchObj.competitionRegionArea
-        : updateMatchObj.competitionRegion,
-      competitionRegion: updateMatchObj.competitionRegion,
-      competitionRegionArea: !isEmpty(updateMatchObj.competitionRegionArea) ? updateMatchObj.competitionRegionArea : '',
-      competitionRound: updateMatchObj.competitionRound,
-      teamOneName: updateMatchObj.teamOneName,
-      teamOneScore: updateMatchObj.teamOneScore,
-      teamTwoName: updateMatchObj.teamTwoName,
-      teamTwoScore: updateMatchObj.teamTwoScore,
-      neutralVenueName: updateMatchObj.neutralVenueName,
-      individualMatch: updateMatchObj.individualMatch,
-      updatedAt: moment().format(),
-    })
+    API.updateMatch(
+      {
+        matchId: updateMatchObj.matchId,
+        matchDateTime: updateMatchObj.matchDateTime,
+        competitionName: updateMatchObj.competitionName,
+        matchStatus: updateMatchObj.matchStatus,
+        competitionConcatRegion: !isEmpty(updateMatchObj.competitionRegionArea)
+          ? updateMatchObj.competitionRegion + ' ' + updateMatchObj.competitionRegionArea
+          : updateMatchObj.competitionRegion,
+        competitionRegion: updateMatchObj.competitionRegion,
+        competitionRegionArea: !isEmpty(updateMatchObj.competitionRegionArea)
+          ? updateMatchObj.competitionRegionArea
+          : '',
+        competitionRound: updateMatchObj.competitionRound,
+        teamOneName: updateMatchObj.teamOneName,
+        teamOneScore: updateMatchObj.teamOneScore,
+        teamTwoName: updateMatchObj.teamTwoName,
+        teamTwoScore: updateMatchObj.teamTwoScore,
+        neutralVenueName: updateMatchObj.neutralVenueName,
+        individualMatch: updateMatchObj.individualMatch,
+        updatedAt: moment().format(),
+      },
+      appCheckTokenResponse.token,
+    )
       .then((response) => {
         setUpdateResponse({
           message: response.data.message,

@@ -5,6 +5,7 @@ import Lib from '../../../utils/Lib';
 import { Button, Modal, Spinner } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { deleteUser } from 'firebase/auth';
+const { getToken } = require('firebase/app-check');
 
 function DeleteModal(props) {
   const {
@@ -15,14 +16,24 @@ function DeleteModal(props) {
     match,
     userDataObj,
     setIsMatchDelete,
+    appCheck,
   } = useContext(DataAreaContext);
   let history = useHistory();
   const [isLoading, setLoading] = useState(false);
 
-  function handleDeleteClick(matchId) {
+  const handleDeleteClick = async (matchId) => {
     setLoading(true);
+
+    let appCheckTokenResponse;
+    try {
+      appCheckTokenResponse = await getToken(appCheck, /* forceRefresh= */ false);
+    } catch (err) {
+      console.log(JSON.stringify(err));
+      return;
+    }
+
     if (props.isMatch) {
-      API.deleteMatch(matchId)
+      API.deleteMatch(matchId, appCheckTokenResponse.token)
         .then((response) => {
           setDeleteResponse({
             message: response.data.message,
@@ -63,7 +74,7 @@ function DeleteModal(props) {
           setLoading(false);
         });
     }
-  }
+  };
 
   function handleCloseClick() {
     setDeleteResponse({});

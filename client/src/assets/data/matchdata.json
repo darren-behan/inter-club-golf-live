@@ -7,8 +7,7 @@
     "awayMatchPlayerAName": "empty",
     "awayMatchPlayerBName": "empty",
     "awayMatchScore": 0,
-    "holesPlayed": 0,
-    "matchDestination": "empty"
+    "holesPlayed": 0
   },
   {
     "individualMatchId": 2,
@@ -18,8 +17,7 @@
     "awayMatchPlayerAName": "empty",
     "awayMatchPlayerBName": "empty",
     "awayMatchScore": 0,
-    "holesPlayed": 0,
-    "matchDestination": "empty"
+    "holesPlayed": 0
   },
   {
     "individualMatchId": 3,
@@ -29,8 +27,7 @@
     "awayMatchPlayerAName": "empty",
     "awayMatchPlayerBName": "empty",
     "awayMatchScore": 0,
-    "holesPlayed": 0,
-    "matchDestination": "empty"
+    "holesPlayed": 0
   },
   {
     "individualMatchId": 4,
@@ -40,8 +37,7 @@
     "awayMatchPlayerAName": "empty",
     "awayMatchPlayerBName": "empty",
     "awayMatchScore": 0,
-    "holesPlayed": 0,
-    "matchDestination": "empty"
+    "holesPlayed": 0
   },
   {
     "individualMatchId": 5,
@@ -51,8 +47,7 @@
     "awayMatchPlayerAName": "empty",
     "awayMatchPlayerBName": "empty",
     "awayMatchScore": 0,
-    "holesPlayed": 0,
-    "matchDestination": "empty"
+    "holesPlayed": 0
   },
   {
     "individualMatchId": 6,
@@ -62,8 +57,7 @@
     "awayMatchPlayerAName": "empty",
     "awayMatchPlayerBName": "empty",
     "awayMatchScore": 0,
-    "holesPlayed": 0,
-    "matchDestination": "empty"
+    "holesPlayed": 0
   },
   {
     "individualMatchId": 7,
@@ -73,8 +67,7 @@
     "awayMatchPlayerAName": "empty",
     "awayMatchPlayerBName": "empty",
     "awayMatchScore": 0,
-    "holesPlayed": 0,
-    "matchDestination": "empty"
+    "holesPlayed": 0
   },
   {
     "individualMatchId": 8,
@@ -84,8 +77,7 @@
     "awayMatchPlayerAName": "empty",
     "awayMatchPlayerBName": "empty",
     "awayMatchScore": 0,
-    "holesPlayed": 0,
-    "matchDestination": "empty"
+    "holesPlayed": 0
   },
   {
     "individualMatchId": 9,
@@ -95,7 +87,6 @@
     "awayMatchPlayerAName": "empty",
     "awayMatchPlayerBName": "empty",
     "awayMatchScore": 0,
-    "holesPlayed": 0,
-    "matchDestination": "empty"
+    "holesPlayed": 0
   }
 ]

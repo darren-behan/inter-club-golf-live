@@ -13,7 +13,6 @@ import regions from '../../../assets/data/regions.json';
 import regionAreas from '../../../assets/data/regionArea.json';
 import matchData from '../../../assets/data/matchdata.json';
 import rounds from '../../../assets/data/competitionRounds.json';
-import statuses from '../../../assets/data/matchStatuses.json';
 let isEmpty = require('lodash.isempty');
 const { getToken } = require('firebase/app-check');
 
@@ -40,11 +39,9 @@ function MatchForm(props) {
     setCreateMatchModalShow,
     setCreateMatchResponse,
     setMatchObj,
-    oldPostMatchObj,
     setOldPostMatchObj,
     updateMatchObj,
     setUpdateMatchObj,
-    oldUpdateMatchObj,
     setOldUpdateMatchObj,
     setIsMatchEdited,
     appCheck,
@@ -84,16 +81,6 @@ function MatchForm(props) {
       return;
     }
 
-    if (name === 'neutralVenueName' || name === 'teamOneName' || name === 'teamTwoName') {
-      if (!props.isUpdate && !postMatchObj.hasOwnProperty('individualMatchesArray')) {
-        postMatchObj['individualMatchesArray'] = [];
-      }
-      if (!props.isUpdate && !oldPostMatchObj.hasOwnProperty('neutralVenueName')) {
-        postMatchObj['neutralVenueName'] = '';
-      }
-      updateIndividualMatchDestination(name, value);
-    }
-
     if (props.isUpdate && (name === 'matchDate' || name === 'matchTime')) {
       let key = 'matchDateTime';
       let valueDateTime;
@@ -119,32 +106,6 @@ function MatchForm(props) {
       setIsMatchEdited(false);
     }
   };
-
-  function updateIndividualMatchDestination(name, value) {
-    if (!props.isUpdate) {
-      let oldValue = oldPostMatchObj[name];
-
-      for (let i = 0; i < postMatchObj.individualMatchesArray.length; i++) {
-        let individualMatch = postMatchObj.individualMatchesArray[i];
-        if (!individualMatch.hasOwnProperty('matchDestination')) continue;
-        if (individualMatch.matchDestination.toLowerCase() === oldValue.toLowerCase()) {
-          individualMatch.matchDestination = value.toLowerCase();
-          setPostMatchObj({ ...postMatchObj, individualMatchesArray: postMatchObj.individualMatch });
-        }
-      }
-    } else {
-      let oldValue = oldUpdateMatchObj[name];
-
-      for (let i = 0; i < updateMatchObj.individualMatch.length; i++) {
-        let individualMatch = updateMatchObj.individualMatch[i];
-        if (individualMatch.matchDestination.toLowerCase() === oldValue.toLowerCase()) {
-          individualMatch.matchDestination = value.toLowerCase();
-          setUpdateMatchObj(JSON.parse(JSON.stringify({ ...updateMatchObj })));
-          setIsMatchEdited(false);
-        }
-      }
-    }
-  }
 
   const handleIndividualMatchFieldInputChange = (event, id) => {
     event.preventDefault();
@@ -182,35 +143,21 @@ function MatchForm(props) {
 
   let homeTeamName = props.isUpdate ? updateMatchObj['teamOneName'] : postMatchObj['teamOneName'];
   let awayTeamName = props.isUpdate ? updateMatchObj['teamTwoName'] : postMatchObj['teamTwoName'];
-  let neutralVenueName = props.isUpdate ? updateMatchObj['neutralVenueName'] : postMatchObj['neutralVenueName'];
   let competitionName = props.isUpdate ? updateMatchObj['competitionName'] : postMatchObj['competitionName'];
 
-  let competitors = [
-    {
-      name: !isEmpty(homeTeamName) ? homeTeamName.toLowerCase() : homeTeamName,
-    },
-    {
-      name: !isEmpty(awayTeamName) ? awayTeamName.toLowerCase() : awayTeamName,
-    },
-  ];
-
   let competitionObject;
-  let matchDestination = '';
+  let numberOfHomeMatches;
   let individualMatch;
 
   const getIndividualMatchFields = () => {
-    // If the match is being played at a neutral venue, we add this to the competitors array so each individual match has the option to choose the neutral venue for where the match is played
-    if (!isEmpty(neutralVenueName)) {
-      competitors.push({
-        name: !isEmpty(neutralVenueName) ? neutralVenueName.toLowerCase() : neutralVenueName,
-      });
-    }
-
     let individualMatchFields = [];
     // We find the competition object in the competition data based on the competition selected
     for (let i = 0; i < competition.length; i++) {
       if (competition[i].name === competitionName) {
         competitionObject = competition[i];
+        numberOfHomeMatches = !props.isUpdate
+          ? Math.ceil(parseInt(competition[i].matches) / 2)
+          : Math.ceil(parseInt(updateMatchObj.numIndividualMatches) / 2);
       }
     }
 
@@ -234,15 +181,6 @@ function MatchForm(props) {
     }
 
     for (let i = 0; i < competitionObject.matches; i++) {
-      if (!props.isUpdate) {
-        if (postMatchObj.individualMatchesArray.length === 0) {
-          matchDestination = '';
-        } else if (postMatchObj.individualMatchesArray[i].matchDestination === 'empty') {
-          matchDestination = '';
-        } else {
-          matchDestination = postMatchObj.individualMatchesArray[i].matchDestination;
-        }
-      }
       if (props.isUpdate) {
         individualMatch = updateMatchObj.individualMatch[i];
       }
@@ -253,7 +191,19 @@ function MatchForm(props) {
               <>
                 <Accordion.Item eventKey={i + 1}>
                   <Accordion.Header>
-                    <span style={{ color: 'rgb(10, 102, 194)' }}>Match {i + 1}</span>
+                    <>
+                      {!isEmpty(postMatchObj.neutralVenueName) || !isEmpty(updateMatchObj.neutralVenueName) ? (
+                        <span style={{ color: 'rgb(10, 102, 194)' }}>Match {i + 1}</span>
+                      ) : i + 1 <= numberOfHomeMatches ? (
+                        <span style={{ color: 'rgb(10, 102, 194)' }}>
+                          {Lib.capitalize(homeTeamName)} match {i + 1}
+                        </span>
+                      ) : (
+                        <span style={{ color: 'rgb(10, 102, 194)' }}>
+                          {Lib.capitalize(awayTeamName)} match {i + 1 - numberOfHomeMatches}
+                        </span>
+                      )}
+                    </>
                   </Accordion.Header>
                   <Accordion.Body>
                     <Row className="py-1">
@@ -293,18 +243,6 @@ function MatchForm(props) {
                                 name="homeMatchScore"
                                 onChange={(e) => handleIndividualMatchFieldInputChange(e, i)}
                                 value={individualMatch.homeMatchScore}
-                              />
-                            </Form.Group>
-                          </Row>
-                          <Row className="py-1">
-                            <Form.Group as={Col}>
-                              <Form.Text className="text-muted">Update the number of holes played</Form.Text>
-                              <Form.Control
-                                type="text"
-                                className="mb-3"
-                                name="holesPlayed"
-                                onChange={(e) => handleIndividualMatchFieldInputChange(e, i)}
-                                value={individualMatch.holesPlayed}
                               />
                             </Form.Group>
                           </Row>
@@ -351,48 +289,21 @@ function MatchForm(props) {
                               />
                             </Form.Group>
                           </Row>
+                          <Row className="py-1">
+                            <Form.Group as={Col}>
+                              <Form.Text className="text-muted">Update the number of holes played</Form.Text>
+                              <Form.Control
+                                type="text"
+                                className="mb-3"
+                                name="holesPlayed"
+                                onChange={(e) => handleIndividualMatchFieldInputChange(e, i)}
+                                value={individualMatch.holesPlayed}
+                              />
+                            </Form.Group>
+                          </Row>
                         </>
                       ) : null}
                     </>
-                    <Row>
-                      <Form.Group as={Col} className="mb-3">
-                        <Form.Text className="text-muted">
-                          {props.isUpdate
-                            ? 'Update the course this match is played at'
-                            : 'Select the course this match is played at'}
-                        </Form.Text>
-                        <Form.Select
-                          aria-label="Match destination"
-                          name="matchDestination"
-                          onChange={(e) => handleIndividualMatchFieldInputChange(e, i)}
-                        >
-                          <option
-                            value={
-                              props.isUpdate
-                                ? individualMatch.matchDestination.toLowerCase() === 'empty'
-                                  ? ''
-                                  : Lib.capitalize(individualMatch.matchDestination)
-                                : ''
-                            }
-                          >
-                            {props.isUpdate
-                              ? individualMatch.matchDestination === 'empty'
-                                ? ''
-                                : Lib.capitalize(individualMatch.matchDestination)
-                              : ''}
-                          </option>
-                          {competitors.map((clubName, index) =>
-                            props.isUpdate ? (
-                              individualMatch.matchDestination.toLowerCase() === clubName.name.toLowerCase() ? null : (
-                                <option value={clubName.name}>{Lib.capitalize(clubName.name)}</option>
-                              )
-                            ) : (
-                              <option value={clubName.name}>{Lib.capitalize(clubName.name)}</option>
-                            ),
-                          )}
-                        </Form.Select>
-                      </Form.Group>
-                    </Row>
                   </Accordion.Body>
                 </Accordion.Item>
               </>,
@@ -401,7 +312,19 @@ function MatchForm(props) {
               <>
                 <Accordion.Item eventKey={i + 1}>
                   <Accordion.Header>
-                    <span style={{ color: 'rgb(10, 102, 194)' }}>Match {i + 1}</span>
+                    <>
+                      {!isEmpty(postMatchObj.neutralVenueName) || !isEmpty(updateMatchObj.neutralVenueName) ? (
+                        <>Match {i + 1}</>
+                      ) : i + 1 <= numberOfHomeMatches ? (
+                        <span style={{ color: 'rgb(10, 102, 194)' }}>
+                          {Lib.capitalize(homeTeamName)} match {i + 1}
+                        </span>
+                      ) : (
+                        <span style={{ color: 'rgb(10, 102, 194)' }}>
+                          {Lib.capitalize(awayTeamName)} match {i + 1 - numberOfHomeMatches}
+                        </span>
+                      )}
+                    </>
                   </Accordion.Header>
                   <Accordion.Body>
                     <Row className="py-1">
@@ -463,18 +386,6 @@ function MatchForm(props) {
                                 name="homeMatchScore"
                                 onChange={(e) => handleIndividualMatchFieldInputChange(e, i)}
                                 value={individualMatch.homeMatchScore}
-                              />
-                            </Form.Group>
-                          </Row>
-                          <Row className="py-1">
-                            <Form.Group as={Col}>
-                              <Form.Text className="text-muted">Update the number of holes played</Form.Text>
-                              <Form.Control
-                                type="text"
-                                className="mb-3"
-                                name="holesPlayed"
-                                onChange={(e) => handleIndividualMatchFieldInputChange(e, i)}
-                                value={individualMatch.holesPlayed}
                               />
                             </Form.Group>
                           </Row>
@@ -543,48 +454,21 @@ function MatchForm(props) {
                               />
                             </Form.Group>
                           </Row>
+                          <Row className="py-1">
+                            <Form.Group as={Col}>
+                              <Form.Text className="text-muted">Update the number of holes played</Form.Text>
+                              <Form.Control
+                                type="text"
+                                className="mb-3"
+                                name="holesPlayed"
+                                onChange={(e) => handleIndividualMatchFieldInputChange(e, i)}
+                                value={individualMatch.holesPlayed}
+                              />
+                            </Form.Group>
+                          </Row>
                         </>
                       ) : null}
                     </>
-                    <Row>
-                      <Form.Group as={Col} className="mb-3">
-                        <Form.Text className="text-muted">
-                          {props.isUpdate
-                            ? 'Update the course this match is played at'
-                            : 'Select the course this match is played at'}
-                        </Form.Text>
-                        <Form.Select
-                          aria-label="Match destination"
-                          name="matchDestination"
-                          onChange={(e) => handleIndividualMatchFieldInputChange(e, i)}
-                        >
-                          <option
-                            value={
-                              props.isUpdate
-                                ? individualMatch.matchDestination.toLowerCase() === 'empty'
-                                  ? ''
-                                  : Lib.capitalize(individualMatch.matchDestination)
-                                : ''
-                            }
-                          >
-                            {props.isUpdate
-                              ? individualMatch.matchDestination === 'empty'
-                                ? ''
-                                : Lib.capitalize(individualMatch.matchDestination)
-                              : ''}
-                          </option>
-                          {competitors.map((clubName, index) =>
-                            props.isUpdate ? (
-                              individualMatch.matchDestination.toLowerCase() === clubName.name.toLowerCase() ? null : (
-                                <option value={clubName.name}>{Lib.capitalize(clubName.name)}</option>
-                              )
-                            ) : (
-                              <option value={clubName.name}>{Lib.capitalize(clubName.name)}</option>
-                            ),
-                          )}
-                        </Form.Select>
-                      </Form.Group>
-                    </Row>
                   </Accordion.Body>
                 </Accordion.Item>
               </>,

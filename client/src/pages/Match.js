@@ -195,7 +195,7 @@ function Match() {
           {Lib.capitalize(singleMatch.homeMatchPlayerAName)}
         </p>
       ) : (
-        <p style={{ margin: '0px', alignItems: 'center', fontSize: '0.8rem' }}>{match.teamOneName}</p>
+        <p style={{ margin: '0px', alignItems: 'center', fontSize: '0.8rem' }}>{Lib.capitalize(match.teamOneName)}</p>
       );
     } else {
       return singleMatch.homeMatchPlayerAName !== 'empty' && singleMatch.homeMatchPlayerBName !== 'empty' ? (
@@ -290,6 +290,22 @@ function Match() {
                   Competition Round:&nbsp;
                   <span style={{ color: '#0a66c2' }}>{Lib.capitalize(match.competitionRound.round)}</span>
                 </h6>
+                <>
+                  {isEmpty(match.neutralVenueName) ? (
+                    <h6>
+                      Home Team:&nbsp;<span style={{ color: '#0a66c2' }}>{Lib.capitalize(match.teamOneName)}</span>
+                    </h6>
+                  ) : match.matchStatus === 'complete' ? (
+                    <h6>
+                      Played at:&nbsp;<span style={{ color: '#0a66c2' }}>{Lib.capitalize(match.neutralVenueName)}</span>
+                    </h6>
+                  ) : (
+                    <h6>
+                      Playing at:&nbsp;
+                      <span style={{ color: '#0a66c2' }}>{Lib.capitalize(match.neutralVenueName)}</span>
+                    </h6>
+                  )}
+                </>
                 <h6>
                   Match Status:&nbsp;<span style={{ color: '#0a66c2' }}>{Lib.capitalize(match.matchStatus)}</span>
                 </h6>
@@ -331,14 +347,18 @@ function Match() {
                       <>
                         <tr>
                           <td colSpan="3" style={{ background: '#ffffff', textAlign: 'left' }}>
-                            {singleMatch.matchDestination === 'empty' ? (
-                              <>Match {singleMatch.individualMatchId} destination not provided</>
+                            {!isEmpty(match.neutralVenueName) ? (
+                              <>Match {singleMatch.individualMatchId}</>
+                            ) : parseInt(singleMatch.individualMatchId) <=
+                              Math.ceil(parseInt(match.numIndividualMatches) / 2) ? (
+                              <>
+                                {Lib.capitalize(match.teamOneName)} match {singleMatch.individualMatchId}
+                              </>
                             ) : (
                               <>
-                                Match {singleMatch.individualMatchId} contested in&nbsp;
-                                <span style={{ color: '#0a66c2', fontWeight: '500' }}>
-                                  {Lib.capitalize(singleMatch.matchDestination)}
-                                </span>
+                                {Lib.capitalize(match.teamTwoName)} match{' '}
+                                {parseInt(singleMatch.individualMatchId) -
+                                  Math.ceil(parseInt(match.numIndividualMatches) / 2)}
                               </>
                             )}
                           </td>

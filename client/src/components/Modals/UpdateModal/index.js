@@ -127,8 +127,6 @@ function UpdateModal(props) {
   };
 
   const calculateMatchStatusOnUpdate = (matchDateTime, updatedAt) => {
-    console.log(matchDateTime);
-    console.log(updatedAt);
     var end_time = moment(matchDateTime).tz(timeZone).add(7, 'hours');
 
     // if updatedAt date/time is between the match date/time & before 7 hours after the match date/time, return in progress

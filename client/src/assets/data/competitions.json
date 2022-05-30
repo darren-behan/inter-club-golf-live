@@ -36,12 +36,6 @@
     "gender": "men"
 	},
 	{
-		"name": "[All-Ireland] Mixed Foursomes",
-		"matches": 5,
-		"singlePlayer": false,
-    "gender": "both"
-	},
-	{
 		"name": "[Connacht] Connacht Shield",
 		"matches": 5,
 		"singlePlayer": false,
@@ -112,6 +106,12 @@
 		"matches": 5,
 		"singlePlayer": false,
     "gender": "men"
+	},
+	{
+		"name": "[All-Ireland] Mixed Foursomes",
+		"matches": 5,
+		"singlePlayer": false,
+    "gender": "mixed"
 	},
 	{
 		"name": "Women's Challenge Cup",

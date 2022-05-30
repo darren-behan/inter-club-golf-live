@@ -456,9 +456,6 @@ function MatchesByCompetition() {
               </>
             ) : (
               <>
-                <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
-                  <h4>{competitionName}</h4>
-                </div>
                 <IsEmpty
                   value={matchesObjByYearRegion}
                   yes={() => (
@@ -495,7 +492,9 @@ function MatchesByCompetition() {
                               return (
                                 <>
                                   <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
-                                    <h4>{Lib.capitalize(matchYear)}</h4>
+                                    <h4>
+                                      {competitionName} {Lib.capitalize(matchYear)}
+                                    </h4>
                                   </div>
                                   <>
                                     {regions.map(function (region) {

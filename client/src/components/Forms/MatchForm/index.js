@@ -314,7 +314,7 @@ function MatchForm(props) {
                   <Accordion.Header>
                     <>
                       {!isEmpty(postMatchObj.neutralVenueName) || !isEmpty(updateMatchObj.neutralVenueName) ? (
-                        <>Match {i + 1}</>
+                        <span style={{ color: 'rgb(10, 102, 194)' }}>Match {i + 1}</span>
                       ) : i + 1 <= numberOfHomeMatches ? (
                         <span style={{ color: 'rgb(10, 102, 194)' }}>
                           {Lib.capitalize(homeTeamName)} match {i + 1}

@@ -328,9 +328,9 @@ function MatchesByCompetition() {
               </tr>
             </thead>
             <tbody>
-              {matches.map((match, index) => {
+              {matches.map((match) => {
                 if (match.competitionRound.round === round) {
-                  return renderRoundMatches(match, index, i);
+                  return renderRoundMatches(match, i);
                 }
               })}
             </tbody>
@@ -340,14 +340,14 @@ function MatchesByCompetition() {
     );
   };
 
-  const renderRoundMatches = (match, index, i) => {
+  const renderRoundMatches = (match, i) => {
     if (
       match.teamOneName.toLowerCase().includes(filterValue.golfClub.toLowerCase()) ||
       match.teamTwoName.toLowerCase().includes(filterValue.golfClub.toLowerCase())
     ) {
       return (
         <>
-          {index === 0 && i === 0 ? (
+          {i === 0 ? (
             <>
               <OverlayTrigger
                 placement="top"

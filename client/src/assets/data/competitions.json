@@ -102,6 +102,18 @@
     "gender": "men"
 	},
 	{
+		"name": "Michael Moore Cup",
+		"matches": 7,
+		"singlePlayer": true,
+    "gender": "men"
+	},
+	{
+		"name": "Duggan Cup",
+		"matches": 5,
+		"singlePlayer": false,
+    "gender": "men"
+	},
+	{
 		"name": "Women's Challenge Cup",
 		"matches": 5,
 		"singlePlayer": true,

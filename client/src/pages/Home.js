@@ -162,7 +162,7 @@ function Home() {
                       View more
                     </Link>
                   </h6>
-                  <Slider matches={completedMatches} />
+                  <Slider matches={completedMatches} status="completed" />
                 </>
               ) : (
                 <div style={{ textAlign: 'left' }}>
@@ -184,7 +184,7 @@ function Home() {
                       View more
                     </Link>
                   </h6>
-                  <Slider matches={inProgressMatches} />
+                  <Slider matches={inProgressMatches} status="inProgress" />
                 </>
               ) : (
                 <div style={{ textAlign: 'left' }}>
@@ -206,7 +206,7 @@ function Home() {
                       View more
                     </Link>
                   </h6>
-                  <Slider matches={notStartedMatches} />
+                  <Slider matches={notStartedMatches} status="notStarted" />
                 </>
               ) : (
                 <div style={{ textAlign: 'left' }}>

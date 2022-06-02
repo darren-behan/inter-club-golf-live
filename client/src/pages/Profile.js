@@ -40,6 +40,7 @@ function Profile() {
     isMatchDelete,
     setIsMatchDelete,
     appCheck,
+    setIsCompetitionByCountyFormat,
   } = useContext(DataAreaContext);
   const [userMatches, setUserMatches] = useState([]);
   const [componentToRender, setComponentToRender] = useState(isMatchDelete ? 'userMatches' : 'myAccount');
@@ -61,6 +62,7 @@ function Profile() {
     if (isAuthenticating.status !== 400 && isAuthenticating.authenticatingComplete !== true) authenticateUser();
     if (isMatchDelete) setIsMatchDelete(false);
     if (!isMatchDelete) getUserMatches(userDataObj.uid, 'userMatches');
+    setIsCompetitionByCountyFormat();
   }, []);
 
   useEffect(() => {

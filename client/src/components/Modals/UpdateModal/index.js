@@ -82,21 +82,32 @@ function UpdateModal(props) {
         matchDateTime: updateMatchObj.matchDateTime,
         competitionName: updateMatchObj.competitionName,
         matchStatus: updateMatchObj.matchStatus,
-        competitionConcatRegion: !isEmpty(updateMatchObj.competitionRegionArea)
+        competitionConcatRegion: !isEmpty(updateMatchObj.competitionCounty)
+          ? updateMatchObj.competitionRegion
+          : !isEmpty(updateMatchObj.competitionRegionArea)
           ? updateMatchObj.competitionRegion + ' ' + updateMatchObj.competitionRegionArea
           : updateMatchObj.competitionRegion,
         competitionRegion: updateMatchObj.competitionRegion,
         competitionRegionArea: !isEmpty(updateMatchObj.competitionRegionArea)
           ? updateMatchObj.competitionRegionArea
           : '',
+        competitionCounty: !isEmpty(updateMatchObj.competitionCounty) ? updateMatchObj.competitionCounty : '',
+        competitionConcatCounty:
+          !isEmpty(updateMatchObj.competitionCounty) && !isEmpty(updateMatchObj.competitionRegionArea)
+            ? updateMatchObj.competitionCounty + ' ' + updateMatchObj.competitionRegionArea
+            : updateMatchObj.competitionCounty,
         competitionRound: updateMatchObj.competitionRound,
         teamOneName: updateMatchObj.teamOneName,
         teamOneScore: updateMatchObj.teamOneScore,
         teamTwoName: updateMatchObj.teamTwoName,
         teamTwoScore: updateMatchObj.teamTwoScore,
         neutralVenueName: updateMatchObj.neutralVenueName,
+        numIndividualMatches: updateMatchObj.numIndividualMatches,
         individualMatch: updateMatchObj.individualMatch,
+        createdByUid: updateMatchObj.createdByUid,
+        singlePlayer: updateMatchObj.singlePlayer,
         updatedAt: moment().format(),
+        createdAt: updateMatchObj.createdAt,
       },
       appCheckTokenResponse.token,
     )
@@ -105,12 +116,7 @@ function UpdateModal(props) {
           message: response.data.message,
           status: response.status,
         });
-        setMatchObj({
-          ...updateMatchObj,
-          competitionRound: { ...updateMatchObj.competitionRound },
-          individualMatch: [...updateMatchObj.individualMatch],
-          collaborators: [...updateMatchObj.collaborators],
-        });
+        setMatchObj(JSON.parse(JSON.stringify({ ...response.data.match })));
         for (let i = 0; i < appMatchesOnLoad.length; i++) {
           if (appMatchesOnLoad[i].matchId === updateMatchObj.matchId) {
             appMatchesOnLoad[i] = updateMatchObj;

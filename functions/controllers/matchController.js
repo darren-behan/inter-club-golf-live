@@ -17,6 +17,8 @@ module.exports = {
             competitionConcatRegion: doc.data().competitionConcatRegion,
             competitionRegion: doc.data().competitionRegion,
             competitionRegionArea: doc.data().competitionRegionArea,
+            competitionCounty: doc.data().competitionCounty,
+            competitionConcatCounty: doc.data().competitionConcatCounty,
             competitionRound: doc.data().competitionRound,
             matchDateTime: doc.data().matchDateTime,
             numIndividualMatches: doc.data().numIndividualMatches,
@@ -58,6 +60,8 @@ module.exports = {
               competitionConcatRegion: doc.data().competitionConcatRegion,
               competitionRegion: doc.data().competitionRegion,
               competitionRegionArea: doc.data().competitionRegionArea,
+              competitionCounty: doc.data().competitionCounty,
+              competitionConcatCounty: doc.data().competitionConcatCounty,
               competitionRound: doc.data().competitionRound,
               matchDateTime: doc.data().matchDateTime,
               numIndividualMatches: doc.data().numIndividualMatches,
@@ -95,6 +99,8 @@ module.exports = {
                   competitionConcatRegion: doc.data().competitionConcatRegion,
                   competitionRegion: doc.data().competitionRegion,
                   competitionRegionArea: doc.data().competitionRegionArea,
+                  competitionCounty: doc.data().competitionCounty,
+                  competitionConcatCounty: doc.data().competitionConcatCounty,
                   competitionRound: doc.data().competitionRound,
                   matchDateTime: doc.data().matchDateTime,
                   numIndividualMatches: doc.data().numIndividualMatches,
@@ -134,6 +140,8 @@ module.exports = {
           competitionConcatRegion: data.data().competitionConcatRegion,
           competitionRegion: data.data().competitionRegion,
           competitionRegionArea: data.data().competitionRegionArea,
+          competitionCounty: data.data().competitionCounty,
+          competitionConcatCounty: data.data().competitionConcatCounty,
           competitionRound: data.data().competitionRound,
           matchDateTime: data.data().matchDateTime,
           numIndividualMatches: data.data().numIndividualMatches,
@@ -175,6 +183,8 @@ module.exports = {
               competitionConcatRegion: doc.data().competitionConcatRegion,
               competitionRegion: doc.data().competitionRegion,
               competitionRegionArea: doc.data().competitionRegionArea,
+              competitionCounty: doc.data().competitionCounty,
+              competitionConcatCounty: doc.data().competitionConcatCounty,
               competitionRound: doc.data().competitionRound,
               matchDateTime: doc.data().matchDateTime,
               numIndividualMatches: doc.data().numIndividualMatches,
@@ -211,6 +221,8 @@ module.exports = {
               competitionConcatRegion: doc.data().competitionConcatRegion,
               competitionRegion: doc.data().competitionRegion,
               competitionRegionArea: doc.data().competitionRegionArea,
+              competitionCounty: doc.data().competitionCounty,
+              competitionConcatCounty: doc.data().competitionConcatCounty,
               competitionRound: doc.data().competitionRound,
               matchDateTime: doc.data().matchDateTime,
               numIndividualMatches: doc.data().numIndividualMatches,
@@ -248,6 +260,8 @@ module.exports = {
               competitionConcatRegion: doc.data().competitionConcatRegion,
               competitionRegion: doc.data().competitionRegion,
               competitionRegionArea: doc.data().competitionRegionArea,
+              competitionCounty: doc.data().competitionCounty,
+              competitionConcatCounty: doc.data().competitionConcatCounty,
               competitionRound: doc.data().competitionRound,
               matchDateTime: doc.data().matchDateTime,
               numIndividualMatches: doc.data().numIndividualMatches,
@@ -280,6 +294,8 @@ module.exports = {
       competitionConcatRegion: request.body.competitionConcatRegion,
       competitionRegion: request.body.competitionRegion,
       competitionRegionArea: request.body.competitionRegionArea,
+      competitionCounty: request.body.competitionCounty,
+      competitionConcatCounty: request.body.competitionConcatCounty,
       competitionRound: request.body.competitionRound,
       numIndividualMatches: request.body.numIndividualMatches,
       teamOneName: request.body.teamOneName,
@@ -306,6 +322,8 @@ module.exports = {
           competitionConcatRegion: doc.data().competitionConcatRegion,
           competitionRegion: doc.data().competitionRegion,
           competitionRegionArea: doc.data().competitionRegionArea,
+          competitionCounty: doc.data().competitionCounty,
+          competitionConcatCounty: doc.data().competitionConcatCounty,
           competitionRound: doc.data().competitionRound,
           matchDateTime: doc.data().matchDateTime,
           numIndividualMatches: doc.data().numIndividualMatches,
@@ -347,7 +365,7 @@ module.exports = {
     document
       .update(request.body)
       .then((data) => {
-        return response.status(200).json({ message: 'Updated successfully' });
+        return response.status(200).json({ message: 'Updated successfully', match: request.body });
       })
       .catch((err) => {
         console.error(err);

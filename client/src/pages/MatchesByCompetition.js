@@ -35,6 +35,8 @@ function MatchesByCompetition() {
     isShowTooltip,
     setIsShowTooltip,
     appCheck,
+    isCommpetitionByCountyFormat,
+    setIsCompetitionByCountyFormat,
   } = useContext(DataAreaContext);
   let { competition } = useParams();
   const history = useHistory();
@@ -45,6 +47,9 @@ function MatchesByCompetition() {
   const [scrolled, setScrolled] = useState(false);
   let regions;
   let matchesByRegion;
+  let countiesByRegion;
+  let sortedCounties;
+  let matchesByCounty;
   let rounds;
   let sortedRounds;
 
@@ -53,6 +58,8 @@ function MatchesByCompetition() {
   useEffect(() => {
     if (isAuthenticating.status !== 400 && isAuthenticating.authenticatingComplete !== true) authenticateUser();
     if (!isCommpetitionNameParamValid()) return;
+    setIsCompetitionByCountyFormat(false);
+    getIsCommpetitionByCountyFormat();
     setFilterValue({
       year: moment().format('YYYY'),
       region: '',
@@ -78,6 +85,12 @@ function MatchesByCompetition() {
       setIsCommpetitionNameParamInvalid(true);
       return false;
     }
+  };
+
+  const getIsCommpetitionByCountyFormat = () => {
+    CompetitionData.map((competition) => {
+      if (competition.name === competitionName && competition.isCountyFormat) setIsCompetitionByCountyFormat(true);
+    });
   };
 
   useLayoutEffect(() => {
@@ -190,11 +203,70 @@ function MatchesByCompetition() {
     return matchesByRegion;
   };
 
+  const getIsProvinceFinalsMatches = (matchesArrByRegion, getProvinceFinalsMatches) => {
+    let provinceFinalsMatches = [];
+    let countyMatches = [];
+
+    for (const key in matchesArrByRegion) {
+      if (isEmpty(matchesArrByRegion[key].competitionConcatCounty)) {
+        provinceFinalsMatches.push(matchesArrByRegion[key]);
+      } else if (!isEmpty(matchesArrByRegion[key].competitionConcatCounty)) {
+        countyMatches.push(matchesArrByRegion[key]);
+      }
+    }
+
+    if (getProvinceFinalsMatches) {
+      return provinceFinalsMatches;
+    } else {
+      return countyMatches;
+    }
+  };
+
+  const getMatchesByCounty = (matchesByRegion, county) => {
+    let matches = [];
+
+    for (const key in matchesByRegion) {
+      if (matchesByRegion[key].competitionConcatCounty.toLowerCase() === county.toLowerCase()) {
+        matches.push(matchesByRegion[key]);
+      }
+    }
+
+    return matches;
+  };
+
+  const getCountiesByRegion = (matchesArrByRegion) => {
+    let countiesByRegion = [];
+
+    for (const key in matchesArrByRegion) {
+      countiesByRegion.push(matchesArrByRegion[key].competitionConcatCounty);
+    }
+
+    return countiesByRegion;
+  };
+
+  const getSortedCounties = (counties) => {
+    const sortedCounties = counties.sort(Lib.compare);
+
+    return Lib.eliminateDuplicates(sortedCounties);
+  };
+
   const getRoundsByRegion = (matches) => {
     let rounds = [];
 
     for (const key in matches) {
       rounds.push(matches[key].competitionRound);
+    }
+
+    return rounds;
+  };
+
+  const getRoundsByCounty = (matches, county) => {
+    let rounds = [];
+
+    for (const key in matches) {
+      if (matches[key].competitionConcatCounty.toLowerCase() === county.toLowerCase()) {
+        rounds.push(matches[key].competitionRound);
+      }
     }
 
     return rounds;
@@ -226,7 +298,7 @@ function MatchesByCompetition() {
       });
 
       if (!isEmpty(filteredMatchesByRegion)) {
-        return renderRegionBody(region, true, filteredMatchesByRegion);
+        return renderRegionBody(region, filteredMatchesByRegion);
       }
     }
 
@@ -250,7 +322,7 @@ function MatchesByCompetition() {
       });
 
       if (!isEmpty(filteredMatchesByRegion)) {
-        return renderRegionBody(region, true, filteredMatchesByRegion);
+        return renderRegionBody(region, filteredMatchesByRegion);
       }
     }
 
@@ -270,33 +342,105 @@ function MatchesByCompetition() {
       });
 
       if (!isEmpty(filteredMatchesByRegion)) {
-        return renderRegionBody(region, true, filteredMatchesByRegion);
+        return renderRegionBody(region, filteredMatchesByRegion);
       }
     }
 
     if (isEmpty(filterValue.region) && isEmpty(filterValue.round) && isEmpty(filterValue.golfClub)) {
-      return renderRegionBody(region, false, matchesByRegion);
+      return renderRegionBody(region, matchesByRegion);
     }
   };
 
-  const renderRegionBody = (region, isFiltersPopulated, matchesByRegion) => {
-    if (isFiltersPopulated) {
-      rounds = getRoundsByRegion(matchesByRegion);
-      sortedRounds = getSortedRounds(rounds);
+  const renderRegionBody = (region, matchesByRegion) => {
+    if (isCommpetitionByCountyFormat) {
+      if (region === 'all ireland') {
+        rounds = getRoundsByRegion(matchesByRegion);
+        sortedRounds = getSortedRounds(rounds);
+
+        return (
+          <>
+            <div style={{ marginTop: '15px', textAlign: 'center' }}>
+              <h4>{Lib.capitalize(region)}</h4>
+            </div>
+            <div>
+              <>
+                {sortedRounds.map(function (round, i) {
+                  return renderRoundBody(matchesByRegion, round, i);
+                })}
+              </>
+            </div>
+          </>
+        );
+      } else {
+        let provinceFinalsMatches = getIsProvinceFinalsMatches(matchesByRegion, true);
+        let countyMatches = getIsProvinceFinalsMatches(matchesByRegion, false);
+
+        rounds = getRoundsByRegion(provinceFinalsMatches);
+        sortedRounds = getSortedRounds(rounds);
+        countiesByRegion = getCountiesByRegion(countyMatches);
+        sortedCounties = getSortedCounties(countiesByRegion);
+
+        return (
+          <>
+            <div style={{ marginTop: '15px', textAlign: 'center' }}>
+              <h4>{Lib.capitalize(region)}</h4>
+            </div>
+            <>
+              {!isEmpty(provinceFinalsMatches) ? (
+                <>
+                  <div>
+                    {sortedRounds.map(function (round, i) {
+                      return renderRoundBody(provinceFinalsMatches, round, i);
+                    })}
+                  </div>
+                </>
+              ) : null}
+            </>
+            <div>
+              <>
+                {sortedCounties.map(function (county) {
+                  return renderCountyBody(countyMatches, county);
+                })}
+              </>
+            </div>
+          </>
+        );
+      }
     } else {
       rounds = getRoundsByRegion(matchesByRegion);
       sortedRounds = getSortedRounds(rounds);
+
+      return (
+        <>
+          <div style={{ marginTop: '15px', textAlign: 'center' }}>
+            <h4>{Lib.capitalize(region)}</h4>
+          </div>
+          <div>
+            <>
+              {sortedRounds.map(function (round, i) {
+                return renderRoundBody(matchesByRegion, round, i);
+              })}
+            </>
+          </div>
+        </>
+      );
     }
+  };
+
+  const renderCountyBody = (matchesByRegion, county) => {
+    matchesByCounty = getMatchesByCounty(matchesByRegion, county);
+    rounds = getRoundsByCounty(matchesByRegion, county);
+    sortedRounds = getSortedRounds(rounds);
 
     return (
       <>
-        <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
-          <h4>{Lib.capitalize(region)}</h4>
+        <div style={{ marginTop: '15px', textAlign: 'center' }}>
+          <h6>{Lib.capitalize(county)}</h6>
         </div>
         <div>
           <>
             {sortedRounds.map(function (round, i) {
-              return renderRoundBody(matchesByRegion, round, i);
+              return renderRoundBody(matchesByCounty, round, i);
             })}
           </>
         </div>
@@ -304,11 +448,11 @@ function MatchesByCompetition() {
     );
   };
 
-  const renderRoundBody = (matchesObjByRegion, round, i) => {
+  const renderRoundBody = (matches, round, i) => {
     if (filterValue.round === '') {
-      return renderRoundHeading(round, matchesObjByRegion, i);
+      return renderRoundHeading(round, matches, i);
     } else if (round === filterValue.round) {
-      return renderRoundHeading(round, matchesObjByRegion, i);
+      return renderRoundHeading(round, matches, i);
     }
   };
 
@@ -491,7 +635,7 @@ function MatchesByCompetition() {
                             if (matchYear === filterValue.year) {
                               return (
                                 <>
-                                  <div style={{ marginTop: '25px', paddingTop: '15px', textAlign: 'center' }}>
+                                  <div style={{ marginTop: '15px', textAlign: 'center' }}>
                                     <h4>
                                       {competitionName} {Lib.capitalize(matchYear)}
                                     </h4>

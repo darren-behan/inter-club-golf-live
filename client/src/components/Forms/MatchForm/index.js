@@ -11,6 +11,7 @@ import 'moment-timezone';
 import competition from '../../../assets/data/competitions.json';
 import regions from '../../../assets/data/regions.json';
 import regionAreas from '../../../assets/data/regionArea.json';
+import counties from '../../../assets/data/counties.json';
 import matchData from '../../../assets/data/matchdata.json';
 import rounds from '../../../assets/data/competitionRounds.json';
 let isEmpty = require('lodash.isempty');
@@ -66,6 +67,11 @@ function MatchForm(props) {
   const handleInputChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
+
+    if (name === 'competitionName' && postMatchObj.hasOwnProperty('competitionName') && value !== 'JB Carr') {
+      setPostMatchObj({ ...postMatchObj, [name]: value, competitionCounty: '' });
+      return;
+    }
 
     if (name === 'competitionRound') {
       rounds.map((round) => {
@@ -497,11 +503,20 @@ function MatchForm(props) {
         createdAt: moment().format(),
         updatedAt: moment().format(),
         competitionName: postMatchObj.competitionName,
-        competitionConcatRegion: !isEmpty(postMatchObj.competitionRegionArea)
+        competitionConcatRegion: !isEmpty(postMatchObj.competitionCounty)
+          ? postMatchObj.competitionRegion
+          : !isEmpty(postMatchObj.competitionRegionArea)
           ? postMatchObj.competitionRegion + ' ' + postMatchObj.competitionRegionArea
           : postMatchObj.competitionRegion,
         competitionRegion: postMatchObj.competitionRegion,
         competitionRegionArea: !isEmpty(postMatchObj.competitionRegionArea) ? postMatchObj.competitionRegionArea : '',
+        competitionCounty: !isEmpty(postMatchObj.competitionCounty) ? postMatchObj.competitionCounty : '',
+        competitionConcatCounty:
+          !isEmpty(postMatchObj.competitionCounty) && !isEmpty(postMatchObj.competitionRegionArea)
+            ? postMatchObj.competitionCounty + ' ' + postMatchObj.competitionRegionArea
+            : !isEmpty(postMatchObj.competitionCounty)
+            ? postMatchObj.competitionCounty
+            : '',
         competitionRound: postMatchObj.competitionRound,
         numIndividualMatches: competitionObject.matches,
         individualMatch: !isEmpty(postMatchObj.individualMatchesArray)
@@ -672,6 +687,41 @@ function MatchForm(props) {
                   </Form.Select>
                 </Form.Group>
               </Row>
+              <>
+                {competitionName === 'JB Carr' ? (
+                  <>
+                    <Row>
+                      <Form.Group as={Col} className="mb-3">
+                        <Form.Text className="text-muted">
+                          {props.isUpdate ? 'Update competition county' : 'Select the county the match is played in'}
+                        </Form.Text>
+                        <Form.Select aria-label="Counties" name="competitionCounty" onChange={handleInputChange}>
+                          <option>
+                            {props.isUpdate
+                              ? !isEmpty(updateMatchObj.competitionCounty)
+                                ? Lib.capitalize(updateMatchObj.competitionCounty)
+                                : ''
+                              : ''}
+                          </option>
+                          {counties.map((county) =>
+                            props.isUpdate ? (
+                              !isEmpty(updateMatchObj.competitionCounty) ? (
+                                updateMatchObj.competitionCounty.toLowerCase() === county.toLowerCase() ? null : (
+                                  <option value={county}>{Lib.capitalize(county)}</option>
+                                )
+                              ) : (
+                                <option value={county}>{Lib.capitalize(county)}</option>
+                              )
+                            ) : (
+                              <option value={county}>{Lib.capitalize(county)}</option>
+                            ),
+                          )}
+                        </Form.Select>
+                      </Form.Group>
+                    </Row>
+                  </>
+                ) : null}
+              </>
               <Row>
                 <Form.Group as={Col} className="mb-3">
                   <Form.Text className="text-muted">
@@ -687,6 +737,7 @@ function MatchForm(props) {
                           : ''
                         : ''}
                     </option>
+                    <option value=""></option>
                     {regionAreas.map((regionArea, index) =>
                       props.isUpdate ? (
                         !isEmpty(updateMatchObj.competitionRegionArea) ? (

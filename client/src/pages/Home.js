@@ -24,6 +24,7 @@ function Home() {
     setIsAuthenticated,
     setUserDataObj,
     appCheck,
+    setIsCompetitionByCountyFormat,
   } = useContext(DataAreaContext);
   const RowStyles = {
     // height: "100vh",
@@ -54,6 +55,7 @@ function Home() {
   useEffect(() => {
     getAppMatchesOnLoad();
     if (isAuthenticating.status !== 400 && isAuthenticating.authenticatingComplete !== true) authenticateUser();
+    setIsCompetitionByCountyFormat(false);
   }, []);
 
   const authenticateUser = () => {

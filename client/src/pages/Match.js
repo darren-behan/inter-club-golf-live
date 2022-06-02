@@ -41,6 +41,7 @@ function Match() {
     isAuthenticating,
     setIsAuthenticated,
     setUserDataObj,
+    setIsCompetitionByCountyFormat,
   } = useContext(DataAreaContext);
   let { id } = useParams();
   let individualMatches;
@@ -56,6 +57,7 @@ function Match() {
     } else {
       getMatchOnLoad();
     }
+    setIsCompetitionByCountyFormat(false);
   }, []);
 
   const authenticateUser = () => {
@@ -286,6 +288,14 @@ function Match() {
                   Competition Region:&nbsp;
                   <span style={{ color: '#0a66c2' }}>{Lib.capitalize(match.competitionConcatRegion)}</span>
                 </h6>
+                <>
+                  {!isEmpty(match.competitionConcatCounty) ? (
+                    <h6>
+                      Competition County:&nbsp;
+                      <span style={{ color: '#0a66c2' }}>{Lib.capitalize(match.competitionConcatCounty)}</span>
+                    </h6>
+                  ) : null}
+                </>
                 <h6>
                   Competition Round:&nbsp;
                   <span style={{ color: '#0a66c2' }}>{Lib.capitalize(match.competitionRound.round)}</span>

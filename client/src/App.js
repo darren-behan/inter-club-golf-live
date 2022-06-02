@@ -83,6 +83,8 @@ function App(props) {
   const [isShowTooltip, setIsShowTooltip] = useState(false);
   // This is to control the displaying of the tooltips
   const [isMatchDelete, setIsMatchDelete] = useState(false);
+  //
+  const [isCommpetitionByCountyFormat, setIsCompetitionByCountyFormat] = useState(false);
 
   useEffect(() => {
     setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
@@ -125,6 +127,8 @@ function App(props) {
           isAuthenticating,
           isShowTooltip,
           isMatchDelete,
+          isCommpetitionByCountyFormat,
+          setIsCompetitionByCountyFormat,
           setIsMatchDelete,
           setIsShowTooltip,
           setIsAuthenticating,

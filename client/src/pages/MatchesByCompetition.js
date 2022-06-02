@@ -10,12 +10,14 @@ import { useParams, useHistory, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FiltersOffCanvas from '../components/FiltersOffCanvas';
-import { Container, Row, Table, OverlayTrigger, Tooltip, Breadcrumb } from 'react-bootstrap';
+import { Container, Row, Table, OverlayTrigger, Tooltip, Breadcrumb, Badge } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { ShinyBlock, Space } from '../components/SkeletonBuildingBlocks/SkeletonBuildingBlocks';
 import moment from 'moment';
+import Moment from 'react-moment';
+import 'moment-timezone';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 const { getToken } = require('firebase/app-check');
 
@@ -37,6 +39,7 @@ function MatchesByCompetition() {
     appCheck,
     isCommpetitionByCountyFormat,
     setIsCompetitionByCountyFormat,
+    timeZone,
   } = useContext(DataAreaContext);
   let { competition } = useParams();
   const history = useHistory();
@@ -505,7 +508,9 @@ function MatchesByCompetition() {
                 </tr>
               </OverlayTrigger>
               <tr>
-                <td colSpan="3">{Lib.capitalize(match.matchStatus)}</td>
+                <td colSpan="3" style={{ fontSize: '13px' }}>
+                  {calculateMatchStatus(match)}
+                </td>
               </tr>
             </>
           ) : (
@@ -516,11 +521,45 @@ function MatchesByCompetition() {
                 <td>{Lib.capitalize(match.teamTwoName)}</td>
               </tr>
               <tr>
-                <td colSpan="3">{Lib.capitalize(match.matchStatus)}</td>
+                <td colSpan="3" style={{ fontSize: '13px' }}>
+                  {calculateMatchStatus(match)}
+                </td>
               </tr>
             </>
           )}
         </>
+      );
+    }
+  };
+
+  const calculateMatchStatus = (match) => {
+    if (match.matchStatus === 'complete') {
+      return (
+        <Badge bg="success" style={{ fontSize: '1em' }}>
+          {Lib.capitalize(match.matchStatus)}d&nbsp;on&nbsp;
+          <Moment tz={timeZone} format="DD/MM/YYYY">
+            {match.matchDateTime}
+          </Moment>
+        </Badge>
+      );
+    } else if (match.matchStatus === 'in progress') {
+      return (
+        <Badge bg="warning" style={{ fontSize: '1em' }}>
+          {Lib.capitalize(match.matchStatus)}
+        </Badge>
+      );
+    } else if (match.matchStatus === 'not started') {
+      return (
+        <Badge style={{ fontSize: '1em', backgroundColor: '#0a66c2' }}>
+          Teeing off on&nbsp;
+          <Moment tz={timeZone} format="DD/MM/YYYY">
+            {match.matchDateTime}
+          </Moment>
+          &nbsp;@&nbsp;
+          <Moment tz={timeZone} format="HH:mm z">
+            {match.matchDateTime}
+          </Moment>
+        </Badge>
       );
     }
   };

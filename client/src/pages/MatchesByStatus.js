@@ -107,9 +107,15 @@ function MatchesByStatus() {
     });
   };
 
-  sortedMatchesByMatchDateTime = matchesByStatus.sort(function (a, b) {
-    return new Date(b.matchDateTime) - new Date(a.matchDateTime);
-  });
+  if (matchesStatus === 'complete') {
+    sortedMatchesByMatchDateTime = matchesByStatus.sort(function (a, b) {
+      return new Date(b.matchDateTime) - new Date(a.matchDateTime);
+    });
+  } else if (matchesStatus === 'in progress' || matchesStatus === 'not started') {
+    sortedMatchesByMatchDateTime = matchesByStatus.sort(function (a, b) {
+      return new Date(a.matchDateTime) - new Date(b.matchDateTime);
+    });
+  }
 
   const LoadingDiv = () => {
     return (

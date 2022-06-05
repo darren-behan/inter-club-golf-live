@@ -238,23 +238,71 @@ function Match() {
     <IsEmpty
       value={match}
       yes={() => (
-        <Container fluid={true} style={{ padding: '0 0 70px 0' }}>
-          <Header />
-          <Container>
+        <>
+          <Container fluid={true} style={{ padding: '0 0 70px 0' }}>
+            <Header />
             <Row>
-              <div>
-                <br />
-                <br />
-                <ShinyBlock height="1.5rem" />
+              <div className="py-1">
                 <Space height="1rem" />
-                <ShinyBlock height="12rem" />
+                <ShinyBlock height="1rem" width="50%" />
+                <Space height="2rem" />
+                <ShinyBlock height="1rem" width="40%" style={{ margin: '0% 30%' }} />
                 <Space height="1rem" />
-                <ShinyBlock height="12rem" />
+                <ShinyBlock height="1.5rem" width="100%" />
                 <Space height="1rem" />
+                <ShinyBlock height="1rem" width="50%" />
+                <Space height="1rem" />
+                <ShinyBlock height="1rem" width="50%" />
+                <Space height="1rem" />
+                <ShinyBlock height="1rem" width="50%" />
+                <Space height="1rem" />
+                <ShinyBlock height="1rem" width="50%" />
+                <Space height="1rem" />
+                <ShinyBlock height="1rem" width="50%" />
+                <Space height="1rem" />
+                <ShinyBlock height="1rem" width="50%" />
+                <Space height="1rem" />
+                <ShinyBlock height="1rem" width="50%" />
+                <Space height="4rem" />
+                <ShinyBlock height="1rem" width="40%" style={{ margin: '0% 30%' }} />
+                <Space height="1rem" />
+                <ShinyBlock height="1rem" width="70%" style={{ margin: '0% 15%' }} />
+                <Space height="1rem" />
+                <ShinyBlock height="1rem" width="30%" />
+                <Space height="0.5rem" />
+                <ShinyBlock height="1rem" width="100%" />
+                <Space height="0.5rem" />
+                <ShinyBlock height="1rem" width="40%" style={{ margin: '0% 30%' }} />
+                <Space height="2rem" />
+                <ShinyBlock height="1rem" width="30%" />
+                <Space height="0.5rem" />
+                <ShinyBlock height="1rem" width="100%" />
+                <Space height="0.5rem" />
+                <ShinyBlock height="1rem" width="40%" style={{ margin: '0% 30%' }} />
+                <Space height="2rem" />
+                <ShinyBlock height="1rem" width="30%" />
+                <Space height="0.5rem" />
+                <ShinyBlock height="1rem" width="100%" />
+                <Space height="0.5rem" />
+                <ShinyBlock height="1rem" width="40%" style={{ margin: '0% 30%' }} />
+                <Space height="2rem" />
+                <ShinyBlock height="1rem" width="30%" />
+                <Space height="0.5rem" />
+                <ShinyBlock height="1rem" width="100%" />
+                <Space height="0.5rem" />
+                <ShinyBlock height="1rem" width="40%" style={{ margin: '0% 30%' }} />
+                <Space height="2rem" />
+                <ShinyBlock height="1rem" width="30%" />
+                <Space height="0.5rem" />
+                <ShinyBlock height="1rem" width="100%" />
+                <Space height="0.5rem" />
+                <ShinyBlock height="1rem" width="40%" style={{ margin: '0% 30%' }} />
+                <Space height="2rem" />
               </div>
             </Row>
           </Container>
-        </Container>
+          <Footer />
+        </>
       )}
       no={() => (
         <>

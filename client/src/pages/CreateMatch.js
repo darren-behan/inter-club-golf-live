@@ -59,17 +59,30 @@ function CreateMatch() {
   const LoadingDiv = () => {
     return (
       <>
-        <div className="container px-3 py-5">
-          <br />
-          <br />
-          <ShinyBlock height="1.5rem" />
-          <Space height="1rem" />
-          <ShinyBlock height="12rem" />
-          <Space height="1rem" />
-          <ShinyBlock height="12rem" />
-          <Space height="1rem" />
+        <div className="py-2">
+          <ShinyBlock height="1.5rem" width="40%" style={{ margin: '0% 56% 0% 4%' }} />
+          <Space height="2rem" />
+          <ShinyBlock height="1.5rem" width="40%" style={{ margin: '0% 50% 0% 10%' }} />
+          <Space height="2.5rem" />
+          <ShinyBlock height="2rem" width="80%" style={{ margin: '0% 10%' }} />
+          <Space height="2.5rem" />
+          <ShinyBlock height="2rem" width="80%" style={{ margin: '0% 10%' }} />
+          <Space height="2.5rem" />
+          <ShinyBlock height="2rem" width="80%" style={{ margin: '0% 10%' }} />
+          <Space height="2.5rem" />
+          <ShinyBlock height="2rem" width="80%" style={{ margin: '0% 10%' }} />
+          <Space height="2.5rem" />
+          <ShinyBlock height="2rem" width="80%" style={{ margin: '0% 10%' }} />
+          <Space height="2.5rem" />
+          <ShinyBlock height="2rem" width="80%" style={{ margin: '0% 10%' }} />
+          <Space height="2.5rem" />
+          <ShinyBlock height="2rem" width="80%" style={{ margin: '0% 10%' }} />
+          <Space height="2.5rem" />
+          <ShinyBlock height="2rem" width="80%" style={{ margin: '0% 10%' }} />
+          <Space height="2.5rem" />
+          <ShinyBlock height="2rem" width="80%" style={{ margin: '0% 10%' }} />
+          <Space height="2.5rem" />
         </div>
-        <br />
       </>
     );
   };

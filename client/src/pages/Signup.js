@@ -161,17 +161,26 @@ function Signup() {
   const LoadingDiv = () => {
     return (
       <>
-        <div className="container px-3 py-5">
-          <br />
-          <br />
-          <ShinyBlock height="1.5rem" />
+        <div className="py-1">
           <Space height="1rem" />
-          <ShinyBlock height="12rem" />
+          <ShinyBlock height="1rem" width="40%" style={{ margin: '0% 56% 0% 4%' }} />
+          <Space height="1.5rem" />
+          <ShinyBlock height="1.5rem" width="50%" style={{ margin: '0% 25% 0% 25%' }} />
+          <Space height="1.5rem" />
+          <ShinyBlock height="3rem" width="95%" style={{ margin: '0% 2.5%' }} />
+          <Space height="1.5rem" />
+          <ShinyBlock height="3rem" width="95%" style={{ margin: '0% 2.5%' }} />
+          <Space height="1.5rem" />
+          <ShinyBlock height="3rem" width="95%" style={{ margin: '0% 2.5%' }} />
+          <Space height="1.5rem" />
+          <ShinyBlock height="3rem" width="95%" style={{ margin: '0% 2.5%' }} />
+          <Space height="1.5rem" />
+          <ShinyBlock height="3rem" width="95%" style={{ margin: '0% 2.5%' }} />
+          <Space height="1.5rem" />
+          <ShinyBlock height="2rem" width="95%" style={{ margin: '0% 2.5%' }} />
           <Space height="1rem" />
-          <ShinyBlock height="12rem" />
-          <Space height="1rem" />
+          <ShinyBlock height="1rem" width="40%" style={{ margin: '0% 56% 0% 4%' }} />
         </div>
-        <br />
       </>
     );
   };

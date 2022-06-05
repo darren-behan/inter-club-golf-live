@@ -651,15 +651,56 @@ function MatchesByCompetition() {
                         </div>
                       ) : (
                         <>
-                          <div className="py-5">
-                            <br />
-                            <ShinyBlock height="1.5rem" />
+                          <div className="py-1">
+                            <ShinyBlock height="1.5rem" width="80%" style={{ margin: '0% 10%' }} />
                             <Space height="1rem" />
-                            <ShinyBlock height="12rem" />
+                            <ShinyBlock height="1.5rem" width="60%" style={{ margin: '0% 20%' }} />
                             <Space height="1rem" />
-                            <ShinyBlock height="12rem" />
+                            <ShinyBlock height="1rem" width="40%" style={{ margin: '0% 30%' }} />
                             <Space height="1rem" />
-                            <br />
+                            <ShinyBlock height="1rem" width="100%" />
+                            <Space height="0.5rem" />
+                            <ShinyBlock height="1rem" width="100%" />
+                            <Space height="0.5rem" />
+                            <ShinyBlock height="1rem" width="100%" />
+                            <Space height="1rem" />
+                            <Space height="1rem" />
+                            <ShinyBlock height="1rem" width="40%" style={{ margin: '0% 30%' }} />
+                            <Space height="1rem" />
+                            <ShinyBlock height="1rem" width="100%" />
+                            <Space height="0.5rem" />
+                            <ShinyBlock height="1rem" width="100%" />
+                            <Space height="0.5rem" />
+                            <ShinyBlock height="1rem" width="100%" />
+                            <Space height="1rem" />
+                            <Space height="1rem" />
+                            <ShinyBlock height="1rem" width="40%" style={{ margin: '0% 30%' }} />
+                            <Space height="1rem" />
+                            <ShinyBlock height="1rem" width="100%" />
+                            <Space height="0.5rem" />
+                            <ShinyBlock height="1rem" width="100%" />
+                            <Space height="0.5rem" />
+                            <ShinyBlock height="1rem" width="100%" />
+                            <Space height="1rem" />
+                            <Space height="1rem" />
+                            <ShinyBlock height="1rem" width="40%" style={{ margin: '0% 30%' }} />
+                            <Space height="1rem" />
+                            <ShinyBlock height="1rem" width="100%" />
+                            <Space height="0.5rem" />
+                            <ShinyBlock height="1rem" width="100%" />
+                            <Space height="0.5rem" />
+                            <ShinyBlock height="1rem" width="100%" />
+                            <Space height="1rem" />
+                            <Space height="1rem" />
+                            <ShinyBlock height="1rem" width="40%" style={{ margin: '0% 30%' }} />
+                            <Space height="1rem" />
+                            <ShinyBlock height="1rem" width="100%" />
+                            <Space height="0.5rem" />
+                            <ShinyBlock height="1rem" width="100%" />
+                            <Space height="0.5rem" />
+                            <ShinyBlock height="1rem" width="100%" />
+                            <Space height="1rem" />
+                            <Space height="1rem" />
                           </div>
                         </>
                       )}

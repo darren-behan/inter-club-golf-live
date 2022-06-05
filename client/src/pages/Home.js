@@ -7,7 +7,11 @@ import Footer from '../components/Footer';
 import ComboBox from '../components/ComboBox';
 import Slider from '../components/Slider';
 import { Container, Row, Col } from 'react-bootstrap';
-import { ShinyBlock, Space } from '../components/SkeletonBuildingBlocks/SkeletonBuildingBlocks';
+import {
+  ShinyBlock,
+  Space,
+  ShinyCircle,
+} from '../components/SkeletonBuildingBlocks/SkeletonBuildingBlocks';
 import { IsEmpty } from 'react-lodash';
 import { Link } from 'react-router-dom';
 import AdSense from 'react-adsense';
@@ -141,14 +145,25 @@ function Home() {
         yes={() => (
           <>
             <div className="container px-3 py-5">
+              <ShinyBlock height="1.5rem" width="40%" />
+              <Space height="1rem" />
+              <ShinyBlock height="1rem" width="25%" />
+              <Space height="1rem" />
+              <ShinyCircle height="10rem" width="20rem" />
               <br />
               <br />
-              <ShinyBlock height="1.5rem" />
+              <ShinyBlock height="1.5rem" width="40%" />
               <Space height="1rem" />
-              <ShinyBlock height="12rem" />
+              <ShinyBlock height="1rem" width="25%" />
               <Space height="1rem" />
-              <ShinyBlock height="12rem" />
+              <ShinyCircle height="10rem" width="20rem" />
+              <br />
+              <br />
+              <ShinyBlock height="1.5rem" width="40%" />
               <Space height="1rem" />
+              <ShinyBlock height="1rem" width="25%" />
+              <Space height="1rem" />
+              <ShinyCircle height="10rem" width="20rem" />
             </div>
             <br />
           </>

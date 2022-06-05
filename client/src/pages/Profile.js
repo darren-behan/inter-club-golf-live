@@ -177,38 +177,56 @@ function Profile() {
     sortedMatchesByMatchDateTime = [];
   }
 
-  const LoadingBlock = () => {
-    return (
-      <>
-        <div className="container px-3 py-5">
-          <br />
-          <br />
-          <ShinyBlock height="1.5rem" />
-          <Space height="1rem" />
-          <ShinyBlock height="12rem" />
-          <Space height="1rem" />
-          <ShinyBlock height="12rem" />
-          <Space height="1rem" />
-        </div>
-        <br />
-      </>
-    );
-  };
-
   const LoadingDiv = () => {
     return (
       <>
-        <div className="container px-3 py-5">
-          <br />
-          <br />
-          <ShinyBlock height="1.5rem" />
+        <div className="py-3">
+          <ShinyBlock height="1.5rem" width="70%" />
           <Space height="1rem" />
-          <ShinyBlock height="12rem" />
+          <ShinyBlock height="1.5rem" width="50%" />
           <Space height="1rem" />
-          <ShinyBlock height="12rem" />
+          <ShinyBlock height="1rem" width="30%" />
+          <Space height="1rem" />
+          <ShinyBlock height="1rem" width="20%" />
+          <Space height="1rem" />
+          <Space height="1rem" />
+          <ShinyBlock height="1.5rem" width="70%" />
+          <Space height="1rem" />
+          <ShinyBlock height="1.5rem" width="50%" />
+          <Space height="1rem" />
+          <ShinyBlock height="1rem" width="30%" />
+          <Space height="1rem" />
+          <ShinyBlock height="1rem" width="20%" />
+          <Space height="1rem" />
+          <Space height="1rem" />
+          <ShinyBlock height="1.5rem" width="70%" />
+          <Space height="1rem" />
+          <ShinyBlock height="1.5rem" width="50%" />
+          <Space height="1rem" />
+          <ShinyBlock height="1rem" width="30%" />
+          <Space height="1rem" />
+          <ShinyBlock height="1rem" width="20%" />
+          <Space height="1rem" />
+          <Space height="1rem" />
+          <ShinyBlock height="1.5rem" width="70%" />
+          <Space height="1rem" />
+          <ShinyBlock height="1.5rem" width="50%" />
+          <Space height="1rem" />
+          <ShinyBlock height="1rem" width="30%" />
+          <Space height="1rem" />
+          <ShinyBlock height="1rem" width="20%" />
+          <Space height="1rem" />
+          <Space height="1rem" />
+          <ShinyBlock height="1.5rem" width="70%" />
+          <Space height="1rem" />
+          <ShinyBlock height="1.5rem" width="50%" />
+          <Space height="1rem" />
+          <ShinyBlock height="1rem" width="30%" />
+          <Space height="1rem" />
+          <ShinyBlock height="1rem" width="20%" />
+          <Space height="1rem" />
           <Space height="1rem" />
         </div>
-        <br />
       </>
     );
   };

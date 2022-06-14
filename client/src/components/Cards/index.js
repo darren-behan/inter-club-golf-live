@@ -70,7 +70,8 @@ function Cards(props) {
     } else {
       return (
         <>
-          {Lib.capitalize(props.match.teamOneName)}&nbsp;-&nbsp;A/S&nbsp;-&nbsp;
+          {Lib.capitalize(props.match.teamOneName)}&nbsp;{props.match.teamOneScore} - {props.match.teamTwoScore}
+          &nbsp;
           {Lib.capitalize(props.match.teamTwoName)}
         </>
       );

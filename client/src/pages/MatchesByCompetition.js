@@ -602,7 +602,11 @@ function MatchesByCompetition() {
         </div>
       );
     } else {
-      return <div style={{ color: '#ffffff', fontWeight: '900' }}>A/S</div>;
+      return (
+        <div style={{ color: '#ffffff', fontWeight: '900' }}>
+          {match.teamOneScore} - {match.teamTwoScore}
+        </div>
+      );
     }
   };
 

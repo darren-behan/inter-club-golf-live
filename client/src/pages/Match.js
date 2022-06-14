@@ -239,7 +239,7 @@ function Match() {
       value={match}
       yes={() => (
         <>
-          <Container fluid={true} style={{ padding: '0 0 70px 0' }}>
+          <Container fluid={true} style={{ padding: '0 10px 70px 10px' }}>
             <Header />
             <Row>
               <div className="py-1">

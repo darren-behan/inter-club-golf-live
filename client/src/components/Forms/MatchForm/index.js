@@ -14,6 +14,7 @@ import regionAreas from '../../../assets/data/regionArea.json';
 import counties from '../../../assets/data/counties.json';
 import matchData from '../../../assets/data/matchdata.json';
 import rounds from '../../../assets/data/competitionRounds.json';
+import statuses from '../../../assets/data/matchStatuses.json';
 let isEmpty = require('lodash.isempty');
 const { getToken } = require('firebase/app-check');
 
@@ -784,6 +785,37 @@ function MatchForm(props) {
                   </Form.Select>
                 </Form.Group>
               </Row>
+              <>
+                {props.isUpdate ? (
+                  <>
+                    <Row>
+                      <Form.Group as={Col} className="mb-3">
+                        <Form.Text className="text-muted">Update the status of the match</Form.Text>
+                        <Form.Select aria-label="Match status" name="matchStatus" onChange={handleInputChange}>
+                          <option>
+                            {props.isUpdate
+                              ? !isEmpty(updateMatchObj.matchStatus)
+                                ? Lib.capitalize(updateMatchObj.matchStatus)
+                                : ''
+                              : ''}
+                          </option>
+                          {statuses.map((status, index) =>
+                            props.isUpdate ? (
+                              !isEmpty(updateMatchObj.matchStatus) ? (
+                                updateMatchObj.matchStatus.toLowerCase() === status.status.toLowerCase() ? null : (
+                                  <option value={status.status}>{Lib.capitalize(status.status)}</option>
+                                )
+                              ) : (
+                                <option value={status.status}>{Lib.capitalize(status.status)}</option>
+                              )
+                            ) : null,
+                          )}
+                        </Form.Select>
+                      </Form.Group>
+                    </Row>
+                  </>
+                ) : null}
+              </>
               <Row>
                 <Form.Group as={Col} className="mb-3">
                   <Form.Text className="text-muted">Enter the venue for the match if it is neutral</Form.Text>

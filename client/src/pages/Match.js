@@ -11,7 +11,7 @@ import Footer from '../components/Footer';
 import DeleteModal from '../components/Modals/DeleteModal';
 import UpdateModal from '../components/Modals/UpdateModal';
 import AddCollaboratorsModal from '../components/Modals/AddCollaboratorsModal';
-import { Container, Row, Table, Button, Breadcrumb } from 'react-bootstrap';
+import { Container, Row, Table, Button, Breadcrumb, Badge } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -165,32 +165,75 @@ function Match() {
   };
 
   const getIndividualMatchScore = (match) => {
-    if (match.homeMatchScore > match.awayMatchScore) {
-      return (
-        <div style={{ color: '#ffffff', fontWeight: '900' }}>
-          <span style={{ float: 'left' }}>
-            <FontAwesomeIcon icon={faArrowLeft} className="fa-sm" />
-          </span>
-          {match.homeMatchScore} up
-          <span style={{ float: 'right', color: '#0a66c2' }}>
-            <FontAwesomeIcon icon={faArrowRight} className="fa-sm" />
-          </span>
-        </div>
-      );
-    } else if (match.homeMatchScore < match.awayMatchScore) {
-      return (
-        <div style={{ color: '#ffffff', fontWeight: '900' }}>
-          <span style={{ float: 'left', color: '#0a66c2' }}>
-            <FontAwesomeIcon icon={faArrowLeft} className="fa-sm" />
-          </span>
-          {match.awayMatchScore} up
-          <span style={{ float: 'right' }}>
-            <FontAwesomeIcon icon={faArrowRight} className="fa-sm" />
-          </span>
-        </div>
-      );
+    const holesPlayed = 18 - match.holesPlayed;
+    if (match.matchStatus === 'complete') {
+      if (match.homeMatchScore > match.awayMatchScore) {
+        return (
+          <div style={{ color: '#ffffff', fontWeight: '900' }}>
+            <span style={{ float: 'left' }}>
+              <FontAwesomeIcon icon={faArrowLeft} className="fa-sm" />
+            </span>
+            {match.holesPlayed >= 18 ? (
+              <>{match.homeMatchScore} up</>
+            ) : (
+              <>
+                {match.homeMatchScore}&amp;{holesPlayed}
+              </>
+            )}
+            <span style={{ float: 'right', color: '#0a66c2' }}>
+              <FontAwesomeIcon icon={faArrowRight} className="fa-sm" />
+            </span>
+          </div>
+        );
+      } else if (match.homeMatchScore < match.awayMatchScore) {
+        return (
+          <div style={{ color: '#ffffff', fontWeight: '900' }}>
+            <span style={{ float: 'left', color: '#0a66c2' }}>
+              <FontAwesomeIcon icon={faArrowLeft} className="fa-sm" />
+            </span>
+            {match.holesPlayed >= 18 ? (
+              <>{match.awayMatchScore} up</>
+            ) : (
+              <>
+                {match.awayMatchScore}&amp;{holesPlayed}
+              </>
+            )}
+            <span style={{ float: 'right' }}>
+              <FontAwesomeIcon icon={faArrowRight} className="fa-sm" />
+            </span>
+          </div>
+        );
+      } else {
+        return <div style={{ color: '#ffffff', fontWeight: '900' }}>A/S</div>;
+      }
     } else {
-      return <div style={{ color: '#ffffff', fontWeight: '900' }}>A/S</div>;
+      if (match.homeMatchScore > match.awayMatchScore) {
+        return (
+          <div style={{ color: '#ffffff', fontWeight: '900' }}>
+            <span style={{ float: 'left' }}>
+              <FontAwesomeIcon icon={faArrowLeft} className="fa-sm" />
+            </span>
+            {match.homeMatchScore} up
+            <span style={{ float: 'right', color: '#0a66c2' }}>
+              <FontAwesomeIcon icon={faArrowRight} className="fa-sm" />
+            </span>
+          </div>
+        );
+      } else if (match.homeMatchScore < match.awayMatchScore) {
+        return (
+          <div style={{ color: '#ffffff', fontWeight: '900' }}>
+            <span style={{ float: 'left', color: '#0a66c2' }}>
+              <FontAwesomeIcon icon={faArrowLeft} className="fa-sm" />
+            </span>
+            {match.awayMatchScore} up
+            <span style={{ float: 'right' }}>
+              <FontAwesomeIcon icon={faArrowRight} className="fa-sm" />
+            </span>
+          </div>
+        );
+      } else {
+        return <div style={{ color: '#ffffff', fontWeight: '900' }}>A/S</div>;
+      }
     }
   };
 
@@ -234,6 +277,42 @@ function Match() {
         </p>
       ) : (
         <p style={{ margin: '0px', alignItems: 'center', fontSize: '0.8rem' }}>{Lib.capitalize(match.teamTwoName)}</p>
+      );
+    }
+  };
+
+  const getHolesPlayed = (singleMatch) => {
+    if (singleMatch.matchStatus === 'in progress') {
+      return (
+        <tr>
+          <td colSpan="3">
+            Holes played <span style={{ color: '#0a66c2', fontWeight: '500' }}>{singleMatch.holesPlayed}</span>
+          </td>
+        </tr>
+      );
+    }
+  };
+
+  const getMatchStatusBadge = (singleMatch) => {
+    if (singleMatch.matchStatus === 'complete') {
+      return (
+        <tr>
+          <td colSpan="3">
+            <Badge bg="success" className="float-right">
+              {Lib.capitalize(singleMatch.matchStatus)}
+            </Badge>
+          </td>
+        </tr>
+      );
+    } else if (singleMatch.matchStatus === 'in progress') {
+      return (
+        <tr>
+          <td colSpan="3">
+            <Badge bg="warning" className="float-right">
+              {Lib.capitalize(singleMatch.matchStatus)}
+            </Badge>
+          </td>
+        </tr>
       );
     }
   };
@@ -430,12 +509,8 @@ function Match() {
                           <td style={{ background: '#0a66c2' }}>{getIndividualMatchScore(singleMatch)}</td>
                           <td>{getAwayPlayerNames(singleMatch)}</td>
                         </tr>
-                        <tr>
-                          <td colSpan="3">
-                            Holes played{' '}
-                            <span style={{ color: '#0a66c2', fontWeight: '500' }}>{singleMatch.holesPlayed}</span>
-                          </td>
-                        </tr>
+                        {getHolesPlayed(singleMatch)}
+                        {getMatchStatusBadge(singleMatch)}
                         <br />
                       </>
                     )}

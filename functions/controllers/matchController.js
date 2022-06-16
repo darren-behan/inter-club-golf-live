@@ -303,12 +303,22 @@ module.exports = {
       teamOneScore: calculateMatchScoreOnPost(request.body.numIndividualMatches),
       teamTwoScore: calculateMatchScoreOnPost(request.body.numIndividualMatches),
       neutralVenueName: request.body.neutralVenueName,
-      individualMatch: request.body.individualMatch,
+      individualMatch: calculateMatchStatus(
+        request.body.matchDateTime,
+        request.body.createdAt,
+        request.body.timeZone,
+        request.body.individualMatch,
+      ),
       createdByUid: request.body.uid,
       createdAt: request.body.createdAt,
       updatedAt: request.body.updatedAt,
       timeZone: request.body.timeZone,
-      matchStatus: calculateMatchStatus(request.body.matchDateTime, request.body.createdAt, request.body.timeZone),
+      matchStatus: calculateMatchStatus(
+        request.body.matchDateTime,
+        request.body.createdAt,
+        request.body.timeZone,
+        null,
+      ),
       singlePlayer: request.body.singlePlayer,
       collaborators: [],
     };
@@ -386,17 +396,37 @@ const calculateMatchScoreOnPost = (value) => {
   return value / 2;
 };
 
-const calculateMatchStatus = (matchDateTime, createdAt, timeZone) => {
+const calculateMatchStatus = (matchDateTime, createdAt, timeZone, individualMatches) => {
   var end_time = moment(matchDateTime).tz(timeZone).add(7, 'hours');
-
-  // if createdAt date/time is between the match date/time & before 6 hours after the match date/time, return in progress
+  // if createdAt date/time is between the match date/time & before 7 hours after the match date/time, return in progress
   if (moment(createdAt).isBetween(matchDateTime, end_time)) {
-    return 'in progress';
+    if (individualMatches === null) {
+      return 'in progress';
+    } else {
+      individualMatches.map((individualMatch) => {
+        individualMatch.matchStatus = 'in progress';
+      });
+      return individualMatches;
+    }
   } else if (moment(createdAt).isBefore(matchDateTime)) {
     // if createdAt date/time is before match date/time, return not started
-    return 'not started';
+    if (individualMatches === null) {
+      return 'not started';
+    } else {
+      individualMatches.map((individualMatch) => {
+        individualMatch.matchStatus = 'not started';
+      });
+      return individualMatches;
+    }
   } else {
-    // if createdAt date/time is 6 hours after date/time, return complete
-    return 'complete';
+    // if createdAt date/time is 7 hours after date/time, return complete
+    if (individualMatches === null) {
+      return 'complete';
+    } else {
+      individualMatches.map((individualMatch) => {
+        individualMatch.matchStatus = 'complete';
+      });
+      return individualMatches;
+    }
   }
 };

@@ -53,6 +53,32 @@ function UpdateModal(props) {
     };
   };
 
+  const calculateIndividualMatchesStatus = () => {
+    updateMatchObj.individualMatch.map((individualMatch) => {
+      if (updateMatchObj.matchStatus === 'not started') {
+        individualMatch.matchStatus = 'not started';
+      } else if (updateMatchObj.matchStatus === 'complete') {
+        individualMatch.matchStatus = 'complete';
+      } else {
+        if (individualMatch.holesPlayed > 18) {
+          if ((individualMatch.homeMatchScore || individualMatch.awayMatchScore) === 0) {
+            individualMatch.matchStatus = 'in progress';
+          } else {
+            individualMatch.matchStatus = 'complete';
+          }
+        } else if (
+          (individualMatch.homeMatchScore || individualMatch.awayMatchScore) >
+          18 - individualMatch.holesPlayed
+        ) {
+          individualMatch.matchStatus = 'complete';
+        } else {
+          individualMatch.matchStatus = 'in progress';
+        }
+      }
+    });
+    return updateMatchObj.individualMatch;
+  };
+
   const handleClose = () => {
     setUpdateModalShow(false);
     setUpdateMatchObj(JSON.parse(JSON.stringify({ ...match })));
@@ -74,6 +100,7 @@ function UpdateModal(props) {
     const updatedOverallMatchScore = updateOverallMatchScore(updateMatchObj);
     updateMatchObj.teamOneScore = updatedOverallMatchScore.teamOneScore;
     updateMatchObj.teamTwoScore = updatedOverallMatchScore.teamTwoScore;
+    updateMatchObj.individualMatch = calculateIndividualMatchesStatus();
     API.updateMatch(
       {
         matchId: updateMatchObj.matchId,

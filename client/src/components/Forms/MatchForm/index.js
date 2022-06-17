@@ -64,6 +64,54 @@ function MatchForm(props) {
     setOldUpdateMatchObj(JSON.parse(JSON.stringify({ ...updateMatchObj })));
   }, [updateMatchObj]);
 
+  const scoreValues = [
+    { number: 0 },
+    { number: 1 },
+    { number: 2 },
+    { number: 3 },
+    { number: 4 },
+    { number: 5 },
+    { number: 6 },
+    { number: 7 },
+    { number: 8 },
+    { number: 9 },
+    { number: 10 },
+  ];
+
+  const holeValues = [
+    { number: 0 },
+    { number: 1 },
+    { number: 2 },
+    { number: 3 },
+    { number: 4 },
+    { number: 5 },
+    { number: 6 },
+    { number: 7 },
+    { number: 8 },
+    { number: 9 },
+    { number: 10 },
+    { number: 11 },
+    { number: 12 },
+    { number: 13 },
+    { number: 14 },
+    { number: 15 },
+    { number: 16 },
+    { number: 17 },
+    { number: 18 },
+    { number: 19 },
+    { number: 20 },
+    { number: 21 },
+    { number: 22 },
+    { number: 23 },
+    { number: 24 },
+    { number: 25 },
+    { number: 26 },
+    { number: 27 },
+    { number: 28 },
+    { number: 29 },
+    { number: 30 },
+  ];
+
   // Handles updating component state when the user types into the input field
   const handleInputChange = (event) => {
     event.preventDefault();
@@ -117,6 +165,8 @@ function MatchForm(props) {
   const handleIndividualMatchFieldInputChange = (event, id) => {
     event.preventDefault();
     const { name, value } = event.target;
+    console.log(name);
+    console.log(value);
 
     if (!props.isUpdate) {
       for (let i = 0; i < filteredMatchArray.length; i++) {
@@ -135,7 +185,16 @@ function MatchForm(props) {
       updateMatchObj.individualMatch.map((object, i) => {
         if (parseInt(id) === i) {
           if (value !== '' && (name === 'awayMatchScore' || name === 'homeMatchScore')) {
-            object[name] = parseInt(value);
+            if (name === 'awayMatchScore') {
+              object[name] = parseInt(value);
+              object['homeMatchScore'] = 0;
+            }
+
+            if (name === 'homeMatchScore') {
+              object[name] = parseInt(value);
+              object['awayMatchScore'] = 0;
+            }
+
             return object;
           }
 
@@ -147,6 +206,7 @@ function MatchForm(props) {
       setIsMatchEdited(false);
     }
   };
+  console.log(updateMatchObj);
 
   let homeTeamName = props.isUpdate ? updateMatchObj['teamOneName'] : postMatchObj['teamOneName'];
   let awayTeamName = props.isUpdate ? updateMatchObj['teamTwoName'] : postMatchObj['teamTwoName'];
@@ -191,6 +251,7 @@ function MatchForm(props) {
       if (props.isUpdate) {
         individualMatch = updateMatchObj.individualMatch[i];
       }
+      console.log(individualMatch);
       /* eslint-disable */
       {
         competitionObject.singlePlayer === true
@@ -241,16 +302,21 @@ function MatchForm(props) {
                           <Row className="py-1">
                             <Form.Group as={Col}>
                               <Form.Text className="text-muted">
-                                If the {Lib.capitalize(homeTeamName)} player is winning, enter the number of holes they
-                                are up by, otherwise, enter 0
+                                If the {Lib.capitalize(homeTeamName)} player is leading, select the number of holes the
+                                player is leading by
                               </Form.Text>
-                              <Form.Control
-                                type="text"
-                                className="mb-3"
+                              <Form.Select
+                                aria-label="Home match score"
                                 name="homeMatchScore"
                                 onChange={(e) => handleIndividualMatchFieldInputChange(e, i)}
-                                value={individualMatch.homeMatchScore}
-                              />
+                              >
+                                <option>{individualMatch.homeMatchScore}</option>
+                                {scoreValues.map((score) =>
+                                  individualMatch.homeMatchScore === score.number ? null : (
+                                    <option value={score.number}>{score.number}</option>
+                                  ),
+                                )}
+                              </Form.Select>
                             </Form.Group>
                           </Row>
                         </>
@@ -284,28 +350,38 @@ function MatchForm(props) {
                           <Row className="py-1">
                             <Form.Group as={Col}>
                               <Form.Text className="text-muted">
-                                If the {Lib.capitalize(awayTeamName)} player is winning, enter the number of holes they
-                                are up by, otherwise, enter 0
+                                If the {Lib.capitalize(awayTeamName)} player is leading, select the number of holes
+                                player is leading by
                               </Form.Text>
-                              <Form.Control
-                                type="text"
-                                className="mb-3"
+                              <Form.Select
+                                aria-label="Away match score"
                                 name="awayMatchScore"
                                 onChange={(e) => handleIndividualMatchFieldInputChange(e, i)}
-                                value={individualMatch.awayMatchScore}
-                              />
+                              >
+                                <option>{individualMatch.awayMatchScore}</option>
+                                {scoreValues.map((score) =>
+                                  individualMatch.awayMatchScore === score.number ? null : (
+                                    <option value={score.number}>{score.number}</option>
+                                  ),
+                                )}
+                              </Form.Select>
                             </Form.Group>
                           </Row>
                           <Row className="py-1">
                             <Form.Group as={Col}>
                               <Form.Text className="text-muted">Update the number of holes played</Form.Text>
-                              <Form.Control
-                                type="text"
-                                className="mb-3"
+                              <Form.Select
+                                aria-label="Holes played"
                                 name="holesPlayed"
                                 onChange={(e) => handleIndividualMatchFieldInputChange(e, i)}
-                                value={individualMatch.holesPlayed}
-                              />
+                              >
+                                <option>{individualMatch.holesPlayed}</option>
+                                {holeValues.map((hole) =>
+                                  individualMatch.holesPlayed === hole.number ? null : (
+                                    <option value={hole.number}>{hole.number}</option>
+                                  ),
+                                )}
+                              </Form.Select>
                             </Form.Group>
                           </Row>
                         </>
@@ -384,16 +460,21 @@ function MatchForm(props) {
                           <Row className="py-1">
                             <Form.Group as={Col}>
                               <Form.Text className="text-muted">
-                                If the {Lib.capitalize(homeTeamName)} players are winning, enter the number of holes
-                                they are up by, otherwise, enter 0
+                                If the {Lib.capitalize(homeTeamName)} players are leading, select the number of holes
+                                they are leading by
                               </Form.Text>
-                              <Form.Control
-                                type="text"
-                                className="mb-3"
+                              <Form.Select
+                                aria-label="Home match score"
                                 name="homeMatchScore"
                                 onChange={(e) => handleIndividualMatchFieldInputChange(e, i)}
-                                value={individualMatch.homeMatchScore}
-                              />
+                              >
+                                <option>{individualMatch.homeMatchScore}</option>
+                                {scoreValues.map((score) =>
+                                  individualMatch.homeMatchScore === score.number ? null : (
+                                    <option value={score.number}>{score.number}</option>
+                                  ),
+                                )}
+                              </Form.Select>
                             </Form.Group>
                           </Row>
                         </>
@@ -449,28 +530,38 @@ function MatchForm(props) {
                           <Row className="py-1">
                             <Form.Group as={Col}>
                               <Form.Text className="text-muted">
-                                If the {Lib.capitalize(awayTeamName)} players are winning, enter the number of holes
-                                they are up by, otherwise, enter 0
+                                If the {Lib.capitalize(awayTeamName)} players are leading, select the number of holes
+                                they are leading by
                               </Form.Text>
-                              <Form.Control
-                                type="text"
-                                className="mb-3"
+                              <Form.Select
+                                aria-label="Away match score"
                                 name="awayMatchScore"
                                 onChange={(e) => handleIndividualMatchFieldInputChange(e, i)}
-                                value={individualMatch.awayMatchScore}
-                              />
+                              >
+                                <option>{individualMatch.awayMatchScore}</option>
+                                {scoreValues.map((score) =>
+                                  individualMatch.awayMatchScore === score.number ? null : (
+                                    <option value={score.number}>{score.number}</option>
+                                  ),
+                                )}
+                              </Form.Select>
                             </Form.Group>
                           </Row>
                           <Row className="py-1">
                             <Form.Group as={Col}>
                               <Form.Text className="text-muted">Update the number of holes played</Form.Text>
-                              <Form.Control
-                                type="text"
-                                className="mb-3"
+                              <Form.Select
+                                aria-label="Holes played"
                                 name="holesPlayed"
                                 onChange={(e) => handleIndividualMatchFieldInputChange(e, i)}
-                                value={individualMatch.holesPlayed}
-                              />
+                              >
+                                <option>{individualMatch.holesPlayed}</option>
+                                {holeValues.map((hole) =>
+                                  individualMatch.holesPlayed === hole.number ? null : (
+                                    <option value={hole.number}>{hole.number}</option>
+                                  ),
+                                )}
+                              </Form.Select>
                             </Form.Group>
                           </Row>
                         </>

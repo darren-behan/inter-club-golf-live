@@ -13,6 +13,7 @@ import regions from '../../../assets/data/regions.json';
 import regionAreas from '../../../assets/data/regionArea.json';
 import counties from '../../../assets/data/counties.json';
 import matchData from '../../../assets/data/matchdata.json';
+import collaboratorsData from '../../../assets/data/collaboratorsdata.json';
 import rounds from '../../../assets/data/competitionRounds.json';
 import statuses from '../../../assets/data/matchStatuses.json';
 let isEmpty = require('lodash.isempty');
@@ -350,7 +351,7 @@ function MatchForm(props) {
                           <Row className="py-1">
                             <Form.Group as={Col}>
                               <Form.Text className="text-muted">
-                                If the {Lib.capitalize(awayTeamName)} player is leading, select the number of holes
+                                If the {Lib.capitalize(awayTeamName)} player is leading, select the number of holes the
                                 player is leading by
                               </Form.Text>
                               <Form.Select
@@ -619,6 +620,7 @@ function MatchForm(props) {
         neutralVenueName: !isEmpty(postMatchObj.neutralVenueName) ? postMatchObj.neutralVenueName : '',
         uid: userDataObj.uid,
         singlePlayer: competitionObject.singlePlayer,
+        collaborators: collaboratorsData,
       },
       appCheckTokenResponse.token,
     )

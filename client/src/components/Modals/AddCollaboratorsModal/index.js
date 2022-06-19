@@ -58,11 +58,9 @@ function AddCollaboratorsModal(props) {
     }
 
     let requestArr = [];
-    let collaboratorsFiltered = collaborators.collaborators.filter((collab, i) => {
-      let emailKey = 'email' + (i + 1);
-      if (collab[emailKey] !== '' && isEmail(collab[emailKey])) {
-        requestArr.push(collab[emailKey]);
-        return collab;
+    collaborators.collaborators.map((collab, i) => {
+      if (collab['email'] !== '' && isEmail(collab['email'])) {
+        requestArr.push(collab['email']);
       }
     });
 
@@ -71,21 +69,32 @@ function AddCollaboratorsModal(props) {
         .then((getUsersResult) => {
           let collabsNotFound = '';
 
-          collaboratorsFiltered.filter((collab, i) => {
-            let emailKey = 'email' + (i + 1);
-            getUsersResult.data.users.filter((users) => {
-              if (collab[emailKey] === users.email) {
-                collab.userId = users.uid;
-                collab['dateUpdated'] = moment().format();
-              }
-            });
+          collaborators.collaborators.filter((collab, i) => {
+            if (!isEmpty(getUsersResult.data.users)) {
+              getUsersResult.data.users.filter((users) => {
+                if (collab['email'] === users.email) {
+                  collab.userId = users.uid;
+                  collab['dateUpdated'] = moment().format();
+                }
+              });
+            }
 
-            getUsersResult.data.notFound.filter((users) => {
-              if (collab[emailKey] === users.email) {
-                collabsNotFound += users.email + ', ';
-                collaboratorsFiltered.splice(i, 1);
-              }
-            });
+            if (!isEmpty(getUsersResult.data.notFound)) {
+              getUsersResult.data.notFound.filter((users) => {
+                if (collab['email'] === users.email) {
+                  collabsNotFound += users.email + ', ';
+                  collab['dateUpdated'] = moment().format();
+                  collab['email'] = '';
+                  collab['userId'] = '';
+                }
+              });
+            }
+
+            if (isEmpty(collab['email'])) {
+              collab['dateUpdated'] = moment().format();
+              collab['email'] = '';
+              collab['userId'] = '';
+            }
           });
 
           setCollaborators(JSON.parse(JSON.stringify({ ...collaborators })));
@@ -95,7 +104,7 @@ function AddCollaboratorsModal(props) {
           API.updateMatch(
             {
               matchId: match.matchId,
-              collaborators: collaboratorsFiltered,
+              collaborators: collaborators.collaborators,
               updatedAt: moment().format(),
             },
             appCheckTokenResponse.token,
@@ -105,10 +114,10 @@ function AddCollaboratorsModal(props) {
                 message: response.data.message,
                 status: response.status,
               });
-              setMatchObj({ ...match, collaborators: collaboratorsFiltered, updatedAt: moment().format() });
+              setMatchObj({ ...match, collaborators: collaborators.collaborators, updatedAt: moment().format() });
               for (let i = 0; i < appMatchesOnLoad.length; i++) {
                 if (appMatchesOnLoad[i].matchId === match.matchId) {
-                  appMatchesOnLoad[i].collaborators = collaboratorsFiltered;
+                  appMatchesOnLoad[i].collaborators = collaborators.collaborators;
                   appMatchesOnLoad[i].updatedAt = moment().format();
                 }
               }
@@ -160,14 +169,6 @@ function AddCollaboratorsModal(props) {
     }
   };
 
-  const handleCloseClick = (matchId) => {
-    setAddCollaboratorsModalShow(false);
-    setCollaboratorsUpdateResponse({});
-    setCollaboratorsNotFound('');
-    setIsCollaboratorsEdited(true);
-    history.push(`/match/${matchId}`);
-  };
-
   return (
     <>
       <Modal
@@ -180,14 +181,16 @@ function AddCollaboratorsModal(props) {
       >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter">
-            {collaboratorsUpdateResponse.status === 200 || collaboratorsUpdateResponse.status === 400
+            {collaboratorsUpdateResponse.status === 200
               ? 'Collaborators added'
+              : collaboratorsUpdateResponse.status === 400
+              ? 'Something went wrong'
               : 'Add up to 5 Collaborators'}
           </Modal.Title>
           <CloseButton onClick={handleClose} />
         </Modal.Header>
         <Modal.Body>
-          {collaboratorsUpdateResponse.status === 200 || collaboratorsUpdateResponse.status === 400 ? (
+          {collaboratorsUpdateResponse.status === 200 ? (
             <>
               {isEmpty(collaboratorsNotFound)
                 ? `${collaboratorsUpdateResponse.message}.`
@@ -195,6 +198,8 @@ function AddCollaboratorsModal(props) {
               The following email/s ${collaboratorsNotFound} are not registered user/s & are unable to be added as collaborators at this stage.\n
               To be eligible to be added as a collaborator, the email is required to be a registered user.`}
             </>
+          ) : collaboratorsUpdateResponse.status === 400 ? (
+            'Something went wrong, please refresh the page and try again'
           ) : (
             <AddCollaboratorsForm matchCollaborators={collaborators} />
           )}

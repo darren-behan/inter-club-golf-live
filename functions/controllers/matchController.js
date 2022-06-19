@@ -320,7 +320,7 @@ module.exports = {
         null,
       ),
       singlePlayer: request.body.singlePlayer,
-      collaborators: [],
+      collaborators: request.body.collaborators,
     };
 
     let document = addMatch(newMatch);

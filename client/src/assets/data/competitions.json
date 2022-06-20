@@ -105,13 +105,6 @@
 		"isCountyFormat": false
 	},
 	{
-		"name": "South Leinster",
-		"matches": 7,
-		"singlePlayer": true,
-    "gender": "men",
-		"isCountyFormat": false
-	},
-	{
 		"name": "Michael Moore Cup",
 		"matches": 7,
 		"singlePlayer": true,

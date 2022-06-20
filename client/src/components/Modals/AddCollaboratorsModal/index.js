@@ -185,7 +185,7 @@ function AddCollaboratorsModal(props) {
               ? 'Collaborators added'
               : collaboratorsUpdateResponse.status === 400
               ? 'Something went wrong'
-              : 'Add up to 5 Collaborators'}
+              : 'Add up to 10 collaborators'}
           </Modal.Title>
           <CloseButton onClick={handleClose} />
         </Modal.Header>

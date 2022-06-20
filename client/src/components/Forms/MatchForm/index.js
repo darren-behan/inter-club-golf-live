@@ -661,13 +661,21 @@ function MatchForm(props) {
     <>
       <CreateMatchModal show={createMathModalShow} onHide={() => setCreateMatchModalShow(false)} />
       <Form className="px-3" style={{ backgroundColor: '#ffffff' }}>
-        <Row className="py-1">
-          <h4 style={{ color: 'rgb(10, 102, 194)' }}>Let's begin</h4>
-        </Row>
+        <>
+          {props.isUpdate ? null : (
+            <>
+              <Row className="py-1">
+                <h4 style={{ color: 'rgb(10, 102, 194)' }}>Let's begin</h4>
+              </Row>
+            </>
+          )}
+        </>
         <Accordion defaultActiveKey="0">
           <Accordion.Item eventKey="0">
             <Accordion.Header>
-              <span style={{ color: 'rgb(10, 102, 194)' }}>Tell us about the match</span>
+              <span style={{ color: 'rgb(10, 102, 194)' }}>
+                {props.isUpdate ? 'Update match information' : 'Tell us about the match'}
+              </span>
             </Accordion.Header>
             <Accordion.Body>
               <Row className="py-1">

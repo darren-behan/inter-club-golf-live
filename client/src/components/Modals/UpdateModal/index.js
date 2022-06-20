@@ -133,6 +133,7 @@ function UpdateModal(props) {
         singlePlayer: updateMatchObj.singlePlayer,
         updatedAt: moment().format(),
         createdAt: updateMatchObj.createdAt,
+        collaborators: updateMatchObj.collaborators,
       },
       appCheckTokenResponse.token,
     )

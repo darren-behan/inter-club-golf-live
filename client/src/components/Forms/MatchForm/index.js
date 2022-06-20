@@ -166,8 +166,6 @@ function MatchForm(props) {
   const handleIndividualMatchFieldInputChange = (event, id) => {
     event.preventDefault();
     const { name, value } = event.target;
-    console.log(name);
-    console.log(value);
 
     if (!props.isUpdate) {
       for (let i = 0; i < filteredMatchArray.length; i++) {
@@ -207,7 +205,6 @@ function MatchForm(props) {
       setIsMatchEdited(false);
     }
   };
-  console.log(updateMatchObj);
 
   let homeTeamName = props.isUpdate ? updateMatchObj['teamOneName'] : postMatchObj['teamOneName'];
   let awayTeamName = props.isUpdate ? updateMatchObj['teamTwoName'] : postMatchObj['teamTwoName'];
@@ -252,7 +249,6 @@ function MatchForm(props) {
       if (props.isUpdate) {
         individualMatch = updateMatchObj.individualMatch[i];
       }
-      console.log(individualMatch);
       /* eslint-disable */
       {
         competitionObject.singlePlayer === true
